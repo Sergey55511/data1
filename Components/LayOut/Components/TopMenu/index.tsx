@@ -98,7 +98,10 @@ export const TopMenu = () => {
                 Склад: <span>Москва</span>
             </div>
             <div className="user">
-                Пользователь: <span>SSP</span>
+                Пользователь:{' '}
+                <span>
+                    <Link href="/login">SSP</Link>
+                </span>
             </div>
         </Wrapper>
     );

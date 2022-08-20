@@ -2,7 +2,9 @@ import styled from 'styled-components';
 
 export const Wrapper = styled.div`
     padding: 16px;
+    padding-right: 40px;
     display: flex;
+    align-items: center;
     .menu {
         flex: 1;
         margin-right: 16px;
@@ -14,9 +16,11 @@ export const Wrapper = styled.div`
         }
     }
     .user {
-        margin-right: 16px;
         span {
             font-weight: 600;
+            a {
+                color: rgba(0, 0, 0, 0.85);
+            }
         }
     }
 `;
