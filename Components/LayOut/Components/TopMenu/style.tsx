@@ -1,8 +1,7 @@
 import styled from 'styled-components';
 
 export const Wrapper = styled.div`
-    padding: 16px;
-    padding-right: 40px;
+    padding: 8px;
     display: flex;
     align-items: center;
     .menu {

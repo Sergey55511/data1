@@ -7,7 +7,8 @@ export const Wrapper = styled.div`
     .body {
         flex: 1;
         background: #edf1f7;
-        padding: 40px;
+        padding: 8px;
+        overflow: auto;
         .papper {
             background-color: #fff;
             height: 100%;
