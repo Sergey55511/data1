@@ -1,6 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -11,8 +8,32 @@ datasource db {
 }
 
 model Users {
-  id    Int     @id @default(autoincrement())
-  login String  @unique
-  password  String
-  activ Boolean @default(true)
+  id       Int     @id @default(autoincrement())
+  login    String  @unique
+  password String
+  activ    Boolean @default(true)
+}
+
+model Opereytion {
+  id         Int     @id @default(autoincrement())
+  opereytion String  @unique
+  result     String?
+  sborka     Int?
+  activ      Boolean @default(true)
+}
+
+model Grade {
+  id      Int     @id @default(autoincrement())
+  grade   String  @unique
+  for     String?
+  variant Int
+  activ   Boolean @default(true)
+}
+
+model Collor {
+  id      Int     @id @default(autoincrement())
+  collor   String  @unique
+  for     String?
+  variant Int
+  activ   Boolean @default(true)
 }
