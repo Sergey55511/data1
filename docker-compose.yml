@@ -13,7 +13,7 @@ services:
   #     - postgres
 
   postgres:
-    container_name: postgres_container
+    container_name: postgres_container_data
     image: postgres
     environment:
       POSTGRES_USER: "landingPage"
@@ -28,7 +28,11 @@ services:
     restart: unless-stopped
   
   pgadmin:
+<<<<<<< HEAD
     container_name: pgadmin_container
+=======
+    container_name: pgadmin_container_data
+>>>>>>> dev_kpp
     image: dpage/pgadmin4
     environment:
       PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL:-pgadmin4@pgadmin.org}
