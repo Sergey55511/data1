@@ -1,3 +1,4 @@
+import { notification } from 'antd';
 import { flow, makeAutoObservable } from 'mobx';
 import * as api from './Api';
 import { ErrorStore } from './ErrorStore';
@@ -10,17 +11,31 @@ export class Login {
         makeAutoObservable(this);
         this.errorStore = errorStore;
     }
-    login = flow(function* (this: Login, data: iLogin) {
+    login = flow(function* (this: Login, data: iLogin, callBack: () => void) {
         try {
             this.user = yield api.login(data);
+            this.errorStore.resetError();
+            callBack();
         } catch (err) {
+            notification.error({
+                message: 'Ошибка',
+                description: 'Отказано в доступе',
+            });
             console.log(err);
         }
     });
     registration = flow(function* (this: Login, data: iLogin) {
         try {
             yield api.registration(data);
+            notification.success({
+                message: 'Создан',
+                description: 'Пользователь успешно создан',
+            });
         } catch (err) {
+            notification.error({
+                message: 'Ошибка',
+                description: 'Что-то пошло не так',
+            });
             this.errorStore.setError(err as iError);
         }
     });

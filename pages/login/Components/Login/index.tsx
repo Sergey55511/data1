@@ -6,9 +6,11 @@ import { Wrapper } from './style';
 import { useRef, useState } from 'react';
 import { observer } from 'mobx-react-lite';
 import { useStores } from '../../../../Store/useStores';
+import { useRouter } from 'next/router';
 
 export default observer(() => {
     const submitRef = useRef<HTMLElement>(null);
+    const router = useRouter();
     const [isLoading, setIsLoading] = useState(false);
     const [loginV, setLogin] = useState('');
     const [password, setPassword] = useState('');
@@ -16,7 +18,9 @@ export default observer(() => {
     const { loginStore } = useStores();
     const onClickHandler = async () => {
         setIsLoading(true);
-        await loginStore.login({ login: loginV, password });
+        await loginStore.login({ login: loginV, password }, () => {
+            router.push('/');
+        });
         setIsLoading(false);
     };
 

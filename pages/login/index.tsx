@@ -22,18 +22,18 @@ const items: MenuProps['items'] = [
 
 export default observer(() => {
     const [current, setCurrent] = useState<'login' | 'registration'>('login');
-    const { loginStore } = useStores();
+    const { loginStore, ErrorStore } = useStores();
 
     const onClick: MenuProps['onClick'] = (e) => {
         console.log('click ', e);
         setCurrent(e.key as typeof current);
     };
     useEffect(() => {
+        ErrorStore.resetError();
         loginStore.whoami();
     }, []);
 
     const isAdmin = loginStore.user.status == 'admin';
-    console.log('oginStore.user');
 
     return (
         <Wrapper>
