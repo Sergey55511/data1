@@ -9,6 +9,7 @@ export const ErrorHandler = observer(({ children }: { children: JSX.Element }) =
     const isError = ErrorStore.error.isError;
     const router = useRouter();
     const is401 = ErrorStore.error.status == 401;
+
     if (is401) {
         router.push('/login');
         return null;
