@@ -1,48 +1,56 @@
 //Страница Логина на фронте
 
-import { Button, Input } from 'antd';
-import { UserOutlined, KeyOutlined } from '@ant-design/icons';
+import { MenuProps } from 'antd';
 import { Wrapper } from './style';
-import { useState } from 'react';
-import {} from '../../Store';
+import { useEffect, useState } from 'react';
 import { useStores } from '../../Store/useStores';
+import { observer } from 'mobx-react-lite';
+import { Menu } from 'antd';
+import Login from './Components/Login';
+import { Registration } from './Components/Registration';
 
-export default () => {
-    const [loginV, setLogin] = useState('');
-    const [password, setPassword] = useState('');
-    const disabled = loginV && password;
-    const onClickHandler = () => {
-        login.login({ login: loginV, password });
+const items: MenuProps['items'] = [
+    {
+        label: 'Логин',
+        key: 'login',
+    },
+    {
+        label: 'Регистрация',
+        key: 'registration',
+    },
+];
+
+export default observer(() => {
+    const [current, setCurrent] = useState<'login' | 'registration'>('login');
+    const { loginStore } = useStores();
+
+    const onClick: MenuProps['onClick'] = (e) => {
+        console.log('click ', e);
+        setCurrent(e.key as typeof current);
     };
-    const { login } = useStores();
+    useEffect(() => {
+        loginStore.whoami();
+    }, []);
+
+    const isAdmin = loginStore.user.status == 'admin';
+    console.log('oginStore.user');
+
     return (
         <Wrapper>
             <div className="form">
-                <Input
-                    size="large"
-                    placeholder="Логин"
-                    prefix={<UserOutlined />}
-                    className="input"
-                    value={loginV}
-                    onChange={(e) => setLogin(e.target.value)}
-                />
-                <Input.Password
-                    size="large"
-                    placeholder="Пароль"
-                    prefix={<KeyOutlined />}
-                    className="input"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                />
-                <Button
-                    style={{ width: '100%' }}
-                    type="primary"
-                    disabled={!disabled}
-                    onClick={onClickHandler}
-                >
-                    Войти
-                </Button>
+                {isAdmin && (
+                    <div className="menu">
+                        <Menu
+                            onClick={onClick}
+                            selectedKeys={[current]}
+                            mode="horizontal"
+                            items={items}
+                        />
+                    </div>
+                )}
+                {current == 'login' && <Login />}
+                {current == 'registration' && <Registration />}
             </div>
         </Wrapper>
     );
-};
+});

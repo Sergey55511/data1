@@ -11,6 +11,8 @@ model Users {
   id       Int     @id @default(autoincrement())
   login    String  @unique
   password String
+  key      String?
+  status   String? 
   activ    Boolean @default(true)
 }
 
@@ -32,7 +34,7 @@ model Grade {
 
 model Collor {
   id      Int     @id @default(autoincrement())
-  collor   String  @unique
+  collor  String  @unique
   for     String?
   variant Int
   activ   Boolean @default(true)

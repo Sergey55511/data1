@@ -67,11 +67,11 @@ export const TopMenu = () => {
                                     children: [
                                         {
                                             label: 'Option 1',
-                                            key: 'setting:1',
+                                            key: 'setting:12',
                                         },
                                         {
                                             label: 'Option 2',
-                                            key: 'setting:2',
+                                            key: 'setting:22',
                                         },
                                     ],
                                 },
@@ -81,11 +81,11 @@ export const TopMenu = () => {
                                     children: [
                                         {
                                             label: 'Option 3',
-                                            key: 'setting:3',
+                                            key: 'setting:32',
                                         },
                                         {
                                             label: 'Option 4',
-                                            key: 'setting:4',
+                                            key: 'setting:42',
                                         },
                                     ],
                                 },
