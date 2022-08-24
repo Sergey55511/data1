@@ -3,6 +3,7 @@ import jwt from 'jsonwebtoken';
 import { PrismaClient } from '@prisma/client';
 import { createJWT, KEY } from './createJWT';
 import { NextApiRequest, NextApiResponse } from 'next';
+import { MyError } from '../Classes/error';
 const prisma = new PrismaClient();
 
 export const varifyJWT = async (
@@ -25,9 +26,11 @@ export const varifyJWT = async (
             if (user.key == rtkn.key) {
                 createJWT(req, res, user);
             } else {
+                throw new MyError(401)
                 res.status(401).json({ message: 'доступ запрещен!' });
             }
         } catch (error) {
+            throw new MyError(401)
             res.status(401).json({ message: 'доступ запрещен!' });
         }
     }

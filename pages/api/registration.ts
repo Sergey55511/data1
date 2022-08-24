@@ -3,6 +3,7 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import { varifyJWT } from '../../Services/verifyJWT';
 import { iCookies } from '../../Store/interfaces';
 import sha1 from 'sha1';
+import { MyError } from '../../Classes/error';
 const prisma = new PrismaClient();
 
 export const KEY = 'b6d48d1d41be922130ce2a32e1dab1fc';
@@ -15,7 +16,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     if (user?.status == 'admin') {
         try {
-            const result = await prisma.users.create({
+            await prisma.users.create({
                 data: {
                     login,
                     password,
@@ -24,7 +25,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             });
             res.status(200).json({ message: 'Пользователь создан' });
         } catch (err) {
-            res.status(400).json({ message: 'Что то пошло не так' });
+            const error = err as MyError;
+            res.status(error.status).json({ message: error.message });
         }
     }
 }
