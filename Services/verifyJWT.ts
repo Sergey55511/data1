@@ -13,25 +13,34 @@ export const varifyJWT = async (
 ) => {
     try {
         const atkn = jwt.verify(token.atkn, KEY) as iUser;
-        return { login: atkn.login, status: atkn.status };
+
+        return { login: atkn.login, status: atkn.status, store: atkn.store };
     } catch (err) {
         try {
             const rtkn = jwt.verify(token.rtkn, KEY) as { login: string; key: string };
-            const user = (await prisma.users.findFirst({
+            const result = await prisma.users.findFirst({
+                select: {
+                    id: true,
+                    key: true,
+                    login: true,
+                    status: true,
+                    store: { select: { name: true } },
+                },
                 where: {
                     login: rtkn.login.toLowerCase(),
                     activ: true,
                 },
-            })) as iUser;
+            });
+
+            const user = { ...result, store: result?.store?.name } as iUser;
+
             if (user.key == rtkn.key) {
                 createJWT(req, res, user);
             } else {
-                throw new MyError(401)
-                res.status(401).json({ message: 'доступ запрещен!' });
+                throw new MyError(401);
             }
         } catch (error) {
-            throw new MyError(401)
-            res.status(401).json({ message: 'доступ запрещен!' });
+            throw new MyError(401);
         }
     }
 };

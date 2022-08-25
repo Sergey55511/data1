@@ -11,13 +11,22 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     if (req.method == 'POST') {
         const password = sha1(req.body.password + KEY);
         try {
-            const user = (await prisma.users.findFirst({
+            const result = await prisma.users.findFirst({
+                select: {
+                    id: true,
+                    key: true,
+                    login: true,
+                    status: true,
+                    store: { select: { name: true } },
+                },
                 where: {
                     login: req.body.login.toLowerCase(),
                     password,
                     activ: true,
                 },
-            })) as iUser;
+            });
+
+            const user = { ...result, store: result?.store?.name } as iUser;
 
             if (user.login) {
                 await createJWT(req, res, user);

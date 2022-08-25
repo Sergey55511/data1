@@ -2,7 +2,7 @@ export class MyError {
     status: number = 500;
     message = 'Что-то пошло не так';
     constructor(status: number, message?: string) {
-        this.status == status;
+        this.status = status;
         if (message) {
             this.message = message;
             return;

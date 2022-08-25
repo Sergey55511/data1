@@ -5,7 +5,7 @@ import { ErrorStore } from './ErrorStore';
 import { iError, iLogin, iUser } from './interfaces';
 
 export class Login {
-    user = { login: '', status: '' };
+    user = { login: '', status: '', store: '' };
     errorStore: ErrorStore;
     constructor(errorStore: ErrorStore) {
         makeAutoObservable(this);

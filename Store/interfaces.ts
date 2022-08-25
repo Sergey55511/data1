@@ -6,9 +6,10 @@ export interface iLogin {
 export interface iUser {
     id: number;
     login: string;
-    password: string;
+    password?: string;
     key: string;
     status: string;
+    store?: string;
 }
 
 export interface iCookies {

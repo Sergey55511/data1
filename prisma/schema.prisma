@@ -12,8 +12,16 @@ model Users {
   login    String  @unique
   password String
   key      String?
-  status   String? 
+  status   String?
+  store    Stores?  @relation(fields: [storesId], references: [id])
   activ    Boolean @default(true)
+  storesId Int?
+}
+
+model Stores {
+  id    Int     @id @default(autoincrement())
+  name  String
+  Users Users[]
 }
 
 model Opereytion {

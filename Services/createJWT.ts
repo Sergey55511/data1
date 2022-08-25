@@ -14,9 +14,13 @@ export const createJWT = async (
     user: iUser,
 ) => {
     const refrashToken = makeRandomString();
-    const atkn = jwt.sign({ login: user.login, status: user.status }, KEY, {
-        expiresIn: 60 * 60,
-    });
+    const atkn = jwt.sign(
+        { login: user.login, status: user.status, store: user.store },
+        KEY,
+        {
+            expiresIn: 60 * 60,
+        },
+    );
     const rtkn = jwt.sign({ login: user.login, key: refrashToken }, KEY);
     try {
         await prisma.users.update({
