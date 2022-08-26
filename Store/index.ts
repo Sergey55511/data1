@@ -6,6 +6,7 @@ import { iError, iLogin, iUser } from './interfaces';
 
 export class Login {
     user = { login: '', status: '', store: '' };
+    stores: { id: number; name: string }[] = [];
     errorStore: ErrorStore;
     constructor(errorStore: ErrorStore) {
         makeAutoObservable(this);
@@ -43,6 +44,13 @@ export class Login {
     whoami = flow(function* (this: Login) {
         try {
             this.user = yield api.whoami();
+        } catch (err) {
+            this.errorStore.setError(err as iError);
+        }
+    });
+    getStores = flow(function* (this: Login) {
+        try {
+            this.stores = yield api.getStores();
         } catch (err) {
             this.errorStore.setError(err as iError);
         }

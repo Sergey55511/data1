@@ -21,3 +21,9 @@ export const whoami = () => {
         method: 'GET',
     }).then((res) => res.data);
 };
+export const getStores = () => {
+    return axios({
+        url: '/api/stores',
+        method: 'GET',
+    }).then((res) => res.data);
+};

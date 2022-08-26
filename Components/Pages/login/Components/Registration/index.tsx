@@ -1,22 +1,31 @@
-import { Button, Input } from 'antd';
+import { Button, Input, Select } from 'antd';
 import { UserOutlined, KeyOutlined } from '@ant-design/icons';
 import { Wrapper } from './style';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useStores } from '../../../../../Store/useStores';
+import { observer } from 'mobx-react-lite';
 
-export const Registration = () => {
+const Option = Select.Option;
+type tStatus = 'worker' | 'admin';
+export const Registration = observer(() => {
     const submitRef = useRef<HTMLElement>(null);
     const [isLoading, setIsLoading] = useState(false);
     const [loginV, setLogin] = useState('');
     const [password, setPassword] = useState('');
+    const [status, setStatus] = useState<tStatus>('worker');
+    const [store, setStore] = useState(1);
     const [confirmPassword, setConfirmPassword] = useState('');
     const { loginStore } = useStores();
+
+    useEffect(() => {
+        loginStore.getStores();
+    }, []);
 
     const disabled = loginV && password && confirmPassword && password == confirmPassword;
 
     const onClickHandler = async () => {
         setIsLoading(true);
-        await loginStore.registration({ login: loginV, password });
+        await loginStore.registration({ login: loginV, password, status, store });
         setIsLoading(false);
     };
 
@@ -50,6 +59,29 @@ export const Registration = () => {
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
             />
+            <Select
+                size="large"
+                defaultValue="worker"
+                style={{ width: '100%' }}
+                className="input"
+                onChange={(v: tStatus) => setStatus(v)}
+            >
+                <Option value="worker">worker</Option>
+                <Option value="admin">admin</Option>
+            </Select>
+            <Select
+                size="large"
+                defaultValue={1}
+                style={{ width: '100%' }}
+                className="input"
+                onChange={(v) => setStore(v)}
+            >
+                {loginStore.stores.map((item) => (
+                    <Option key={item.id} value={item.id}>
+                        {item.name}
+                    </Option>
+                ))}
+            </Select>
             <Button
                 ref={submitRef}
                 loading={isLoading}
@@ -62,4 +94,4 @@ export const Registration = () => {
             </Button>
         </Wrapper>
     );
-};
+});

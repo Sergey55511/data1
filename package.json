@@ -2,14 +2,13 @@
   "name": "data1",
   "version": "0.1.0",
   "private": true,
-  "main": "index.js",
   "scripts": {
     "dev": "cross-env DATABASE_URL=$DATABASE_URL next dev",
     "build": "next build",
     "start": "cross-env DATABASE_URL=$DATABASE_URL next start",
     "lint": "next lint",
     "pm": "npx prisma migrate -dev",
-    "ps": "npx prisma studio"
+    "ps": "cross-env DATABASE_URL=$DATABASE_URL npx prisma studio"
   },
   "dependencies": {
     "@prisma/client": "^4.2.1",

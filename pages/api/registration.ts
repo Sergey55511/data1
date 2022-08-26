@@ -13,6 +13,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     try {
         const user = await varifyJWT(req, res, cookies);
         const login = req.body.login.toLowerCase();
+        const status = req.body.status;
+        const storesId = req.body.store;
         const password = sha1(req.body.password + KEY);
 
         if (user?.status == 'admin') {
@@ -21,7 +23,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                     data: {
                         login,
                         password,
-                        status: 'worker',
+                        status,
+                        storesId,
                     },
                 });
                 res.status(200).json({ message: 'Пользователь создан' });
