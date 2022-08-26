@@ -78,12 +78,12 @@ export const TopMenu = observer(() => {
                 />
             </div>
             <div className="store">
-                Склад: <span>{loginStore.user.store}</span>
+                Склад: <span>{loginStore.user?.store || ''}</span>
             </div>
             <div className="user">
                 Пользователь:{' '}
                 <span>
-                    <Link href="/login">{loginStore.user.login}</Link>
+                    <Link href="/login">{loginStore.user?.login || ''}</Link>
                 </span>
             </div>
         </Wrapper>

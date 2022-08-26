@@ -5,6 +5,7 @@ import { createJWT } from '../../Services/createJWT';
 import { iUser } from '../../Store/interfaces';
 import sha1 from 'sha1';
 import { KEY } from './registration';
+import { MyError } from '../../Classes/error';
 const prisma = new PrismaClient();
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
@@ -30,11 +31,13 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
             if (user.login) {
                 await createJWT(req, res, user);
+                res.status(200).json(user);
+                return;
             }
+            throw new MyError(401);
         } catch (err) {
-            res.status(401).json({
-                message: 'Отказ в доступе',
-            });
+            const error = err as MyError;
+            res.status(error.status).json({ message: error.message });
         }
     }
 }

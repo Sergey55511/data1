@@ -26,12 +26,17 @@ const GlobalStyle = createGlobalStyle`
 export const LayOut = observer(({ children }: { children: JSX.Element }) => {
     const { loginStore } = useStores();
     const [isLoading, setIsLoading] = useState(true);
+    
     useEffect(() => {
         const whoami = async () => {
             await loginStore.whoami();
             setIsLoading(false);
         };
-        whoami();
+        if (!loginStore.user.login) {
+            whoami();
+        } else {
+            setIsLoading(false);
+        }
     }, []);
 
     return (

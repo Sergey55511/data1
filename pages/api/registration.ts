@@ -10,23 +10,28 @@ export const KEY = 'b6d48d1d41be922130ce2a32e1dab1fc';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     const cookies = req.cookies as iCookies;
-    const user = await varifyJWT(req, res, cookies);
-    const login = req.body.login.toLowerCase();
-    const password = sha1(req.body.password + KEY);
+    try {
+        const user = await varifyJWT(req, res, cookies);
+        const login = req.body.login.toLowerCase();
+        const password = sha1(req.body.password + KEY);
 
-    if (user?.status == 'admin') {
-        try {
-            await prisma.users.create({
-                data: {
-                    login,
-                    password,
-                    status: 'worker',
-                },
-            });
-            res.status(200).json({ message: 'Пользователь создан' });
-        } catch (err) {
-            const error = err as MyError;
-            res.status(error.status).json({ message: error.message });
+        if (user?.status == 'admin') {
+            try {
+                await prisma.users.create({
+                    data: {
+                        login,
+                        password,
+                        status: 'worker',
+                    },
+                });
+                res.status(200).json({ message: 'Пользователь создан' });
+            } catch (err) {
+                const error = err as MyError;
+                res.status(error.status).json({ message: error.message });
+            }
         }
+    } catch (err) {
+        const error = err as MyError;
+        res.status(error.status).json({ message: error.message });
     }
 }

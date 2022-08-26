@@ -3,8 +3,8 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
   url      = env("DATABASE_URL")
+  provider = "postgresql"
 }
 
 model Users {
@@ -13,7 +13,7 @@ model Users {
   password String
   key      String?
   status   String?
-  store    Stores?  @relation(fields: [storesId], references: [id])
+  store    Stores? @relation(fields: [storesId], references: [id])
   activ    Boolean @default(true)
   storesId Int?
 }

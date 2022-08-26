@@ -1,26 +1,22 @@
-//Страница Логина на фронте
-
 import { Button, Input } from 'antd';
 import { UserOutlined, KeyOutlined } from '@ant-design/icons';
 import { Wrapper } from './style';
 import { useRef, useState } from 'react';
-import { observer } from 'mobx-react-lite';
-import { useStores } from '../../../../Store/useStores';
-import { useRouter } from 'next/router';
+import { useStores } from '../../../../../Store/useStores';
 
-export default observer(() => {
+export const Registration = () => {
     const submitRef = useRef<HTMLElement>(null);
-    const router = useRouter();
     const [isLoading, setIsLoading] = useState(false);
     const [loginV, setLogin] = useState('');
     const [password, setPassword] = useState('');
-    const disabled = loginV && password;
+    const [confirmPassword, setConfirmPassword] = useState('');
     const { loginStore } = useStores();
+
+    const disabled = loginV && password && confirmPassword && password == confirmPassword;
+
     const onClickHandler = async () => {
         setIsLoading(true);
-        await loginStore.login({ login: loginV, password }, () => {
-            router.push('/');
-        });
+        await loginStore.registration({ login: loginV, password });
         setIsLoading(false);
     };
 
@@ -46,6 +42,14 @@ export default observer(() => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
             />
+            <Input.Password
+                size="large"
+                placeholder="Повторить пароль"
+                prefix={<KeyOutlined />}
+                className="input"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+            />
             <Button
                 ref={submitRef}
                 loading={isLoading}
@@ -54,8 +58,8 @@ export default observer(() => {
                 disabled={!disabled}
                 onClick={onClickHandler}
             >
-                Войти
+                Создать
             </Button>
         </Wrapper>
     );
-});
+};

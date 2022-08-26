@@ -2,12 +2,13 @@
   "name": "data1",
   "version": "0.1.0",
   "private": true,
+  "main": "index.js",
   "scripts": {
-    "dev": "next dev",
+    "dev": "cross-env DATABASE_URL=$DATABASE_URL next dev",
     "build": "next build",
-    "start": "next start",
+    "start": "cross-env DATABASE_URL=$DATABASE_URL next start",
     "lint": "next lint",
-    "pm": "npx prisma migrate",
+    "pm": "npx prisma migrate -dev",
     "ps": "npx prisma studio"
   },
   "dependencies": {
@@ -15,6 +16,7 @@
     "antd": "^4.22.4",
     "axios": "^0.27.2",
     "cookies": "^0.8.0",
+    "cross-env": "^7.0.3",
     "jsonwebtoken": "^8.5.1",
     "mobx": "^6.6.1",
     "mobx-react-lite": "^3.4.0",

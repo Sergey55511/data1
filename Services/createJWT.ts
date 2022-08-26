@@ -31,6 +31,7 @@ export const createJWT = async (
                 id: user.id,
             },
         });
+
         const cookies = new Cookies(req, res);
 
         cookies.set('atkn', atkn, {
@@ -38,10 +39,6 @@ export const createJWT = async (
         });
         cookies.set('rtkn', rtkn, {
             httpOnly: true,
-        });
-        res.status(200).json({
-            login: user.login,
-            status: user.status,
         });
     } catch (err) {
         throw err;
