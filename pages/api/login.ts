@@ -6,6 +6,7 @@ import { iUser } from '../../Store/interfaces';
 import sha1 from 'sha1';
 import { KEY } from './registration';
 import { MyError } from '../../Classes/error';
+import { resError } from '../../Services/Helpers';
 const prisma = new PrismaClient();
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
@@ -36,8 +37,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             }
             throw new MyError(401);
         } catch (err) {
-            const error = err as MyError;
-            res.status(error.status).json({ message: error.message });
+            resError(err, res);
         }
     }
 }

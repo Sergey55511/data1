@@ -1,8 +1,8 @@
 export interface iLogin {
     login: string;
     password: string;
-    status: string;
-    store: number;
+    status?: string;
+    store?: number;
 }
 
 export interface iUser {

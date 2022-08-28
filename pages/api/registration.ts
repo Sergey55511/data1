@@ -1,17 +1,15 @@
 import { PrismaClient } from '@prisma/client';
 import { NextApiRequest, NextApiResponse } from 'next';
 import { varifyJWT } from '../../Services/verifyJWT';
-import { iCookies } from '../../Store/interfaces';
 import sha1 from 'sha1';
-import { MyError } from '../../Classes/error';
+import { resError } from '../../Services/Helpers';
 const prisma = new PrismaClient();
 
 export const KEY = 'b6d48d1d41be922130ce2a32e1dab1fc';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-    const cookies = req.cookies as iCookies;
     try {
-        const user = await varifyJWT(req, res, cookies);
+        const user = await varifyJWT(req, res);
         const login = req.body.login.toLowerCase();
         const status = req.body.status;
         const storesId = req.body.store;
@@ -29,12 +27,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 });
                 res.status(200).json({ message: 'Пользователь создан' });
             } catch (err) {
-                const error = err as MyError;
-                res.status(error.status).json({ message: error.message });
+                resError(err, res);
             }
         }
     } catch (err) {
-        const error = err as MyError;
-        res.status(error.status).json({ message: error.message });
+        resError(err, res);
     }
 }

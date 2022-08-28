@@ -9,15 +9,15 @@ const prisma = new PrismaClient();
 export const varifyJWT = async (
     req: NextApiRequest,
     res: NextApiResponse,
-    token: iCookies,
 ) => {
+    const cookies = req.cookies as iCookies;
     try {
-        const atkn = jwt.verify(token.atkn, KEY) as iUser;
+        const atkn = jwt.verify(cookies.atkn, KEY) as iUser;
 
         return { login: atkn.login, status: atkn.status, store: atkn.store };
     } catch (err) {
         try {
-            const rtkn = jwt.verify(token.rtkn, KEY) as { login: string; key: string };
+            const rtkn = jwt.verify(cookies.rtkn, KEY) as { login: string; key: string };
             const result = await prisma.users.findFirst({
                 select: {
                     id: true,

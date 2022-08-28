@@ -1,15 +1,13 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { PrismaClient } from '@prisma/client';
-import { iCookies } from '../../Store/interfaces';
+import { Prisma, PrismaClient, PrismaPromise } from '@prisma/client';
 import { varifyJWT } from '../../Services/verifyJWT';
-import { MyError } from '../../Classes/error';
+import { resError } from '../../Services/Helpers';
+import { getFromDB } from '../../Services/getFromDB';
 const prisma = new PrismaClient();
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-    const cookies = req.cookies as iCookies;
     try {
-        await varifyJWT(req, res, cookies);
-
+        await varifyJWT(req, res);
         const result = await prisma.opereytion.findMany({
             select: { opereytion: true },
             where: { activ: true },
@@ -17,7 +15,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
         if (result) res.status(200).json(result);
     } catch (err) {
-        const error = err as MyError;
-        res.status(error.status).json({ message: error.message });
+        resError(err, res);
     }
 }
