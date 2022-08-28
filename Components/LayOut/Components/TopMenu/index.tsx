@@ -7,8 +7,21 @@ import {
 } from '@ant-design/icons';
 import Link from 'next/link';
 import { Wrapper } from './style';
+import { observer } from 'mobx-react-lite';
+import { useStores } from '../../../../Store/useStores';
+import { useEffect } from 'react';
 
-export const TopMenu = () => {
+export const TopMenu = observer(() => {
+    const { loginStore, OperationStore } = useStores();
+
+    const { operations } = OperationStore;
+    console.log('user', loginStore.user);
+
+    useEffect(() => {
+        if (loginStore.user.storeId)
+            OperationStore.getOperations(loginStore.user.storeId);
+    }, [loginStore.user.storeId]);
+
     return (
         <Wrapper>
             <div className="menu">
@@ -25,36 +38,10 @@ export const TopMenu = () => {
                             label: 'Операции',
                             key: 'SubMenu',
                             icon: <SettingOutlined />,
-                            children: [
-                                {
-                                    type: 'group',
-                                    label: 'Item 1',
-                                    children: [
-                                        {
-                                            label: 'Option 1',
-                                            key: 'setting:1',
-                                        },
-                                        {
-                                            label: 'Option 2',
-                                            key: 'setting:2',
-                                        },
-                                    ],
-                                },
-                                {
-                                    type: 'group',
-                                    label: 'Item 2',
-                                    children: [
-                                        {
-                                            label: 'Option 3',
-                                            key: 'setting:3',
-                                        },
-                                        {
-                                            label: 'Option 4',
-                                            key: 'setting:4',
-                                        },
-                                    ],
-                                },
-                            ],
+                            children: operations?.map((item, index) => ({
+                                label: item.opereytion,
+                                key: index,
+                            })),
                         },
                         {
                             label: 'Отчеты',
@@ -67,11 +54,11 @@ export const TopMenu = () => {
                                     children: [
                                         {
                                             label: 'Option 1',
-                                            key: 'setting:1',
+                                            key: 'setting:12',
                                         },
                                         {
                                             label: 'Option 2',
-                                            key: 'setting:2',
+                                            key: 'setting:22',
                                         },
                                     ],
                                 },
@@ -81,11 +68,11 @@ export const TopMenu = () => {
                                     children: [
                                         {
                                             label: 'Option 3',
-                                            key: 'setting:3',
+                                            key: 'setting:32',
                                         },
                                         {
                                             label: 'Option 4',
-                                            key: 'setting:4',
+                                            key: 'setting:42',
                                         },
                                     ],
                                 },
@@ -95,14 +82,14 @@ export const TopMenu = () => {
                 />
             </div>
             <div className="store">
-                Склад: <span>Москва</span>
+                Склад: <span>{loginStore.user?.store || ''}</span>
             </div>
             <div className="user">
                 Пользователь:{' '}
                 <span>
-                    <Link href="/login">SSP</Link>
+                    <Link href="/login">{loginStore.user?.login || ''}</Link>
                 </span>
             </div>
         </Wrapper>
     );
-};
+});

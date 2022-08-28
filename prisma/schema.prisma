@@ -3,23 +3,43 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
   url      = env("DATABASE_URL")
+  provider = "postgresql"
 }
 
 model Users {
   id       Int     @id @default(autoincrement())
   login    String  @unique
   password String
+  key      String?
+  status   String?
+  store    Stores? @relation(fields: [storesId], references: [id])
   activ    Boolean @default(true)
+  storesId Int?
+}
+
+model Stores {
+  id             Int               @id @default(autoincrement())
+  name           String
+  Users          Users[]
+  StoreOperation StoreOperations[]
 }
 
 model Opereytion {
-  id         Int     @id @default(autoincrement())
-  opereytion String  @unique
-  result     String?
-  sborka     Int?
-  activ      Boolean @default(true)
+  id                Int              @id @default(autoincrement())
+  opereytion        String           @unique
+  result            String?
+  sborka            Int?
+  activ             Boolean          @default(true)
+  StoreOperations   StoreOperations? @relation(fields: [storeOperationsId], references: [id])
+  storeOperationsId Int?
+}
+
+model StoreOperations {
+  id         Int          @id @default(autoincrement())
+  store      Stores?      @relation(fields: [storesId], references: [id])
+  storesId   Int?
+  Opereytion Opereytion[]
 }
 
 model Grade {
@@ -32,7 +52,7 @@ model Grade {
 
 model Collor {
   id      Int     @id @default(autoincrement())
-  collor   String  @unique
+  collor  String  @unique
   for     String?
   variant Int
   activ   Boolean @default(true)

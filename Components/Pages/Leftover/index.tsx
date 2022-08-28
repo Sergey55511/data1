@@ -1,8 +1,8 @@
-import { LayOut } from '../../Components/LayOut';
+import { LayOut } from '../../LayOut';
 import { Table } from 'antd';
 import type { ColumnsType, TableProps } from 'antd/es/table';
 import { Wrapper } from './style';
-import { Title } from '../../Components/Title';
+import { Title } from '../../Title';
 
 interface DataType {
     key: React.Key;
