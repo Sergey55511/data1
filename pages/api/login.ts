@@ -19,7 +19,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                     key: true,
                     login: true,
                     status: true,
-                    store: { select: { name: true } },
+                    store: { select: { id: true, name: true } },
                 },
                 where: {
                     login: req.body.login.toLowerCase(),
@@ -28,7 +28,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 },
             });
 
-            const user = { ...result, store: result?.store?.name } as iUser;
+            const user = {
+                ...result,
+                store: result?.store?.name,
+                storeId: result?.store?.id,
+            } as iUser;
 
             if (user.login) {
                 await createJWT(req, res, user);

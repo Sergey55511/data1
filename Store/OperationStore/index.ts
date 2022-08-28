@@ -12,9 +12,9 @@ export class OperationStore {
         this.errorStore = errorStore;
     }
 
-    getOperations = flow(function* (this: OperationStore) {
+    getOperations = flow(function* (this: OperationStore, storeId: number) {
         try {
-            this.operations = yield api.getOperations();
+            this.operations = yield api.getOperations(storeId);
         } catch (err) {
             this.errorStore.setError(err as iError);
         }

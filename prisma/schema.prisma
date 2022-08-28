@@ -19,17 +19,27 @@ model Users {
 }
 
 model Stores {
-  id    Int     @id @default(autoincrement())
-  name  String
-  Users Users[]
+  id             Int               @id @default(autoincrement())
+  name           String
+  Users          Users[]
+  StoreOperation StoreOperations[]
 }
 
 model Opereytion {
-  id         Int     @id @default(autoincrement())
-  opereytion String  @unique
-  result     String?
-  sborka     Int?
-  activ      Boolean @default(true)
+  id                Int              @id @default(autoincrement())
+  opereytion        String           @unique
+  result            String?
+  sborka            Int?
+  activ             Boolean          @default(true)
+  StoreOperations   StoreOperations? @relation(fields: [storeOperationsId], references: [id])
+  storeOperationsId Int?
+}
+
+model StoreOperations {
+  id         Int          @id @default(autoincrement())
+  store      Stores?      @relation(fields: [storesId], references: [id])
+  storesId   Int?
+  Opereytion Opereytion[]
 }
 
 model Grade {

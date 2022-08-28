@@ -4,17 +4,15 @@ import { PrismaClient } from '@prisma/client';
 import { createJWT, KEY } from './createJWT';
 import { NextApiRequest, NextApiResponse } from 'next';
 import { MyError } from '../Classes/error';
+import { createAtkn } from './Helpers';
 const prisma = new PrismaClient();
 
-export const varifyJWT = async (
-    req: NextApiRequest,
-    res: NextApiResponse,
-) => {
+export const varifyJWT = async (req: NextApiRequest, res: NextApiResponse) => {
     const cookies = req.cookies as iCookies;
     try {
         const atkn = jwt.verify(cookies.atkn, KEY) as iUser;
 
-        return { login: atkn.login, status: atkn.status, store: atkn.store };
+        return createAtkn(atkn);
     } catch (err) {
         try {
             const rtkn = jwt.verify(cookies.rtkn, KEY) as { login: string; key: string };
@@ -24,7 +22,7 @@ export const varifyJWT = async (
                     key: true,
                     login: true,
                     status: true,
-                    store: { select: { name: true } },
+                    store: { select: { id: true, name: true } },
                 },
                 where: {
                     login: rtkn.login.toLowerCase(),
@@ -32,7 +30,11 @@ export const varifyJWT = async (
                 },
             });
 
-            const user = { ...result, store: result?.store?.name } as iUser;
+            const user = {
+                ...result,
+                store: result?.store?.name,
+                storeId: result?.store?.id,
+            } as iUser;
 
             if (user.key == rtkn.key) {
                 createJWT(req, res, user);

@@ -13,10 +13,14 @@ import { useEffect } from 'react';
 
 export const TopMenu = observer(() => {
     const { loginStore, OperationStore } = useStores();
+
     const { operations } = OperationStore;
+    console.log('user', loginStore.user);
+
     useEffect(() => {
-        OperationStore.getOperations();
-    }, []);
+        if (loginStore.user.storeId)
+            OperationStore.getOperations(loginStore.user.storeId);
+    }, [loginStore.user.storeId]);
 
     return (
         <Wrapper>
@@ -34,7 +38,7 @@ export const TopMenu = observer(() => {
                             label: 'Операции',
                             key: 'SubMenu',
                             icon: <SettingOutlined />,
-                            children: operations.map((item, index) => ({
+                            children: operations?.map((item, index) => ({
                                 label: item.opereytion,
                                 key: index,
                             })),

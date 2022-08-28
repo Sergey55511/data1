@@ -11,6 +11,7 @@ export interface iUser {
     password?: string;
     key: string;
     status: string;
+    storeId?: string;
     store?: string;
 }
 

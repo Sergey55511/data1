@@ -1,8 +1,8 @@
-import axios from "axios";
+import axios from 'axios';
 
-export const getOperations = () => {
+export const getOperations = (storeId: number) => {
     return axios({
-        url: '/api/operations',
+        url: `/api/operations?storeId=${storeId}`,
         method: 'GET',
     }).then((res) => res.data);
 };
