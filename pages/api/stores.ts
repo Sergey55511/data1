@@ -1,9 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { PrismaClient } from '@prisma/client';
-import { iCookies } from '../../Store/interfaces';
 import { varifyJWT } from '../../Services/verifyJWT';
 import { resError } from '../../Services/Helpers';
-const prisma = new PrismaClient();
+import { prisma } from '../../Services/prisma';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     try {

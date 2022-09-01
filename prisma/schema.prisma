@@ -7,6 +7,45 @@ datasource db {
   provider = "postgresql"
 }
 
+model Data {
+  id               Int      @id @default(autoincrement())
+  date             DateTime @default(now()) @db.Date()
+  lot              String?
+  pp               Int?
+  managerId        Int?
+  manager          String?
+  operation        String
+  state            String?
+  workpieceType    String
+  model            String?
+  sizeRange        String?
+  length           String?
+  channel          Float?
+  grade            String?
+  colorType        String?
+  widthIn          Float?
+  widthOut         Float?
+  tareWidth        Float?
+  provider         String?
+  recipient        String?
+  countItemsIn     Int?
+  countItemsOut    Int?
+  numProduction    String?
+  workingHours     Int?
+  exercise         String?
+  numProducts      Int?
+  numMoving        Int?
+  moneyIn          Decimal?
+  moneyOut         Decimal?
+  moneyDefect      Decimal?
+  typeOfProcessing String?
+  fraction         String?
+  materialGroup    String?
+  stock            String?
+  numShipment      Int?
+  shade            String?
+}
+
 model Users {
   id       Int     @id @default(autoincrement())
   login    String  @unique

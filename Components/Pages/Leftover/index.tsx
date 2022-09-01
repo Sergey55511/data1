@@ -3,6 +3,8 @@ import { Table } from 'antd';
 import type { ColumnsType, TableProps } from 'antd/es/table';
 import { Wrapper } from './style';
 import { Title } from '../../Title';
+import { useEffect } from 'react';
+import { useStores } from '../../../Store/useStores';
 
 interface DataType {
     key: React.Key;
@@ -95,6 +97,10 @@ const onChange: TableProps<DataType>['onChange'] = (
 };
 
 export default () => {
+    const { OperationStore } = useStores();
+    useEffect(() => {
+        OperationStore.leftovers();
+    }, []);
     return (
         <LayOut>
             <Wrapper>

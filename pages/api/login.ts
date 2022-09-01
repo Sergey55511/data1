@@ -1,13 +1,12 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { PrismaClient } from '@prisma/client';
 import { createJWT } from '../../Services/createJWT';
 import { iUser } from '../../Store/interfaces';
 import sha1 from 'sha1';
 import { KEY } from './registration';
 import { MyError } from '../../Classes/error';
 import { resError } from '../../Services/Helpers';
-const prisma = new PrismaClient();
+import { prisma } from '../../Services/prisma';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     if (req.method == 'POST') {

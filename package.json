@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "cross-env DATABASE_URL=$DATABASE_URL next start",
     "lint": "next lint",
-    "pm": "cross-env DATABASE_URL=$DATABASE_URL npx prisma migrate -dev",
+    "pm": "cross-env DATABASE_URL=$DATABASE_URL npx prisma migrate dev",
     "ps": "cross-env DATABASE_URL=$DATABASE_URL npx prisma studio"
   },
   "dependencies": {

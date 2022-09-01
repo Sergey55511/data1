@@ -19,4 +19,11 @@ export class OperationStore {
             this.errorStore.setError(err as iError);
         }
     });
+    leftovers = flow(function* (this: OperationStore) {
+        try {
+            this.operations = yield api.leftovers();
+        } catch (err) {
+            this.errorStore.setError(err as iError);
+        }
+    });
 }

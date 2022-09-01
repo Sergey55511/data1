@@ -6,3 +6,9 @@ export const getOperations = (storeId: number) => {
         method: 'GET',
     }).then((res) => res.data);
 };
+export const leftovers = () => {
+    return axios({
+        url: `/api/leftovers`,
+        method: 'GET',
+    }).then((res) => res.data);
+};
