@@ -8,7 +8,8 @@
     "start": "cross-env DATABASE_URL=$DATABASE_URL next start",
     "lint": "next lint",
     "pm": "cross-env DATABASE_URL=$DATABASE_URL npx prisma migrate dev",
-    "ps": "cross-env DATABASE_URL=$DATABASE_URL npx prisma studio"
+    "ps": "cross-env DATABASE_URL=$DATABASE_URL npx prisma studio",
+    "pg": "npx prisma generate"
   },
   "dependencies": {
     "@prisma/client": "^4.2.1",

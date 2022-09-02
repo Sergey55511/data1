@@ -9,9 +9,11 @@ export const Wrapper = styled.div`
         background: #edf1f7;
         padding: 8px;
         overflow: auto;
+        display: flex;
+        flex-direction: column;
         .papper {
             background-color: #fff;
-            height: 100%;
+            flex: 1;
             border-radius: 4px;
             padding: 24px;
         }

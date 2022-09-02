@@ -15,7 +15,6 @@ export const TopMenu = observer(() => {
     const { loginStore, OperationStore } = useStores();
 
     const { operations } = OperationStore;
-    console.log('user', loginStore.user);
 
     useEffect(() => {
         if (loginStore.user.storeId)
@@ -30,19 +29,19 @@ export const TopMenu = observer(() => {
                     defaultSelectedKeys={['mail']}
                     items={[
                         {
-                            label: <Link href="/leftover">Остатки</Link>,
+                            label: <Link href="/">Остатки</Link>,
                             key: 'mail',
                             icon: <DatabaseOutlined />,
                         },
-                        {
-                            label: 'Операции',
-                            key: 'SubMenu',
-                            icon: <SettingOutlined />,
-                            children: operations?.map((item, index) => ({
-                                label: item.opereytion,
-                                key: index,
-                            })),
-                        },
+                        // {
+                        //     label: 'Операции',
+                        //     key: 'SubMenu',
+                        //     icon: <SettingOutlined />,
+                        //     children: operations?.map((item, index) => ({
+                        //         label: item.opereytion,
+                        //         key: index,
+                        //     })),
+                        // },
                         {
                             label: 'Отчеты',
                             key: 'Reports',

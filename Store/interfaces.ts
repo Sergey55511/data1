@@ -26,3 +26,18 @@ export interface iError {
         data: { message: string };
     };
 }
+export interface iLeftovers {
+    workpieceType: string;
+    model?: string;
+    sizeRange?: string;
+    colorType?: string;
+    length?: string;
+    channel?: string;
+    grade?: string;
+    state?: string;
+    lot?: string;
+    numProduction?: string;
+    width: number;
+    count?: number;
+    code: number;
+}

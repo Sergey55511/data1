@@ -7,6 +7,8 @@ import { Wrapper } from './style';
 import { observer } from 'mobx-react-lite';
 import { ErrorHandler } from './Components/ErrorHandler';
 import { Spin } from 'antd';
+import { ConfigProvider } from 'antd';
+import locale from 'antd/lib/locale/ru_RU';
 
 const GlobalStyle = createGlobalStyle`
     body {
@@ -26,7 +28,7 @@ const GlobalStyle = createGlobalStyle`
 export const LayOut = observer(({ children }: { children: JSX.Element }) => {
     const { loginStore } = useStores();
     const [isLoading, setIsLoading] = useState(true);
-    
+
     useEffect(() => {
         const whoami = async () => {
             await loginStore.whoami();
@@ -42,14 +44,16 @@ export const LayOut = observer(({ children }: { children: JSX.Element }) => {
     return (
         <Spin spinning={isLoading} tip="загрузка..." style={{ height: '100%' }}>
             <ErrorHandler>
-                <Wrapper>
-                    <GlobalStyle />
-                    <TopMenu />
-                    <div className="body">
-                        <div className="papper">{children}</div>
-                    </div>
-                    <Footer />
-                </Wrapper>
+                <ConfigProvider locale={locale}>
+                    <Wrapper>
+                        <GlobalStyle />
+                        <TopMenu />
+                        <div className="body">
+                            <div className="papper">{children}</div>
+                        </div>
+                        <Footer />
+                    </Wrapper>
+                </ConfigProvider>
             </ErrorHandler>
         </Spin>
     );

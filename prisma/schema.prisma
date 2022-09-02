@@ -62,6 +62,7 @@ model Stores {
   name           String
   Users          Users[]
   StoreOperation StoreOperations[]
+  BilletStore    BilletStore[]
 }
 
 model Opereytion {
@@ -95,4 +96,36 @@ model Collor {
   for     String?
   variant Int
   activ   Boolean @default(true)
+}
+
+model Billets {
+  id          Int           @id @default(autoincrement())
+  name        String        @unique
+  BilletStore BilletStore[]
+  Models      Models[]
+  modelsId    Int?
+}
+
+model BilletStore {
+  id       Int      @id @default(autoincrement())
+  Billet   Billets? @relation(fields: [billetId], references: [id])
+  billetId Int?
+  Stores   Stores?  @relation(fields: [storesId], references: [id])
+  storesId Int?
+}
+
+model Models {
+  id          Int           @id @default(autoincrement())
+  name        String        @unique
+  Billets     Billets?      @relation(fields: [billetsId], references: [id])
+  billetsId   Int?
+  ModelsSizes ModelsSizes[]
+}
+
+model ModelsSizes {
+  id       Int     @id @default(autoincrement())
+  size     String?
+  length   String?
+  Models   Models  @relation(fields: [modelsId], references: [id])
+  modelsId Int
 }
