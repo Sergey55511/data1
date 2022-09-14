@@ -6,6 +6,8 @@ import { Title } from '../../Title';
 import { useEffect, useState } from 'react';
 import { useStores } from '../../../Store/useStores';
 import { observer } from 'mobx-react-lite';
+import { getUniqueData } from './Helpers/getUniqueData';
+import { iLeftovers } from '../../../Store/interfaces';
 
 interface DataType {
     key: React.Key;
@@ -36,6 +38,8 @@ export default observer(() => {
         OperationStore.getLeftovers();
     }, []);
 
+    const keys = Object.keys(leftovers);
+
     const data = leftovers.map((item, index) => ({
         key: index,
         workpieceType: item.workpieceType,
@@ -53,14 +57,21 @@ export default observer(() => {
         code: item.code,
     }));
 
-    const columns = [
+    const columns:ColumnsType<iLeftovers> = [
         {
             title: 'Тип заготовки',
             dataIndex: 'workpieceType',
+            filterSearch: true,
+            filters: getUniqueData(leftovers, 'workpieceType'),
+            onFilter: (value: string | number | boolean, record: iLeftovers) =>
+                record['workpieceType'] == value,
         },
         {
             title: 'Модель',
             dataIndex: 'model',
+            filterSearch: true,
+            filters: getUniqueData(leftovers, 'model'),
+            onFilter: (value: string | number | boolean, record: iLeftovers) => record['model'] == value,
         },
         {
             title: 'Размерный ряд',
