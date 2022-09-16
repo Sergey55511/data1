@@ -9,6 +9,7 @@ import { ErrorHandler } from './Components/ErrorHandler';
 import { Spin } from 'antd';
 import { ConfigProvider } from 'antd';
 import locale from 'antd/lib/locale/ru_RU';
+import { tPages } from '../Pages/constants';
 
 const GlobalStyle = createGlobalStyle`
     body {
@@ -25,36 +26,38 @@ const GlobalStyle = createGlobalStyle`
         }
     }`;
 
-export const LayOut = observer(({ children }: { children: JSX.Element }) => {
-    const { loginStore } = useStores();
-    const [isLoading, setIsLoading] = useState(true);
+export const LayOut = observer(
+    ({ children, page }: { children: JSX.Element; page: tPages }) => {
+        const { loginStore } = useStores();
+        const [isLoading, setIsLoading] = useState(true);
 
-    useEffect(() => {
-        const whoami = async () => {
-            await loginStore.whoami();
-            setIsLoading(false);
-        };
-        if (!loginStore.user.login) {
-            whoami();
-        } else {
-            setIsLoading(false);
-        }
-    }, []);
+        useEffect(() => {
+            const whoami = async () => {
+                await loginStore.whoami();
+                setIsLoading(false);
+            };
+            if (!loginStore.user.login) {
+                whoami();
+            } else {
+                setIsLoading(false);
+            }
+        }, []);
 
-    return (
-        <Spin spinning={isLoading} tip="загрузка..." style={{ height: '100%' }}>
-            <ErrorHandler>
-                <ConfigProvider locale={locale}>
-                    <Wrapper>
-                        <GlobalStyle />
-                        <TopMenu />
-                        <div className="body">
-                            <div className="papper">{children}</div>
-                        </div>
-                        <Footer />
-                    </Wrapper>
-                </ConfigProvider>
-            </ErrorHandler>
-        </Spin>
-    );
-});
+        return (
+            <Spin spinning={isLoading} tip="загрузка..." style={{ height: '100%' }}>
+                <ErrorHandler>
+                    <ConfigProvider locale={locale}>
+                        <Wrapper>
+                            <GlobalStyle />
+                            <TopMenu page={page} />
+                            <div className="body">
+                                <div className="papper">{children}</div>
+                            </div>
+                            <Footer />
+                        </Wrapper>
+                    </ConfigProvider>
+                </ErrorHandler>
+            </Spin>
+        );
+    },
+);

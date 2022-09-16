@@ -1,6 +1,7 @@
 import { Menu } from 'antd';
 import {
     DatabaseOutlined,
+    VerticalAlignBottomOutlined,
     AppstoreOutlined,
     SettingOutlined,
     FileOutlined,
@@ -10,8 +11,9 @@ import { Wrapper } from './style';
 import { observer } from 'mobx-react-lite';
 import { useStores } from '../../../../Store/useStores';
 import { useEffect } from 'react';
+import { pages, tPages } from '../../../Pages/constants';
 
-export const TopMenu = observer(() => {
+export const TopMenu = observer(({ page }: { page: tPages }) => {
     const { loginStore, OperationStore } = useStores();
 
     const { operations } = OperationStore;
@@ -26,12 +28,17 @@ export const TopMenu = observer(() => {
             <div className="menu">
                 <Menu
                     mode="horizontal"
-                    defaultSelectedKeys={['mail']}
+                    selectedKeys={[page]}
                     items={[
                         {
                             label: <Link href="/">Остатки</Link>,
-                            key: 'mail',
+                            key: pages.leftover,
                             icon: <DatabaseOutlined />,
+                        },
+                        {
+                            label: <Link href="/newItem">Приход товара</Link>,
+                            key: pages.newItem,
+                            icon: <VerticalAlignBottomOutlined />,
                         },
                         // {
                         //     label: 'Операции',
