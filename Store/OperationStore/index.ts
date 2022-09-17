@@ -2,7 +2,7 @@ import { notification } from 'antd';
 import { flow, makeAutoObservable } from 'mobx';
 import * as api from './Api';
 import { ErrorStore } from '../ErrorStore';
-import { iError, iLeftovers, iLogin, iUser } from '../interfaces';
+import { iError, iLeftovers, iNewItems } from '../interfaces';
 
 export class OperationStore {
     operations: { opereytion: string }[] = [];
@@ -23,6 +23,19 @@ export class OperationStore {
     getLeftovers = flow(function* (this: OperationStore) {
         try {
             this.leftovers = yield api.leftovers();
+        } catch (err) {
+            this.errorStore.setError(err as iError);
+        }
+    });
+
+    postNewItems = flow(function* (
+        this: OperationStore,
+        data: iNewItems[],
+        callBack: () => void,
+    ) {
+        try {
+            yield api.postNewItems(data);
+            callBack();
         } catch (err) {
             this.errorStore.setError(err as iError);
         }

@@ -8,21 +8,22 @@ datasource db {
 }
 
 model Data {
-  id               Int      @id @default(autoincrement())
-  date             DateTime @default(now()) @db.Date()
+  id               Int            @id @default(autoincrement())
+  date             DateTime       @default(now()) @db.Date()
   lot              String?
+  numDocument      String?
   pp               Int?
   managerId        Int?
   manager          String?
-  operation        String
   state            String?
-  workpieceType    String
   model            String?
-  sizeRange        String?
+  sizeRange        SizeRange?     @relation(fields: [sizeRangeId], references: [id])
+  sizeRangeId      Int?
   length           String?
   channel          Float?
   grade            String?
   colorType        String?
+  widthInDocument  Float?
   widthIn          Float?
   widthOut         Float?
   tareWidth        Float?
@@ -40,10 +41,15 @@ model Data {
   moneyDefect      Decimal?
   typeOfProcessing String?
   fraction         String?
-  materialGroup    String?
   stock            String?
   numShipment      Int?
   shade            String?
+  materialGroup    MaterialGroup? @relation(fields: [materialGroupId], references: [id])
+  materialGroupId  Int?
+  WorkpieceType    WorkpieceType? @relation(fields: [workpieceTypeId], references: [id])
+  workpieceTypeId  Int?
+  Operations       Operations?    @relation(fields: [operationId], references: [id])
+  operationId     Int?
 }
 
 model Users {
@@ -128,4 +134,36 @@ model ModelsSizes {
   length   String?
   Models   Models  @relation(fields: [modelsId], references: [id])
   modelsId Int
+}
+
+model SizeRange {
+  id        Int     @id @default(autoincrement())
+  sizeRange String
+  position  Int     @default(autoincrement())
+  active    Boolean @default(true)
+  Data      Data[]
+}
+
+model MaterialGroup {
+  id            Int     @id @default(autoincrement())
+  materialGroup String
+  position      Int     @default(autoincrement())
+  active        Boolean @default(true)
+  Data          Data[]
+}
+
+model WorkpieceType {
+  id            Int     @id @default(autoincrement())
+  workpieceType String
+  position      Int     @default(autoincrement())
+  active        Boolean @default(true)
+  Data          Data[]
+}
+
+model Operations {
+  id        Int     @id @default(autoincrement())
+  operation String
+  position  Int     @default(autoincrement())
+  active    Boolean @default(true)
+  Data      Data[]
 }

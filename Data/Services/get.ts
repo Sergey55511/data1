@@ -1,20 +1,24 @@
-import { PrismaPromise } from "@prisma/client";
-import { NextApiRequest, NextApiResponse } from "next";
-import { resError } from "../../Services/Helpers";
-import { varifyJWT } from "../../Services/verifyJWT";
+import { PrismaPromise } from '@prisma/client';
+import { NextApiRequest, NextApiResponse } from 'next';
+import { resError } from '../../Services/Helpers';
+import { varifyJWT } from '../../Services/verifyJWT';
 
-export  const getService = async <T>({
+export const getService = async <T>({
     req,
     res,
-    callBack,
+    fetch,
 }: {
     req: NextApiRequest;
     res: NextApiResponse;
-    callBack: () => PrismaPromise<T>;
+    fetch: () => PrismaPromise<T>;
 }) => {
     try {
         await varifyJWT(req, res);
-        const result = await callBack();
+        console.log('after verifyJWT');
+        
+        const result = await fetch();
+
+        console.log('result', result);
 
         if (result) {
             res.status(200).json(result);

@@ -7,6 +7,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     getService<iLeftovers>({
         req,
         res,
-        callBack: leftovers,
+        fetch: leftovers,
     });
 }

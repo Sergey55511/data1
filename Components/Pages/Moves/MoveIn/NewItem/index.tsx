@@ -2,13 +2,24 @@ import { Button, notification, Tooltip } from 'antd';
 import { Title } from '../../../../Shared/Title';
 import { Wrapper } from './style';
 import { CheckOutlined, MinusOutlined } from '@ant-design/icons';
-import { useState } from 'react';
-import { initData, initPrimeData, iPrimeData, iRow, Item } from './constants';
-import { Field, PrimeField } from './Components/fields';
+import { useEffect, useRef, useState } from 'react';
+import { iItem, initData, initPrimeData, iPrimeData, iRow, Item } from './constants';
+import { Field, PrimeField, SelectField } from './Components/fields';
+import isNumber from 'lodash/isNumber';
+import { observer } from 'mobx-react-lite';
+import { useStores } from '../../../../../Store/useStores';
+import { iNewItems } from '../../../../../Store/interfaces';
 
-export const NewItem = () => {
+export const NewItem = observer(() => {
     const [primeData, setPrimeData] = useState<iPrimeData>(initPrimeData());
     const [data, setData] = useState<iRow[]>([]);
+    const tuched = useRef(false);
+    const { ListsStore, OperationStore } = useStores();
+
+    useEffect(() => {
+        ListsStore.getMaterialGroup();
+        ListsStore.getSizeRange();
+    }, []);
 
     const addRowHandler = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
         e.preventDefault();
@@ -19,9 +30,17 @@ export const NewItem = () => {
         setData((prev) => prev.filter((_, i) => i != index));
     };
 
-    const setValue = (indexRow: number, key: keyof iRow, value: string) => {
+    const setItemValue = (item: iItem, value: any) => {
+        item.value = value;
+        item.isError = value ? false : true;
+    };
+
+    const setValue = (indexRow: number, key: keyof iRow, value: any) => {
+        if (isNumber(+value)) {
+            if (+value < 0) return;
+        }
         setData((prev) => {
-            prev[indexRow][key].value = value;
+            setItemValue(prev[indexRow][key], value);
             return [...prev];
         });
     };
@@ -30,20 +49,92 @@ export const NewItem = () => {
         key: T,
         value: iPrimeData[T]['value'],
     ) => {
+        if (isNumber(+value)) {
+            if (+value < 0) return;
+        }
         setPrimeData((prev) => {
-            prev[key].value = value;
+            setItemValue(prev[key], value);
             return { ...prev };
         });
     };
 
-    const subbmitHandler = (type: 'success' | 'info' | 'warning' | 'error') => {
-        setPrimeData(initPrimeData());
-        setData([]);
-        notification[type]({
-            message: 'Успешно',
-            description: 'Приход сохранен успешно',
-        });
+    const subbmitHandler = async () => {
+        tuched.current = true;
+
+        if (isValid()) {
+            const preparedData: iNewItems[] = data.map((item) => {
+                const res: any = {
+                    [primeData.lot.field]: primeData.lot.value,
+                    [primeData.numDocument.field]: primeData.numDocument.value,
+                    operationId: 1,
+                    workpieceTypeId: 1,
+                };
+                for (const key in item) {
+                    const keyField = key as keyof typeof item;
+                    res[item[keyField].field] = item[keyField].value;
+                }
+                return res;
+            });
+
+            await OperationStore.postNewItems(preparedData, () => {
+                setPrimeData(initPrimeData());
+                setData([]);
+                notification.success({
+                    message: 'Успешно',
+                    description: 'Приход сохранен успешно',
+                });
+            });
+        } else {
+            notification.error({
+                message: 'Ошибка',
+                description: 'Заполните обязательные поля',
+            });
+        }
     };
+
+    const isValid = () => {
+        let result = true;
+
+        if (!tuched.current) return result;
+        if (!data.length) return false;
+        const findErrors = <T extends object>(item: T) => {
+            for (const key in item) {
+                const fieldName = key as keyof T;
+                const field: any = item[fieldName];
+                if (field.value) {
+                    field.isError = false;
+                } else {
+                    field.isError = true;
+                    result = false;
+                }
+            }
+        };
+        setPrimeData((prev) => {
+            findErrors(prev);
+
+            setData((prev) => {
+                prev = prev.map((item) => {
+                    findErrors(item);
+                    return item;
+                });
+                return [...prev];
+            });
+
+            return { ...prev };
+        });
+
+        return result;
+    };
+
+    const materialGroup = ListsStore.materialGroup.map((item) => ({
+        value: item.id,
+        caption: item.materialGroup,
+    }));
+
+    const sizeRange = ListsStore.sizeRange.map((item) => ({
+        value: item.id,
+        caption: item.sizeRange,
+    }));
 
     return (
         <Wrapper>
@@ -57,17 +148,22 @@ export const NewItem = () => {
                                 size="small"
                                 shape="circle"
                                 icon={<CheckOutlined />}
-                                onClick={() => subbmitHandler('success')}
+                                onClick={() => subbmitHandler()}
                             />
                         </Tooltip>
                     </div>
-                    {Object.keys(primeData).map((key) => (
-                        <PrimeField
-                            key={key}
-                            {...{ primeData, setPrameValue }}
-                            fieldName={key as keyof typeof primeData}
-                        />
-                    ))}
+                    {Object.keys(primeData).map((key) => {
+                        const keyItem = key as keyof iPrimeData;
+                        return (
+                            <PrimeField
+                                key={key}
+                                {...{ primeData, setPrameValue }}
+                                fieldName={key as keyof typeof primeData}
+                                type={primeData[keyItem].type}
+                                step={primeData[keyItem].step}
+                            />
+                        );
+                    })}
                 </div>
             </fieldset>
             <div className="addRow">
@@ -87,18 +183,32 @@ export const NewItem = () => {
                             />
                         </Tooltip>
                     </div>
-                    {Object.keys(item).map((key) => {
-                        const keyItem = key as keyof typeof item;
-                        return (
-                            <Field
-                                key={key}
-                                item={item[keyItem]}
-                                onChange={(v) => setValue(index, keyItem, v)}
-                            />
-                        );
-                    })}
+                    <SelectField
+                        item={item.sizeRangeId}
+                        onChangeHandler={(v) =>
+                            setValue(index, 'sizeRangeId', v as string)
+                        }
+                        options={sizeRange}
+                    />
+                    <SelectField
+                        item={item.grade}
+                        onChangeHandler={(v) => setValue(index, 'grade', '' + v)}
+                        options={materialGroup}
+                    />
+                    <Field
+                        item={item.widthInDocument}
+                        onChangeHandler={(v) => setValue(index, 'widthInDocument', +v)}
+                        type={item.widthInDocument.type}
+                        step={item.widthInDocument.step}
+                    />
+                    <Field
+                        item={item.widthIn}
+                        onChangeHandler={(v) => setValue(index, 'widthIn', +v)}
+                        type={item.widthIn.type}
+                        step={item.widthIn.step}
+                    />
                 </div>
             ))}
         </Wrapper>
     );
-};
+});

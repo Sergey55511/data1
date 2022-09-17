@@ -1,8 +1,8 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import { varifyJWT } from '../../Services/verifyJWT';
+import { varifyJWT } from '../../../Services/verifyJWT';
 import sha1 from 'sha1';
-import { resError } from '../../Services/Helpers';
-import { prisma } from '../../Services/prisma';
+import { resError } from '../../../Services/Helpers';
+import { prisma } from '../../../Services/prisma';
 
 export const KEY = 'b6d48d1d41be922130ce2a32e1dab1fc';
 

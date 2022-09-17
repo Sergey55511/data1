@@ -3,6 +3,7 @@ import { MyError } from '../../Classes/error';
 import { iUser } from '../../Store/interfaces';
 
 export const resError = (err: any, res: NextApiResponse) => {
+    console.log('err', err);
     const error = err as MyError;
     res.status(error.status).json({ message: error.message });
 };

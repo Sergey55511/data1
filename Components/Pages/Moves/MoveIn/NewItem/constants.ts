@@ -1,37 +1,73 @@
+import { InputProps } from 'antd';
+
 export interface iRow {
-    item1: iItem;
-    item2: iItem;
-    item3: iItem;
-    item4: iItem;
+    sizeRangeId: iItem;
+    grade: iItem;
+    widthInDocument: iItem;
+    widthIn: iItem;
 }
 
 export interface iItem {
     placeholder: string;
-    value: string;
+    value: string | number;
+    field: string;
+    isError: boolean;
+    errorMessage: string;
+    type: InputProps['type'];
+    step: InputProps['step'];
 }
 
 export interface iPrimeData {
-    primeItem1: iItem;
-    primeItem2: iItem;
-    primeItem3: iItem;
+    lot: iItem;
+    numDocument: iItem;
 }
 
 export class Item implements iItem {
-    value = '';
+    value: string | number = '';
     placeholder = '';
-    constructor(placeholder: string) {
+    field = '';
+    isError = false;
+    errorMessage = '';
+    type: InputProps['type'] = undefined;
+    step: InputProps['step'] = undefined;
+    constructor({
+        field,
+        placeholder,
+        errorMessage = 'Обязательное поле',
+        type,
+        step,
+    }: {
+        field: string;
+        placeholder: string;
+        errorMessage?: string;
+        type?: InputProps['type'];
+        step?: InputProps['step'];
+    }) {
+        this.field = field;
         this.placeholder = placeholder;
+        this.errorMessage = errorMessage;
+        this.type = type;
+        this.step = step;
     }
 }
 
 export const initData = () => ({
-    item1: new Item('hello'),
-    item2: new Item('hello1'),
-    item3: new Item('hello2'),
-    item4: new Item('hello3'),
+    sizeRangeId: new Item({ field: 'sizeRangeId', placeholder: 'Фракция' }),
+    grade: new Item({ field: 'grade', placeholder: 'Группа сырья' }),
+    widthInDocument: new Item({
+        field: 'widthInDocument',
+        placeholder: 'Вес по накладной гр.',
+        type: 'number',
+        step: '0.01',
+    }),
+    widthIn: new Item({
+        field: 'widthIn',
+        placeholder: 'Вес факт гр.',
+        type: 'number',
+        step: '0.01',
+    }),
 });
 export const initPrimeData = () => ({
-    primeItem1: new Item('prime1'),
-    primeItem2: new Item('prime2'),
-    primeItem3: new Item('prime3'),
+    lot: new Item({ field: 'lot', placeholder: 'Партия', type: 'number' }),
+    numDocument: new Item({ field: 'numDocument', placeholder: '№ накладной' }),
 });

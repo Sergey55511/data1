@@ -41,3 +41,24 @@ export interface iLeftovers {
     count?: number;
     code: number;
 }
+
+interface iList {
+    id: number;
+    active: boolean;
+    position: number;
+}
+export interface iMaterialGroup extends iList {
+    materialGroup: string;
+}
+export interface iSizeRange extends iList {
+    sizeRange: string;
+}
+
+export interface iNewItems {
+    grade: number;
+    lot: number;
+    numDocument: string;
+    sizeRange: number;
+    widthIn: number;
+    widthInDocument: number;
+}

@@ -1,12 +1,14 @@
 import React from 'react';
 import { Login } from '.';
 import { ErrorStore } from './ErrorStore';
+import { ListsStore } from './Lists';
 import { OperationStore } from './OperationStore';
 
 class Store {
     ErrorStore = new ErrorStore();
     loginStore = new Login(this.ErrorStore);
     OperationStore = new OperationStore(this.ErrorStore);
+    ListsStore=new ListsStore()
 }
 const store = new Store();
 

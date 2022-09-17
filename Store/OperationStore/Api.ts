@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { iNewItems } from '../interfaces';
 
 export const getOperations = (storeId: number) => {
     return axios({
@@ -10,5 +11,12 @@ export const leftovers = () => {
     return axios({
         url: `/api/leftovers`,
         method: 'GET',
+    }).then((res) => res.data);
+};
+export const postNewItems = (data: iNewItems[]) => {
+    return axios({
+        url: `/api/Data/newItems`,
+        method: 'POST',
+        data,
     }).then((res) => res.data);
 };

@@ -1,6 +1,9 @@
 import styled from 'styled-components';
 
 export const Wrapper = styled.div`
+    .item {
+        flex: 0 0 200px;
+    }
     .frame {
         border: 1px solid lightgray;
         border-radius: 5px;
