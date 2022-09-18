@@ -11,7 +11,7 @@ import { getColumnProps } from './Helpers/getColumnProps';
 import { FilterValue } from 'antd/es/table/interface';
 
 export default observer(() => {
-    const { OperationStore } = useStores();
+    const { OperationStore, loginStore } = useStores();
     const { leftovers, operations } = OperationStore;
     const [opereytion, setOperation] = useState(undefined);
     const [filters, setFilters] = useState<Record<string, FilterValue | null>>({});
@@ -21,14 +21,15 @@ export default observer(() => {
     );
 
     useEffect(() => {
-        OperationStore.getLeftovers();
-    }, []);
+        if (loginStore.user.storeId) OperationStore.getLeftovers(loginStore.user.storeId);
+    }, [loginStore.user.storeId]);
 
     const data = leftovers.map((item, index) => ({
         key: index,
         workpieceType: item.workpieceType,
         model: item.model,
         sizeRange: item.sizeRange,
+        materialGroup: item.materialGroup,
         colorType: item.colorType,
         length: item.length,
         channel: item.channel,
@@ -63,6 +64,7 @@ export default observer(() => {
         },
         { ...getColumnPropsHoc(KEYSLEFTOVERS.model), title: 'Модель' },
         { ...getColumnPropsHoc(KEYSLEFTOVERS.sizeRange), title: 'Размерный ряд' },
+        { ...getColumnPropsHoc(KEYSLEFTOVERS.materialGroup), title: 'Группа сырья' },
         { ...getColumnPropsHoc(KEYSLEFTOVERS.colorType), title: 'Цвет' },
         {
             ...getColumnPropsHoc(KEYSLEFTOVERS.length),
@@ -70,7 +72,7 @@ export default observer(() => {
         },
         {
             ...getColumnPropsHoc(KEYSLEFTOVERS.channel),
-            title: 'канал',
+            title: 'Канал',
         },
         {
             ...getColumnPropsHoc(KEYSLEFTOVERS.grade),

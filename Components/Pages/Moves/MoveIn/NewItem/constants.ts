@@ -2,7 +2,7 @@ import { InputProps } from 'antd';
 
 export interface iRow {
     sizeRangeId: iItem;
-    grade: iItem;
+    materialGroup: iItem;
     widthInDocument: iItem;
     widthIn: iItem;
 }
@@ -53,7 +53,7 @@ export class Item implements iItem {
 
 export const initData = () => ({
     sizeRangeId: new Item({ field: 'sizeRangeId', placeholder: 'Фракция' }),
-    grade: new Item({ field: 'grade', placeholder: 'Группа сырья' }),
+    materialGroup: new Item({ field: 'materialGroupId', placeholder: 'Группа сырья' }),
     widthInDocument: new Item({
         field: 'widthInDocument',
         placeholder: 'Вес по накладной гр.',

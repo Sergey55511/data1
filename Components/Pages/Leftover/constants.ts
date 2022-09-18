@@ -3,6 +3,7 @@ export const KEYSLEFTOVERS = {
     workpieceType: 'workpieceType',
     model: 'model',
     sizeRange: 'sizeRange',
+    materialGroup: 'materialGroup',
     colorType: 'colorType',
     length: 'length',
     channel: 'channel',

@@ -1,11 +1,11 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { getService } from '../../../Data/Services/get';
-import { postNewItems } from '../../../Data/Requests/Data/postNewItems';
+import { getMaxLot } from '../../../Data/Requests/Data/getMaxLot';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-    getService<any>({
+    getService<{ lot: number }>({
         req,
         res,
-        fetch: () => postNewItems(req.body),
+        fetch: () => getMaxLot(),
     });
 }

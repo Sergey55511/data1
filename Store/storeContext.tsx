@@ -7,7 +7,7 @@ import { OperationStore } from './OperationStore';
 class Store {
     ErrorStore = new ErrorStore();
     loginStore = new Login(this.ErrorStore);
-    OperationStore = new OperationStore(this.ErrorStore);
+    OperationStore = new OperationStore(this.ErrorStore,this.loginStore);
     ListsStore=new ListsStore()
 }
 const store = new Store();

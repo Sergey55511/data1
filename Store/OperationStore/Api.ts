@@ -7,11 +7,17 @@ export const getOperations = (storeId: number) => {
         method: 'GET',
     }).then((res) => res.data);
 };
-export const leftovers = () => {
+export const leftovers = (storeId: number) => {
     return axios({
-        url: `/api/leftovers`,
+        url: `/api/leftovers?storeId=${storeId}`,
         method: 'GET',
     }).then((res) => res.data);
+};
+export const getMaxLot = () => {
+    return axios({
+        url: `/api/Data/getMaxLot`,
+        method: 'GET',
+    }).then((res) => res.data.lot);
 };
 export const postNewItems = (data: iNewItems[]) => {
     return axios({

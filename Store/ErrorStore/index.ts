@@ -10,8 +10,8 @@ export class ErrorStore {
     }
     setError = (error: iError) => {
         this.error.isError = true;
-        this.error.status = error.response.status;
-        this.error.message = error.response.data?.message;
+        this.error.status = error.response?.status;
+        this.error.message = error.response?.data?.message;
     };
     resetError = () => {
         this.error = defaultError;

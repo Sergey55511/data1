@@ -14,11 +14,12 @@ export const NewItem = observer(() => {
     const [primeData, setPrimeData] = useState<iPrimeData>(initPrimeData());
     const [data, setData] = useState<iRow[]>([]);
     const tuched = useRef(false);
-    const { ListsStore, OperationStore } = useStores();
+    const { ListsStore, OperationStore, loginStore } = useStores();
 
     useEffect(() => {
         ListsStore.getMaterialGroup();
         ListsStore.getSizeRange();
+        OperationStore.getMaxLot();
     }, []);
 
     const addRowHandler = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
@@ -49,11 +50,12 @@ export const NewItem = observer(() => {
         key: T,
         value: iPrimeData[T]['value'],
     ) => {
-        if (isNumber(+value)) {
+        const isNum = isNumber(+value);
+        if (isNum) {
             if (+value < 0) return;
         }
         setPrimeData((prev) => {
-            setItemValue(prev[key], value);
+            setItemValue(prev[key], key == 'lot' ? +value : value);
             return { ...prev };
         });
     };
@@ -68,6 +70,9 @@ export const NewItem = observer(() => {
                     [primeData.numDocument.field]: primeData.numDocument.value,
                     operationId: 1,
                     workpieceTypeId: 1,
+                    userId: loginStore.user.id,
+                    managerId: loginStore.user.id,
+                    storeId: loginStore.user.storeId,
                 };
                 for (const key in item) {
                     const keyField = key as keyof typeof item;
@@ -152,18 +157,23 @@ export const NewItem = observer(() => {
                             />
                         </Tooltip>
                     </div>
-                    {Object.keys(primeData).map((key) => {
-                        const keyItem = key as keyof iPrimeData;
-                        return (
-                            <PrimeField
-                                key={key}
-                                {...{ primeData, setPrameValue }}
-                                fieldName={key as keyof typeof primeData}
-                                type={primeData[keyItem].type}
-                                step={primeData[keyItem].step}
-                            />
-                        );
-                    })}
+                    <Tooltip
+                        placement="top"
+                        title={`Макс партия: ${OperationStore.maxLot}`}
+                    >
+                        <PrimeField
+                            {...{ primeData, setPrameValue }}
+                            fieldName={'lot'}
+                            type={primeData.lot.type}
+                            step={primeData.lot.step}
+                        />
+                    </Tooltip>
+                    <PrimeField
+                        {...{ primeData, setPrameValue }}
+                        fieldName={'numDocument'}
+                        type={primeData.numDocument.type}
+                        step={primeData.numDocument.step}
+                    />
                 </div>
             </fieldset>
             <div className="addRow">
@@ -191,8 +201,8 @@ export const NewItem = observer(() => {
                         options={sizeRange}
                     />
                     <SelectField
-                        item={item.grade}
-                        onChangeHandler={(v) => setValue(index, 'grade', '' + v)}
+                        item={item.materialGroup}
+                        onChangeHandler={(v) => setValue(index, 'materialGroup', +v)}
                         options={materialGroup}
                     />
                     <Field

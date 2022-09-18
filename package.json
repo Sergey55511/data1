@@ -3,12 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "cross-env DATABASE_URL=$DATABASE_URL next dev",
+    "dev": "next dev",
     "build": "next build",
     "start": "cross-env DATABASE_URL=$DATABASE_URL next start",
     "lint": "next lint",
-    "pm": "cross-env DATABASE_URL=$DATABASE_URL npx prisma migrate dev",
-    "ps": "cross-env DATABASE_URL=$DATABASE_URL npx prisma studio",
+    "pm": "npx prisma migrate dev",
+    "ps": "npx prisma studio",
     "pg": "npx prisma generate"
   },
   "dependencies": {

@@ -30,6 +30,7 @@ export interface iLeftovers {
     workpieceType: string;
     model?: string;
     sizeRange?: string;
+    materialGroup?: string;
     colorType?: string;
     length?: string;
     channel?: string;

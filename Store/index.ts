@@ -5,7 +5,7 @@ import { ErrorStore } from './ErrorStore';
 import { iError, iLogin, iUser } from './interfaces';
 
 export class Login {
-    user = { login: '', status: '', store: '',storeId: 0 };
+    user = { id: 0, login: '', status: '', store: '', storeId: 0 };
     stores: { id: number; name: string }[] = [];
     errorStore: ErrorStore;
     constructor(errorStore: ErrorStore) {
