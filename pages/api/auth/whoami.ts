@@ -1,7 +1,7 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { varifyJWT } from '../../../Services/verifyJWT';
-import { resError } from '../../../Services/Helpers';
+import { varifyJWT } from '../../../Backend/Data/Services/verifyJWT';
+import { resError } from '../../../Shared/Helpers';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     try {

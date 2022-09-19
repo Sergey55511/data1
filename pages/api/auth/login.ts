@@ -1,12 +1,12 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { createJWT } from '../../../Services/createJWT';
-import { iUser } from '../../../Store/interfaces';
+import { createJWT } from '../../../Backend/Data/Services/createJWT';
+import { iUser } from '../../../Shared/Types/interfaces';
 import sha1 from 'sha1';
 import { KEY } from './registration';
-import { MyError } from '../../../Classes/error';
-import { resError } from '../../../Services/Helpers';
-import { prisma } from '../../../Services/prisma';
+import { MyError } from '../../../Shared/Classes/error';
+import { resError } from '../../../Shared/Helpers';
+import { prisma } from '../../../Backend/Data/Services/prisma';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     if (req.method == 'POST') {

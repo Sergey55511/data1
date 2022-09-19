@@ -1,0 +1,16 @@
+export const KEYSLEFTOVERS = {
+    workpieceType: { key: 'workpieceType', title: 'Тип заготовки' },
+    model: { key: 'model', title: 'Модель' },
+    sizeRange: { key: 'sizeRange', title: 'Размерный ряд' },
+    materialGroup: { key: 'materialGroup', title: 'Группа сырья' },
+    colorType: { key: 'colorType', title: 'Цвет' },
+    length: { key: 'length', title: 'Длина' },
+    channel: { key: 'channel', title: 'Канал' },
+    grade: { key: 'grade', title: 'Сорт' },
+    state: { key: 'state', title: 'Состояние' },
+    lot: { key: 'lot', title: 'Партия' },
+    numProduction: { key: 'numProduction', title: '№ производства' },
+    width: { key: 'width', title: 'Остаток гр.' },
+    count: { key: 'count', title: 'Остаток шт.' },
+    code: { key: 'code', title: '' },
+};

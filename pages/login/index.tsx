@@ -1,3 +1,3 @@
-import Login from '../../Components/Pages/login';
+import Login from '../../Frontend/Components/Pages/login';
 
 export default () => <Login />;

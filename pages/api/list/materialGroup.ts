@@ -1,7 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { getMaterialGroup } from '../../../Data/Requests/MaterialGroup/get';
-import { getService } from '../../../Data/Services/get';
-import { iMaterialGroup } from '../../../Store/interfaces';
+import { getMaterialGroup } from '../../../Backend/Data/Requests/MaterialGroup/get';
+import { getService } from '../../../Backend/Data/Services/get';
+import { iMaterialGroup } from '../../../Shared/Types/interfaces';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     switch (req.method) {

@@ -1,7 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { getSizeRange } from '../../../Data/Requests/SizeRange/get';
-import { getService } from '../../../Data/Services/get';
-import { iSizeRange } from '../../../Store/interfaces';
+import { getSizeRange } from '../../../Backend/Data/Requests/SizeRange/get';
+import { getService } from '../../../Backend/Data/Services/get';
+import { iSizeRange } from '../../../Shared/Types/interfaces';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     switch (req.method) {

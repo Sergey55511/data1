@@ -1,7 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { varifyJWT } from '../../Services/verifyJWT';
-import { resError } from '../../Services/Helpers';
-import { prisma } from '../../Services/prisma';
+import { varifyJWT } from '../../Backend/Data/Services/verifyJWT';
+import { resError } from '../../Shared/Helpers';
+import { prisma } from '../..//Backend/Data/Services/prisma';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     const storesId = req.query.storeId as string;
