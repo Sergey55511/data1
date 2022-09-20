@@ -2,11 +2,18 @@ import { notification } from 'antd';
 import { flow, makeAutoObservable } from 'mobx';
 import * as api from './Api';
 import { ErrorStore } from '../ErrorStore';
-import { iError, iLeftovers, iNewItems } from '../../../Shared/Types/interfaces';
+import {
+    iError,
+    iLeftovers,
+    iNewItems,
+    iOperation,
+    iProductions,
+} from '../../../Shared/Types/interfaces';
 import { Login } from '..';
 
 export class OperationStore {
-    operations: { opereytion: string }[] = [];
+    operations: iOperation[] = [];
+    productions: iProductions[] = [];
     leftovers: iLeftovers[] = [];
     errorStore: ErrorStore;
     loginStore: Login;
@@ -20,6 +27,22 @@ export class OperationStore {
     getOperations = flow(function* (this: OperationStore, storeId: number) {
         try {
             this.operations = yield api.getOperations(storeId);
+        } catch (err) {
+            this.errorStore.setError(err as iError);
+        }
+    });
+    getProductions = flow(function* (this: OperationStore, storeId: number) {
+        try {
+            this.productions = yield api.getProductions(storeId);
+        } catch (err) {
+            this.errorStore.setError(err as iError);
+        }
+    });
+    postProductions = flow(function* (this: OperationStore, description: string) {
+        const storeId = this.loginStore.user.storeId;
+        try {
+            yield api.postProductions({ description, storeId });
+            yield this.getProductions(this.loginStore.user.storeId);
         } catch (err) {
             this.errorStore.setError(err as iError);
         }

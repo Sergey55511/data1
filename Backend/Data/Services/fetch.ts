@@ -1,9 +1,9 @@
 import { PrismaPromise } from '@prisma/client';
 import { NextApiRequest, NextApiResponse } from 'next';
 import { resError } from '../../../Shared/Helpers';
-import { varifyJWT } from '../../../Backend/Data/Services/verifyJWT';
+import { varifyJWT } from './verifyJWT';
 
-export const getService = async <T>({
+export const fetchService = async <T>({
     req,
     res,
     fetch,

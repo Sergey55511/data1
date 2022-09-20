@@ -15,7 +15,7 @@ export const leftovers = <T>(storeId: number): PrismaPromise<T> => {
             "materialGroup",
             state,
             lot,
-            "numProduction",
+            "productionId",
             round(sum("widthIn")::numeric,2)-round(coalesce(sum("widthOut"),0)::numeric,2) as "width",
             round(sum("countItemsIn")::numeric,2)-round(sum("countItemsOut")::numeric,2) as "count",
             sum("moneyIn")-sum("moneyOut") as "code"
@@ -36,7 +36,7 @@ export const leftovers = <T>(storeId: number): PrismaPromise<T> => {
             "materialGroup",
             state,
             lot,
-            "numProduction"
+            "productionId"
         HAVING round(sum("widthIn")::numeric,2)-round(coalesce(sum("widthOut"),0)::numeric,2)>0;
     `;
 };

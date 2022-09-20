@@ -1,15 +1,16 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { getMaterialGroup } from '../../../Backend/Data/Requests/MaterialGroup/get';
 import { fetchService } from '../../../Backend/Data/Services/fetch';
-import { iMaterialGroup } from '../../../Shared/Types/interfaces';
+import { iOperation } from '../../../Shared/Types/interfaces';
+import { getOperations } from '../../../Backend/Data/Requests/Operations/get';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+    const storeId: number = +req.query.storeId!;
     switch (req.method) {
         case 'GET': {
-            await fetchService<iMaterialGroup>({
+            await fetchService<iOperation>({
                 req,
                 res,
-                fetch: getMaterialGroup,
+                fetch: () => getOperations(storeId),
             });
             break;
         }

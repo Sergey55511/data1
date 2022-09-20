@@ -28,7 +28,6 @@ model Data {
   recipient        String?
   countItemsIn     Int?
   countItemsOut    Int?
-  numProduction    String?
   workingHours     Int?
   exercise         String?
   numProducts      Int?
@@ -56,6 +55,8 @@ model Data {
   Grade            Grade?         @relation(fields: [gradeId], references: [id])
   gradeId          Int?
   active           Boolean        @default(true)
+  Productions      Productions?   @relation(fields: [productionId], references: [id])
+  productionId     Int?
 }
 
 model Users {
@@ -64,9 +65,9 @@ model Users {
   password    String
   key         String?
   status      String?
-  store       Stores? @relation(fields: [storesId], references: [id])
+  store       Stores? @relation(fields: [storeId], references: [id])
   activ       Boolean @default(true)
-  storesId    Int?
+  storeId     Int?    @map("storesId")
   DataUser    Data[]  @relation("user")
   DataManager Data[]  @relation("manager")
 }
@@ -78,6 +79,7 @@ model Stores {
   Users          Users[]
   StoreOperation StoreOperations[]
   BilletStore    BilletStore[]
+  Productions    Productions[]
 }
 
 model Opereytion {
@@ -92,8 +94,8 @@ model Opereytion {
 
 model StoreOperations {
   id         Int          @id @default(autoincrement())
-  store      Stores?      @relation(fields: [storesId], references: [id])
-  storesId   Int?
+  store      Stores?      @relation(fields: [storeId], references: [id])
+  storeId    Int?         @map("storesId")
   Opereytion Opereytion[]
 }
 
@@ -126,8 +128,8 @@ model BilletStore {
   id       Int      @id @default(autoincrement())
   Billet   Billets? @relation(fields: [billetId], references: [id])
   billetId Int?
-  Stores   Stores?  @relation(fields: [storesId], references: [id])
-  storesId Int?
+  Stores   Stores?  @relation(fields: [storeId], references: [id])
+  storeId  Int?     @map("storesId")
 }
 
 model Models {
@@ -176,4 +178,13 @@ model Operations {
   position  Int     @default(autoincrement())
   active    Boolean @default(true)
   Data      Data[]
+}
+
+model Productions {
+  id          Int     @id @default(autoincrement())
+  description String
+  Stores      Stores? @relation(fields: [storeId], references: [id])
+  storeId     Int?
+  active      Boolean @default(true)
+  Data        Data[]
 }

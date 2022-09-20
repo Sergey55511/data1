@@ -57,7 +57,7 @@ export const MenuLeftovers = observer(
                             )}
                         </div>
                         <div>
-                            <Select
+                            {/* <Select
                                 placeholder="Выбрать операцию"
                                 style={{ width: '200px' }}
                                 value={opereytion}
@@ -68,7 +68,7 @@ export const MenuLeftovers = observer(
                                         {item.opereytion}
                                     </Select.Option>
                                 ))}
-                            </Select>
+                            </Select> */}
                             {isShowAdditionalParams && (
                                 <div className="additionalsParams">
                                     <div>

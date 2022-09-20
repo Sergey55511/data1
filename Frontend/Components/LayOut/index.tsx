@@ -20,6 +20,8 @@ const GlobalStyle = createGlobalStyle`
         }
         .ant-spin-nested-loading {
             height: 100%;
+            overflow-y: auto;
+            overflow-x: clip;
             .ant-spin-container {
                 height: 100%;
             }

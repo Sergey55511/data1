@@ -14,15 +14,18 @@ type tProps = {
 };
 
 const DraverData1 = ({ title, content, onCancel }: tProps) => {
+    const cloneContent=React.cloneElement(content, { onClose: onCancel });
     return (
         <Drawer
             title={title}
             placement="right"
             width={500}
-            onClose={() => onCancel!()}
+            onClose={() => {
+                if (onCancel) onCancel();
+            }}
             visible={true}
         >
-            {content}
+            {cloneContent}
         </Drawer>
     );
 };

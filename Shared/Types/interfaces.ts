@@ -63,3 +63,11 @@ export interface iNewItems {
     widthIn: number;
     widthInDocument: number;
 }
+export interface iOperation {
+    id: number;
+    opereytion: string;
+}
+export interface iProductions {
+    id: number;
+    description: string;
+}
