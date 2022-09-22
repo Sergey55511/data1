@@ -27,23 +27,7 @@ export const TableLeftOvers = observer(
                 OperationStore.getLeftovers(loginStore.user.storeId);
         }, [loginStore.user.storeId]);
 
-        const data = leftovers.map((item, index) => ({
-            key: index,
-            workpieceType: item.workpieceType,
-            model: item.model,
-            sizeRange: item.sizeRange,
-            materialGroup: item.materialGroup,
-            colorType: item.colorType,
-            length: item.length,
-            channel: item.channel,
-            grade: item.grade,
-            state: item.state,
-            lot: item.lot,
-            numProduction: item.numProduction,
-            width: item.width,
-            count: item.count,
-            code: item.code,
-        }));
+        const data = leftovers.map((item, index) => ({ ...item, key: index }));
 
         const filteredleftovers = leftovers.filter((item) => {
             for (const key in item) {
@@ -77,8 +61,8 @@ export const TableLeftOvers = observer(
                 title: KEYSLEFTOVERS.materialGroup.title,
             },
             {
-                ...getColumnPropsHoc(KEYSLEFTOVERS.colorType.key),
-                title: KEYSLEFTOVERS.colorType.title,
+                ...getColumnPropsHoc(KEYSLEFTOVERS.color.key),
+                title: KEYSLEFTOVERS.color.title,
             },
             {
                 ...getColumnPropsHoc(KEYSLEFTOVERS.length.key),

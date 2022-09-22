@@ -7,15 +7,17 @@ export const fetchService = async <T>({
     req,
     res,
     fetch,
+    validation,
 }: {
     req: NextApiRequest;
     res: NextApiResponse;
     fetch: () => PrismaPromise<T>;
+    validation?: (req?: NextApiRequest) => void;
 }) => {
     try {
         await varifyJWT(req, res);
         console.log('after verifyJWT');
-        
+        if (validation) validation(req);
         const result = await fetch();
 
         console.log('result', result);

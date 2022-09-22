@@ -3,7 +3,7 @@ export const KEYSLEFTOVERS = {
     model: { key: 'model', title: 'Модель' },
     sizeRange: { key: 'sizeRange', title: 'Размерный ряд' },
     materialGroup: { key: 'materialGroup', title: 'Группа сырья' },
-    colorType: { key: 'colorType', title: 'Цвет' },
+    color: { key: 'color', title: 'Цвет' },
     length: { key: 'length', title: 'Длина' },
     channel: { key: 'channel', title: 'Канал' },
     grade: { key: 'grade', title: 'Сорт' },

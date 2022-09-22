@@ -5,14 +5,23 @@ export const leftovers = <T>(storeId: number): PrismaPromise<T> => {
     const prisma = new PrismaClient();
     return prisma.$queryRaw`
         SELECT 
+            "workpieceTypeId",
             "workpieceType",
-            model,
+            "modelId",
+			"model",
+            "sizeRangeId",
             "sizeRange",
-            "colorType",
+			"colorId",
+            "color",
+			"lengthId",
             length,
-            channel,
+            "channelId",
+			"channel",
+			"gradeId",
 			"grade",
+            "materialGroupId",
             "materialGroup",
+            "stateId",
             state,
             lot,
             "productionId",
@@ -24,16 +33,29 @@ export const leftovers = <T>(storeId: number): PrismaPromise<T> => {
             left join "SizeRange" on "Data"."sizeRangeId"="SizeRange".id
             left join "MaterialGroup" on "Data"."materialGroupId"="MaterialGroup".id
 			left join "Grade" on "Data"."gradeId"="Grade".id
-		WHERE "Data"."storeId"=${+storeId}
+			left join "Models" on "Data"."modelId"="Models".id
+			left join "Color" on "Data"."colorId"="Color".id
+			left join "Length" on "Data"."lengthId"="Length".id
+			left join "Channel" on "Data"."channelId"="Channel".id
+		WHERE "Data"."storeId"=2
         GROUP BY 
+            "workpieceTypeId",
             "workpieceType",
-            model,
+			"modelId",
+            "model",
+            "sizeRangeId",
             "sizeRange",
-            "colorType",
+            "colorId",
+            "color",
+            "lengthId",
             length,
-            channel,
+            "channelId",
+			channel,
+			"gradeId",
 			"grade",
+            "materialGroupId",
             "materialGroup",
+            "stateId",
             state,
             lot,
             "productionId"

@@ -62,15 +62,28 @@ export class OperationStore {
         }
     });
 
-    postNewItems = flow(function* (
+    postNewItems = flow(function* <T>(
         this: OperationStore,
-        data: iNewItems[],
-        callBack: () => void,
+        data: T[],
+        callBack?: () => void,
     ) {
         try {
             yield api.postNewItems(data);
             yield this.getMaxLot();
-            callBack();
+            if (callBack) callBack();
+        } catch (err) {
+            this.errorStore.setError(err as iError);
+        }
+    });
+
+    moveToWork = flow(function* (
+        this: OperationStore,
+        data: iLeftovers,
+        callBack?: () => void,
+    ) {
+        try {
+            yield api.moveToWork(data);
+            if (callBack) callBack();
         } catch (err) {
             this.errorStore.setError(err as iError);
         }

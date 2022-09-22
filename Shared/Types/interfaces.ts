@@ -27,20 +27,34 @@ export interface iError {
     };
 }
 export interface iLeftovers {
-    workpieceType: string;
+    workpieceTypeId: number;
+    workpieceType?: string;
+    modelId?: number;
     model?: string;
+    sizeRangeId?: number;
     sizeRange?: string;
+    materialGroupId?: number;
     materialGroup?: string;
-    colorType?: string;
+    colorId?: number;
+    color?: string;
+    lengthId: number;
     length?: string;
-    channel?: string;
+    channelId?: number;
+    channel?: number;
+    gradeId?: number;
     grade?: string;
+    stateId?: number;
     state?: string;
-    lot?: string;
+    lot?: number;
     numProduction?: string;
-    width: number;
+    width?: number;
     count?: number;
-    code: number;
+    productionId?: number;
+    code?: number;
+    date?: moment.Moment | null;
+    countItemsOut?: number;
+    widthOut?: number;
+    operationId?: number;
 }
 
 interface iList {

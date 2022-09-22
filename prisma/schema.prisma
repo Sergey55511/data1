@@ -14,12 +14,8 @@ model Data {
   numDocument      String?
   pp               Int?
   state            String?
-  model            String?
   sizeRange        SizeRange?     @relation(fields: [sizeRangeId], references: [id])
   sizeRangeId      Int?
-  length           String?
-  channel          Float?
-  colorType        String?
   widthInDocument  Float?
   widthIn          Float?
   widthOut         Float?
@@ -57,6 +53,16 @@ model Data {
   active           Boolean        @default(true)
   Productions      Productions?   @relation(fields: [productionId], references: [id])
   productionId     Int?
+  Models           Models?        @relation(fields: [modelId], references: [id])
+  modelId          Int?
+  Color            Color?         @relation(fields: [colorId], references: [id])
+  colorId          Int?
+  Length           Length?        @relation(fields: [lengthId], references: [id])
+  lengthId         Int?
+  State            State?         @relation(fields: [stateId], references: [id])
+  stateId          Int?
+  Channel          Channel?       @relation(fields: [channelId], references: [id])
+  channelId        Int?
 }
 
 model Users {
@@ -108,12 +114,13 @@ model Grade {
   Data    Data[]
 }
 
-model Collor {
+model Color {
   id      Int     @id @default(autoincrement())
-  collor  String  @unique
+  color   String  @unique
   for     String?
   variant Int
   activ   Boolean @default(true)
+  Data    Data[]
 }
 
 model Billets {
@@ -121,7 +128,7 @@ model Billets {
   name        String        @unique
   BilletStore BilletStore[]
   Models      Models[]
-  modelsId    Int?
+  modelId     Int?          @map("modelsId")
 }
 
 model BilletStore {
@@ -134,18 +141,19 @@ model BilletStore {
 
 model Models {
   id          Int           @id @default(autoincrement())
-  name        String        @unique
+  model       String        @unique
   Billets     Billets?      @relation(fields: [billetsId], references: [id])
   billetsId   Int?
   ModelsSizes ModelsSizes[]
+  Date        Data[]
 }
 
 model ModelsSizes {
-  id       Int     @id @default(autoincrement())
-  size     String?
-  length   String?
-  Models   Models  @relation(fields: [modelsId], references: [id])
-  modelsId Int
+  id      Int     @id @default(autoincrement())
+  size    String?
+  length  String?
+  Models  Models  @relation(fields: [modelId], references: [id])
+  modelId Int     @map("modelsId")
 }
 
 model SizeRange {
@@ -187,4 +195,25 @@ model Productions {
   storeId     Int?
   active      Boolean @default(true)
   Data        Data[]
+}
+
+model Length {
+  id     Int     @id @default(autoincrement())
+  length String
+  active Boolean @default(true)
+  Data   Data[]
+}
+
+model State {
+  id     Int     @id @default(autoincrement())
+  state  String
+  active Boolean @default(true)
+  Data   Data[]
+}
+
+model Channel {
+  id      Int     @id @default(autoincrement())
+  channel Float
+  active  Boolean @default(true)
+  Data    Data[]
 }

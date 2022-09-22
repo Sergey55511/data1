@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { iNewItems } from '../../../Shared/Types/interfaces';
+import { iLeftovers, iNewItems } from '../../../Shared/Types/interfaces';
 
 export const getOperations = (storeId: number) => {
     return axios({
@@ -19,9 +19,23 @@ export const getMaxLot = () => {
         method: 'GET',
     }).then((res) => res.data.lot);
 };
-export const postNewItems = (data: iNewItems[]) => {
+export const postNewItems = <T>(data: T[]) => {
     return axios({
         url: `/api/Data/newItems`,
+        method: 'POST',
+        data,
+    }).then((res) => res.data);
+};
+export const moveToWork = (data: iLeftovers) => {
+    return axios({
+        url: `/api/Data/moveToWork`,
+        method: 'POST',
+        data,
+    }).then((res) => res.data);
+};
+export const postNewDataItems = <T>(data: T[]) => {
+    return axios({
+        url: `/api/Data/moveToWork`,
         method: 'POST',
         data,
     }).then((res) => res.data);
