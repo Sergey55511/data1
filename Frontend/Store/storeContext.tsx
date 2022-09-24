@@ -3,8 +3,10 @@ import { Login } from '.';
 import { ErrorStore } from './ErrorStore';
 import { ListsStore } from './Lists';
 import { OperationStore } from './OperationStore';
+import { UIStore } from './UIStore';
 
 class Store {
+    UIStore=new UIStore()
     ErrorStore = new ErrorStore();
     loginStore = new Login(this.ErrorStore);
     OperationStore = new OperationStore(this.ErrorStore,this.loginStore);

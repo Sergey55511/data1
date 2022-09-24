@@ -30,23 +30,27 @@ const GlobalStyle = createGlobalStyle`
 
 export const LayOut = observer(
     ({ children, page }: { children: JSX.Element; page: tPages }) => {
-        const { loginStore } = useStores();
-        const [isLoading, setIsLoading] = useState(true);
+        const { loginStore, UIStore } = useStores();
 
         useEffect(() => {
+            UIStore.setIsLoading(true);
             const whoami = async () => {
                 await loginStore.whoami();
-                setIsLoading(false);
+                UIStore.setIsLoading(false);
             };
             if (!loginStore.user.login) {
                 whoami();
             } else {
-                setIsLoading(false);
+                UIStore.setIsLoading(false);
             }
         }, []);
 
         return (
-            <Spin spinning={isLoading} tip="загрузка..." style={{ height: '100%' }}>
+            <Spin
+                spinning={UIStore.isLoading}
+                tip="загрузка..."
+                style={{ height: '100%' }}
+            >
                 <ErrorHandler>
                     <ConfigProvider locale={locale}>
                         <Wrapper>

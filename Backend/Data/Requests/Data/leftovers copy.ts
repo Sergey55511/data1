@@ -5,7 +5,8 @@ export const leftovers = <T>(storeId: number): PrismaPromise<T> => {
     const prisma = new PrismaClient();
     return prisma.$queryRaw`
         SELECT 
-            "workpieceTypeId",
+            pp,
+			"workpieceTypeId",
             "workpieceType",
             "modelId",
 			"model",
@@ -24,9 +25,9 @@ export const leftovers = <T>(storeId: number): PrismaPromise<T> => {
             "stateId",
             state,
             lot,
-            round(sum("widthIn")::numeric,2)-round(coalesce(sum("widthOut"),0)::numeric,2) as "width",
-            round(sum("countItemsIn")::numeric,2)-round(sum("countItemsOut")::numeric,2) as "count",
-            sum("moneyIn")-sum("moneyOut") as "code"
+            COALESCE(round(sum("widthIn")::numeric,2),0)-COALESCE(round(coalesce(sum("widthOut"),0)::numeric,2),0) as "width",
+            COALESCE(round(sum("countItemsIn")::numeric,2),0)-COALESCE(round(sum("countItemsOut")::numeric,2),0) as "count",
+            COALESCE(sum("moneyIn"),0)-COALESCE(sum("moneyOut"),0) as "code"
         FROM 
             public."Data" left join "WorkpieceType" on "Data"."workpieceTypeId"="WorkpieceType".id
             left join "SizeRange" on "Data"."sizeRangeId"="SizeRange".id
@@ -38,6 +39,7 @@ export const leftovers = <T>(storeId: number): PrismaPromise<T> => {
 			left join "Channel" on "Data"."channelId"="Channel".id
 		WHERE "Data"."storeId"=${+storeId}
         GROUP BY 
+			pp,
             "workpieceTypeId",
             "workpieceType",
 			"modelId",
@@ -57,6 +59,8 @@ export const leftovers = <T>(storeId: number): PrismaPromise<T> => {
             "stateId",
             state,
             lot
-        HAVING round(sum("widthIn")::numeric,2)-round(coalesce(sum("widthOut"),0)::numeric,2)>0;
+        HAVING pp is not null and 
+		COALESCE(round(sum("widthIn")::numeric,2),0)-COALESCE(round(coalesce(sum("widthOut"),0)::numeric,2),0)<>0 or
+        COALESCE(round(sum("countItemsIn")::numeric,2),0)-COALESCE(round(sum("countItemsOut")::numeric,2),0)<>0;
     `;
 };

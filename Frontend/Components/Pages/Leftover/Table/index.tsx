@@ -85,10 +85,6 @@ export const TableLeftOvers = observer(
                 title: KEYSLEFTOVERS.lot.title,
             },
             {
-                ...getColumnPropsHoc(KEYSLEFTOVERS.numProduction.key),
-                title: KEYSLEFTOVERS.numProduction.title,
-            },
-            {
                 ...getColumnPropsHoc(KEYSLEFTOVERS.width.key),
                 title: KEYSLEFTOVERS.width.title,
             },

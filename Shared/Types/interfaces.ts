@@ -27,6 +27,7 @@ export interface iError {
     };
 }
 export interface iLeftovers {
+    pp?: number;
     workpieceTypeId: number;
     workpieceType?: string;
     modelId?: number;
@@ -44,6 +45,7 @@ export interface iLeftovers {
     gradeId?: number;
     grade?: string;
     stateId?: number;
+    storeId?: number;
     state?: string;
     lot?: number;
     numProduction?: string;
@@ -51,7 +53,7 @@ export interface iLeftovers {
     count?: number;
     productionId?: number;
     code?: number;
-    date?: moment.Moment | null;
+    date?: moment.Moment | null | any;
     countItemsOut?: number;
     widthOut?: number;
     operationId?: number;

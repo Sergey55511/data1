@@ -1,8 +1,12 @@
 import { PrismaClient } from '@prisma/client';
 
-export const postNewItems = async (data: any) => {
+export const postNewItems = async (data: any, isSetNewPP = true) => {
     const prisma = new PrismaClient();
-    const maxpp = await prisma.$queryRaw`SELECT max(pp) as maxpp FROM "Data";`;
-    const pp = Array.isArray(maxpp) ? (maxpp[0]?.maxpp as number) : 0;
+    let pp: number | null = null;
+    if (isSetNewPP) {
+        const queryMaxPP = await prisma.$queryRaw`SELECT max(pp) as maxpp FROM "Data";`;
+        pp = Array.isArray(queryMaxPP) ? queryMaxPP[0]?.maxpp : 0;
+    }
+
     return prisma.data.createMany({ ...data, pp }) as any;
 };

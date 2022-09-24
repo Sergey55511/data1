@@ -1,7 +1,24 @@
-import { PrismaPromise } from '@prisma/client';
 import { PrismaClient } from '@prisma/client';
+import moment from 'moment';
+import { iLeftovers } from '../../../../Shared/Types/interfaces';
 
-export const postNewItems = <T>(data: any): PrismaPromise<T> => {
+export const postNewItems = async <T>(
+    data: iLeftovers[],
+    isSetNewPP = true,
+): Promise<T> => {
     const prisma = new PrismaClient();
-    return prisma.data.createMany({ data }) as any;
+    let pp: number;
+    if (isSetNewPP) {
+        const queryMaxPP = await prisma.$queryRaw`SELECT max(pp) as maxpp FROM "Data";`;
+        pp = Array.isArray(queryMaxPP) ? queryMaxPP[0]?.maxpp : 0;
+        pp++;
+    }
+    const datePrepared = data?.map((item) => ({
+        ...item,
+        date: moment(item.date)?.toDate(),
+        pp,
+    }));
+    return (await prisma.data.createMany({
+        data: datePrepared,
+    })) as any;
 };

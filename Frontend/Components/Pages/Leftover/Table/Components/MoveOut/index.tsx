@@ -12,7 +12,7 @@ type tConstKeys = keyof typeof KEYSLEFTOVERS;
 type tValue = number | string | undefined;
 export const MoveOutSolo = observer(
     ({ record, onClose }: { record: iLeftovers; onClose?: () => void }) => {
-        const { OperationStore } = useStores();
+        const { OperationStore, loginStore, UIStore } = useStores();
         const [numProd, setNumProd] = useState(0);
         const [operation, setOperation] = useState<number | undefined>(undefined);
         const [isLoading, setIsLoading] = useState(false);
@@ -59,26 +59,30 @@ export const MoveOutSolo = observer(
         const subbmitHandler = () => {
             setIsLoading(true);
             OperationStore.moveToWork(
-                    {
-                        modelId: record.modelId,
-                        colorId: record.colorId,
-                        lengthId: record.lengthId,
-                        stateId: record.stateId,
-                        channelId: record.channelId,
-                        lot: record.lot,
-                        gradeId: record.gradeId,
-                        materialGroupId: record.materialGroupId,
-                        sizeRangeId: record.sizeRangeId,
-                        workpieceTypeId: record.workpieceTypeId,
-                        date,
-                        countItemsOut: count as number,
-                        widthOut: width as number,
-                        operationId: operation,
-                        productionId: numProd,
-                    },
-                () => {
+                {
+                    storeId: loginStore.user.storeId,
+                    modelId: record.modelId,
+                    colorId: record.colorId,
+                    lengthId: record.lengthId,
+                    stateId: record.stateId,
+                    channelId: record.channelId,
+                    lot: record.lot,
+                    gradeId: record.gradeId,
+                    materialGroupId: record.materialGroupId,
+                    sizeRangeId: record.sizeRangeId,
+                    workpieceTypeId: record.workpieceTypeId,
+                    date,
+                    countItemsOut: count ? +count : undefined,
+                    widthOut: width ? +width : undefined,
+                    operationId: operation,
+                    productionId: numProd || undefined,
+                },
+                async () => {
                     setIsLoading(false);
-                    // if (onClose) onClose();
+                    UIStore.setIsLoading(true);
+                    if (onClose) onClose();
+                    await OperationStore.getLeftovers(loginStore.user.storeId);
+                    UIStore.setIsLoading(false);
                 },
             );
         };

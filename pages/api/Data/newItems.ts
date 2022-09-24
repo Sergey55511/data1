@@ -6,6 +6,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     await fetchService<any>({
         req,
         res,
-        fetch: () => postNewItems(req.body),
+        fetch: () => postNewItems(req.body,false),
     });
 }
