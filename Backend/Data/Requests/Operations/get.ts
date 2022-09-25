@@ -6,9 +6,9 @@ export const getOperations = <T>(storeId: number): PrismaPromise<T> => {
     return prisma.storeOperations
         .findFirst({
             select: {
-                Opereytion: { select: { id: true, opereytion: true } },
+                Operation: { select: { id: true, operation: true } },
             },
             where: { storeId: +storeId },
         })
-        .then((data) => data?.Opereytion) as any;
+        .then((data) => data?.Operation) as any;
 };

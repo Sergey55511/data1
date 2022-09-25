@@ -1,4 +1,8 @@
 export const KEYSLEFTOVERS = {
+    pp: { key: 'pp', title: 'ПП' },
+    user: { key: 'userLogin', title: 'Выдал' },
+    manager: { key: 'managerLogin', title: 'Исполнитель' },
+    operation: { key: 'operation', title: 'Операция' },
     workpieceType: { key: 'workpieceType', title: 'Тип заготовки' },
     model: { key: 'model', title: 'Модель' },
     sizeRange: { key: 'sizeRange', title: 'Размерный ряд' },

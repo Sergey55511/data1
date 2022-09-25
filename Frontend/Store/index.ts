@@ -2,7 +2,7 @@ import { notification } from 'antd';
 import { flow, makeAutoObservable } from 'mobx';
 import * as api from './Api';
 import { ErrorStore } from './ErrorStore';
-import { iError, iLogin, iUser } from '../../Shared/Types/interfaces';
+import { iError, iUser } from '../../Shared/Types/interfaces';
 
 export class Login {
     user = { id: 0, login: '', status: '', store: '', storeId: 0 };
@@ -12,7 +12,7 @@ export class Login {
         makeAutoObservable(this);
         this.errorStore = errorStore;
     }
-    login = flow(function* (this: Login, data: iLogin, callBack: () => void) {
+    login = flow(function* (this: Login, data: iUser, callBack: () => void) {
         try {
             this.user = yield api.login(data);
             this.errorStore.resetError();
@@ -25,7 +25,7 @@ export class Login {
             console.log(err);
         }
     });
-    registration = flow(function* (this: Login, data: iLogin) {
+    registration = flow(function* (this: Login, data: iUser) {
         try {
             yield api.registration(data);
             notification.success({

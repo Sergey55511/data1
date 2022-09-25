@@ -1,15 +1,14 @@
-import { Drawer, Input, Table } from 'antd';
-import { iLeftovers } from '../../../../../Shared/Types/interfaces';
+import { iData } from '../../../../../Shared/Types/interfaces';
 import type { ColumnsType, TableProps } from 'antd/es/table';
-import { getColumnProps } from '../Helpers/getColumnProps';
-import { KEYSLEFTOVERS } from './constants';
+import { getColumnProps } from '../../../Shared/Table/Helpers/getColumnProps';
 import { useStores } from '../../../../Store/useStores';
 import { observer } from 'mobx-react-lite';
-import { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import { Dispatch, SetStateAction, useEffect } from 'react';
 import { FilterValue } from 'antd/es/table/interface';
-import { Wrapper } from './style';
 import { MyDrawer } from '../../../Shared/MyDrawer';
 import { MoveOutSolo } from './Components/MoveOut';
+import { TableApp } from '../../../Shared/Table';
+import { KEYSLEFTOVERS } from '../../../Shared/Table/constants';
 
 export const TableLeftOvers = observer(
     ({
@@ -23,8 +22,10 @@ export const TableLeftOvers = observer(
         const { leftovers } = OperationStore;
 
         useEffect(() => {
-            if (loginStore.user.storeId)
+            if (loginStore.user.storeId) {
                 OperationStore.getLeftovers(loginStore.user.storeId);
+                OperationStore.getUsers(loginStore.user.storeId);
+            }
         }, [loginStore.user.storeId]);
 
         const data = leftovers.map((item, index) => ({ ...item, key: index }));
@@ -43,7 +44,7 @@ export const TableLeftOvers = observer(
         const getColumnPropsHoc = (dataIndex: string) =>
             getColumnProps(dataIndex, filteredleftovers, filters);
 
-        const columns: ColumnsType<iLeftovers> = [
+        const columns: ColumnsType<iData> = [
             {
                 ...getColumnPropsHoc(KEYSLEFTOVERS.workpieceType.key),
                 title: KEYSLEFTOVERS.workpieceType.title,
@@ -92,31 +93,9 @@ export const TableLeftOvers = observer(
                 ...getColumnPropsHoc(KEYSLEFTOVERS.count.key),
                 title: KEYSLEFTOVERS.count.title,
             },
-            // {
-            //     title: 'Выдать гр.',
-            //     dataIndex: 'widthOut',
-            //     width: '90px',
-            //     render: (_text, _record, index) => {
-            //         return (
-            //             <InputWidth
-            //                 widthOutAll={widthOut}
-            //                 widthOut={widthOut[index]}
-            //                 index={index}
-            //                 fieldName="width"
-            //                 setWidthOut={setWidthOut}
-            //             />
-            //         );
-            //     },
-            // },
-            // {
-            //     title: 'Выдать шт.',
-            //     dataIndex: 'countOut',
-            //     width: '90px',
-            //     render: () => <Input />,
-            // },
         ];
 
-        const handleChange: TableProps<iLeftovers>['onChange'] = (
+        const handleChange: TableProps<iData>['onChange'] = (
             _pagination,
             filters,
             _sorter,
@@ -126,23 +105,21 @@ export const TableLeftOvers = observer(
         };
 
         return (
-            <Wrapper>
-                <Table
-                    onRow={(record, rowIndex) => {
-                        return {
-                            onDoubleClick: (event) => {
-                                MyDrawer({
-                                    title: 'Выдать в работу',
-                                    content: <MoveOutSolo record={record} />,
-                                });
-                            },
-                        };
-                    }}
-                    columns={columns}
-                    dataSource={data}
-                    onChange={handleChange}
-                />
-            </Wrapper>
+            <TableApp
+                onRow={(record, rowIndex) => {
+                    return {
+                        onDoubleClick: (event) => {
+                            MyDrawer({
+                                title: 'Выдать в работу',
+                                content: <MoveOutSolo record={record} />,
+                            });
+                        },
+                    };
+                }}
+                columns={columns}
+                dataSource={data}
+                onChange={handleChange}
+            />
         );
     },
 );

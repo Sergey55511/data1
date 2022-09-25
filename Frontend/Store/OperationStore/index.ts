@@ -4,17 +4,20 @@ import * as api from './Api';
 import { ErrorStore } from '../ErrorStore';
 import {
     iError,
-    iLeftovers,
+    iData,
     iNewItems,
     iOperation,
     iProductions,
+    iUser,
 } from '../../../Shared/Types/interfaces';
 import { Login } from '..';
 
 export class OperationStore {
+    users: iUser[] = [];
     operations: iOperation[] = [];
     productions: iProductions[] = [];
-    leftovers: iLeftovers[] = [];
+    leftovers: iData[] = [];
+    orders: iData[] = [];
     errorStore: ErrorStore;
     loginStore: Login;
     maxLot = 0;
@@ -34,6 +37,13 @@ export class OperationStore {
     getProductions = flow(function* (this: OperationStore, storeId: number) {
         try {
             this.productions = yield api.getProductions(storeId);
+        } catch (err) {
+            this.errorStore.setError(err as iError);
+        }
+    });
+    getUsers = flow(function* (this: OperationStore, storeId: number) {
+        try {
+            this.users = yield api.getUsers(storeId);
         } catch (err) {
             this.errorStore.setError(err as iError);
         }
@@ -61,6 +71,13 @@ export class OperationStore {
             this.errorStore.setError(err as iError);
         }
     });
+    getOrders = flow(function* (this: OperationStore, storeId: number) {
+        try {
+            this.orders = yield api.getOrders(storeId);
+        } catch (err) {
+            this.errorStore.setError(err as iError);
+        }
+    });
 
     postNewItems = flow(function* <T>(
         this: OperationStore,
@@ -78,7 +95,7 @@ export class OperationStore {
 
     moveToWork = flow(function* (
         this: OperationStore,
-        data: iLeftovers,
+        data: iData,
         callBack?: () => void,
     ) {
         try {

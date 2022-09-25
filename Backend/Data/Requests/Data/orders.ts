@@ -1,11 +1,17 @@
 import { PrismaPromise } from '@prisma/client';
 import { PrismaClient } from '@prisma/client';
 
-export const leftovers = <T>(storeId: number): PrismaPromise<T> => {
+export const orders = <T>(storeId: number): PrismaPromise<T> => {
     const prisma = new PrismaClient();
     return prisma.$queryRaw`
         SELECT 
             pp,
+			"userId",
+			u."login" as "userLogin",
+			"managerId",
+			m."login" as "managerLogin",
+			"operationId",
+			"operation",
 			"workpieceTypeId",
             "workpieceType",
             "modelId",
@@ -37,9 +43,18 @@ export const leftovers = <T>(storeId: number): PrismaPromise<T> => {
 			left join "Color" on "Data"."colorId"="Color".id
 			left join "Length" on "Data"."lengthId"="Length".id
 			left join "Channel" on "Data"."channelId"="Channel".id
+			left join "Users" m on "Data"."managerId"=m.id
+			left join "Users" u on "Data"."userId"=u.id
+			left join "Operations" on "Data"."operationId"="Operations".id
 		WHERE "Data"."storeId"=${+storeId}
         GROUP BY 
 			pp,
+			"userId",
+			u."login",
+			"managerId",
+			m."login",
+			"operationId",
+			"operation",
             "workpieceTypeId",
             "workpieceType",
 			"modelId",

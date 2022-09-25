@@ -1,10 +1,10 @@
-import { Menu } from 'antd';
+import { Avatar, Menu } from 'antd';
 import {
     DatabaseOutlined,
     VerticalAlignBottomOutlined,
-    AppstoreOutlined,
-    SettingOutlined,
+    StarOutlined,
     FileOutlined,
+    UserOutlined,
 } from '@ant-design/icons';
 import Link from 'next/link';
 import { Wrapper } from './style';
@@ -34,6 +34,11 @@ export const TopMenu = observer(({ page }: { page: tPages }) => {
                             label: <Link href="/">Остатки</Link>,
                             key: pages.leftover,
                             icon: <DatabaseOutlined />,
+                        },
+                        {
+                            label: <Link href="/orders">Задачи</Link>,
+                            key: pages.orders,
+                            icon: <StarOutlined />,
                         },
                         {
                             label: <Link href="/newItem">Приход товара</Link>,
@@ -91,7 +96,7 @@ export const TopMenu = observer(({ page }: { page: tPages }) => {
                 Склад: <span>{loginStore.user?.store || ''}</span>
             </div>
             <div className="user">
-                Пользователь:{' '}
+                <Avatar icon={<UserOutlined />} />{' '}
                 <span>
                     <Link href="/login">{loginStore.user?.login || ''}</Link>
                 </span>

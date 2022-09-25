@@ -88,21 +88,22 @@ model Stores {
   Productions    Productions[]
 }
 
-model Opereytion {
+model Operations {
   id                Int              @id @default(autoincrement())
-  opereytion        String           @unique
+  operation         String           @unique
   result            String?
   sborka            Int?
   activ             Boolean          @default(true)
   StoreOperations   StoreOperations? @relation(fields: [storeOperationsId], references: [id])
   storeOperationsId Int?
+  Data              Data[]
 }
 
 model StoreOperations {
   id         Int          @id @default(autoincrement())
   store      Stores?      @relation(fields: [storeId], references: [id])
   storeId    Int?         @map("storesId")
-  Opereytion Opereytion[]
+  Operation Operations[]
 }
 
 model Grade {
@@ -178,14 +179,6 @@ model WorkpieceType {
   position      Int     @default(autoincrement())
   active        Boolean @default(true)
   Data          Data[]
-}
-
-model Operations {
-  id        Int     @id @default(autoincrement())
-  operation String
-  position  Int     @default(autoincrement())
-  active    Boolean @default(true)
-  Data      Data[]
 }
 
 model Productions {

@@ -1,14 +1,14 @@
 import axios from 'axios';
-import { iLogin } from '../../../Shared/Types/interfaces';
+import { iUser } from '../../../Shared/Types/interfaces';
 
-export const login = (data: iLogin) => {
+export const login = (data: iUser) => {
     return axios({
         url: '/api/auth/login',
         method: 'POST',
         data,
     }).then((res) => res.data);
 };
-export const registration = (data: iLogin) => {
+export const registration = (data: iUser) => {
     return axios({
         url: '/api/auth/registration',
         method: 'POST',

@@ -1,10 +1,3 @@
-export interface iLogin {
-    login: string;
-    password: string;
-    status?: string;
-    store?: number;
-}
-
 export interface iUser {
     id: number;
     login: string;
@@ -26,10 +19,14 @@ export interface iError {
         data: { message: string };
     };
 }
-export interface iLeftovers {
+export interface iData {
     pp?: number;
     workpieceTypeId: number;
     workpieceType?: string;
+    userId?: number;
+    userLogin?:string;
+    managerId?: number;
+    managerLogin?: string;
     modelId?: number;
     model?: string;
     sizeRangeId?: number;
@@ -81,7 +78,7 @@ export interface iNewItems {
 }
 export interface iOperation {
     id: number;
-    opereytion: string;
+    operation: string;
 }
 export interface iProductions {
     id: number;

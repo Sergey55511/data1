@@ -1,9 +1,9 @@
 import { PrismaClient } from '@prisma/client';
 import moment from 'moment';
-import { iLeftovers } from '../../../../Shared/Types/interfaces';
+import { iData } from '../../../../Shared/Types/interfaces';
 
 export const postNewItems = async <T>(
-    data: iLeftovers[],
+    data: iData[],
     isSetNewPP = true,
 ): Promise<T> => {
     const prisma = new PrismaClient();

@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { iLeftovers, iNewItems } from '../../../Shared/Types/interfaces';
+import { iData } from '../../../Shared/Types/interfaces';
 
 export const getOperations = (storeId: number) => {
     return axios({
@@ -9,33 +9,33 @@ export const getOperations = (storeId: number) => {
 };
 export const leftovers = (storeId: number) => {
     return axios({
-        url: `/api/leftovers?storeId=${storeId}`,
+        url: `/api/data/leftovers?storeId=${storeId}`,
         method: 'GET',
     }).then((res) => res.data);
 };
 export const getMaxLot = () => {
     return axios({
-        url: `/api/Data/getMaxLot`,
+        url: `/api/data/getMaxLot`,
         method: 'GET',
     }).then((res) => res.data.lot);
 };
 export const postNewItems = <T>(data: T[]) => {
     return axios({
-        url: `/api/Data/newItems`,
+        url: `/api/data/newItems`,
         method: 'POST',
         data,
     }).then((res) => res.data);
 };
-export const moveToWork = (data: iLeftovers) => {
+export const moveToWork = (data: iData) => {
     return axios({
-        url: `/api/Data/moveToWork`,
+        url: `/api/data/moveToWork`,
         method: 'POST',
         data,
     }).then((res) => res.data);
 };
 export const postNewDataItems = <T>(data: T[]) => {
     return axios({
-        url: `/api/Data/moveToWork`,
+        url: `/api/data/moveToWork`,
         method: 'POST',
         data,
     }).then((res) => res.data);
@@ -46,10 +46,22 @@ export const getProductions = (storeId: number) => {
         method: 'GET',
     }).then((res) => res.data);
 };
+export const getUsers = (storeId: number) => {
+    return axios({
+        url: `/api/list/users?storeId=${storeId}`,
+        method: 'GET',
+    }).then((res) => res.data);
+};
 export const postProductions = (data: { description: string; storeId: number }) => {
     return axios({
         url: `/api/list/productions`,
         method: 'POST',
         data,
+    }).then((res) => res.data);
+};
+export const getOrders = (storeId: number) => {
+    return axios({
+        url: `/api/data/orders?storeId=${storeId}`,
+        method: 'GET',
     }).then((res) => res.data);
 };

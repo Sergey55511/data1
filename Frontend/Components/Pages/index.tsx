@@ -2,6 +2,7 @@ import { LayOut } from '../LayOut';
 import { pages, tPages } from './constants';
 import Leftover from './Leftover';
 import { NewItem } from './Moves/MoveIn/NewItem';
+import { Orders } from './Orders';
 
 interface iProps {
     page: tPages;
@@ -20,6 +21,8 @@ const PageSwitcher = ({ page }: { page: tPages }) => {
             return <Leftover />;
         case pages.newItem:
             return <NewItem />;
+        case pages.orders:
+            return <Orders />;
     }
     return <></>;
 };

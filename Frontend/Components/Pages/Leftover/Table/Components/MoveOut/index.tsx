@@ -1,26 +1,26 @@
 import { Button, DatePicker, Divider, Input, Select } from 'antd';
 import { observer } from 'mobx-react-lite';
 import { SetStateAction, useState } from 'react';
-import { iLeftovers } from '../../../../../../../Shared/Types/interfaces';
+import { iData } from '../../../../../../../Shared/Types/interfaces';
 import { useStores } from '../../../../../../Store/useStores';
 import { MyDrawer } from '../../../../../Shared/MyDrawer';
-import { KEYSLEFTOVERS } from '../../constants';
+import { KEYSLEFTOVERS } from '../../../../../Shared/Table/constants';
 import { NumProduction } from '../NumProduction';
 import { Wrapper } from './style';
 
 type tConstKeys = keyof typeof KEYSLEFTOVERS;
 type tValue = number | string | undefined;
 export const MoveOutSolo = observer(
-    ({ record, onClose }: { record: iLeftovers; onClose?: () => void }) => {
+    ({ record, onClose }: { record: iData; onClose?: () => void }) => {
         const { OperationStore, loginStore, UIStore } = useStores();
         const [numProd, setNumProd] = useState(0);
         const [operation, setOperation] = useState<number | undefined>(undefined);
+        const [managerId, setManagerId] = useState<number | undefined>(undefined);
         const [isLoading, setIsLoading] = useState(false);
         const [width, setWidth] = useState<tValue>(undefined);
         const [count, setCount] = useState<tValue>(undefined);
         const [date, setDate] = useState<moment.Moment | null>(null);
         const keys = Object.keys(record);
-
         const setNumProduction = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
             e.preventDefault();
             MyDrawer({
@@ -53,13 +53,15 @@ export const MoveOutSolo = observer(
             if (test(count)) return false;
             if (isMinus(record.width!, width)) return false;
             if (count) if ((record.count ?? 0 - +count) < 0) return false;
-            return operation && date && (width || count) ? true : false;
+            return operation && date && managerId && (width || count) ? true : false;
         })();
 
         const subbmitHandler = () => {
             setIsLoading(true);
             OperationStore.moveToWork(
                 {
+                    userId: loginStore.user.id,
+                    managerId,
                     storeId: loginStore.user.storeId,
                     modelId: record.modelId,
                     colorId: record.colorId,
@@ -107,7 +109,7 @@ export const MoveOutSolo = observer(
                             return (
                                 <div key={key} className="item">
                                     <h3>{KEYSLEFTOVERS[key as tConstKeys].title}</h3>
-                                    <p>{record[key as keyof iLeftovers] as string}</p>
+                                    <p>{record[key as keyof iData] as string}</p>
                                 </div>
                             );
                         })}
@@ -130,7 +132,21 @@ export const MoveOutSolo = observer(
                 >
                     {OperationStore.operations?.map((item) => (
                         <Select.Option key={item.id} value={item.id}>
-                            {item.opereytion}
+                            {item.operation}
+                        </Select.Option>
+                    ))}
+                </Select>
+                <Divider />
+                <Select
+                    style={{ width: '100%' }}
+                    placeholder="Исполнитель"
+                    value={managerId}
+                    onChange={(v) => setManagerId(v)}
+                    showSearch
+                >
+                    {OperationStore.users?.map((item) => (
+                        <Select.Option key={item.id} value={item.id}>
+                            {item.login}
                         </Select.Option>
                     ))}
                 </Select>

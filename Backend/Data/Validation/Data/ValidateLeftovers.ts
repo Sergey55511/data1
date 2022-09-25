@@ -1,11 +1,11 @@
 import { NextApiRequest } from 'next';
 import { PrismaClient } from '@prisma/client';
 import { MyError } from '../../../../Shared/Classes/error';
-import { iLeftovers } from '../../../../Shared/Types/interfaces';
+import { iData } from '../../../../Shared/Types/interfaces';
 
 export const validateLeftovers = async (req: NextApiRequest) => {
     const prisma = new PrismaClient();
-    const body = req.body as iLeftovers;
+    const body = req.body as iData;
     const where = {
         workpieceTypeId: body.workpieceTypeId,
         modelId: body.modelId,

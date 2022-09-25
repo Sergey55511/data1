@@ -1,25 +1,30 @@
-import { WarningOutlined } from '@ant-design/icons';
-import { Button, Drawer, Input, Modal, notification } from 'antd';
+import { Drawer, DrawerProps } from 'antd';
 import React from 'react';
-import ReactDOM from 'react-dom';
 import { createRoot } from 'react-dom/client';
-import { Wrapper } from './style';
 
 export type tNewValue = string | number | undefined;
 
-type tProps = {
+type tProps = DrawerProps & {
     title: string;
     content: JSX.Element;
     onCancel?: () => void;
 };
 
-const DraverData1 = ({ title, content, onCancel }: tProps) => {
-    const cloneContent=React.cloneElement(content, { onClose: onCancel });
+const DraverData = ({
+    title,
+    content,
+    onCancel,
+    placement = 'right',
+    width = 500,
+    height = '70%',
+}: tProps) => {
+    const cloneContent = React.cloneElement(content, { onClose: onCancel });
     return (
         <Drawer
             title={title}
-            placement="right"
-            width={500}
+            placement={placement}
+            width={width}
+            height={height}
             onClose={() => {
                 if (onCancel) onCancel();
             }}
@@ -44,11 +49,5 @@ export const MyDrawer = ({ onCancel, ...rest }: tProps) => {
         destroy();
     };
 
-    const onOkHandler = async (value: tNewValue) => {
-        console.log('hello');
-
-        destroy();
-    };
-
-    root.render(<DraverData1 {...rest} onCancel={onCancelHandler} />);
+    root.render(<DraverData {...rest} onCancel={onCancelHandler} />);
 };

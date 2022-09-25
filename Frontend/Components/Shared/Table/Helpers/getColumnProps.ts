@@ -1,20 +1,22 @@
 import { Dispatch, SetStateAction } from 'react';
-import { iLeftovers } from '../../../../../Shared/Types/interfaces';
+import { iData } from '../../../../../Shared/Types/interfaces';
 import { getUniqueData } from './getUniqueData';
 import { FilterValue } from 'antd/es/table/interface';
 
 export const getColumnProps = (
     dataIndex: string,
-    leftovers: iLeftovers[],
+    leftovers: iData[],
     filters: Record<string, FilterValue | null>,
 ) => {
-    const key = dataIndex as keyof iLeftovers;
+    const key = dataIndex as keyof iData;
+    console.log('key', key);
+
     return {
         dataIndex: key,
         filterSearch: true,
         filters: getUniqueData(leftovers, key),
         filteredValue: filters[dataIndex] || null,
-        onFilter: (value: any, record: iLeftovers) => {
+        onFilter: (value: any, record: iData) => {
             return record[key] == value;
         },
     };
