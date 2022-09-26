@@ -4,7 +4,7 @@ import { iData } from '../../../../Shared/Types/interfaces';
 
 export const postNewItems = async <T>(
     data: iData[],
-    isSetNewPP = true,
+    isSetNewPP = true
 ): Promise<T> => {
     const prisma = new PrismaClient();
     let pp: number;

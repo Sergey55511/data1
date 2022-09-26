@@ -33,9 +33,9 @@ export const moveToWork = (data: iData) => {
         data,
     }).then((res) => res.data);
 };
-export const postNewDataItems = <T>(data: T[]) => {
+export const changeNumProduction = (data: iData) => {
     return axios({
-        url: `/api/data/moveToWork`,
+        url: `/api/data/changeNumProduction`,
         method: 'POST',
         data,
     }).then((res) => res.data);

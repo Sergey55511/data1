@@ -105,4 +105,15 @@ export class OperationStore {
             this.errorStore.setError(err as iError);
         }
     });
+
+    changeNumProduction = flow(function* (
+        this: OperationStore,
+        data: iData,
+    ) {
+        try {
+            yield api.changeNumProduction(data);
+        } catch (err) {
+            this.errorStore.setError(err as iError);
+        }
+    });
 }
