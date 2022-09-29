@@ -1,4 +1,3 @@
-import { PrismaPromise } from '@prisma/client';
 import { NextApiRequest, NextApiResponse } from 'next';
 import { resError } from '../../../Shared/Helpers';
 import { varifyJWT } from './verifyJWT';
@@ -16,11 +15,8 @@ export const fetchService = async <T>({
 }) => {
     try {
         await varifyJWT(req, res);
-        console.log('after verifyJWT');
         if (validation) await validation(req);
         const result = await fetch();
-
-        console.log('result', result);
 
         if (result) {
             res.status(200).json(result);

@@ -65,3 +65,9 @@ export const getOrders = (storeId: number) => {
         method: 'GET',
     }).then((res) => res.data);
 };
+export const getOrder = (pp: number) => {
+    return axios({
+        url: `/api/data/orders/getOrder?pp=${pp}`,
+        method: 'GET',
+    }).then((res) => res.data);
+};

@@ -9,6 +9,7 @@ import isNumber from 'lodash/isNumber';
 import { observer } from 'mobx-react-lite';
 import { useStores } from '../../../../../Store/useStores';
 import { iNewItems } from '../../../../../../Shared/Types/interfaces';
+import { Frame } from '../../../../Shared/Frame';
 
 export const NewItem = observer(() => {
     const [primeData, setPrimeData] = useState<iPrimeData>(initPrimeData());
@@ -144,8 +145,7 @@ export const NewItem = observer(() => {
     return (
         <Wrapper>
             <Title text="Приход сырья:" />
-            <fieldset className="frame">
-                <legend>Общие данные</legend>
+            <Frame legend="Общие данные">
                 <div className="primeData">
                     <div>
                         <Tooltip placement="right" title="Сохранить">
@@ -175,7 +175,7 @@ export const NewItem = observer(() => {
                         step={primeData.numDocument.step}
                     />
                 </div>
-            </fieldset>
+            </Frame>
             <div className="addRow">
                 <a href="#" onClick={addRowHandler}>
                     Добавить строку

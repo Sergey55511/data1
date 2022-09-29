@@ -1,5 +1,6 @@
 import { LayOut } from '../LayOut';
 import { pages, tPages } from './constants';
+import { GetOrder } from './Orders/GetOrder';
 import Leftover from './Leftover';
 import { NewItem } from './Moves/MoveIn/NewItem';
 import { Orders } from './Orders';
@@ -23,6 +24,8 @@ const PageSwitcher = ({ page }: { page: tPages }) => {
             return <NewItem />;
         case pages.orders:
             return <Orders />;
+        case pages.getOrder:
+            return <GetOrder />;
     }
     return <></>;
 };

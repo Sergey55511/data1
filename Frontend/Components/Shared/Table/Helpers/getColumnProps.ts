@@ -9,7 +9,6 @@ export const getColumnProps = (
     filters: Record<string, FilterValue | null>,
 ) => {
     const key = dataIndex as keyof iData;
-    console.log('key', key);
 
     return {
         dataIndex: key,

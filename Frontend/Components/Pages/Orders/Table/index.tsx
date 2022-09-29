@@ -8,13 +8,13 @@ import { useState } from 'react';
 import { KEYSLEFTOVERS } from '../../../Shared/Table/constants';
 import { TableApp } from '../../../Shared/Table';
 import { MyDrawer } from '../../../Shared/MyDrawer';
+import { useRouter } from 'next/router';
 
 export const OrdersTable = observer(() => {
     const [filters, setFilters] = useState<Record<string, FilterValue | null>>({});
     const { OperationStore } = useStores();
     const data = OperationStore.orders.map((item, index) => ({ ...item, key: index }));
-
-    console.log('data', data);
+    const router = useRouter();
 
     const filteredleftovers = OperationStore.orders.filter((item) => {
         for (const key in item) {
@@ -109,14 +109,10 @@ export const OrdersTable = observer(() => {
 
     return (
         <TableApp
-            onRow={(record, rowIndex) => {
+            onRow={(record, _rowIndex) => {
                 return {
-                    onDoubleClick: (event) => {
-                        MyDrawer({
-                            title: 'Принять результат:',
-                            content: <div>hello</div>,
-                            placement: 'bottom',
-                        });
+                    onDoubleClick: (_event) => {
+                        router.push(`/orders/getOrder/${record.pp}`);
                     },
                 };
             }}

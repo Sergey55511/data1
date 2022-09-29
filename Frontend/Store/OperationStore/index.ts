@@ -78,6 +78,14 @@ export class OperationStore {
             this.errorStore.setError(err as iError);
         }
     });
+    
+    getOrder = flow(function* (this: OperationStore, pp: number) {
+        try {
+            return yield api.getOrder(pp);
+        } catch (err) {
+            this.errorStore.setError(err as iError);
+        }
+    });
 
     postNewItems = flow(function* <T>(
         this: OperationStore,
@@ -106,10 +114,7 @@ export class OperationStore {
         }
     });
 
-    changeNumProduction = flow(function* (
-        this: OperationStore,
-        data: iData,
-    ) {
+    changeNumProduction = flow(function* (this: OperationStore, data: iData) {
         try {
             yield api.changeNumProduction(data);
         } catch (err) {
