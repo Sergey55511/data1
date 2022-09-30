@@ -6,5 +6,8 @@ export const Wrapper = styled.div`
         h4 {
             margin-bottom: 4px;
         }
+        .input {
+            width: 250px;
+        }
     }
 `;
