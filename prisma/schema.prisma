@@ -13,7 +13,6 @@ model Data {
   lot              Int?
   numDocument      String?
   pp               Int?
-  state            String?
   sizeRange        SizeRange?     @relation(fields: [sizeRangeId], references: [id])
   sizeRangeId      Int?
   widthInDocument  Float?
@@ -42,9 +41,7 @@ model Data {
   workpieceTypeId  Int?
   Operations       Operations?    @relation(fields: [operationId], references: [id])
   operationId      Int?
-  User             Users?         @relation("user", fields: [userId], references: [id])
   userId           Int?
-  Manager          Users?         @relation("manager", fields: [managerId], references: [id])
   managerId        Int?
   Stores           Stores?        @relation(fields: [storeId], references: [id])
   storeId          Int?
@@ -63,19 +60,37 @@ model Data {
   stateId          Int?
   Channel          Channel?       @relation(fields: [channelId], references: [id])
   channelId        Int?
+  Users            Users?         @relation(fields: [userId], references: [id])
+  Managers         Managers?      @relation(fields: [managerId], references: [id])
+}
+
+model Managers {
+  id                Int                 @id @default(autoincrement())
+  name              String
+  store             Stores?             @relation(fields: [storeId], references: [id])
+  storeId           Int?                @map("storesId")
+  active            Boolean             @default(true)
+  Data              Data[]
+  ManagerOperations ManagerOperations[]
+}
+
+model ManagerOperations {
+  id        Int          @id @default(autoincrement())
+  manager   Managers?    @relation(fields: [managerId], references: [id])
+  managerId Int?         @map("storesId")
+  Operation Operations[]
 }
 
 model Users {
-  id          Int     @id @default(autoincrement())
-  login       String  @unique
-  password    String
-  key         String?
-  status      String?
-  store       Stores? @relation(fields: [storeId], references: [id])
-  activ       Boolean @default(true)
-  storeId     Int?    @map("storesId")
-  DataUser    Data[]  @relation("user")
-  DataManager Data[]  @relation("manager")
+  id       Int     @id @default(autoincrement())
+  login    String  @unique
+  password String
+  key      String?
+  status   String?
+  store    Stores? @relation(fields: [storeId], references: [id])
+  activ    Boolean @default(true)
+  storeId  Int?    @map("storesId")
+  Data     Data[]
 }
 
 model Stores {
@@ -86,23 +101,26 @@ model Stores {
   StoreOperation StoreOperations[]
   BilletStore    BilletStore[]
   Productions    Productions[]
+  Managers       Managers[]
 }
 
 model Operations {
-  id                Int              @id @default(autoincrement())
-  operation         String           @unique
-  result            String?
-  sborka            Int?
-  activ             Boolean          @default(true)
-  StoreOperations   StoreOperations? @relation(fields: [storeOperationsId], references: [id])
-  storeOperationsId Int?
-  Data              Data[]
+  id                  Int                @id @default(autoincrement())
+  operation           String             @unique
+  result              String?
+  sborka              Int?
+  activ               Boolean            @default(true)
+  StoreOperations     StoreOperations?   @relation(fields: [storeOperationsId], references: [id])
+  storeOperationsId   Int?
+  Data                Data[]
+  managerOperations   ManagerOperations? @relation(fields: [managerOperationsId], references: [id])
+  managerOperationsId Int?
 }
 
 model StoreOperations {
-  id         Int          @id @default(autoincrement())
-  store      Stores?      @relation(fields: [storeId], references: [id])
-  storeId    Int?         @map("storesId")
+  id        Int          @id @default(autoincrement())
+  store     Stores?      @relation(fields: [storeId], references: [id])
+  storeId   Int?         @map("storesId")
   Operation Operations[]
 }
 

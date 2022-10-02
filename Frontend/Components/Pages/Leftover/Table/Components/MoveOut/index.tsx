@@ -1,7 +1,8 @@
 import { Button, DatePicker, Divider, Input, Select } from 'antd';
 import { observer } from 'mobx-react-lite';
+import moment from 'moment';
 import { SetStateAction, useRef, useState } from 'react';
-import { iData } from '../../../../../../../Shared/Types/interfaces';
+import { iData, iDataTable } from '../../../../../../../Shared/Types/interfaces';
 import { useStores } from '../../../../../../Store/useStores';
 import { MyDrawer } from '../../../../../Shared/MyDrawer';
 import { KEYSLEFTOVERS } from '../../../../../Shared/Table/constants';
@@ -20,7 +21,7 @@ export const MoveOutSolo = observer(
         const [isLoading, setIsLoading] = useState(false);
         const [width, setWidth] = useState<tValue>(undefined);
         const [count, setCount] = useState<tValue>(undefined);
-        const [date, setDate] = useState<moment.Moment | null>(null);
+        const [date, setDate] = useState<moment.Moment | null>(moment());
         const keys = Object.keys(record);
         const setNumProduction = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
             e.preventDefault();
@@ -66,7 +67,7 @@ export const MoveOutSolo = observer(
 
         const subbmitHandler = async () => {
             setIsLoading(true);
-            const data: iData = {
+            const data: iDataTable = {
                 userId: loginStore.user.id,
                 managerId,
                 storeId: loginStore.user.storeId,
@@ -87,12 +88,15 @@ export const MoveOutSolo = observer(
                 productionId: numProd || undefined,
             };
 
-            if (isNewProductionId.current) await OperationStore.changeNumProduction(data);
+            if (isNewProductionId.current)
+                await OperationStore.changeNumProduction({
+                    ...data
+                });
 
             await OperationStore.moveToWork(data);
 
             setIsLoading(false);
-            
+
             UIStore.setIsLoading(true);
             if (onClose) onClose();
             await OperationStore.getLeftovers(loginStore.user.storeId);

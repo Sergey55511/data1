@@ -1,16 +1,17 @@
 import { PrismaClient } from '@prisma/client';
 import moment from 'moment';
-import { iData } from '../../../../Shared/Types/interfaces';
+import { iDataTable } from '../../../../Shared/Types/interfaces';
 
-export const changeNumProduction = async <T>(data: iData[]): Promise<T> => {
+export const changeNumProduction = async <T>(data: iDataTable[]): Promise<T> => {
     const prisma = new PrismaClient();
 
-    const tmpData = (item: iData) => ({
+    const tmpData = (item: iDataTable) => ({
         ...item,
         date: moment(item.date)?.toDate(),
         operationId: 38,
         pp: undefined,
         managerId: item.userId,
+        productionId: undefined,
     });
 
     const dateOut = data?.map(tmpData);
@@ -20,6 +21,7 @@ export const changeNumProduction = async <T>(data: iData[]): Promise<T> => {
         countItemsOut: undefined,
         widthIn: item.widthOut,
         countItemsIn: item.countItemsOut,
+        productionId: item.productionId,
     }));
 
     await prisma.data.createMany({

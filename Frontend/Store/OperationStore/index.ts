@@ -9,6 +9,7 @@ import {
     iOperation,
     iProductions,
     iUser,
+    iDataTable,
 } from '../../../Shared/Types/interfaces';
 import { Login } from '..';
 
@@ -78,7 +79,7 @@ export class OperationStore {
             this.errorStore.setError(err as iError);
         }
     });
-    
+
     getOrder = flow(function* (this: OperationStore, pp: number) {
         try {
             return yield api.getOrder(pp);
@@ -103,11 +104,24 @@ export class OperationStore {
 
     moveToWork = flow(function* (
         this: OperationStore,
-        data: iData,
+        data: iDataTable,
         callBack?: () => void,
     ) {
         try {
             yield api.moveToWork(data);
+            if (callBack) callBack();
+        } catch (err) {
+            this.errorStore.setError(err as iError);
+        }
+    });
+
+    postOrderResult = flow(function* (
+        this: OperationStore,
+        data: iDataTable[],
+        callBack?: () => void,
+    ) {
+        try {
+            yield api.postOrderResult(data);
             if (callBack) callBack();
         } catch (err) {
             this.errorStore.setError(err as iError);

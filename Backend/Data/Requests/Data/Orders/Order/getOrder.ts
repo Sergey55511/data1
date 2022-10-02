@@ -1,11 +1,21 @@
+import jwt from 'jsonwebtoken';
 import { PrismaPromise } from '@prisma/client';
 import { PrismaClient } from '@prisma/client';
+import { NextApiRequest } from 'next';
+import { iCookies, iUser } from '../../../../../../Shared/Types/interfaces';
+import { KEY } from '../../../../Services/createJWT';
 
-export const orders = <T>(storeId: number): PrismaPromise<T> => {
+export const getOrder = <T>(req: NextApiRequest): PrismaPromise<T> => {
+    const cookies = req.cookies as iCookies;
+    const atkn = jwt.verify(cookies?.atkn, KEY) as iUser;
+    const storeId = atkn.storeId;
+    const pp = req.query.pp;
+
     const prisma = new PrismaClient();
     return prisma.$queryRaw`
         SELECT 
             pp,
+            "productionId",
 			"userId",
 			u."login" as "userLogin",
 			"managerId",
@@ -31,6 +41,7 @@ export const orders = <T>(storeId: number): PrismaPromise<T> => {
             "stateId",
             state,
             lot,
+            "widthOut",
             COALESCE(round(sum("widthIn")::numeric,2),0)-COALESCE(round(coalesce(sum("widthOut"),0)::numeric,2),0) as "width",
             COALESCE(round(sum("countItemsIn")::numeric,2),0)-COALESCE(round(sum("countItemsOut")::numeric,2),0) as "count",
             COALESCE(sum("moneyIn"),0)-COALESCE(sum("moneyOut"),0) as "code"
@@ -46,9 +57,11 @@ export const orders = <T>(storeId: number): PrismaPromise<T> => {
 			left join "Users" m on "Data"."managerId"=m.id
 			left join "Users" u on "Data"."userId"=u.id
 			left join "Operations" on "Data"."operationId"="Operations".id
-		WHERE "Data"."storeId"=${+storeId}
+            left join "State" on "Data"."stateId"="State".id
+		WHERE "Data"."storeId"=${+storeId!} and "Data".pp=${+pp!}
         GROUP BY 
 			pp,
+            "productionId",
 			"userId",
 			u."login",
 			"managerId",
@@ -73,7 +86,8 @@ export const orders = <T>(storeId: number): PrismaPromise<T> => {
             "materialGroup",
             "stateId",
             state,
-            lot
+            lot,
+            "widthOut"
         HAVING pp is not null and 
 		COALESCE(round(sum("widthIn")::numeric,2),0)-COALESCE(round(coalesce(sum("widthOut"),0)::numeric,2),0)<>0 or
         COALESCE(round(sum("countItemsIn")::numeric,2),0)-COALESCE(round(sum("countItemsOut")::numeric,2),0)<>0;

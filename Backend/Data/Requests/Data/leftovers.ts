@@ -7,6 +7,8 @@ export const leftovers = <T>(storeId: number): PrismaPromise<T> => {
         SELECT 
             "workpieceTypeId",
             "workpieceType",
+			"productionId",
+			"Productions".description as "production",
             "modelId",
 			"model",
             "sizeRangeId",
@@ -36,10 +38,14 @@ export const leftovers = <T>(storeId: number): PrismaPromise<T> => {
 			left join "Color" on "Data"."colorId"="Color".id
 			left join "Length" on "Data"."lengthId"="Length".id
 			left join "Channel" on "Data"."channelId"="Channel".id
+			left join "Productions" on "Data"."productionId"="Productions".id
+            left join "State" on "Data"."stateId"="State".id
 		WHERE "Data"."storeId"=${+storeId}
         GROUP BY 
             "workpieceTypeId",
             "workpieceType",
+			"productionId",
+			"Productions".description,
 			"modelId",
             "model",
             "sizeRangeId",

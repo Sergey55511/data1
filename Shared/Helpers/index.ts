@@ -1,16 +1,50 @@
 import { NextApiResponse } from 'next';
 import { MyError } from '../Classes/error';
-import { iUser } from '../Types/interfaces';
+import { iData, iDataTable, iUser } from '../Types/interfaces';
+
+export const prepareDataTable = (data: iData): iDataTable => {
+    const dataTableKeys = [
+        'lot',
+        'numProduction',
+        'pp',
+        'workpieceTypeId',
+        'userId',
+        'managerId',
+        'modelId',
+        'sizeRangeId',
+        'materialGroupId',
+        'colorId',
+        'lengthId',
+        'channelId',
+        'gradeId',
+        'stateId',
+        'storeId',
+        'productionId',
+        'operationId',
+        'countItemsOut',
+        'widthOut',
+        'widthIn',
+        'date',
+    ];
+    const result: iDataTable = {};
+    Object.keys(data).forEach((key) => {
+        const keyDt = key as keyof iDataTable;
+        if (dataTableKeys.includes(key)) result[keyDt] = data[keyDt];
+    });
+    return result;
+};
 
 export const resError = (err: any, res: NextApiResponse) => {
     console.log('err', err);
     const error = err as MyError;
-    res.status(error?.status||500).json({ message: error?.message|| 'unexoected error' });
+    res.status(error?.status || 500).json({
+        message: error?.message || 'unexoected error',
+    });
 };
 
 export const createAtkn = (user: iUser) => {
     return {
-        id:user.id,
+        id: user.id,
         login: user.login,
         status: user.status,
         store: user.store,

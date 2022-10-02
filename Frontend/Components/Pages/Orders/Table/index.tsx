@@ -53,6 +53,10 @@ export const OrdersTable = observer(() => {
             title: KEYSLEFTOVERS.workpieceType.title,
         },
         {
+            ...getColumnPropsHoc(KEYSLEFTOVERS.state.key),
+            title: KEYSLEFTOVERS.state.title,
+        },
+        {
             ...getColumnPropsHoc(KEYSLEFTOVERS.model.key),
             title: KEYSLEFTOVERS.model.title,
         },

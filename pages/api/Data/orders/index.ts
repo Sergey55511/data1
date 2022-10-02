@@ -1,7 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { fetchService } from '../../../../Backend/Data/Services/fetch';
 import { iData } from '../../../../Shared/Types/interfaces';
-import { orders } from '../../../../Backend/Data/Requests/Data/Order';
+import { orders } from '../../../../Backend/Data/Requests/Data/Orders';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     switch (req.method) {

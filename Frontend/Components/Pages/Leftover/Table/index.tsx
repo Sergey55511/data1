@@ -50,6 +50,10 @@ export const TableLeftOvers = observer(
                 title: KEYSLEFTOVERS.workpieceType.title,
             },
             {
+                ...getColumnPropsHoc(KEYSLEFTOVERS.state.key),
+                title: KEYSLEFTOVERS.state.title,
+            },
+            {
                 ...getColumnPropsHoc(KEYSLEFTOVERS.model.key),
                 title: KEYSLEFTOVERS.model.title,
             },
@@ -78,12 +82,12 @@ export const TableLeftOvers = observer(
                 title: KEYSLEFTOVERS.grade.title,
             },
             {
-                ...getColumnPropsHoc(KEYSLEFTOVERS.state.key),
-                title: KEYSLEFTOVERS.state.title,
-            },
-            {
                 ...getColumnPropsHoc(KEYSLEFTOVERS.lot.key),
                 title: KEYSLEFTOVERS.lot.title,
+            },
+            {
+                ...getColumnPropsHoc(KEYSLEFTOVERS.productionId.key),
+                title: KEYSLEFTOVERS.productionId.title,
             },
             {
                 ...getColumnPropsHoc(KEYSLEFTOVERS.width.key),

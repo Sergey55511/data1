@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { iData } from '../../../Shared/Types/interfaces';
+import { iData, iDataTable } from '../../../Shared/Types/interfaces';
 
 export const getOperations = (storeId: number) => {
     return axios({
@@ -26,9 +26,16 @@ export const postNewItems = <T>(data: T[]) => {
         data,
     }).then((res) => res.data);
 };
-export const moveToWork = (data: iData) => {
+export const moveToWork = (data: iDataTable) => {
     return axios({
         url: `/api/data/moveToWork`,
+        method: 'POST',
+        data,
+    }).then((res) => res.data);
+};
+export const postOrderResult = (data: iDataTable[]) => {
+    return axios({
+        url: `/api/data/orders/order`,
         method: 'POST',
         data,
     }).then((res) => res.data);
@@ -67,7 +74,7 @@ export const getOrders = (storeId: number) => {
 };
 export const getOrder = (pp: number) => {
     return axios({
-        url: `/api/data/orders/getOrder?pp=${pp}`,
+        url: `/api/data/orders/order?pp=${pp}`,
         method: 'GET',
     }).then((res) => res.data);
 };

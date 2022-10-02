@@ -19,41 +19,45 @@ export interface iError {
         data: { message: string };
     };
 }
-export interface iData {
-    pp?: number;
-    workpieceTypeId: number;
-    workpieceType?: string;
-    userId?: number;
-    userLogin?:string;
-    managerId?: number;
-    managerLogin?: string;
-    modelId?: number;
-    model?: string;
-    sizeRangeId?: number;
-    sizeRange?: string;
-    materialGroupId?: number;
-    materialGroup?: string;
-    colorId?: number;
-    color?: string;
-    lengthId: number;
-    length?: string;
-    channelId?: number;
-    channel?: number;
-    gradeId?: number;
-    grade?: string;
-    stateId?: number;
-    storeId?: number;
-    state?: string;
+export interface iDataTable {
     lot?: number;
     numProduction?: string;
-    width?: number;
-    count?: number;
+    pp?: number;
+    workpieceTypeId?: number;
+    userId?: number;
+    managerId?: number;
+    modelId?: number;
+    sizeRangeId?: number;
+    materialGroupId?: number;
+    colorId?: number;
+    lengthId?: number;
+    channelId?: number;
+    gradeId?: number;
+    stateId?: number;
+    storeId?: number;
     productionId?: number;
-    code?: number;
-    date?: moment.Moment | null | any;
+    operationId?: number;
     countItemsOut?: number;
     widthOut?: number;
-    operationId?: number;
+    widthIn?: number;
+    date?: moment.Moment | null | any;
+}
+
+export interface iData extends iDataTable {
+    userLogin?: string;
+    managerLogin?: string;
+    model?: string;
+    sizeRange?: string;
+    materialGroup?: string;
+    color?: string;
+    length?: string;
+    channel?: number;
+    grade?: string;
+    state?: string;
+    workpieceType?: string;
+    width?: number;
+    count?: number;
+    code?: number;
 }
 
 interface iList {

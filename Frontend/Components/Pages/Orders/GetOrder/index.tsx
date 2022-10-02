@@ -35,7 +35,7 @@ export const GetOrder = () => {
             if (!order) return null;
             return (
                 <div className="item">
-                    <h4>{title}</h4>
+                    <h4>{title}:</h4>
                     <div>{order[KEYSLEFTOVERS[keyObj].key as keyof iData]}</div>
                 </div>
             );
@@ -49,19 +49,19 @@ export const GetOrder = () => {
                 <div className="order">
                     <Frame legend="В работе">
                         <div>
+                            <Item keyObj="operation" />
                             <Item keyObj="user" />
                             <Item keyObj="manager" />
-                            <Item keyObj="operation" />
-                            <Item keyObj="workpieceType" />
-                            <Item keyObj="model" />
+                            <Item keyObj="lot" />
                             <Item keyObj="sizeRange" />
+                            <Item keyObj="workpieceType" />
+                            <Item keyObj="materialGroup" />
+                            <Item keyObj="grade" />
+                            <Item keyObj="model" />
                             <Item keyObj="color" />
                             <Item keyObj="length" />
                             <Item keyObj="channel" />
-                            <Item keyObj="grade" />
-                            <Item keyObj="materialGroup" />
                             <Item keyObj="state" />
-                            <Item keyObj="lot" />
                             <Item keyObj="width" title="В работе гр." />
                             <Item keyObj="count" title="В работе шт." />
                         </div>
@@ -69,7 +69,10 @@ export const GetOrder = () => {
                 </div>
                 <div className="result">
                     <Frame legend="Результат">
-                        <GetOrderSwitcher operationId={order?.operationId || 0} />
+                        <GetOrderSwitcher
+                            operationId={order?.operationId || 0}
+                            record={orders[0]}
+                        />
                         {/* <pre>{JSON.stringify(order, undefined, 2)}</pre> */}
                     </Frame>
                 </div>

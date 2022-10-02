@@ -79,6 +79,7 @@ export const NumProduction = observer(
                         type="primary"
                         onClick={newProductionHandler}
                         loading={isLoading}
+                        disabled={!description}
                     >
                         Создать
                     </Button>

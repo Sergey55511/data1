@@ -69,7 +69,7 @@ export const NewItem = observer(() => {
                 const res: any = {
                     [primeData.lot.field]: primeData.lot.value,
                     [primeData.numDocument.field]: primeData.numDocument.value,
-                    operationId: 1,
+                    operationId: 39,
                     workpieceTypeId: 1,
                     userId: loginStore.user.id,
                     managerId: loginStore.user.id,

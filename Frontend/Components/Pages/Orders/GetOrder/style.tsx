@@ -11,7 +11,11 @@ export const Wrapper = styled.div`
             flex: 1;
             .item {
                 margin-bottom: 4px;
+                display: flex;
+                column-gap: 16px;
+                border-bottom: 1px solid rgb(250, 250, 250);
                 h4 {
+                    flex: 0 0 110px;
                     margin-bottom: 4px;
                 }
                 div {
@@ -20,7 +24,7 @@ export const Wrapper = styled.div`
             }
         }
         .result {
-            flex: 1;
+            flex: 3;
         }
     }
 `;

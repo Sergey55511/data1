@@ -13,6 +13,8 @@ export const KEYSLEFTOVERS = {
     grade: { key: 'grade', title: 'Сорт' },
     state: { key: 'state', title: 'Состояние' },
     lot: { key: 'lot', title: 'Партия' },
+    productionId: { key: 'productionId', title: '№ Производства' },
+    production: { key: 'production', title: 'Производство' },
     numProduction: { key: 'numProduction', title: '№ производства' },
     width: { key: 'width', title: 'Остаток гр.' },
     count: { key: 'count', title: 'Остаток шт.' },

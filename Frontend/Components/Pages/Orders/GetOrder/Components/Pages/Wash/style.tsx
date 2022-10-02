@@ -9,5 +9,8 @@ export const Wrapper = styled.div`
         .input {
             width: 250px;
         }
+        .error {
+            color: red;
+        }
     }
 `;
