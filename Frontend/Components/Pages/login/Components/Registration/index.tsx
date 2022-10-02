@@ -25,7 +25,12 @@ export const Registration = observer(() => {
 
     const onClickHandler = async () => {
         setIsLoading(true);
-        await loginStore.registration({ login: loginV, password, status, store });
+        await loginStore.registration({
+            login: loginV,
+            password,
+            status,
+            storeId: store + '',
+        });
         setIsLoading(false);
     };
 

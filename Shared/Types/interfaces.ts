@@ -1,9 +1,9 @@
 export interface iUser {
-    id: number;
+    id?: number;
     login: string;
     password?: string;
-    key: string;
-    status: string;
+    key?: string;
+    status?: string;
     storeId?: string;
     store?: string;
 }
