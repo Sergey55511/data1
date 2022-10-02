@@ -1,7 +1,7 @@
 import { InputProps } from 'antd';
 
 export interface iRow {
-    sizeRangeId: iItem;
+    fractionId: iItem;
     materialGroup: iItem;
     widthInDocument: iItem;
     widthIn: iItem;
@@ -52,7 +52,7 @@ export class Item implements iItem {
 }
 
 export const initData = () => ({
-    sizeRangeId: new Item({ field: 'sizeRangeId', placeholder: 'Фракция' }),
+    fractionId: new Item({ field: 'fractionId', placeholder: 'Фракция' }),
     materialGroup: new Item({ field: 'materialGroupId', placeholder: 'Группа сырья' }),
     widthInDocument: new Item({
         field: 'widthInDocument',

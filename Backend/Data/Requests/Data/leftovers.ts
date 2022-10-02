@@ -11,8 +11,8 @@ export const leftovers = <T>(storeId: number): PrismaPromise<T> => {
 			"Productions".description as "production",
             "modelId",
 			"model",
-            "sizeRangeId",
-            "sizeRange",
+            "fractionId",
+            "fraction",
 			"colorId",
             "color",
 			"lengthId",
@@ -31,7 +31,7 @@ export const leftovers = <T>(storeId: number): PrismaPromise<T> => {
             sum("moneyIn")-sum("moneyOut") as "code"
         FROM 
             public."Data" left join "WorkpieceType" on "Data"."workpieceTypeId"="WorkpieceType".id
-            left join "SizeRange" on "Data"."sizeRangeId"="SizeRange".id
+            left join "Fraction" on "Data"."fractionId"="Fraction".id
             left join "MaterialGroup" on "Data"."materialGroupId"="MaterialGroup".id
 			left join "Grade" on "Data"."gradeId"="Grade".id
 			left join "Models" on "Data"."modelId"="Models".id
@@ -48,8 +48,8 @@ export const leftovers = <T>(storeId: number): PrismaPromise<T> => {
 			"Productions".description,
 			"modelId",
             "model",
-            "sizeRangeId",
-            "sizeRange",
+            "fractionId",
+            "fraction",
             "colorId",
             "color",
             "lengthId",

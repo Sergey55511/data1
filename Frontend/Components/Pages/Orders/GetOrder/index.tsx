@@ -53,7 +53,8 @@ export const GetOrder = () => {
                             <Item keyObj="user" />
                             <Item keyObj="manager" />
                             <Item keyObj="lot" />
-                            <Item keyObj="sizeRange" />
+                            <Item keyObj="productionId" />
+                            <Item keyObj="fraction" />
                             <Item keyObj="workpieceType" />
                             <Item keyObj="materialGroup" />
                             <Item keyObj="grade" />

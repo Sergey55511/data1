@@ -6,6 +6,7 @@ export const KEYSLEFTOVERS = {
     workpieceType: { key: 'workpieceType', title: 'Тип заготовки' },
     model: { key: 'model', title: 'Модель' },
     sizeRange: { key: 'sizeRange', title: 'Размерный ряд' },
+    fraction: { key: 'fraction', title: 'Фракция' },
     materialGroup: { key: 'materialGroup', title: 'Группа сырья' },
     color: { key: 'color', title: 'Цвет' },
     length: { key: 'length', title: 'Длина' },

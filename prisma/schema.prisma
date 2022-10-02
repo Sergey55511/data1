@@ -31,7 +31,6 @@ model Data {
   moneyOut         Decimal?
   moneyDefect      Decimal?
   typeOfProcessing String?
-  fraction         String?
   stock            String?
   numShipment      Int?
   shade            String?
@@ -62,23 +61,26 @@ model Data {
   channelId        Int?
   Users            Users?         @relation(fields: [userId], references: [id])
   Managers         Managers?      @relation(fields: [managerId], references: [id])
+  Fraction         Fraction?      @relation(fields: [fractionId], references: [id])
+  fractionId       Int?
 }
 
 model Managers {
   id                Int                 @id @default(autoincrement())
   name              String
   store             Stores?             @relation(fields: [storeId], references: [id])
-  storeId           Int?                @map("storesId")
+  storeId           Int?
   active            Boolean             @default(true)
   Data              Data[]
   ManagerOperations ManagerOperations[]
 }
 
 model ManagerOperations {
-  id        Int          @id @default(autoincrement())
-  manager   Managers?    @relation(fields: [managerId], references: [id])
-  managerId Int?         @map("storesId")
-  Operation Operations[]
+  id          Int         @id @default(autoincrement())
+  manager     Managers?   @relation(fields: [managerId], references: [id])
+  managerId   Int?
+  Operation   Operations? @relation(fields: [operationId], references: [id])
+  operationId Int?
 }
 
 model Users {
@@ -105,16 +107,15 @@ model Stores {
 }
 
 model Operations {
-  id                  Int                @id @default(autoincrement())
-  operation           String             @unique
-  result              String?
-  sborka              Int?
-  activ               Boolean            @default(true)
-  StoreOperations     StoreOperations?   @relation(fields: [storeOperationsId], references: [id])
-  storeOperationsId   Int?
-  Data                Data[]
-  managerOperations   ManagerOperations? @relation(fields: [managerOperationsId], references: [id])
-  managerOperationsId Int?
+  id                Int                 @id @default(autoincrement())
+  operation         String              @unique
+  result            String?
+  sborka            Int?
+  activ             Boolean             @default(true)
+  StoreOperations   StoreOperations?    @relation(fields: [storeOperationsId], references: [id])
+  storeOperationsId Int?
+  Data              Data[]
+  ManagerOperations ManagerOperations[]
 }
 
 model StoreOperations {
@@ -131,6 +132,14 @@ model Grade {
   variant Int
   activ   Boolean @default(true)
   Data    Data[]
+}
+
+model Fraction {
+  id       Int     @id @default(autoincrement())
+  fraction String  @unique
+  position Int     @default(autoincrement())
+  active   Boolean @default(true)
+  Data     Data[]
 }
 
 model Color {

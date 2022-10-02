@@ -59,6 +59,12 @@ export const getUsers = (storeId: number) => {
         method: 'GET',
     }).then((res) => res.data);
 };
+export const getManagers = (storeId: number, operationId: number) => {
+    return axios({
+        url: `/api/list/managers?storeId=${storeId}&operationId=${operationId}`,
+        method: 'GET',
+    }).then((res) => res.data);
+};
 export const postProductions = (data: { description: string; storeId: number }) => {
     return axios({
         url: `/api/list/productions`,

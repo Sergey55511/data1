@@ -1,7 +1,9 @@
 import { Button, DatePicker, Divider, Input, Select } from 'antd';
 import { observer } from 'mobx-react-lite';
 import moment from 'moment';
-import { SetStateAction, useRef, useState } from 'react';
+import { SetStateAction, useEffect, useRef, useState } from 'react';
+import { OPERATIONS } from '../../../../../../../Shared/constants';
+import { prepareDataTable } from '../../../../../../../Shared/Helpers';
 import { iData, iDataTable } from '../../../../../../../Shared/Types/interfaces';
 import { useStores } from '../../../../../../Store/useStores';
 import { MyDrawer } from '../../../../../Shared/MyDrawer';
@@ -22,6 +24,14 @@ export const MoveOutSolo = observer(
         const [width, setWidth] = useState<tValue>(undefined);
         const [count, setCount] = useState<tValue>(undefined);
         const [date, setDate] = useState<moment.Moment | null>(moment());
+
+        useEffect(() => {
+            setManagerId(undefined);
+            OperationStore.resetManagers();
+            if (loginStore.user.storeId && operation)
+                OperationStore.getManagers(loginStore.user.storeId, operation!);
+        }, [loginStore.user.storeId, operation]);
+
         const keys = Object.keys(record);
         const setNumProduction = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
             e.preventDefault();
@@ -67,30 +77,19 @@ export const MoveOutSolo = observer(
 
         const subbmitHandler = async () => {
             setIsLoading(true);
-            const data: iDataTable = {
-                userId: loginStore.user.id,
-                managerId,
-                storeId: loginStore.user.storeId,
-                modelId: record.modelId,
-                colorId: record.colorId,
-                lengthId: record.lengthId,
-                stateId: record.stateId,
-                channelId: record.channelId,
-                lot: record.lot,
-                gradeId: record.gradeId,
-                materialGroupId: record.materialGroupId,
-                sizeRangeId: record.sizeRangeId,
-                workpieceTypeId: record.workpieceTypeId,
-                date,
-                countItemsOut: count ? +count : undefined,
-                widthOut: width ? +width : undefined,
-                operationId: operation,
-                productionId: numProd || undefined,
-            };
+            const data = prepareDataTable(record);
+            data.userId = loginStore.user.id;
+            data.storeId = loginStore.user.storeId;
+            data.managerId = managerId;
+            data.date = date;
+            data.countItemsOut = count ? +count : undefined;
+            data.widthOut = width ? +width : undefined;
+            data.operationId = operation;
+            data.productionId = numProd || undefined;
 
             if (isNewProductionId.current)
                 await OperationStore.changeNumProduction({
-                    ...data
+                    ...data,
                 });
 
             await OperationStore.moveToWork(data);
@@ -158,9 +157,9 @@ export const MoveOutSolo = observer(
                     onChange={(v) => setManagerId(v)}
                     showSearch
                 >
-                    {OperationStore.users?.map((item) => (
+                    {OperationStore.managers?.map((item) => (
                         <Select.Option key={item.id} value={item.id}>
-                            {item.login}
+                            {item.name}
                         </Select.Option>
                     ))}
                 </Select>

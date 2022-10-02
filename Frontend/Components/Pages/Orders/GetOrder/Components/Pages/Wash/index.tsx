@@ -2,6 +2,7 @@ import { Button, DatePicker, Input, notification } from 'antd';
 import moment from 'moment';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
+import { STATE, WORKPIECETYPE } from '../../../../../../../../Shared/constants';
 import { prepareDataTable } from '../../../../../../../../Shared/Helpers';
 import { iData } from '../../../../../../../../Shared/Types/interfaces';
 import { useStores } from '../../../../../../../Store/useStores';
@@ -35,13 +36,13 @@ export const Wash = ({ record }: { record: iData }) => {
                 ...record,
                 widthOut: undefined,
                 widthIn: state.widthIn,
-                stateId: 1,
+                stateId: STATE.washed.id,
             },
         ];
         if (state.losses) {
             data.push({
                 ...record,
-                workpieceTypeId: 9,
+                workpieceTypeId: WORKPIECETYPE.losses.id,
                 widthOut: undefined,
                 widthIn: +state.losses.toFixed(2),
                 stateId: undefined,
@@ -75,7 +76,7 @@ export const Wash = ({ record }: { record: iData }) => {
                         type="number"
                         className="input"
                         value={state.widthIn}
-                        placeholder='Введите данные'
+                        placeholder="Введите данные"
                         step={0.01}
                         onChange={(v) => {
                             const value = v.target.value;

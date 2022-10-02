@@ -10,6 +10,7 @@ import { observer } from 'mobx-react-lite';
 import { useStores } from '../../../../../Store/useStores';
 import { iNewItems } from '../../../../../../Shared/Types/interfaces';
 import { Frame } from '../../../../Shared/Frame';
+import { WORKPIECETYPE } from '../../../../../../Shared/constants';
 
 export const NewItem = observer(() => {
     const [primeData, setPrimeData] = useState<iPrimeData>(initPrimeData());
@@ -19,7 +20,7 @@ export const NewItem = observer(() => {
 
     useEffect(() => {
         ListsStore.getMaterialGroup();
-        ListsStore.getSizeRange();
+        ListsStore.getFraction();
         OperationStore.getMaxLot();
     }, []);
 
@@ -69,10 +70,9 @@ export const NewItem = observer(() => {
                 const res: any = {
                     [primeData.lot.field]: primeData.lot.value,
                     [primeData.numDocument.field]: primeData.numDocument.value,
-                    operationId: 39,
-                    workpieceTypeId: 1,
+                    operationId: 1,
+                    workpieceTypeId: WORKPIECETYPE.stone.id,
                     userId: loginStore.user.id,
-                    managerId: loginStore.user.id,
                     storeId: loginStore.user.storeId,
                 };
                 for (const key in item) {
@@ -137,9 +137,9 @@ export const NewItem = observer(() => {
         caption: item.materialGroup,
     }));
 
-    const sizeRange = ListsStore.sizeRange.map((item) => ({
+    const fraction = ListsStore.fraction.map((item) => ({
         value: item.id,
-        caption: item.sizeRange,
+        caption: item.fraction,
     }));
 
     return (
@@ -194,11 +194,11 @@ export const NewItem = observer(() => {
                         </Tooltip>
                     </div>
                     <SelectField
-                        item={item.sizeRangeId}
+                        item={item.fractionId}
                         onChangeHandler={(v) =>
-                            setValue(index, 'sizeRangeId', v as string)
+                            setValue(index, 'fractionId', v as string)
                         }
-                        options={sizeRange}
+                        options={fraction}
                     />
                     <SelectField
                         item={item.materialGroup}

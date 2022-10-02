@@ -12,3 +12,9 @@ export const getSizeRange = () => {
         method: 'GET',
     }).then((res) => res.data);
 };
+export const getFraction = () => {
+    return axios({
+        url: '/api/list/fraction',
+        method: 'GET',
+    }).then((res) => res.data);
+};

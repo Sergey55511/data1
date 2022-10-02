@@ -1,5 +1,6 @@
 import { PrismaClient } from '@prisma/client';
 import moment from 'moment';
+import { OPERATIONS } from '../../../../Shared/constants';
 import { iDataTable } from '../../../../Shared/Types/interfaces';
 
 export const changeNumProduction = async <T>(data: iDataTable[]): Promise<T> => {
@@ -8,7 +9,7 @@ export const changeNumProduction = async <T>(data: iDataTable[]): Promise<T> => 
     const tmpData = (item: iDataTable) => ({
         ...item,
         date: moment(item.date)?.toDate(),
-        operationId: 38,
+        operationId: OPERATIONS.changeProduction.id,
         pp: undefined,
         managerId: item.userId,
         productionId: undefined,

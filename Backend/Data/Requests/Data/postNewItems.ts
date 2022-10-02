@@ -18,6 +18,9 @@ export const postNewItems = async <T>(
         date: moment(item.date)?.toDate(),
         pp: pp,
     }));
+    
+    console.log('datePrepared', datePrepared);
+
     return (await prisma.data.createMany({
         data: datePrepared,
     })) as any;

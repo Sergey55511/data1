@@ -1,4 +1,3 @@
-import { PrismaPromise } from '@prisma/client';
 import { PrismaClient } from '@prisma/client';
 
 export const getUsers = <T>(storeId: number): Promise<T> => {

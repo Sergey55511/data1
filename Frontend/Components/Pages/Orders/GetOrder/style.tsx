@@ -15,7 +15,7 @@ export const Wrapper = styled.div`
                 column-gap: 16px;
                 border-bottom: 1px solid rgb(250, 250, 250);
                 h4 {
-                    flex: 0 0 110px;
+                    flex: 0 0 120px;
                     margin-bottom: 4px;
                 }
                 div {

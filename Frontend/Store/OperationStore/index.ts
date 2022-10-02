@@ -10,11 +10,13 @@ import {
     iProductions,
     iUser,
     iDataTable,
+    iManager,
 } from '../../../Shared/Types/interfaces';
 import { Login } from '..';
 
 export class OperationStore {
     users: iUser[] = [];
+    managers: iManager[] = [];
     operations: iOperation[] = [];
     productions: iProductions[] = [];
     leftovers: iData[] = [];
@@ -49,6 +51,20 @@ export class OperationStore {
             this.errorStore.setError(err as iError);
         }
     });
+    getManagers = flow(function* (
+        this: OperationStore,
+        storeId: number,
+        operationId: number,
+    ) {
+        try {
+            this.managers = yield api.getManagers(storeId, operationId);
+        } catch (err) {
+            this.errorStore.setError(err as iError);
+        }
+    });
+    resetManagers = () => {
+        this.managers = [];
+    };
     postProductions = flow(function* (this: OperationStore, description: string) {
         const storeId = this.loginStore.user.storeId;
         try {

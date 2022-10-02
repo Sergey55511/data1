@@ -7,6 +7,10 @@ export interface iUser {
     storeId?: string;
     store?: string;
 }
+export interface iManager {
+    id: number;
+    name: string;
+}
 
 export interface iCookies {
     [key: string]: string;
@@ -28,6 +32,7 @@ export interface iDataTable {
     managerId?: number;
     modelId?: number;
     sizeRangeId?: number;
+    fractionId?: number;
     materialGroupId?: number;
     colorId?: number;
     lengthId?: number;
@@ -70,6 +75,9 @@ export interface iMaterialGroup extends iList {
 }
 export interface iSizeRange extends iList {
     sizeRange: string;
+}
+export interface iFraction extends iList {
+    fraction: string;
 }
 
 export interface iNewItems {

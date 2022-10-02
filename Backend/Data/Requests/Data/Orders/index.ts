@@ -9,15 +9,15 @@ export const orders = <T>(storeId: number): PrismaPromise<T> => {
 			"userId",
 			u."login" as "userLogin",
 			"managerId",
-			m."login" as "managerLogin",
+			m."name" as "managerLogin",
 			"operationId",
 			"operation",
 			"workpieceTypeId",
             "workpieceType",
             "modelId",
 			"model",
-            "sizeRangeId",
-            "sizeRange",
+            "fractionId",
+            "fraction",
 			"colorId",
             "color",
 			"lengthId",
@@ -37,14 +37,14 @@ export const orders = <T>(storeId: number): PrismaPromise<T> => {
             COALESCE(sum("moneyIn"),0)-COALESCE(sum("moneyOut"),0) as "code"
         FROM 
             public."Data" left join "WorkpieceType" on "Data"."workpieceTypeId"="WorkpieceType".id
-            left join "SizeRange" on "Data"."sizeRangeId"="SizeRange".id
+            left join "Fraction" on "Data"."fractionId"="Fraction".id
             left join "MaterialGroup" on "Data"."materialGroupId"="MaterialGroup".id
 			left join "Grade" on "Data"."gradeId"="Grade".id
 			left join "Models" on "Data"."modelId"="Models".id
 			left join "Color" on "Data"."colorId"="Color".id
 			left join "Length" on "Data"."lengthId"="Length".id
 			left join "Channel" on "Data"."channelId"="Channel".id
-			left join "Users" m on "Data"."managerId"=m.id
+			left join "Managers" m on "Data"."managerId"=m.id
 			left join "Users" u on "Data"."userId"=u.id
 			left join "Operations" on "Data"."operationId"="Operations".id
             left join "State" on "Data"."stateId"="State".id
@@ -63,15 +63,15 @@ export const orders = <T>(storeId: number): PrismaPromise<T> => {
 			"userId",
 			u."login",
 			"managerId",
-			m."login",
+			m."name",
 			"operationId",
 			"operation",
             "workpieceTypeId",
             "workpieceType",
 			"modelId",
             "model",
-            "sizeRangeId",
-            "sizeRange",
+            "fractionId",
+            "fraction",
             "colorId",
             "color",
             "lengthId",
