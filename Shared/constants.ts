@@ -1,5 +1,6 @@
 export const OPERATIONS = {
     wash: { id: 2 },
+    sorting: { id: 4 },
     changeProduction: { id: 3 },
 };
 export const STATE = {

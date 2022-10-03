@@ -24,6 +24,11 @@ export const MoveOutSolo = observer(
         const [width, setWidth] = useState<tValue>(undefined);
         const [count, setCount] = useState<tValue>(undefined);
         const [date, setDate] = useState<moment.Moment | null>(moment());
+        console.log('record.productionId', record.productionId);
+
+        // useEffect(() => {
+        //     if (record.productionId) setNumProd(record.productionId);
+        // }, [record.productionId]);
 
         useEffect(() => {
             setManagerId(undefined);
@@ -200,8 +205,8 @@ export const MoveOutSolo = observer(
                 <div className="flex">
                     <div className="itemNumProduction">
                         <div>
-                            {record.numProduction ? (
-                                <div>№ ПП {record.numProduction}</div>
+                            {record.productionId ? (
+                                <div>№ производства {record.productionId}</div>
                             ) : (
                                 <a href="#" onClick={setNumProduction}>
                                     {numProd
