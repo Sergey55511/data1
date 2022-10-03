@@ -15,10 +15,10 @@ export const Registration = observer(() => {
     const [status, setStatus] = useState<tStatus>('worker');
     const [store, setStore] = useState(1);
     const [confirmPassword, setConfirmPassword] = useState('');
-    const { loginStore } = useStores();
+    const { loginStore, ListsStore } = useStores();
 
     useEffect(() => {
-        loginStore.getStores();
+        ListsStore.getStores();
     }, []);
 
     const disabled = loginV && password && confirmPassword && password == confirmPassword;
@@ -81,7 +81,7 @@ export const Registration = observer(() => {
                 className="input"
                 onChange={(v) => setStore(v)}
             >
-                {loginStore.stores.map((item) => (
+                {ListsStore.stores.map((item) => (
                     <Option key={item.id} value={item.id}>
                         {item.name}
                     </Option>

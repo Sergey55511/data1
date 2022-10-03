@@ -11,10 +11,10 @@ export const NumProduction = observer(
         const [description, setDescription] = useState('');
         const [search, setSearch] = useState('');
         const [isLoading, setIsLoading] = useState(true);
-        const { OperationStore, loginStore } = useStores();
+        const { OperationStore, loginStore,ListsStore } = useStores();
         useEffect(() => {
             const fetch = async () => {
-                await OperationStore.getProductions(loginStore.user.storeId);
+                await ListsStore.getProductions(loginStore.user.storeId);
                 setIsLoading(false);
             };
             fetch();
@@ -27,7 +27,7 @@ export const NumProduction = observer(
             setIsLoading(false);
         };
 
-        const productions = OperationStore.productions.filter(
+        const productions = ListsStore.productions.filter(
             (item) =>
                 `${item.id}${item.description}`.toLowerCase().split(search.toLowerCase())
                     .length > 1,

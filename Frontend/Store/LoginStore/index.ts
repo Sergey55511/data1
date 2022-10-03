@@ -1,12 +1,11 @@
 import { notification } from 'antd';
 import { flow, makeAutoObservable } from 'mobx';
-import * as api from './Api';
-import { ErrorStore } from './ErrorStore';
-import { iError, iUser } from '../../Shared/Types/interfaces';
+import * as api from './api';
+import { ErrorStore } from '../ErrorStore';
+import { iError, iUser } from '../../../Shared/Types/interfaces';
 
 export class Login {
     user = { id: 0, login: '', status: '', store: '', storeId: 0 };
-    stores: { id: number; name: string }[] = [];
     errorStore: ErrorStore;
     constructor(errorStore: ErrorStore) {
         makeAutoObservable(this);
@@ -44,13 +43,6 @@ export class Login {
     whoami = flow(function* (this: Login) {
         try {
             this.user = yield api.whoami();
-        } catch (err) {
-            this.errorStore.setError(err as iError);
-        }
-    });
-    getStores = flow(function* (this: Login) {
-        try {
-            this.stores = yield api.getStores();
         } catch (err) {
             this.errorStore.setError(err as iError);
         }

@@ -14,13 +14,11 @@ import { useEffect } from 'react';
 import { pages, tPages } from '../../../Pages/constants';
 
 export const TopMenu = observer(({ page }: { page: tPages }) => {
-    const { loginStore, OperationStore } = useStores();
-
-    const { operations } = OperationStore;
+    const { loginStore,ListsStore } = useStores();
 
     useEffect(() => {
         if (loginStore.user.storeId)
-            OperationStore.getOperations(loginStore.user.storeId);
+        ListsStore.getOperations(loginStore.user.storeId);
     }, [loginStore.user.storeId]);
 
     return (

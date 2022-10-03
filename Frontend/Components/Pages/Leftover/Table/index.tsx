@@ -18,13 +18,13 @@ export const TableLeftOvers = observer(
         filters: Record<string, FilterValue | null>;
         setFilters: Dispatch<SetStateAction<Record<string, FilterValue | null>>>;
     }) => {
-        const { OperationStore, loginStore } = useStores();
-        const { leftovers } = OperationStore;
+        const { loginStore,ListsStore } = useStores();
+        const { leftovers } = ListsStore;
 
         useEffect(() => {
             if (loginStore.user.storeId) {
-                OperationStore.getLeftovers(loginStore.user.storeId);
-                OperationStore.getUsers(loginStore.user.storeId);
+                ListsStore.getLeftovers(loginStore.user.storeId);
+                ListsStore.getUsers(loginStore.user.storeId);
             }
         }, [loginStore.user.storeId]);
 

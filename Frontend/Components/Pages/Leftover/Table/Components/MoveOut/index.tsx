@@ -15,7 +15,7 @@ type tConstKeys = keyof typeof KEYSLEFTOVERS;
 type tValue = number | string | undefined;
 export const MoveOutSolo = observer(
     ({ record, onClose }: { record: iData; onClose?: () => void }) => {
-        const { OperationStore, loginStore, UIStore } = useStores();
+        const { OperationStore, loginStore, UIStore, ListsStore } = useStores();
         const [numProd, setNumProd] = useState(0);
         const isNewProductionId = useRef(false);
         const [operation, setOperation] = useState<number | undefined>(undefined);
@@ -27,9 +27,9 @@ export const MoveOutSolo = observer(
 
         useEffect(() => {
             setManagerId(undefined);
-            OperationStore.resetManagers();
+            ListsStore.resetManagers();
             if (loginStore.user.storeId && operation)
-                OperationStore.getManagers(loginStore.user.storeId, operation!);
+                ListsStore.getManagers(loginStore.user.storeId, operation!);
         }, [loginStore.user.storeId, operation]);
 
         const keys = Object.keys(record);
@@ -98,7 +98,7 @@ export const MoveOutSolo = observer(
 
             UIStore.setIsLoading(true);
             if (onClose) onClose();
-            await OperationStore.getLeftovers(loginStore.user.storeId);
+            await ListsStore.getLeftovers(loginStore.user.storeId);
             UIStore.setIsLoading(false);
         };
 
@@ -143,7 +143,7 @@ export const MoveOutSolo = observer(
                     onChange={(v) => setOperation(v)}
                     showSearch
                 >
-                    {OperationStore.operations?.map((item) => (
+                    {ListsStore.operations?.map((item) => (
                         <Select.Option key={item.id} value={item.id}>
                             {item.operation}
                         </Select.Option>
@@ -157,7 +157,7 @@ export const MoveOutSolo = observer(
                     onChange={(v) => setManagerId(v)}
                     showSearch
                 >
-                    {OperationStore.managers?.map((item) => (
+                    {ListsStore.managers?.map((item) => (
                         <Select.Option key={item.id} value={item.id}>
                             {item.name}
                         </Select.Option>

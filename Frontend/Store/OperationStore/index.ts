@@ -1,82 +1,31 @@
-import { notification } from 'antd';
 import { flow, makeAutoObservable } from 'mobx';
 import * as api from './Api';
 import { ErrorStore } from '../ErrorStore';
 import {
     iError,
     iData,
-    iNewItems,
-    iOperation,
-    iProductions,
-    iUser,
     iDataTable,
-    iManager,
 } from '../../../Shared/Types/interfaces';
-import { Login } from '..';
+import { Login } from '../LoginStore';
+import { ListsStore } from '../Lists';
 
 export class OperationStore {
-    users: iUser[] = [];
-    managers: iManager[] = [];
-    operations: iOperation[] = [];
-    productions: iProductions[] = [];
-    leftovers: iData[] = [];
-    orders: iData[] = [];
     errorStore: ErrorStore;
     loginStore: Login;
+    listsStore: ListsStore;
     maxLot = 0;
-    constructor(errorStore: ErrorStore, login: Login) {
+    constructor(errorStore: ErrorStore, login: Login, listsStore: ListsStore) {
         makeAutoObservable(this);
         this.errorStore = errorStore;
         this.loginStore = login;
+        this.listsStore = listsStore;
     }
 
-    getOperations = flow(function* (this: OperationStore, storeId: number) {
-        try {
-            this.operations = yield api.getOperations(storeId);
-        } catch (err) {
-            this.errorStore.setError(err as iError);
-        }
-    });
-    getProductions = flow(function* (this: OperationStore, storeId: number) {
-        try {
-            this.productions = yield api.getProductions(storeId);
-        } catch (err) {
-            this.errorStore.setError(err as iError);
-        }
-    });
-    getUsers = flow(function* (this: OperationStore, storeId: number) {
-        try {
-            this.users = yield api.getUsers(storeId);
-        } catch (err) {
-            this.errorStore.setError(err as iError);
-        }
-    });
-    getManagers = flow(function* (
-        this: OperationStore,
-        storeId: number,
-        operationId: number,
-    ) {
-        try {
-            this.managers = yield api.getManagers(storeId, operationId);
-        } catch (err) {
-            this.errorStore.setError(err as iError);
-        }
-    });
-    resetManagers = () => {
-        this.managers = [];
-    };
     postProductions = flow(function* (this: OperationStore, description: string) {
         const storeId = this.loginStore.user.storeId;
         try {
             yield api.postProductions({ description, storeId });
-            yield this.getProductions(this.loginStore.user.storeId);
-        } catch (err) {
-            this.errorStore.setError(err as iError);
-        }
-    });
-    getLeftovers = flow(function* (this: OperationStore, storeId: number) {
-        try {
-            this.leftovers = yield api.leftovers(storeId);
+            yield this.listsStore.getProductions(this.loginStore.user.storeId);
         } catch (err) {
             this.errorStore.setError(err as iError);
         }
@@ -84,13 +33,6 @@ export class OperationStore {
     getMaxLot = flow(function* (this: OperationStore) {
         try {
             this.maxLot = yield api.getMaxLot();
-        } catch (err) {
-            this.errorStore.setError(err as iError);
-        }
-    });
-    getOrders = flow(function* (this: OperationStore, storeId: number) {
-        try {
-            this.orders = yield api.getOrders(storeId);
         } catch (err) {
             this.errorStore.setError(err as iError);
         }

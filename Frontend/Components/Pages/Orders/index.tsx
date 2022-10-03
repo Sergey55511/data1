@@ -6,9 +6,9 @@ import { Wrapper } from './style';
 import { OrdersTable } from './Table';
 
 export const Orders = observer(() => {
-    const { loginStore, OperationStore } = useStores();
+    const { loginStore, ListsStore } = useStores();
     useEffect(() => {
-        if (loginStore.user.storeId) OperationStore.getOrders(loginStore.user.storeId);
+        if (loginStore.user.storeId) ListsStore.getOrders(loginStore.user.storeId);
     }, [loginStore.user.storeId]);
     return (
         <Wrapper>
