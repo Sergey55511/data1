@@ -1,7 +1,11 @@
 import { CheckOutlined, MinusOutlined } from '@ant-design/icons';
-import { Button, Input, List, Select, Tooltip } from 'antd';
+import { Button, notification, Select, Tooltip } from 'antd';
 import { observer } from 'mobx-react-lite';
-import { useState } from 'react';
+import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
+import { STATE, WORKPIECETYPE } from '../../../../../../../../Shared/constants';
+import { prepareDataTable } from '../../../../../../../../Shared/Helpers';
+import { iData } from '../../../../../../../../Shared/Types/interfaces';
 import { useStores } from '../../../../../../../Store/useStores';
 import { InputNumber } from '../../../../../../Shared/InputNumber';
 import { Wrapper } from './style';
@@ -10,6 +14,7 @@ interface iField {
     key: string;
     placeholder: string;
     value: string | number;
+    isError: boolean;
 }
 interface iState {
     typeId: iField;
@@ -18,20 +23,34 @@ interface iState {
     sizeRangeId: iField;
     widthIn: iField;
 }
-
 class Field implements iField {
     key;
     placeholder;
     value = '';
+    isError = false;
     constructor(key: string, placeholder: string) {
         this.key = key;
         this.placeholder = placeholder;
     }
 }
 
-export const Sorting = observer(() => {
-    const { ListsStore } = useStores();
+export const Sorting = observer(({ record }: { record: iData }) => {
+    const { ListsStore, OperationStore } = useStores();
     const [state, setState] = useState<iState[]>([]);
+    const [losses, setLosses] = useState<number>(0);
+    const [isLoading, setIsLoading] = useState(false);
+    const router = useRouter();
+    const getTotalSum = () =>
+        state.reduce((res, item) => {
+            return (res += +item.widthIn.value || 0);
+        }, 0);
+
+    useEffect(() => {
+        const totalSum = getTotalSum();
+        const res = (record?.widthOut || 0) - totalSum;
+        setLosses(isNaN(res) ? 0 : res);
+    }, [state]);
+
     const addRowHandler = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
         e.preventDefault();
         setState((prev) => {
@@ -52,15 +71,98 @@ export const Sorting = observer(() => {
     const removeRow = (index: number) => {
         setState((prev) => prev.filter((_, i) => i != index));
     };
+
+    const validation = () => {
+        let isError = false;
+        setState((prev) => {
+            const res = prev.map((item) => {
+                for (const k in item) {
+                    const key = k as keyof iState;
+                    if (!item[key].value) {
+                        isError = true;
+                        item[key].isError = true;
+                    } else item[key].isError = false;
+                }
+                return { ...item };
+            });
+            return res;
+        });
+        return isError;
+    };
+
+    const subbmitHandler = async () => {
+        const errorNote = () => {
+            notification.error({
+                message: 'Ошибка!',
+                description: 'Не верно заполнены поля!',
+            });
+        };
+        if (!state.length) {
+            errorNote();
+            return;
+        }
+
+        const isError = validation();
+        if (isError) {
+            errorNote();
+            return;
+        }
+        
+        const totalSum = getTotalSum();
+        if (!totalSum) {
+            errorNote();
+            return;
+        }
+        if (losses < 0) {
+            errorNote();
+            return;
+        }
+
+        const data: iData[] = state.map((item) => ({
+            ...record,
+            typeId: +item.typeId.value,
+            gradeId: +item.gradeId.value,
+            colorId: +item.colorId.value,
+            sizeRangeId: +item.sizeRangeId.value,
+            widthOut: undefined,
+            widthIn: +item.widthIn.value!,
+            stateId: STATE.sorted.id,
+        }));
+        if (losses) {
+            data.push({
+                ...record,
+                workpieceTypeId: WORKPIECETYPE.losses.id,
+                widthOut: undefined,
+                widthIn: +losses.toFixed(2),
+                stateId: undefined,
+            });
+        }
+
+        const dataTable = data.map((item) => prepareDataTable(item));
+        setIsLoading(true);
+        await OperationStore.postOrderResult(dataTable);
+        notification.success({
+            message: 'Сохранение прошло успешно',
+        });
+        router.push('/orders');
+        setIsLoading(false);
+    };
+
     return (
         <Wrapper>
             <div className="title">
                 <Tooltip title="Сохранить">
-                    <Button shape="circle" icon={<CheckOutlined />} />
+                    <Button
+                        shape="circle"
+                        icon={<CheckOutlined />}
+                        onClick={subbmitHandler}
+                        loading={isLoading}
+                    />
                 </Tooltip>
                 <a href="#" onClick={addRowHandler}>
                     Добавить строку
                 </a>
+                <div className={losses < 0 ? 'red' : ''}>потеря: {losses}</div>
             </div>
             <div>
                 {state.map((item, index) => {
@@ -81,10 +183,11 @@ export const Sorting = observer(() => {
                                     shape="circle"
                                     icon={<MinusOutlined />}
                                     onClick={() => removeRow(index)}
+                                    loading={isLoading}
                                 />
                             </Tooltip>
                             <div className="item">
-                                <InputField>
+                                <InputField isError={item.typeId.isError}>
                                     <SelectField
                                         placeholder={item.typeId.placeholder}
                                         value={+item.typeId.value || undefined}
@@ -97,7 +200,7 @@ export const Sorting = observer(() => {
                                 </InputField>
                             </div>
                             <div className="item">
-                                <InputField>
+                                <InputField isError={item.gradeId.isError}>
                                     <SelectField
                                         placeholder={item.gradeId.placeholder}
                                         value={+item.gradeId.value || undefined}
@@ -110,7 +213,7 @@ export const Sorting = observer(() => {
                                 </InputField>
                             </div>
                             <div className="item">
-                                <InputField>
+                                <InputField isError={item.colorId.isError}>
                                     <SelectField
                                         placeholder={item.colorId.placeholder}
                                         value={+item.colorId.value || undefined}
@@ -123,7 +226,7 @@ export const Sorting = observer(() => {
                                 </InputField>
                             </div>
                             <div className="item">
-                                <InputField>
+                                <InputField isError={item.sizeRangeId.isError}>
                                     <SelectField
                                         placeholder={item.sizeRangeId.placeholder}
                                         value={+item.sizeRangeId.value || undefined}
@@ -138,7 +241,7 @@ export const Sorting = observer(() => {
                                 </InputField>
                             </div>
                             <div className="item">
-                                <InputField>
+                                <InputField isError={item.widthIn.isError}>
                                     <InputNumber
                                         placeholder={item.widthIn.placeholder}
                                         onChangeHandler={(v) => {

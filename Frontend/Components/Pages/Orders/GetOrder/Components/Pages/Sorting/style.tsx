@@ -7,6 +7,9 @@ export const Wrapper = styled.div`
         display: flex;
         column-gap: 15px;
         align-items: center;
+        .red {
+            color: red;
+        }
     }
     .row {
         margin-bottom: 8px;

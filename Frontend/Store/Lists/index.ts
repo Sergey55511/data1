@@ -17,6 +17,7 @@ import { ErrorStore } from '../ErrorStore';
 import * as api from './api';
 
 export class ListsStore {
+    isFetched = false;
     errorStore: ErrorStore;
     stores: { id: number; name: string }[] = [];
     users: iUser[] = [];
@@ -40,6 +41,7 @@ export class ListsStore {
     }
 
     fetchLists = flow(function* (this: ListsStore, storeId: number) {
+        if (this.isFetched) return;
         try {
             yield this.getGrades(storeId);
             yield this.getTypes(storeId);
@@ -51,6 +53,7 @@ export class ListsStore {
             yield this.getSizeRange();
             yield this.getFraction();
             yield this.getStores();
+            this.isFetched = true;
         } catch (err) {
             this.errorStore.setError(err as iError);
         }

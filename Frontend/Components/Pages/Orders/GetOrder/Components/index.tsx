@@ -14,7 +14,7 @@ export const GetOrderSwitcher = ({
         case OPERATIONS.wash.id:
             return <Wash record={record} />;
         case OPERATIONS.sorting.id:
-            return <Sorting />;
+            return <Sorting record={record}/>;
     }
     return <></>;
 };

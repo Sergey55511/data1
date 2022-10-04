@@ -5,6 +5,7 @@ export const OPERATIONS = {
 };
 export const STATE = {
     washed: { id: 1 },
+    sorted: { id: 2 },
 };
 export const WORKPIECETYPE = {
     stone: { id: 1 },
