@@ -36,6 +36,26 @@ export const getOperations = (storeId: number) => {
         method: 'GET',
     }).then((res) => res.data);
 };
+
+export const getGrades = (storeId: number) => {
+    return axios({
+        url: `/api/list/grades?storeId=${storeId}`,
+        method: 'GET',
+    }).then((res) => res.data);
+};
+export const getTypes = (storeId: number) => {
+    return axios({
+        url: `/api/list/types?storeId=${storeId}`,
+        method: 'GET',
+    }).then((res) => res.data);
+};
+export const getColors = (storeId: number) => {
+    return axios({
+        url: `/api/list/colors?storeId=${storeId}`,
+        method: 'GET',
+    }).then((res) => res.data);
+};
+
 export const getProductions = (storeId: number) => {
     return axios({
         url: `/api/list/productions?storeId=${storeId}`,

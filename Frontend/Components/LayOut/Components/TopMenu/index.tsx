@@ -10,16 +10,10 @@ import Link from 'next/link';
 import { Wrapper } from './style';
 import { observer } from 'mobx-react-lite';
 import { useStores } from '../../../../Store/useStores';
-import { useEffect } from 'react';
 import { pages, tPages } from '../../../Pages/constants';
 
 export const TopMenu = observer(({ page }: { page: tPages }) => {
     const { loginStore,ListsStore } = useStores();
-
-    useEffect(() => {
-        if (loginStore.user.storeId)
-        ListsStore.getOperations(loginStore.user.storeId);
-    }, [loginStore.user.storeId]);
 
     return (
         <Wrapper>

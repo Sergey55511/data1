@@ -63,6 +63,8 @@ model Data {
   Managers         Managers?      @relation(fields: [managerId], references: [id])
   Fraction         Fraction?      @relation(fields: [fractionId], references: [id])
   fractionId       Int?
+  Types            Types?         @relation(fields: [typeId], references: [id])
+  typeId           Int?
 }
 
 model Managers {
@@ -123,6 +125,13 @@ model StoreOperations {
   store     Stores?      @relation(fields: [storeId], references: [id])
   storeId   Int?         @map("storesId")
   Operation Operations[]
+}
+
+model Types {
+  id     Int     @id @default(autoincrement())
+  type   String
+  active Boolean @default(true)
+  Data   Data[]
 }
 
 model Grade {

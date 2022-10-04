@@ -19,8 +19,6 @@ export const NewItem = observer(() => {
     const { ListsStore, OperationStore, loginStore } = useStores();
 
     useEffect(() => {
-        ListsStore.getMaterialGroup();
-        ListsStore.getFraction();
         OperationStore.getMaxLot();
     }, []);
 

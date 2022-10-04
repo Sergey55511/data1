@@ -12,13 +12,6 @@ export const NumProduction = observer(
         const [search, setSearch] = useState('');
         const [isLoading, setIsLoading] = useState(true);
         const { OperationStore, loginStore,ListsStore } = useStores();
-        useEffect(() => {
-            const fetch = async () => {
-                await ListsStore.getProductions(loginStore.user.storeId);
-                setIsLoading(false);
-            };
-            fetch();
-        }, [loginStore.user.storeId]);
 
         const newProductionHandler = async () => {
             setIsLoading(true);

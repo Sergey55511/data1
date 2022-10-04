@@ -21,13 +21,6 @@ export const TableLeftOvers = observer(
         const { loginStore,ListsStore } = useStores();
         const { leftovers } = ListsStore;
 
-        useEffect(() => {
-            if (loginStore.user.storeId) {
-                ListsStore.getLeftovers(loginStore.user.storeId);
-                ListsStore.getUsers(loginStore.user.storeId);
-            }
-        }, [loginStore.user.storeId]);
-
         const data = leftovers.map((item, index) => ({ ...item, key: index }));
 
         const filteredleftovers = leftovers.filter((item) => {

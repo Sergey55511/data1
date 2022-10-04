@@ -96,3 +96,15 @@ export interface iProductions {
     id: number;
     description: string;
 }
+export interface iGrade {
+    id: number;
+    grade: string;
+}
+export interface iType {
+    id: number;
+    type: string;
+}
+export interface iColor {
+    id: number;
+    color: string;
+}

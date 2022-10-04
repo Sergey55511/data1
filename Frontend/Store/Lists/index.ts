@@ -1,13 +1,16 @@
 import { flow, makeAutoObservable } from 'mobx';
 import {
+    iColor,
     iData,
     iError,
     iFraction,
+    iGrade,
     iManager,
     iMaterialGroup,
     iOperation,
     iProductions,
     iSizeRange,
+    iType,
     iUser,
 } from '../../../Shared/Types/interfaces';
 import { ErrorStore } from '../ErrorStore';
@@ -18,6 +21,11 @@ export class ListsStore {
     stores: { id: number; name: string }[] = [];
     users: iUser[] = [];
     managers: iManager[] = [];
+
+    grades: iGrade[] = [];
+    types: iType[] = [];
+    colors: iColor[] = [];
+
     operations: iOperation[] = [];
     productions: iProductions[] = [];
     leftovers: iData[] = [];
@@ -30,6 +38,23 @@ export class ListsStore {
         makeAutoObservable(this);
         this.errorStore = errorStore;
     }
+
+    fetchLists = flow(function* (this: ListsStore, storeId: number) {
+        try {
+            yield this.getGrades(storeId);
+            yield this.getTypes(storeId);
+            yield this.getColors(storeId);
+            yield this.getOperations(storeId);
+            yield this.getProductions(storeId);
+            yield this.getUsers(storeId);
+            yield this.getMaterialGroup();
+            yield this.getSizeRange();
+            yield this.getFraction();
+            yield this.getStores();
+        } catch (err) {
+            this.errorStore.setError(err as iError);
+        }
+    });
 
     getLeftovers = flow(function* (this: ListsStore, storeId: number) {
         try {
@@ -53,6 +78,29 @@ export class ListsStore {
             this.errorStore.setError(err as iError);
         }
     });
+
+    getGrades = flow(function* (this: ListsStore, storeId: number) {
+        try {
+            this.grades = yield api.getGrades(storeId);
+        } catch (err) {
+            this.errorStore.setError(err as iError);
+        }
+    });
+    getTypes = flow(function* (this: ListsStore, storeId: number) {
+        try {
+            this.types = yield api.getTypes(storeId);
+        } catch (err) {
+            this.errorStore.setError(err as iError);
+        }
+    });
+    getColors = flow(function* (this: ListsStore, storeId: number) {
+        try {
+            this.colors = yield api.getColors(storeId);
+        } catch (err) {
+            this.errorStore.setError(err as iError);
+        }
+    });
+
     getProductions = flow(function* (this: ListsStore, storeId: number) {
         try {
             this.productions = yield api.getProductions(storeId);

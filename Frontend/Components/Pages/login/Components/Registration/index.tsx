@@ -17,10 +17,6 @@ export const Registration = observer(() => {
     const [confirmPassword, setConfirmPassword] = useState('');
     const { loginStore, ListsStore } = useStores();
 
-    useEffect(() => {
-        ListsStore.getStores();
-    }, []);
-
     const disabled = loginV && password && confirmPassword && password == confirmPassword;
 
     const onClickHandler = async () => {

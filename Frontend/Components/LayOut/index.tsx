@@ -30,7 +30,7 @@ const GlobalStyle = createGlobalStyle`
 
 export const LayOut = observer(
     ({ children, page }: { children: JSX.Element; page: tPages }) => {
-        const { loginStore, UIStore } = useStores();
+        const { loginStore, UIStore, ListsStore } = useStores();
 
         useEffect(() => {
             UIStore.setIsLoading(true);
@@ -44,6 +44,11 @@ export const LayOut = observer(
                 UIStore.setIsLoading(false);
             }
         }, []);
+        useEffect(() => {
+            if (loginStore.user.storeId) {
+                ListsStore.fetchLists(loginStore.user.storeId);
+            }
+        }, [loginStore.user.storeId]);
 
         return (
             <Spin
