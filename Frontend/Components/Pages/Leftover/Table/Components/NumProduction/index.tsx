@@ -10,8 +10,8 @@ export const NumProduction = observer(
     ({ onClose, setValue }: { onClose?: () => void; setValue: (v: number) => void }) => {
         const [description, setDescription] = useState('');
         const [search, setSearch] = useState('');
-        const [isLoading, setIsLoading] = useState(true);
-        const { OperationStore, loginStore,ListsStore } = useStores();
+        const [isLoading, setIsLoading] = useState(false);
+        const { OperationStore,ListsStore } = useStores();
 
         const newProductionHandler = async () => {
             setIsLoading(true);

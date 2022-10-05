@@ -24,11 +24,6 @@ export const MoveOutSolo = observer(
         const [width, setWidth] = useState<tValue>(undefined);
         const [count, setCount] = useState<tValue>(undefined);
         const [date, setDate] = useState<moment.Moment | null>(moment());
-        console.log('record.productionId', record.productionId);
-
-        // useEffect(() => {
-        //     if (record.productionId) setNumProd(record.productionId);
-        // }, [record.productionId]);
 
         useEffect(() => {
             setManagerId(undefined);
@@ -90,7 +85,7 @@ export const MoveOutSolo = observer(
             data.countItemsOut = count ? +count : undefined;
             data.widthOut = width ? +width : undefined;
             data.operationId = operation;
-            data.productionId = numProd || undefined;
+            data.productionId = numProd || +record.productionId! || undefined;
 
             if (isNewProductionId.current)
                 await OperationStore.changeNumProduction({
