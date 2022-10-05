@@ -20,6 +20,10 @@ export const GetOrderSwitcher = ({
             return (
                 <Glue record={record} stateId={STATE.glued.id} isCheckLosses={false} />
             );
+        case OPERATIONS.improve.id:
+            return <Glue record={record} stateId={STATE.improved.id} />;
+        case OPERATIONS.autoclave.id:
+            return <Glue record={record} stateId={STATE.autoclaved.id} />;
     }
     return <></>;
 };

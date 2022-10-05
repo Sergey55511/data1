@@ -3,11 +3,15 @@ export const OPERATIONS = {
     changeProduction: { id: 3 },
     sorting: { id: 4 },
     glue: { id: 5 },
+    improve: { id: 6 },
+    autoclave: { id: 7 },
 };
 export const STATE = {
     washed: { id: 1 },
     sorted: { id: 2 },
     glued: { id: 3 },
+    improved: { id: 4 },
+    autoclaved: { id: 5 },
 };
 export const WORKPIECETYPE = {
     stone: { id: 1 },
