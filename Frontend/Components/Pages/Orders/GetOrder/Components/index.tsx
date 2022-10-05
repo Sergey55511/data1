@@ -1,8 +1,7 @@
 import { OPERATIONS, STATE } from '../../../../../../Shared/constants';
 import { iData } from '../../../../../../Shared/Types/interfaces';
-import { Glue } from './Pages/Glue';
 import { Sorting } from './Pages/Sorting';
-import { Wash } from './Pages/Wash';
+import { OneToOne } from './Shared/OneToOne';
 
 export const GetOrderSwitcher = ({
     operationId,
@@ -13,17 +12,29 @@ export const GetOrderSwitcher = ({
 }) => {
     switch (operationId) {
         case OPERATIONS.wash.id:
-            return <Wash record={record} stateId={STATE.washed.id} />;
+            return <OneToOne record={record} stateId={STATE.washed.id} />;
         case OPERATIONS.sorting.id:
             return <Sorting record={record} />;
         case OPERATIONS.glue.id:
             return (
-                <Glue record={record} stateId={STATE.glued.id} isCheckLosses={false} />
+                <OneToOne
+                    record={record}
+                    stateId={STATE.glued.id}
+                    isCheckLosses={false}
+                />
             );
         case OPERATIONS.improve.id:
-            return <Glue record={record} stateId={STATE.improved.id} />;
+            return <OneToOne record={record} stateId={STATE.improved.id} />;
         case OPERATIONS.autoclave.id:
-            return <Glue record={record} stateId={STATE.autoclaved.id} />;
+            return <OneToOne record={record} stateId={STATE.autoclaved.id} />;
+        case OPERATIONS.grinding.id:
+            return <OneToOne record={record} stateId={STATE.grinded.id} />;
+        case OPERATIONS.formation.id:
+            return <OneToOne record={record} stateId={STATE.formated.id} />;
+        case OPERATIONS.turning.id:
+            return <OneToOne record={record} stateId={STATE.turned.id} />;
+        case OPERATIONS.makeBall.id:
+            return <OneToOne record={record} stateId={STATE.balled.id} />;
     }
     return <></>;
 };
