@@ -74,7 +74,6 @@ export const GetOrder = () => {
                             operationId={order?.operationId || 0}
                             record={orders[0]}
                         />
-                        {/* <pre>{JSON.stringify(order, undefined, 2)}</pre> */}
                     </Frame>
                 </div>
             </div>

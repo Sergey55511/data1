@@ -27,14 +27,20 @@ export const GetOrderSwitcher = ({
             return <OneToOne record={record} stateId={STATE.improved.id} />;
         case OPERATIONS.autoclave.id:
             return <OneToOne record={record} stateId={STATE.autoclaved.id} />;
-        case OPERATIONS.grinding.id:
-            return <OneToOne record={record} stateId={STATE.grinded.id} />;
+        case OPERATIONS.grindingEngraver.id:
+            return <OneToOne record={record} stateId={STATE.grindedEngraver.id} />;
         case OPERATIONS.formation.id:
             return <OneToOne record={record} stateId={STATE.formated.id} />;
         case OPERATIONS.turning.id:
             return <OneToOne record={record} stateId={STATE.turned.id} />;
         case OPERATIONS.makeBall.id:
             return <OneToOne record={record} stateId={STATE.balled.id} />;
+        case OPERATIONS.makeSuperBall.id:
+            return <OneToOne record={record} stateId={STATE.makedSuperBall.id} />;
+        case OPERATIONS.grindingSuper.id:
+            return <OneToOne record={record} stateId={STATE.grindedSuper.id} />;
+        case OPERATIONS.polishing.id:
+            return <OneToOne record={record} stateId={STATE.polished.id} />;
     }
     return <></>;
 };

@@ -11,11 +11,14 @@ export const varifyJWT = async (req: NextApiRequest, res: NextApiResponse) => {
     const cookies = req.cookies as iCookies;
     try {
         const atkn = jwt.verify(cookies.atkn, KEY) as iUser;
+        console.log('atkn', atkn);
 
         return createAtkn(atkn);
     } catch (err) {
         try {
             const rtkn = jwt.verify(cookies.rtkn, KEY) as { login: string; key: string };
+            console.log('rtkn', rtkn);
+
             const result = await prisma.users.findFirst({
                 select: {
                     id: true,
@@ -30,6 +33,8 @@ export const varifyJWT = async (req: NextApiRequest, res: NextApiResponse) => {
                 },
             });
 
+            console.log('resultJWT', result);
+
             const user = {
                 ...result,
                 store: result?.store?.name,
@@ -37,10 +42,13 @@ export const varifyJWT = async (req: NextApiRequest, res: NextApiResponse) => {
             } as iUser;
 
             if (user.key == rtkn.key) {
-                createJWT(req, res, user);
+                console.log('createJWT');
+
+                await createJWT(req, res, user)
             } else {
                 throw new MyError(401);
             }
+            return user
         } catch (error) {
             throw new MyError(401);
         }

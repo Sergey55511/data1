@@ -19,7 +19,13 @@ export const createJWT = async (
     const atkn = jwt.sign(createAtkn(user), KEY, {
         expiresIn: 60 * 60,
     });
+
+    console.log('createJWT_atkn', atkn);
+
     const rtkn = jwt.sign({ login: user.login, key: refrashToken }, KEY);
+
+    console.log('createJWT_rtkn', atkn);
+
     try {
         await prisma.users.update({
             data: {
@@ -30,6 +36,8 @@ export const createJWT = async (
             },
         });
 
+        console.log('key updated');
+
         const cookies = new Cookies(req, res);
 
         cookies.set('atkn', atkn, {
@@ -39,6 +47,7 @@ export const createJWT = async (
             httpOnly: true,
         });
     } catch (err) {
+        console.log('createJWT error');
         throw err;
     }
 
