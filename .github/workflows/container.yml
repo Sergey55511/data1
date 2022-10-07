@@ -100,7 +100,7 @@ jobs:
           username: root
           password: guP:hF7i%7TN
           port: 22
-          script: 
+          script: |            
             cd /app/
             docker-compose down --rmi local
             docker-compose up -d
