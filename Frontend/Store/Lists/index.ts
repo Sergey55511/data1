@@ -5,6 +5,7 @@ import {
     iError,
     iFraction,
     iGrade,
+    iLength,
     iManager,
     iMaterialGroup,
     iOperation,
@@ -12,6 +13,7 @@ import {
     iSizeRange,
     iType,
     iUser,
+    iWorkpieceType,
 } from '../../../Shared/Types/interfaces';
 import { ErrorStore } from '../ErrorStore';
 import * as api from './api';
@@ -34,6 +36,8 @@ export class ListsStore {
     materialGroup: iMaterialGroup[] = [];
     sizeRange: iSizeRange[] = [];
     fraction: iFraction[] = [];
+    workpieceType: iWorkpieceType[] = [];
+    lengthes: iLength[] = [];
 
     constructor(errorStore: ErrorStore) {
         makeAutoObservable(this);
@@ -53,6 +57,8 @@ export class ListsStore {
             yield this.getSizeRange();
             yield this.getFraction();
             yield this.getStores();
+            yield this.getWorkpieceType();
+            yield this.getLength();
             this.isFetched = true;
         } catch (err) {
             this.errorStore.setError(err as iError);
@@ -156,6 +162,20 @@ export class ListsStore {
     getStores = flow(function* (this: ListsStore) {
         try {
             this.stores = yield api.getStores();
+        } catch (err) {
+            this.errorStore.setError(err as iError);
+        }
+    });
+    getWorkpieceType = flow(function* (this: ListsStore) {
+        try {
+            this.workpieceType = yield api.getWorkpieceType();
+        } catch (err) {
+            this.errorStore.setError(err as iError);
+        }
+    });
+    getLength = flow(function* (this: ListsStore) {
+        try {
+            this.lengthes = yield api.getLength();
         } catch (err) {
             this.errorStore.setError(err as iError);
         }

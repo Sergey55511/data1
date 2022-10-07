@@ -108,3 +108,11 @@ export interface iColor {
     id: number;
     color: string;
 }
+export interface iWorkpieceType {
+    id: number;
+    workpieceType: string;
+}
+export interface iLength {
+    id: number;
+    length: string;
+}

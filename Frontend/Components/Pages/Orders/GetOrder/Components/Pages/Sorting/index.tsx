@@ -1,5 +1,5 @@
 import { CheckOutlined, MinusOutlined } from '@ant-design/icons';
-import { Button, notification, Select, Tooltip } from 'antd';
+import { Button, notification, Tooltip } from 'antd';
 import { observer } from 'mobx-react-lite';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
@@ -7,7 +7,9 @@ import { STATE, WORKPIECETYPE } from '../../../../../../../../Shared/constants';
 import { prepareDataTable } from '../../../../../../../../Shared/Helpers';
 import { iData } from '../../../../../../../../Shared/Types/interfaces';
 import { useStores } from '../../../../../../../Store/useStores';
+import { InputField } from '../../../../../../Shared/InputField';
 import { InputNumber } from '../../../../../../Shared/InputNumber';
+import { SelectField } from '../../../../../../Shared/SelectField';
 import { Wrapper } from './style';
 
 interface iField {
@@ -258,46 +260,3 @@ export const Sorting = observer(({ record }: { record: iData }) => {
         </Wrapper>
     );
 });
-
-const InputField = ({
-    isError,
-    children,
-}: {
-    isError?: boolean;
-    children: JSX.Element;
-}) => {
-    return (
-        <div>
-            {children}
-            {isError && <small style={{ color: 'red' }}>Обязательное поле</small>}
-        </div>
-    );
-};
-
-const SelectField = ({
-    placeholder,
-    value,
-    onChange,
-    options,
-}: {
-    placeholder: string;
-    onChange: (v: number) => void;
-    options: { value: number; caption: string }[];
-    value?: number;
-}) => {
-    return (
-        <Select
-            showSearch
-            style={{ width: '100%' }}
-            placeholder={placeholder}
-            value={value}
-            onChange={onChange}
-        >
-            {options.map((item) => (
-                <Select.Option key={item.value} value={item.value}>
-                    {item.caption}
-                </Select.Option>
-            ))}
-        </Select>
-    );
-};

@@ -80,3 +80,15 @@ export const getStores = () => {
         method: 'GET',
     }).then((res) => res.data);
 };
+export const getWorkpieceType = () => {
+    return axios({
+        url: '/api/list/workpieceType',
+        method: 'GET',
+    }).then((res) => res.data);
+};
+export const getLength = () => {
+    return axios({
+        url: '/api/list/length',
+        method: 'GET',
+    }).then((res) => res.data);
+};

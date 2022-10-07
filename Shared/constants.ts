@@ -12,6 +12,7 @@ export const OPERATIONS = {
     makeSuperBall: { id: 12 }, //Докат
     grindingSuper: { id: 13 }, //Полировка
     polishing: { id: 14 }, //шарокрут
+    slice: { id: 15 }, //шарокрут
 };
 export const STATE = {
     washed: { id: 1 },
@@ -26,8 +27,10 @@ export const STATE = {
     makedSuperBall: { id: 10 },
     grindedSuper: { id: 11 },
     polished: { id: 12 },
+    sliced: { id: 13 },
 };
 export const WORKPIECETYPE = {
     stone: { id: 1 },
     losses: { id: 2 },
+    garbage: { id: 3 },
 };

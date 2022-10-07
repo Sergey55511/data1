@@ -18,7 +18,7 @@ export const TableLeftOvers = observer(
         filters: Record<string, FilterValue | null>;
         setFilters: Dispatch<SetStateAction<Record<string, FilterValue | null>>>;
     }) => {
-        const { loginStore,ListsStore } = useStores();
+        const { ListsStore } = useStores();
         const { leftovers } = ListsStore;
 
         const data = leftovers.map((item, index) => ({ ...item, key: index }));
