@@ -27,5 +27,6 @@ const PageSwitcher = ({ page }: { page: tPages }) => {
         case pages.getOrder:
             return <GetOrder />;
     }
+    
     return <></>;
 };
