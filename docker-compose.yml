@@ -3,9 +3,7 @@ version: "3.4"
 services:
 
   tdata1:
-    build:
-      dockerfile: ./Dockerfile
-      context: .
+    image: "ghcr.io/sergey55511/data1:dev"
     container_name: tdata1
     ports:
       - "80:3000"
