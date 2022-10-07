@@ -1,0 +1,94 @@
+import axios from 'axios';
+
+export const getMaterialGroup = () => {
+    return axios({
+        url: '/api/list/materialGroup',
+        method: 'GET',
+    }).then((res) => res.data);
+};
+export const getSizeRange = () => {
+    return axios({
+        url: '/api/list/sizeRange',
+        method: 'GET',
+    }).then((res) => res.data);
+};
+export const getFraction = () => {
+    return axios({
+        url: '/api/list/fraction',
+        method: 'GET',
+    }).then((res) => res.data);
+};
+export const leftovers = (storeId: number) => {
+    return axios({
+        url: `/api/data/leftovers?storeId=${storeId}`,
+        method: 'GET',
+    }).then((res) => res.data);
+};
+export const getOrders = (storeId: number) => {
+    return axios({
+        url: `/api/data/orders?storeId=${storeId}`,
+        method: 'GET',
+    }).then((res) => res.data);
+};
+export const getOperations = (storeId: number) => {
+    return axios({
+        url: `/api/list/operations?storeId=${storeId}`,
+        method: 'GET',
+    }).then((res) => res.data);
+};
+
+export const getGrades = (storeId: number) => {
+    return axios({
+        url: `/api/list/grades?storeId=${storeId}`,
+        method: 'GET',
+    }).then((res) => res.data);
+};
+export const getTypes = (storeId: number) => {
+    return axios({
+        url: `/api/list/types?storeId=${storeId}`,
+        method: 'GET',
+    }).then((res) => res.data);
+};
+export const getColors = (storeId: number) => {
+    return axios({
+        url: `/api/list/colors?storeId=${storeId}`,
+        method: 'GET',
+    }).then((res) => res.data);
+};
+
+export const getProductions = (storeId: number) => {
+    return axios({
+        url: `/api/list/productions?storeId=${storeId}`,
+        method: 'GET',
+    }).then((res) => res.data);
+};
+export const getUsers = (storeId: number) => {
+    return axios({
+        url: `/api/list/users?storeId=${storeId}`,
+        method: 'GET',
+    }).then((res) => res.data);
+};
+export const getManagers = (storeId: number, operationId: number) => {
+    return axios({
+        url: `/api/list/managers?storeId=${storeId}&operationId=${operationId}`,
+        method: 'GET',
+    }).then((res) => res.data);
+};
+export const getStores = () => {
+    return axios({
+        url: '/api/stores',
+        method: 'GET',
+    }).then((res) => res.data);
+};
+export const getWorkpieceType = () => {
+    return axios({
+        url: '/api/list/workpieceType',
+        method: 'GET',
+    }).then((res) => res.data);
+};
+export const getLength = () => {
+    return axios({
+        url: '/api/list/length',
+        method: 'GET',
+    }).then((res) => res.data);
+};

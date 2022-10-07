@@ -1,18 +1,248 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
 
 datasource db {
-  provider = "sqlite"
   url      = env("DATABASE_URL")
+  provider = "postgresql"
+}
+
+model Data {
+  id               Int            @id @default(autoincrement())
+  date             DateTime       @default(now()) @db.Date()
+  lot              Int?
+  numDocument      String?
+  pp               Int?
+  sizeRange        SizeRange?     @relation(fields: [sizeRangeId], references: [id])
+  sizeRangeId      Int?
+  widthInDocument  Float?
+  widthIn          Float?
+  widthOut         Float?
+  tareWidth        Float?
+  provider         String?
+  recipient        String?
+  countItemsIn     Int?
+  countItemsOut    Int?
+  workingHours     Int?
+  exercise         String?
+  numProducts      Int?
+  numMoving        Int?
+  moneyIn          Decimal?
+  moneyOut         Decimal?
+  moneyDefect      Decimal?
+  typeOfProcessing String?
+  stock            String?
+  numShipment      Int?
+  shade            String?
+  materialGroup    MaterialGroup? @relation(fields: [materialGroupId], references: [id])
+  materialGroupId  Int?
+  WorkpieceType    WorkpieceType? @relation(fields: [workpieceTypeId], references: [id])
+  workpieceTypeId  Int?
+  Operations       Operations?    @relation(fields: [operationId], references: [id])
+  operationId      Int?
+  userId           Int?
+  managerId        Int?
+  Stores           Stores?        @relation(fields: [storeId], references: [id])
+  storeId          Int?
+  Grade            Grade?         @relation(fields: [gradeId], references: [id])
+  gradeId          Int?
+  active           Boolean        @default(true)
+  Productions      Productions?   @relation(fields: [productionId], references: [id])
+  productionId     Int?
+  Models           Models?        @relation(fields: [modelId], references: [id])
+  modelId          Int?
+  Color            Color?         @relation(fields: [colorId], references: [id])
+  colorId          Int?
+  Length           Length?        @relation(fields: [lengthId], references: [id])
+  lengthId         Int?
+  State            State?         @relation(fields: [stateId], references: [id])
+  stateId          Int?
+  Channel          Channel?       @relation(fields: [channelId], references: [id])
+  channelId        Int?
+  Users            Users?         @relation(fields: [userId], references: [id])
+  Managers         Managers?      @relation(fields: [managerId], references: [id])
+  Fraction         Fraction?      @relation(fields: [fractionId], references: [id])
+  fractionId       Int?
+  Types            Types?         @relation(fields: [typeId], references: [id])
+  typeId           Int?
+}
+
+model Managers {
+  id                Int                 @id @default(autoincrement())
+  name              String
+  store             Stores?             @relation(fields: [storeId], references: [id])
+  storeId           Int?
+  active            Boolean             @default(true)
+  Data              Data[]
+  ManagerOperations ManagerOperations[]
+}
+
+model ManagerOperations {
+  id          Int         @id @default(autoincrement())
+  manager     Managers?   @relation(fields: [managerId], references: [id])
+  managerId   Int?
+  Operation   Operations? @relation(fields: [operationId], references: [id])
+  operationId Int?
 }
 
 model Users {
-  id    Int     @id @default(autoincrement())
-  login String  @unique
-  password  String
-  activ Boolean @default(true)
+  id       Int     @id @default(autoincrement())
+  login    String  @unique
+  password String
+  key      String?
+  status   String?
+  store    Stores? @relation(fields: [storeId], references: [id])
+  activ    Boolean @default(true)
+  storeId  Int?    @map("storesId")
+  Data     Data[]
+}
+
+model Stores {
+  id             Int               @id @default(autoincrement())
+  name           String
+  Data           Data[]
+  Users          Users[]
+  StoreOperation StoreOperations[]
+  BilletStore    BilletStore[]
+  Productions    Productions[]
+  Managers       Managers[]
+}
+
+model Operations {
+  id                Int                 @id @default(autoincrement())
+  operation         String              @unique
+  result            String?
+  sborka            Int?
+  activ             Boolean             @default(true)
+  StoreOperations   StoreOperations?    @relation(fields: [storeOperationsId], references: [id])
+  storeOperationsId Int?
+  Data              Data[]
+  ManagerOperations ManagerOperations[]
+}
+
+model StoreOperations {
+  id        Int          @id @default(autoincrement())
+  store     Stores?      @relation(fields: [storeId], references: [id])
+  storeId   Int?         @map("storesId")
+  Operation Operations[]
+}
+
+model Types {
+  id     Int     @id @default(autoincrement())
+  type   String
+  active Boolean @default(true)
+  Data   Data[]
+}
+
+model Grade {
+  id      Int     @id @default(autoincrement())
+  grade   String  @unique
+  for     String?
+  variant Int
+  activ   Boolean @default(true)
+  Data    Data[]
+}
+
+model Fraction {
+  id       Int     @id @default(autoincrement())
+  fraction String  @unique
+  position Int     @default(autoincrement())
+  active   Boolean @default(true)
+  Data     Data[]
+}
+
+model Color {
+  id      Int     @id @default(autoincrement())
+  color   String  @unique
+  for     String?
+  variant Int
+  activ   Boolean @default(true)
+  Data    Data[]
+}
+
+model Billets {
+  id          Int           @id @default(autoincrement())
+  name        String        @unique
+  BilletStore BilletStore[]
+  Models      Models[]
+  modelId     Int?          @map("modelsId")
+}
+
+model BilletStore {
+  id       Int      @id @default(autoincrement())
+  Billet   Billets? @relation(fields: [billetId], references: [id])
+  billetId Int?
+  Stores   Stores?  @relation(fields: [storeId], references: [id])
+  storeId  Int?     @map("storesId")
+}
+
+model Models {
+  id          Int           @id @default(autoincrement())
+  model       String        @unique
+  Billets     Billets?      @relation(fields: [billetsId], references: [id])
+  billetsId   Int?
+  ModelsSizes ModelsSizes[]
+  Date        Data[]
+}
+
+model ModelsSizes {
+  id      Int     @id @default(autoincrement())
+  size    String?
+  length  String?
+  Models  Models  @relation(fields: [modelId], references: [id])
+  modelId Int     @map("modelsId")
+}
+
+model SizeRange {
+  id        Int     @id @default(autoincrement())
+  sizeRange String
+  position  Int     @default(autoincrement())
+  active    Boolean @default(true)
+  Data      Data[]
+}
+
+model MaterialGroup {
+  id            Int     @id @default(autoincrement())
+  materialGroup String
+  position      Int     @default(autoincrement())
+  active        Boolean @default(true)
+  Data          Data[]
+}
+
+model WorkpieceType {
+  id            Int     @id @default(autoincrement())
+  workpieceType String
+  position      Int     @default(autoincrement())
+  active        Boolean @default(true)
+  Data          Data[]
+}
+
+model Productions {
+  id          Int     @id @default(autoincrement())
+  description String
+  Stores      Stores? @relation(fields: [storeId], references: [id])
+  storeId     Int?
+  active      Boolean @default(true)
+  Data        Data[]
+}
+
+model Length {
+  id     Int     @id @default(autoincrement())
+  length String
+  active Boolean @default(true)
+  Data   Data[]
+}
+
+model State {
+  id     Int     @id @default(autoincrement())
+  state  String
+  active Boolean @default(true)
+  Data   Data[]
+}
+
+model Channel {
+  id      Int     @id @default(autoincrement())
+  channel Float
+  active  Boolean @default(true)
+  Data    Data[]
 }
