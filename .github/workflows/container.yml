@@ -7,11 +7,11 @@ name: Docker
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "dev" ]
     # Publish semver tags as releases.
     tags: [ 'v*.*.*' ]
   pull_request:
-    branches: [ "main" ]
+    branches: [ "dev" ]
 
 env:
   # Use docker.io for Docker Hub if empty
@@ -92,3 +92,15 @@ jobs:
         # This step uses the identity token to provision an ephemeral certificate
         # against the sigstore community Fulcio instance.
         run: echo "${{ steps.meta.outputs.tags }}" | xargs -I {} cosign sign {}@${{ steps.build-and-push.outputs.digest }}
+
+      - name: Deploy to tData1.ru
+        uses: appleboy/ssh-action@master
+        with:
+          host: 89.108.99.45
+          username: root
+          password: guP:hF7i%7TN
+          port: 22
+          script: |            
+            echo $SHELL
+            docker-compose down --rmi local
+            docker-compose up -d
