@@ -107,4 +107,11 @@ jobs:
           port: 22
           source: "docker-compose.yml"
           target: "/app"
+      - name: docker-compose up
+        uses: appleboy/ssh-action@master
+        with:
+          script: |            
+            cd /app/
+            docker-compose down --rmi local
+            docker-compose up -d
           
