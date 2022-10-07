@@ -106,9 +106,5 @@ jobs:
           password: guP:hF7i%7TN
           port: 22
           source: "docker-compose.yml"
-          target: "/app/"
-          script: |            
-            cd /app/
-            docker-compose down --rmi local
-            docker-compose up -d
+          target: "/app"
           
