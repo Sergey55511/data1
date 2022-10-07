@@ -93,14 +93,22 @@ jobs:
         # against the sigstore community Fulcio instance.
         run: echo "${{ steps.meta.outputs.tags }}" | xargs -I {} cosign sign {}@${{ steps.build-and-push.outputs.digest }}
 
-      - name: Deploy to tData1.ru
-        uses: appleboy/ssh-action@master
+  deploy:
+    name: Deploy to tData1.ru
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+      - name: copy file via ssh password
+        uses: appleboy/scp-action@master
         with:
           host: 89.108.99.45
           username: root
           password: guP:hF7i%7TN
           port: 22
+          source: "docker-compose.yml"
+          target: "/app/"
           script: |            
             cd /app/
             docker-compose down --rmi local
             docker-compose up -d
+          
