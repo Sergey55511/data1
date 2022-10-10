@@ -47,6 +47,7 @@ export class ListsStore {
     fetchLists = flow(function* (this: ListsStore, storeId: number) {
         if (this.isFetched) return;
         try {
+            yield this.getOrders(storeId);
             yield this.getGrades(storeId);
             yield this.getTypes(storeId);
             yield this.getColors(storeId);

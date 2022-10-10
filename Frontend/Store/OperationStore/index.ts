@@ -1,11 +1,7 @@
 import { flow, makeAutoObservable } from 'mobx';
 import * as api from './Api';
 import { ErrorStore } from '../ErrorStore';
-import {
-    iError,
-    iData,
-    iDataTable,
-} from '../../../Shared/Types/interfaces';
+import { iError, iData, iDataTable } from '../../../Shared/Types/interfaces';
 import { Login } from '../LoginStore';
 import { ListsStore } from '../Lists';
 
@@ -67,6 +63,8 @@ export class OperationStore {
     ) {
         try {
             yield api.moveToWork(data);
+            if (this.loginStore.user.storeId)
+                yield this.listsStore.getOrders(this.loginStore.user.storeId);
             if (callBack) callBack();
         } catch (err) {
             this.errorStore.setError(err as iError);

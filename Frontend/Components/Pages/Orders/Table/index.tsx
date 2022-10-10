@@ -7,7 +7,6 @@ import { getColumnProps } from '../../../Shared/Table/Helpers/getColumnProps';
 import { useState } from 'react';
 import { KEYSLEFTOVERS } from '../../../Shared/Table/constants';
 import { TableApp } from '../../../Shared/Table';
-import { MyDrawer } from '../../../Shared/MyDrawer';
 import { useRouter } from 'next/router';
 
 export const OrdersTable = observer(() => {

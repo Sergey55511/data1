@@ -1,4 +1,4 @@
-import { Avatar, Menu } from 'antd';
+import { Avatar, Badge, Menu } from 'antd';
 import {
     DatabaseOutlined,
     VerticalAlignBottomOutlined,
@@ -13,8 +13,8 @@ import { useStores } from '../../../../Store/useStores';
 import { pages, tPages } from '../../../Pages/constants';
 
 export const TopMenu = observer(({ page }: { page: tPages }) => {
-    const { loginStore,ListsStore } = useStores();
-
+    const { loginStore, ListsStore } = useStores();
+    const ordersCount=ListsStore.orders.length
     return (
         <Wrapper>
             <div className="menu">
@@ -28,12 +28,16 @@ export const TopMenu = observer(({ page }: { page: tPages }) => {
                             icon: <DatabaseOutlined />,
                         },
                         {
-                            label: <Link href="/orders">Задачи</Link>,
+                            label: (
+                                <Badge size='small' count={ordersCount} overflowCount={999}>
+                                    <Link href="/orders">Задачи</Link>
+                                </Badge>
+                            ),
                             key: pages.orders,
                             icon: <StarOutlined />,
                         },
                         {
-                            label: <Link href="/newItem">Приход товара</Link>,
+                            label: <Link href="/newItem">Приход сырья</Link>,
                             key: pages.newItem,
                             icon: <VerticalAlignBottomOutlined />,
                         },
