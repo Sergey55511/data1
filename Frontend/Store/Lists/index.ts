@@ -58,7 +58,6 @@ export class ListsStore {
             yield this.getFraction();
             yield this.getStores();
             yield this.getWorkpieceType();
-            yield this.getLength();
             this.isFetched = true;
         } catch (err) {
             this.errorStore.setError(err as iError);
@@ -176,6 +175,13 @@ export class ListsStore {
     getLength = flow(function* (this: ListsStore) {
         try {
             this.lengthes = yield api.getLength();
+        } catch (err) {
+            this.errorStore.setError(err as iError);
+        }
+    });
+    getLengthBySize = flow(function* (this: ListsStore, sizeRangeId: number) {
+        try {
+            return yield api.getLengthBySize(sizeRangeId);
         } catch (err) {
             this.errorStore.setError(err as iError);
         }

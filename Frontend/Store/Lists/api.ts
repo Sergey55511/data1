@@ -92,3 +92,9 @@ export const getLength = () => {
         method: 'GET',
     }).then((res) => res.data);
 };
+export const getLengthBySize = (sizeRangeId: number) => {
+    return axios({
+        url: `/api/list/length?sizeRangeId=${sizeRangeId}`,
+        method: 'GET',
+    }).then((res) => res.data);
+};

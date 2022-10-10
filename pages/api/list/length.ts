@@ -9,7 +9,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             await fetchService<iUser>({
                 req,
                 res,
-                fetch: () => getLength(),
+                fetch: () => getLength(req),
             });
             break;
         }

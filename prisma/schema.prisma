@@ -194,11 +194,28 @@ model ModelsSizes {
 }
 
 model SizeRange {
-  id        Int     @id @default(autoincrement())
-  sizeRange String
-  position  Int     @default(autoincrement())
-  active    Boolean @default(true)
-  Data      Data[]
+  id                    Int                     @id @default(autoincrement())
+  sizeRange             String
+  position              Int                     @default(autoincrement())
+  active                Boolean                 @default(true)
+  Data                  Data[]
+  SizeRangeLengthBridge SizeRangeLengthBridge[]
+}
+
+model Length {
+  id                    Int                     @id @default(autoincrement())
+  length                String
+  active                Boolean                 @default(true)
+  Data                  Data[]
+  SizeRangeLengthBridge SizeRangeLengthBridge[]
+}
+
+model SizeRangeLengthBridge {
+  id Int @id @default(autoincrement())
+  Length      Length?    @relation(fields: [lengthId], references: [id])
+  lengthId    Int?
+  SizeRange   SizeRange? @relation(fields: [sizeRangeId], references: [id])
+  sizeRangeId Int?
 }
 
 model MaterialGroup {
@@ -224,13 +241,6 @@ model Productions {
   storeId     Int?
   active      Boolean @default(true)
   Data        Data[]
-}
-
-model Length {
-  id     Int     @id @default(autoincrement())
-  length String
-  active Boolean @default(true)
-  Data   Data[]
 }
 
 model State {

@@ -5,11 +5,12 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { STATE, WORKPIECETYPE } from '../../../../../../../../Shared/constants';
 import { prepareDataTable } from '../../../../../../../../Shared/Helpers';
-import { iData } from '../../../../../../../../Shared/Types/interfaces';
+import { iData, iLength } from '../../../../../../../../Shared/Types/interfaces';
 import { useStores } from '../../../../../../../Store/useStores';
 import { InputField } from '../../../../../../Shared/InputField';
 import { InputNumber } from '../../../../../../Shared/InputNumber';
 import { SelectField } from '../../../../../../Shared/SelectField';
+import { Row } from './Components/Row';
 import { Wrapper } from './style';
 
 interface iField {
@@ -19,7 +20,7 @@ interface iField {
     isError: boolean;
     isReqired: boolean;
 }
-interface iState {
+export interface iState {
     workpieceTypeId: iField;
     gradeId: iField;
     colorId: iField;
@@ -44,6 +45,7 @@ export const Slicing = observer(
     ({ record, stateId }: { record: iData; stateId: number }) => {
         const { ListsStore, OperationStore } = useStores();
         const [state, setState] = useState<iState[]>([]);
+        const [length, setLength] = useState<iLength[]>([]);
         const [losses, setLosses] = useState<number>(0);
         const [garbage, setGarbage] = useState<number | undefined>(undefined);
         const [isLoading, setIsLoading] = useState(false);
@@ -198,115 +200,16 @@ export const Slicing = observer(
                     <div className={losses < 0 ? 'red' : ''}>потеря: {losses}</div>
                 </div>
                 <div>
-                    {state.map((item, index) => {
-                        const onChange = (
-                            v: string | number,
-                            index: number,
-                            fieldName: keyof iState,
-                        ) => {
-                            setState((prev) => {
-                                prev[index][fieldName].value = v;
-                                return [...prev];
-                            });
-                        };
-                        return (
-                            <div key={index} className="row">
-                                <Tooltip title="Удалить строку">
-                                    <Button
-                                        shape="circle"
-                                        icon={<MinusOutlined />}
-                                        onClick={() => removeRow(index)}
-                                        loading={isLoading}
-                                    />
-                                </Tooltip>
-                                <div className="item">
-                                    <InputField isError={item.workpieceTypeId.isError}>
-                                        <SelectField
-                                            placeholder={item.workpieceTypeId.placeholder}
-                                            value={
-                                                +item.workpieceTypeId.value || undefined
-                                            }
-                                            onChange={(v) =>
-                                                onChange(v, index, 'workpieceTypeId')
-                                            }
-                                            options={ListsStore.workpieceType.map(
-                                                (item) => ({
-                                                    value: item.id,
-                                                    caption: item.workpieceType,
-                                                }),
-                                            )}
-                                        />
-                                    </InputField>
-                                </div>
-                                <div className="item">
-                                    <InputField isError={item.sizeRangeId.isError}>
-                                        <SelectField
-                                            placeholder={item.sizeRangeId.placeholder}
-                                            value={+item.sizeRangeId.value || undefined}
-                                            onChange={(v) =>
-                                                onChange(v, index, 'sizeRangeId')
-                                            }
-                                            options={ListsStore.sizeRange.map((item) => ({
-                                                value: item.id,
-                                                caption: item.sizeRange,
-                                            }))}
-                                        />
-                                    </InputField>
-                                </div>
-                                <div className="item">
-                                    <InputField isError={item.length.isError}>
-                                        <Input
-                                            placeholder={item.length.placeholder}
-                                            value={getLengthValue(item.length.value)}
-                                            disabled
-                                            style={{ width: '100%' }}
-                                        />
-                                    </InputField>
-                                </div>
-                                <div className="item">
-                                    <InputField isError={item.colorId.isError}>
-                                        <SelectField
-                                            placeholder={item.colorId.placeholder}
-                                            value={+item.colorId.value || undefined}
-                                            onChange={(v) =>
-                                                onChange(v, index, 'colorId')
-                                            }
-                                            options={ListsStore.colors.map((item) => ({
-                                                value: item.id,
-                                                caption: item.color,
-                                            }))}
-                                        />
-                                    </InputField>
-                                </div>
-                                <div className="item">
-                                    <InputField isError={item.gradeId.isError}>
-                                        <SelectField
-                                            placeholder={item.gradeId.placeholder}
-                                            value={+item.gradeId.value || undefined}
-                                            onChange={(v) =>
-                                                onChange(v, index, 'gradeId')
-                                            }
-                                            options={ListsStore.grades.map((item) => ({
-                                                value: item.id,
-                                                caption: item.grade,
-                                            }))}
-                                        />
-                                    </InputField>
-                                </div>
-                                <div className="item">
-                                    <InputField isError={item.widthIn.isError}>
-                                        <InputNumber
-                                            placeholder={item.widthIn.placeholder}
-                                            onChangeHandler={(v) => {
-                                                onChange(v!, index, 'widthIn');
-                                            }}
-                                            value={item.widthIn.value || ''}
-                                        />
-                                    </InputField>
-                                </div>
-                            </div>
-                        );
-                    })}
+                    {state.map((item, index) => (
+                        <Row
+                            index={index}
+                            state={item}
+                            removeRow={removeRow}
+                            setState={setState}
+                            isLoading={isLoading}
+                            key={index}
+                        />
+                    ))}
                 </div>
             </Wrapper>
         );
