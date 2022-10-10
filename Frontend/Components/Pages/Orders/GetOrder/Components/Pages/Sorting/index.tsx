@@ -7,6 +7,8 @@ import { STATE, WORKPIECETYPE } from '../../../../../../../../Shared/constants';
 import { prepareDataTable } from '../../../../../../../../Shared/Helpers';
 import { iData } from '../../../../../../../../Shared/Types/interfaces';
 import { useStores } from '../../../../../../../Store/useStores';
+import { getLosseObject } from '../../../../../../Helpers';
+import { confirmAction } from '../../../../../../Shared/ConfirmSubbmit';
 import { InputField } from '../../../../../../Shared/InputField';
 import { InputNumber } from '../../../../../../Shared/InputNumber';
 import { SelectField } from '../../../../../../Shared/SelectField';
@@ -92,6 +94,10 @@ export const Sorting = observer(({ record }: { record: iData }) => {
         return isError;
     };
 
+    const confirmSubbmit = () => {
+        confirmAction({ subbmitHandler });
+    };
+
     const subbmitHandler = async () => {
         const errorNote = () => {
             notification.error({
@@ -109,7 +115,7 @@ export const Sorting = observer(({ record }: { record: iData }) => {
             errorNote();
             return;
         }
-        
+
         const totalSum = getTotalSum();
         if (!totalSum) {
             errorNote();
@@ -131,13 +137,7 @@ export const Sorting = observer(({ record }: { record: iData }) => {
             stateId: STATE.sorted.id,
         }));
         if (losses) {
-            data.push({
-                ...record,
-                workpieceTypeId: WORKPIECETYPE.losses.id,
-                widthOut: undefined,
-                widthIn: +losses.toFixed(2),
-                stateId: undefined,
-            });
+            data.push(getLosseObject(record, WORKPIECETYPE.losses.id, losses));
         }
 
         const dataTable = data.map((item) => prepareDataTable(item));
@@ -157,7 +157,7 @@ export const Sorting = observer(({ record }: { record: iData }) => {
                     <Button
                         shape="circle"
                         icon={<CheckOutlined />}
-                        onClick={subbmitHandler}
+                        onClick={confirmSubbmit}
                         loading={isLoading}
                     />
                 </Tooltip>

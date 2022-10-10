@@ -211,7 +211,7 @@ model Length {
 }
 
 model SizeRangeLengthBridge {
-  id Int @id @default(autoincrement())
+  id          Int        @id @default(autoincrement())
   Length      Length?    @relation(fields: [lengthId], references: [id])
   lengthId    Int?
   SizeRange   SizeRange? @relation(fields: [sizeRangeId], references: [id])
@@ -231,6 +231,7 @@ model WorkpieceType {
   workpieceType String
   position      Int     @default(autoincrement())
   active        Boolean @default(true)
+  isShow        Boolean @default(true)
   Data          Data[]
 }
 

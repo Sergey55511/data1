@@ -7,7 +7,7 @@ export const getWorkpieceType = <T>(): Promise<T> => {
             id: true,
             workpieceType: true,
         },
-        where: { active: true },
+        where: { active: true, isShow: true },
         orderBy: { workpieceType: 'asc' },
     }) as any;
 };

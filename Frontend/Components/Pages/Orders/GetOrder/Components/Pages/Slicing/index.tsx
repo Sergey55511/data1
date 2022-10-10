@@ -1,17 +1,21 @@
-import { CheckOutlined, MinusOutlined } from '@ant-design/icons';
-import { Button, Input, notification, Tooltip } from 'antd';
+import { CheckOutlined } from '@ant-design/icons';
+import { Button, notification, Tooltip } from 'antd';
 import { observer } from 'mobx-react-lite';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import { STATE, WORKPIECETYPE } from '../../../../../../../../Shared/constants';
+import { WORKPIECETYPE } from '../../../../../../../../Shared/constants';
 import { prepareDataTable } from '../../../../../../../../Shared/Helpers';
-import { iData, iLength } from '../../../../../../../../Shared/Types/interfaces';
+import { iData } from '../../../../../../../../Shared/Types/interfaces';
 import { useStores } from '../../../../../../../Store/useStores';
-import { InputField } from '../../../../../../Shared/InputField';
 import { InputNumber } from '../../../../../../Shared/InputNumber';
-import { SelectField } from '../../../../../../Shared/SelectField';
 import { Row } from './Components/Row';
 import { Wrapper } from './style';
+import { ExclamationCircleOutlined } from '@ant-design/icons';
+import { Modal } from 'antd';
+import { confirmAction } from '../../../../../../Shared/ConfirmSubbmit';
+import { getLosseObject } from '../../../../../../Helpers';
+
+const { confirm } = Modal;
 
 interface iField {
     key: string;
@@ -45,7 +49,6 @@ export const Slicing = observer(
     ({ record, stateId }: { record: iData; stateId: number }) => {
         const { ListsStore, OperationStore } = useStores();
         const [state, setState] = useState<iState[]>([]);
-        const [length, setLength] = useState<iLength[]>([]);
         const [losses, setLosses] = useState<number>(0);
         const [garbage, setGarbage] = useState<number | undefined>(undefined);
         const [isLoading, setIsLoading] = useState(false);
@@ -103,6 +106,10 @@ export const Slicing = observer(
             return isError;
         };
 
+        const confirmSubbmit = () => {
+            confirmAction({ subbmitHandler });
+        };
+
         const subbmitHandler = async () => {
             const errorNote = () => {
                 notification.error({
@@ -143,23 +150,11 @@ export const Slicing = observer(
                 stateId,
             }));
             if (losses) {
-                data.push({
-                    ...record,
-                    workpieceTypeId: WORKPIECETYPE.losses.id,
-                    widthOut: undefined,
-                    widthIn: +losses.toFixed(2),
-                    stateId: undefined,
-                });
+                data.push(getLosseObject(record, WORKPIECETYPE.losses.id, losses));
             }
 
             if (garbage) {
-                data.push({
-                    ...record,
-                    workpieceTypeId: WORKPIECETYPE.garbage.id,
-                    widthOut: undefined,
-                    widthIn: +garbage.toFixed(2),
-                    stateId: undefined,
-                });
+                data.push(getLosseObject(record, WORKPIECETYPE.garbage.id, garbage));
             }
 
             const dataTable = data.map((item) => prepareDataTable(item));
@@ -183,7 +178,7 @@ export const Slicing = observer(
                         <Button
                             shape="circle"
                             icon={<CheckOutlined />}
-                            onClick={subbmitHandler}
+                            onClick={confirmSubbmit}
                             loading={isLoading}
                         />
                     </Tooltip>

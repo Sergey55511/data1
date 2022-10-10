@@ -6,6 +6,8 @@ import { STATE, WORKPIECETYPE } from '../../../../../../../../Shared/constants';
 import { prepareDataTable } from '../../../../../../../../Shared/Helpers';
 import { iData } from '../../../../../../../../Shared/Types/interfaces';
 import { useStores } from '../../../../../../../Store/useStores';
+import { getLosseObject } from '../../../../../../Helpers';
+import { confirmAction } from '../../../../../../Shared/ConfirmSubbmit';
 import { Wrapper } from './style';
 
 export interface iProps {
@@ -47,6 +49,10 @@ export const OneToOne = ({
         return true;
     })();
 
+    const confirmSubbmit = () => {
+        confirmAction({ subbmitHandler });
+    };
+
     const subbmitHandler = async () => {
         const data: iData[] = [
             {
@@ -57,13 +63,7 @@ export const OneToOne = ({
             },
         ];
         if (state.losses) {
-            data.push({
-                ...record,
-                workpieceTypeId: WORKPIECETYPE.losses.id,
-                widthOut: undefined,
-                widthIn: +state.losses.toFixed(2),
-                stateId: undefined,
-            });
+            data.push(getLosseObject(record, WORKPIECETYPE.losses.id, state.losses));
         }
 
         const dataTable = data.map((item) => prepareDataTable(item));
@@ -125,7 +125,7 @@ export const OneToOne = ({
                 loading={isLoading}
                 type="primary"
                 disabled={!isValid}
-                onClick={subbmitHandler}
+                onClick={confirmSubbmit}
             >
                 Сохранить
             </Button>
