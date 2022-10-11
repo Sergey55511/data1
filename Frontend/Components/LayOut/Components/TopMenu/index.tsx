@@ -65,7 +65,7 @@ export const TopMenu = observer(({ page }: { page: tPages }) => {
                                     icon: <CarOutlined />,
                                 },
                                 {
-                                    label: <Link href="/newItem">Спешивание</Link>,
+                                    label: <Link href="/newItem">Смешивание</Link>,
                                     key: 'mix',
                                     icon: <FullscreenExitOutlined />,
                                 },
