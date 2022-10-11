@@ -1,4 +1,4 @@
-import { Button, Radio } from 'antd';
+import { Badge, Button, Radio } from 'antd';
 import { FilterValue } from 'antd/lib/table/interface';
 import { observer } from 'mobx-react-lite';
 import { useEffect, useState } from 'react';
@@ -9,12 +9,14 @@ import { SelectField } from '../../../Shared/SelectField';
 import { Title } from '../../../Shared/Title';
 import { Wrapper } from './style';
 import { TableLeftOvers } from './TableLeftovers';
+import { TableMoveOut } from './TableMoveOut';
 
 export interface iDataIndex extends iData {
     index?: number;
 }
 
 export const MoveOut = observer(({ title }: { title: string }) => {
+    const [data, setData] = useState<iDataIndex[]>([]);
     const [filters, setFilters] = useState<Record<string, FilterValue | null>>({});
     const [selectedRows, setSelectedRows] = useState<number[]>([]);
     const [buttonState, setButtonState] = useState<'lefovers' | 'prepare'>('lefovers');
@@ -22,14 +24,34 @@ export const MoveOut = observer(({ title }: { title: string }) => {
     const { leftovers } = ListsStore;
 
     useEffect(() => {
+        const data: iDataIndex[] = leftovers.map((item, index) => {
+            return { ...item, index };
+        });
+        setData(data);
+    }, [leftovers]);
+
+    useEffect(() => {
         if (loginStore.user.storeId) ListsStore.getLeftovers(loginStore.user.storeId);
     }, [loginStore.user.storeId]);
 
-    const leftoversData: iDataIndex[] = leftovers
-        .map((item, index) => {
-            return { ...item, index };
-        })
-        .filter((item, index) => !selectedRows.includes(index));
+    const onChange = (
+        record: iDataIndex,
+        key: keyof iDataIndex,
+        value: iDataIndex[keyof iDataIndex],
+    ) => {
+
+        setData((prev) => {
+            prev[record.index!][key] = value;
+            return [...prev];
+        });
+    };
+
+    const leftoversData: iDataIndex[] = data?.filter(
+        (_, index) => !selectedRows.includes(index),
+    );
+    const moveOutData: iDataIndex[] = data?.filter((_, index) =>
+        selectedRows.includes(index),
+    );
 
     return (
         <Wrapper>
@@ -56,7 +78,9 @@ export const MoveOut = observer(({ title }: { title: string }) => {
                     onChange={(e) => setButtonState(e.target.value)}
                 >
                     <Radio.Button value="lefovers">Остаток</Radio.Button>
-                    <Radio.Button value="prepare">Подготовка</Radio.Button>
+                    <Badge count={selectedRows.length}>
+                        <Radio.Button value="prepare">Подготовка</Radio.Button>
+                    </Badge>
                 </Radio.Group>
                 {buttonState == 'prepare' && <Button type="primary">Провести</Button>}
             </div>
@@ -72,7 +96,18 @@ export const MoveOut = observer(({ title }: { title: string }) => {
                         }}
                     />
                 )}
-                {buttonState == 'prepare' && <div>prepare</div>}
+                {buttonState == 'prepare' && (
+                    <TableMoveOut
+                        {...{
+                            filters,
+                            setFilters,
+                            leftovers: moveOutData,
+                            onChange,
+                            selectRow: (i: number) =>
+                                setSelectedRows((prev) => [...prev, i]),
+                        }}
+                    />
+                )}
             </div>
         </Wrapper>
     );
