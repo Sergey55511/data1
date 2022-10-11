@@ -4,6 +4,7 @@ import { GetOrder } from './Orders/GetOrder';
 import Leftover from './Leftover';
 import { NewItem } from './Moves/MoveIn/NewItem';
 import { Orders } from './Orders';
+import { MoveOut } from './Operations/MoveOut';
 
 interface iProps {
     page: tPages;
@@ -26,6 +27,8 @@ const PageSwitcher = ({ page }: { page: tPages }) => {
             return <Orders />;
         case pages.getOrder:
             return <GetOrder />;
+        case pages.moveOut:
+            return <MoveOut title="Отгрузка:" />;
     }
     return <></>;
 };

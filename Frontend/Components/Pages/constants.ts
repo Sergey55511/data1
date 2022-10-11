@@ -5,4 +5,5 @@ export const pages = {
     newItem: 'newItem',
     orders: 'orders',
     getOrder: 'getOrder',
+    moveOut: 'moveOut',
 };

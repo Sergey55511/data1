@@ -5,6 +5,10 @@ import {
     StarOutlined,
     FileOutlined,
     UserOutlined,
+    SettingOutlined,
+    ExportOutlined,
+    CarOutlined,
+    FullscreenExitOutlined,
 } from '@ant-design/icons';
 import Link from 'next/link';
 import { Wrapper } from './style';
@@ -14,7 +18,7 @@ import { pages, tPages } from '../../../Pages/constants';
 
 export const TopMenu = observer(({ page }: { page: tPages }) => {
     const { loginStore, ListsStore } = useStores();
-    const ordersCount=ListsStore.orders.length
+    const ordersCount = ListsStore.orders.length;
     return (
         <Wrapper>
             <div className="menu">
@@ -29,7 +33,11 @@ export const TopMenu = observer(({ page }: { page: tPages }) => {
                         },
                         {
                             label: (
-                                <Badge size='small' count={ordersCount} overflowCount={999}>
+                                <Badge
+                                    size="small"
+                                    count={ordersCount}
+                                    overflowCount={999}
+                                >
                                     <Link href="/orders">Задачи</Link>
                                 </Badge>
                             ),
@@ -41,15 +49,28 @@ export const TopMenu = observer(({ page }: { page: tPages }) => {
                             key: pages.newItem,
                             icon: <VerticalAlignBottomOutlined />,
                         },
-                        // {
-                        //     label: 'Операции',
-                        //     key: 'SubMenu',
-                        //     icon: <SettingOutlined />,
-                        //     children: operations?.map((item, index) => ({
-                        //         label: item.opereytion,
-                        //         key: index,
-                        //     })),
-                        // },
+                        {
+                            label: 'Операции',
+                            key: 'Operations',
+                            icon: <SettingOutlined />,
+                            children: [
+                                {
+                                    label: <Link href="/operations/moveout">Отгрузка</Link>,
+                                    key: 'moveOutside',
+                                    icon: <ExportOutlined />,
+                                },
+                                {
+                                    label: <Link href="/newItem">Перемещение</Link>,
+                                    key: 'moveInside',
+                                    icon: <CarOutlined />,
+                                },
+                                {
+                                    label: <Link href="/newItem">Спешивание</Link>,
+                                    key: 'mix',
+                                    icon: <FullscreenExitOutlined />,
+                                },
+                            ],
+                        },
                         {
                             label: 'Отчеты',
                             key: 'Reports',

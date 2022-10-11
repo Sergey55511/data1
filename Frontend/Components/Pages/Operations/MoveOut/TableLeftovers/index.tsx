@@ -1,27 +1,28 @@
-import { iData } from '../../../../../Shared/Types/interfaces';
 import type { ColumnsType, TableProps } from 'antd/es/table';
-import { getColumnProps } from '../../../Shared/Table/Helpers/getColumnProps';
-import { useStores } from '../../../../Store/useStores';
+import { getColumnProps } from '../../../../Shared/Table/Helpers/getColumnProps';
 import { observer } from 'mobx-react-lite';
 import { Dispatch, SetStateAction } from 'react';
 import { FilterValue } from 'antd/es/table/interface';
-import { MyDrawer } from '../../../Shared/MyDrawer';
-import { MoveOutSolo } from './Components/MoveOut';
-import { TableApp } from '../../../Shared/Table';
-import { KEYSLEFTOVERS } from '../../../Shared/Table/constants';
+import { TableApp } from '../../../../Shared/Table';
+import { KEYSLEFTOVERS } from '../../../../Shared/Table/constants';
+import { iDataIndex } from '..';
 
 export const TableLeftOvers = observer(
     ({
         filters,
         setFilters,
+        leftovers,
+        selectRow,
     }: {
         filters: Record<string, FilterValue | null>;
         setFilters: Dispatch<SetStateAction<Record<string, FilterValue | null>>>;
+        leftovers: iDataIndex[];
+        selectRow: (i: number) => void;
     }) => {
-        const { ListsStore } = useStores();
-        const { leftovers } = ListsStore;
-
-        const data = leftovers.map((item, index) => ({ ...item, key: index }));
+        const data: iDataIndex[] = leftovers.map((item, index) => ({
+            ...item,
+            key: index,
+        }));
 
         const filteredleftovers = leftovers.filter((item) => {
             for (const key in item) {
@@ -37,7 +38,7 @@ export const TableLeftOvers = observer(
         const getColumnPropsHoc = (dataIndex: string) =>
             getColumnProps(dataIndex, filteredleftovers, filters);
 
-        const columns: ColumnsType<iData> = [
+        const columns: ColumnsType<iDataIndex> = [
             {
                 ...getColumnPropsHoc(KEYSLEFTOVERS.workpieceType.key),
                 title: KEYSLEFTOVERS.workpieceType.title,
@@ -92,7 +93,7 @@ export const TableLeftOvers = observer(
             },
         ];
 
-        const handleChange: TableProps<iData>['onChange'] = (
+        const handleChange: TableProps<iDataIndex>['onChange'] = (
             _pagination,
             filters,
             _sorter,
@@ -103,13 +104,10 @@ export const TableLeftOvers = observer(
 
         return (
             <TableApp
-                onRow={(record, rowIndex) => {
+                onRow={(record: iDataIndex, _rowIndex) => {
                     return {
-                        onDoubleClick: (event) => {
-                            MyDrawer({
-                                title: 'Выдать в работу',
-                                content: <MoveOutSolo record={record} />,
-                            });
+                        onDoubleClick: (_event) => {
+                            selectRow(record.index!);
                         },
                     };
                 }}

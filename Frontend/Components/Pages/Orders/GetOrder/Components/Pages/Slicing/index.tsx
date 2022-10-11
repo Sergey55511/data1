@@ -167,10 +167,6 @@ export const Slicing = observer(
             setIsLoading(false);
         };
 
-        const getLengthValue = (index: string | number) => {
-            if (index) return ListsStore.lengthes[+index].length;
-        };
-
         return (
             <Wrapper>
                 <div className="title">
