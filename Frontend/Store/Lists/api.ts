@@ -98,3 +98,16 @@ export const getLengthBySize = (sizeRangeId: number) => {
         method: 'GET',
     }).then((res) => res.data);
 };
+export const getRecipient = () => {
+    return axios({
+        url: `/api/list/recipient`,
+        method: 'GET',
+    }).then((res) => res.data);
+};
+export const postRecipient = (data: { recipient: string }[]) => {
+    return axios({
+        url: `/api/list/recipient`,
+        method: 'POST',
+        data,
+    }).then((res) => res.data);
+};

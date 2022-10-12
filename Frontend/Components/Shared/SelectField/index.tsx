@@ -9,7 +9,7 @@ export const SelectField = ({
 }: {
     placeholder: string;
     onChange: (v: number) => void;
-    options: { value: number; caption: string }[];
+    options?: { value: number; caption: string }[];
     value?: number;
     selectProps?: SelectProps;
 }) => {
@@ -22,7 +22,7 @@ export const SelectField = ({
             onChange={onChange}
             {...selectProps}
         >
-            {options.map((item) => (
+            {options?.map((item) => (
                 <Select.Option key={item.value} value={item.value}>
                     {item.caption}
                 </Select.Option>

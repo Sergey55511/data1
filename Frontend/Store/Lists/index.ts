@@ -10,6 +10,7 @@ import {
     iMaterialGroup,
     iOperation,
     iProductions,
+    iRecipient,
     iSizeRange,
     iType,
     iUser,
@@ -38,6 +39,7 @@ export class ListsStore {
     fraction: iFraction[] = [];
     workpieceType: iWorkpieceType[] = [];
     lengthes: iLength[] = [];
+    recipient: iRecipient[] = [];
 
     constructor(errorStore: ErrorStore) {
         makeAutoObservable(this);
@@ -59,6 +61,7 @@ export class ListsStore {
             yield this.getFraction();
             yield this.getStores();
             yield this.getWorkpieceType();
+            yield this.getRecipient();
             this.isFetched = true;
         } catch (err) {
             this.errorStore.setError(err as iError);
@@ -183,6 +186,21 @@ export class ListsStore {
     getLengthBySize = flow(function* (this: ListsStore, sizeRangeId: number) {
         try {
             return yield api.getLengthBySize(sizeRangeId);
+        } catch (err) {
+            this.errorStore.setError(err as iError);
+        }
+    });
+    getRecipient = flow(function* (this: ListsStore) {
+        try {
+            this.recipient = yield api.getRecipient();
+        } catch (err) {
+            this.errorStore.setError(err as iError);
+        }
+    });
+    postRecipient = flow(function* (this: ListsStore, data: { recipient: string }[]) {
+        try {
+            yield api.postRecipient(data);
+            yield this.getRecipient();
         } catch (err) {
             this.errorStore.setError(err as iError);
         }

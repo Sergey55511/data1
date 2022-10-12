@@ -116,3 +116,7 @@ export interface iLength {
     id: number;
     length: string;
 }
+export interface iRecipient {
+    id: number;
+    recipient: string;
+}

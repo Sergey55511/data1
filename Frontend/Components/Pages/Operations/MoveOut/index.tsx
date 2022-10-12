@@ -1,12 +1,14 @@
-import { Badge, Button, Radio } from 'antd';
+import { Badge, Button, Input, Modal, notification, Radio } from 'antd';
 import { FilterValue } from 'antd/lib/table/interface';
 import { observer } from 'mobx-react-lite';
 import { useEffect, useState } from 'react';
 import { iData } from '../../../../../Shared/Types/interfaces';
 import { useStores } from '../../../../Store/useStores';
 import { InputField } from '../../../Shared/InputField';
+import { myModal } from '../../../Shared/MyModal';
 import { SelectField } from '../../../Shared/SelectField';
 import { Title } from '../../../Shared/Title';
+import { ModalContent } from './AddRecipient';
 import { Wrapper } from './style';
 import { TableLeftOvers } from './TableLeftovers';
 import { TableMoveOut } from './TableMoveOut';
@@ -16,6 +18,7 @@ export interface iDataIndex extends iData {
 }
 
 export const MoveOut = observer(({ title }: { title: string }) => {
+    const [isRecipientLoading, setIsRecipientLoading] = useState(false);
     const [data, setData] = useState<iDataIndex[]>([]);
     const [filters, setFilters] = useState<Record<string, FilterValue | null>>({});
     const [selectedRows, setSelectedRows] = useState<number[]>([]);
@@ -52,6 +55,21 @@ export const MoveOut = observer(({ title }: { title: string }) => {
         selectedRows.includes(index),
     );
 
+    const addRecipient = () => {
+        myModal({
+            children: (
+                <ModalContent
+                    submit={async (v: string) => {
+                        setIsRecipientLoading(true);
+                        await ListsStore.postRecipient([{ recipient: v }]);
+                        setIsRecipientLoading(false);
+                        notification.success({ message: 'Получатель добавлен' });
+                    }}
+                />
+            ),
+        });
+    };
+
     return (
         <Wrapper>
             <div className="header">
@@ -62,15 +80,24 @@ export const MoveOut = observer(({ title }: { title: string }) => {
                             placeholder="получатель"
                             // value={1}
                             onChange={(v) => console.log(v)}
-                            options={[]}
-                            // options={ListsStore.workpieceType.map((item) => ({
-                            //     value: item.id,
-                            //     caption: item.workpieceType,
-                            // }))}
+                            selectProps={{
+                                loading: isRecipientLoading,
+                                disabled: isRecipientLoading,
+                            }}
+                            options={ListsStore.recipient.map((item) => ({
+                                value: item.id,
+                                caption: item.recipient,
+                            }))}
                         />
                     </InputField>
                 </div>
-                <a href="#" onClick={(e) => e.preventDefault()}>
+                <a
+                    href="#"
+                    onClick={(e) => {
+                        e.preventDefault();
+                        addRecipient();
+                    }}
+                >
                     Добавить получателя
                 </a>
             </div>
@@ -80,7 +107,7 @@ export const MoveOut = observer(({ title }: { title: string }) => {
                     onChange={(e) => setButtonState(e.target.value)}
                 >
                     <Radio.Button value="lefovers">Остаток</Radio.Button>
-                    <Badge count={selectedRows.length} size='small'>
+                    <Badge count={selectedRows.length} size="small">
                         <Radio.Button value="prepare">Подготовка</Radio.Button>
                     </Badge>
                 </Radio.Group>
