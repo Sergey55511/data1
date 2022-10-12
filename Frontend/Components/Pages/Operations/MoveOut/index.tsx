@@ -39,7 +39,6 @@ export const MoveOut = observer(({ title }: { title: string }) => {
         key: keyof iDataIndex,
         value: iDataIndex[keyof iDataIndex],
     ) => {
-
         setData((prev) => {
             prev[record.index!][key] = value;
             return [...prev];
@@ -71,6 +70,9 @@ export const MoveOut = observer(({ title }: { title: string }) => {
                         />
                     </InputField>
                 </div>
+                <a href="#" onClick={(e) => e.preventDefault()}>
+                    Добавить получателя
+                </a>
             </div>
             <div className="buttonGroup">
                 <Radio.Group
@@ -103,8 +105,11 @@ export const MoveOut = observer(({ title }: { title: string }) => {
                             setFilters,
                             leftovers: moveOutData,
                             onChange,
-                            selectRow: (i: number) =>
-                                setSelectedRows((prev) => [...prev, i]),
+                            removeRow: (i: number) =>
+                                setSelectedRows((prev) => {
+                                    const res = prev.filter((item) => item != i);
+                                    return [...res];
+                                }),
                         }}
                     />
                 )}

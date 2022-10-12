@@ -15,13 +15,13 @@ export const TableMoveOut = observer(
         filters,
         setFilters,
         leftovers,
-        selectRow,
+        removeRow,
         onChange,
     }: {
         filters: Record<string, FilterValue | null>;
         setFilters: Dispatch<SetStateAction<Record<string, FilterValue | null>>>;
         leftovers: iDataIndex[];
-        selectRow: (i: number) => void;
+        removeRow: (i: number) => void;
         onChange: (
             record: iDataIndex,
             key: keyof iDataIndex,
@@ -129,8 +129,12 @@ export const TableMoveOut = observer(
                     return (
                         <InputF
                             value={value}
-                            onChangeHandler={(v: any) => onChange(record, 'countItemsOut', v)}
-                            isError={(record.count || 0) - (record.countItemsOut || 0) < 0}
+                            onChangeHandler={(v: any) =>
+                                onChange(record, 'countItemsOut', v)
+                            }
+                            isError={
+                                (record.count || 0) - (record.countItemsOut || 0) < 0
+                            }
                         />
                     );
                 },
@@ -148,20 +152,19 @@ export const TableMoveOut = observer(
 
         return (
             <Wrapper>
-               <TableApp
-                onRow={(record: iDataIndex, _rowIndex) => {
-                    return {
-                        onDoubleClick: (_event) => {
-                            selectRow(record.index!);
-                        },
-                    };
-                }}
-                columns={columns}
-                dataSource={data}
-                onChange={handleChange}
-            /> 
+                <TableApp
+                    onRow={(record: iDataIndex, _rowIndex) => {
+                        return {
+                            onDoubleClick: (_event) => {
+                                removeRow(record.index!);
+                            },
+                        };
+                    }}
+                    columns={columns}
+                    dataSource={data}
+                    onChange={handleChange}
+                />
             </Wrapper>
-            
         );
     },
 );
@@ -176,7 +179,7 @@ const InputF = ({
     isError?: boolean;
 }) => {
     return (
-        <InputField isError={isError}>
+        <InputField isError={isError} errorMsg='Минусовой остаток'>
             <InputNumber value={value} onChangeHandler={onChangeHandler} />
         </InputField>
     );
