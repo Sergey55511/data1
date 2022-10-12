@@ -80,7 +80,7 @@ export const MoveOut = observer(({ title }: { title: string }) => {
                     onChange={(e) => setButtonState(e.target.value)}
                 >
                     <Radio.Button value="lefovers">Остаток</Radio.Button>
-                    <Badge count={selectedRows.length}>
+                    <Badge count={selectedRows.length} size='small'>
                         <Radio.Button value="prepare">Подготовка</Radio.Button>
                     </Badge>
                 </Radio.Group>
