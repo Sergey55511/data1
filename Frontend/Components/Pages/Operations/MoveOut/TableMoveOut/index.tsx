@@ -8,6 +8,7 @@ import { KEYSLEFTOVERS } from '../../../../Shared/Table/constants';
 import { iDataIndex } from '..';
 import { InputNumber } from '../../../../Shared/InputNumber';
 import { InputField } from '../../../../Shared/InputField';
+import { Wrapper } from './style';
 
 export const TableMoveOut = observer(
     ({
@@ -129,7 +130,7 @@ export const TableMoveOut = observer(
                         <InputF
                             value={value}
                             onChangeHandler={(v: any) => onChange(record, 'countItemsOut', v)}
-                            isError={(record.width || 0) - (record.countItemsOut || 0) < 0}
+                            isError={(record.count || 0) - (record.countItemsOut || 0) < 0}
                         />
                     );
                 },
@@ -146,7 +147,8 @@ export const TableMoveOut = observer(
         };
 
         return (
-            <TableApp
+            <Wrapper>
+               <TableApp
                 onRow={(record: iDataIndex, _rowIndex) => {
                     return {
                         onDoubleClick: (_event) => {
@@ -157,7 +159,9 @@ export const TableMoveOut = observer(
                 columns={columns}
                 dataSource={data}
                 onChange={handleChange}
-            />
+            /> 
+            </Wrapper>
+            
         );
     },
 );
