@@ -13,6 +13,7 @@ export const OPERATIONS = {
     grindingSuper: { id: 13 }, //Полировка
     polishing: { id: 14 }, //шарокрут
     slice: { id: 15 }, //шарокрут
+    sale: { id: 16 }, //Отгрузка
 };
 export const STATE = {
     washed: { id: 1 },

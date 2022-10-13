@@ -49,19 +49,19 @@ export class ListsStore {
     fetchLists = flow(function* (this: ListsStore, storeId: number) {
         if (this.isFetched) return;
         try {
-            yield this.getOrders(storeId);
-            yield this.getGrades(storeId);
-            yield this.getTypes(storeId);
-            yield this.getColors(storeId);
-            yield this.getOperations(storeId);
-            yield this.getProductions(storeId);
-            yield this.getUsers(storeId);
-            yield this.getMaterialGroup();
-            yield this.getSizeRange();
-            yield this.getFraction();
-            yield this.getStores();
-            yield this.getWorkpieceType();
-            yield this.getRecipient();
+            this.getOrders(storeId);
+            this.getGrades(storeId);
+            this.getTypes(storeId);
+            this.getColors(storeId);
+            this.getOperations(storeId);
+            this.getProductions(storeId);
+            this.getUsers(storeId);
+            this.getMaterialGroup();
+            this.getSizeRange();
+            this.getFraction();
+            this.getStores();
+            this.getWorkpieceType();
+            this.getRecipient();
             this.isFetched = true;
         } catch (err) {
             this.errorStore.setError(err as iError);

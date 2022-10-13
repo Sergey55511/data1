@@ -11,6 +11,7 @@ export const prepareDataTable = (data: iData): iDataTable => {
         'userId',
         'managerId',
         'modelId',
+        'recipientId',
         'sizeRangeId',
         'fractionId',
         'materialGroupId',

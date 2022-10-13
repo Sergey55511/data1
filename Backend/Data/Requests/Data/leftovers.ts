@@ -26,8 +26,8 @@ export const leftovers = <T>(storeId: number): PrismaPromise<T> => {
             "stateId",
             state,
             lot,
-            round(sum("widthIn")::numeric,2)-round(coalesce(sum("widthOut"),0)::numeric,2) as "width",
-            round(sum("countItemsIn")::numeric,2)-round(sum("countItemsOut")::numeric,2) as "count",
+            COALESCE(round(sum("widthIn")::numeric,2),0)-COALESCE(round(coalesce(sum("widthOut"),0)::numeric,2),0) as "width",
+            COALESCE(round(sum("countItemsIn")::numeric,2),0)-COALESCE(round(sum("countItemsOut")::numeric,2),0) as "count",
             sum("moneyIn")-sum("moneyOut") as "code"
         FROM 
             public."Data" left join "WorkpieceType" on "Data"."workpieceTypeId"="WorkpieceType".id
@@ -63,6 +63,6 @@ export const leftovers = <T>(storeId: number): PrismaPromise<T> => {
             "stateId",
             state,
             lot
-        HAVING round(sum("widthIn")::numeric,2)-round(coalesce(sum("widthOut"),0)::numeric,2)>0;
+        HAVING COALESCE(round(sum("widthIn")::numeric,2),0)-COALESCE(round(coalesce(sum("widthOut"),0)::numeric,2),0)>0;
     `;
 };

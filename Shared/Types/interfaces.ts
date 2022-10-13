@@ -30,6 +30,7 @@ export interface iDataTable {
     workpieceTypeId?: number;
     userId?: number;
     managerId?: number;
+    recipientId?: number;
     modelId?: number;
     sizeRangeId?: number;
     fractionId?: number;
@@ -50,6 +51,7 @@ export interface iDataTable {
 
 export interface iData extends iDataTable {
     userLogin?: string;
+    recipient?: string;
     managerLogin?: string;
     model?: string;
     sizeRange?: string;
