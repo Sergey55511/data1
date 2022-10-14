@@ -9,6 +9,6 @@ export default async function moveToWork(req: NextApiRequest, res: NextApiRespon
         req,
         res,
         validation: () => validateLeftovers(req),
-        fetch: () => postNewItems([req.body]),
+        fetch: () => postNewItems(req.body.data as iData[]),
     });
 }

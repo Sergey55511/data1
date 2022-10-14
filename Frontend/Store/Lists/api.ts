@@ -104,6 +104,14 @@ export const getRecipient = () => {
         method: 'GET',
     }).then((res) => res.data);
 };
+
+export const getMaxId = (storeId: number) => {
+    return axios({
+        url: `/api/data/getMaxId?storeId=${storeId}`,
+        method: 'GET',
+    }).then((res) => res.data);
+};
+
 export const postRecipient = (data: { recipient: string }[]) => {
     return axios({
         url: `/api/list/recipient`,

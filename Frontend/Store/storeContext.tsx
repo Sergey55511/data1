@@ -9,7 +9,7 @@ class Store {
     UIStore = new UIStore();
     ErrorStore = new ErrorStore();
     loginStore = new Login(this.ErrorStore);
-    ListsStore = new ListsStore(this.ErrorStore);
+    ListsStore = new ListsStore(this.ErrorStore, this.loginStore);
     OperationStore = new OperationStore(
         this.ErrorStore,
         this.loginStore,

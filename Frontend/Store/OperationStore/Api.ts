@@ -7,6 +7,7 @@ export const getMaxLot = () => {
         method: 'GET',
     }).then((res) => res.data.lot);
 };
+
 export const postNewItems = <T>(data: T[]) => {
     return axios({
         url: `/api/data/newItems`,
@@ -14,7 +15,11 @@ export const postNewItems = <T>(data: T[]) => {
         data,
     }).then((res) => res.data);
 };
-export const moveToWork = (data: iDataTable) => {
+export const moveToWork = (data: {
+    data: iDataTable[];
+    storeId: number;
+    maxId: number;
+}) => {
     return axios({
         url: `/api/data/moveToWork`,
         method: 'POST',

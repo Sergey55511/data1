@@ -17,11 +17,15 @@ import {
     iWorkpieceType,
 } from '../../../Shared/Types/interfaces';
 import { ErrorStore } from '../ErrorStore';
+import { Login } from '../LoginStore';
 import * as api from './api';
 
 export class ListsStore {
     isFetched = false;
+    maxId = 0;
+
     errorStore: ErrorStore;
+    loginStore: Login;
     stores: { id: number; name: string }[] = [];
     users: iUser[] = [];
     managers: iManager[] = [];
@@ -41,9 +45,10 @@ export class ListsStore {
     lengthes: iLength[] = [];
     recipient: iRecipient[] = [];
 
-    constructor(errorStore: ErrorStore) {
+    constructor(errorStore: ErrorStore, loginStore: Login) {
         makeAutoObservable(this);
         this.errorStore = errorStore;
+        this.loginStore = loginStore;
     }
 
     fetchLists = flow(function* (this: ListsStore, storeId: number) {
@@ -68,9 +73,14 @@ export class ListsStore {
         }
     });
 
+    getMaxId = flow(function* (this: ListsStore) {
+        this.maxId = yield api.getMaxId(this.loginStore.user.storeId);
+    });
+
     getLeftovers = flow(function* (this: ListsStore, storeId: number) {
         try {
             this.leftovers = yield api.leftovers(storeId);
+            yield this.getMaxId();
         } catch (err) {
             this.errorStore.setError(err as iError);
         }
@@ -78,6 +88,7 @@ export class ListsStore {
     getOrders = flow(function* (this: ListsStore, storeId: number) {
         try {
             this.orders = yield api.getOrders(storeId);
+            yield this.getMaxId();
         } catch (err) {
             this.errorStore.setError(err as iError);
         }

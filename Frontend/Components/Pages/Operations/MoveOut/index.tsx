@@ -107,7 +107,7 @@ export const MoveOut = observer(({ title }: { title: string }) => {
         });
         setIsSubmitLoading(true);
 
-        await OperationStore.postNewItems(dataSendPrepared, () => {
+        await OperationStore.moveToWork(dataSendPrepared, () => {
             notification.success({ message: 'Отгрузка прошла успешно' });
         });
         await ListsStore.getLeftovers(loginStore.user.storeId);

@@ -10,6 +10,7 @@ export class OperationStore {
     loginStore: Login;
     listsStore: ListsStore;
     maxLot = 0;
+
     constructor(errorStore: ErrorStore, login: Login, listsStore: ListsStore) {
         makeAutoObservable(this);
         this.errorStore = errorStore;
@@ -26,6 +27,7 @@ export class OperationStore {
             this.errorStore.setError(err as iError);
         }
     });
+
     getMaxLot = flow(function* (this: OperationStore) {
         try {
             this.maxLot = yield api.getMaxLot();
@@ -58,13 +60,15 @@ export class OperationStore {
 
     moveToWork = flow(function* (
         this: OperationStore,
-        data: iDataTable,
+        data: iDataTable[],
         callBack?: () => void,
     ) {
         try {
-            yield api.moveToWork(data);
-            if (this.loginStore.user.storeId)
-                yield this.listsStore.getOrders(this.loginStore.user.storeId);
+            yield api.moveToWork({
+                data: data,
+                storeId: this.loginStore.user.storeId,
+                maxId: this.listsStore.maxId,
+            });
             if (callBack) callBack();
         } catch (err) {
             this.errorStore.setError(err as iError);
