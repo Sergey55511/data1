@@ -6,6 +6,7 @@
 .pnp.js
 .env
 /docker
+/nginx
 
 # testing
 /coverage
