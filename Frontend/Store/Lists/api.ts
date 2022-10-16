@@ -98,9 +98,10 @@ export const getLengthBySize = (sizeRangeId: number) => {
         method: 'GET',
     }).then((res) => res.data);
 };
-export const getRecipient = () => {
+export const getRecipient = (storeId?: number) => {
+    const patams = storeId ? `?storeId=${storeId}` : '';
     return axios({
-        url: `/api/list/recipient`,
+        url: `/api/list/recipient${patams}`,
         method: 'GET',
     }).then((res) => res.data);
 };

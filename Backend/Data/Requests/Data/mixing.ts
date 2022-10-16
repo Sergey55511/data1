@@ -2,10 +2,7 @@ import { PrismaClient } from '@prisma/client';
 import moment from 'moment';
 import { iDataTable } from '../../../../Shared/Types/interfaces';
 
-export const postNewItems = async <T>(
-    data: iDataTable[],
-    isSetNewPP = true,
-): Promise<T> => {
+export const mixing = async <T>(data: iDataTable[], isSetNewPP = true): Promise<T> => {
     const prisma = new PrismaClient();
     let pp: number;
     if (isSetNewPP) {
@@ -15,11 +12,23 @@ export const postNewItems = async <T>(
     }
     const dataPrepared = data?.map((item) => ({
         ...item,
-        date: moment(item.date)?.toDate(),
+        date: moment()?.toDate(),
         pp: pp,
     }));
+    const dataCom = dataPrepared?.map((item) => ({
+        ...item,
+        productionId: undefined,
+        widthOut: undefined,
+        countItemsOut: undefined,
+        widthIn: item.widthOut,
+        countItemsIn: item.countItemsOut,
+    }));
+
+    await prisma.data.createMany({
+        data: dataPrepared,
+    });
 
     return (await prisma.data.createMany({
-        data: dataPrepared,
+        data: dataCom,
     })) as any;
 };

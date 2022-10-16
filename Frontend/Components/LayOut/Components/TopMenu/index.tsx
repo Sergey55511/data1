@@ -3,7 +3,7 @@ import {
     DatabaseOutlined,
     VerticalAlignBottomOutlined,
     StarOutlined,
-    FileOutlined,
+    ImportOutlined,
     UserOutlined,
     SettingOutlined,
     ExportOutlined,
@@ -45,8 +45,8 @@ export const TopMenu = observer(({ page }: { page: tPages }) => {
                             icon: <StarOutlined />,
                         },
                         {
-                            label: <Link href="/newItem">Приход сырья</Link>,
-                            key: pages.newItem,
+                            label: <Link href="/newItem654">Приход перемещение</Link>,
+                            key: pages.newItem+'asd',
                             icon: <VerticalAlignBottomOutlined />,
                         },
                         {
@@ -55,54 +55,32 @@ export const TopMenu = observer(({ page }: { page: tPages }) => {
                             icon: <SettingOutlined />,
                             children: [
                                 {
-                                    label: <Link href="/operations/moveout">Отгрузка</Link>,
-                                    key: 'moveOutside',
+                                    label: <Link href="/newItem">Приход сырья</Link>,
+                                    key: pages.newItem,
+                                    icon: <ImportOutlined />,
+                                },
+                                {
+                                    label: (
+                                        <Link href="/operations/moveout">Отгрузка</Link>
+                                    ),
+                                    key: pages.moveOut,
                                     icon: <ExportOutlined />,
                                 },
                                 {
-                                    label: <Link href="/newItem">Перемещение</Link>,
-                                    key: 'moveInside',
+                                    label: (
+                                        <Link href="/operations/shareItems">
+                                            Перемещение
+                                        </Link>
+                                    ),
+                                    key: pages.shareItems,
                                     icon: <CarOutlined />,
                                 },
                                 {
-                                    label: <Link href="/newItem">Смешивание</Link>,
-                                    key: 'mix',
+                                    label: (
+                                        <Link href="/operations/mixing">Смешивание</Link>
+                                    ),
+                                    key: pages.mixing,
                                     icon: <FullscreenExitOutlined />,
-                                },
-                            ],
-                        },
-                        {
-                            label: 'Отчеты',
-                            key: 'Reports',
-                            icon: <FileOutlined />,
-                            children: [
-                                {
-                                    type: 'group',
-                                    label: 'Item 1',
-                                    children: [
-                                        {
-                                            label: 'Option 1',
-                                            key: 'setting:12',
-                                        },
-                                        {
-                                            label: 'Option 2',
-                                            key: 'setting:22',
-                                        },
-                                    ],
-                                },
-                                {
-                                    type: 'group',
-                                    label: 'Item 2',
-                                    children: [
-                                        {
-                                            label: 'Option 3',
-                                            key: 'setting:32',
-                                        },
-                                        {
-                                            label: 'Option 4',
-                                            key: 'setting:42',
-                                        },
-                                    ],
                                 },
                             ],
                         },

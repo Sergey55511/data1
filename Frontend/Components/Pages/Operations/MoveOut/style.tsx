@@ -8,6 +8,9 @@ export const Wrapper = styled.div`
         .recipientWrapper {
             width: 200px;
         }
+        .numShipment {
+            width: 200px;
+        }
     }
     .buttonGroup {
         display: flex;

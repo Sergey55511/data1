@@ -28,7 +28,11 @@ const PageSwitcher = ({ page }: { page: tPages }) => {
         case pages.getOrder:
             return <GetOrder />;
         case pages.moveOut:
-            return <MoveOut title="Отгрузка:" />;
+            return <MoveOut title="Отгрузка:" type="moveOut" />;
+        case pages.shareItems:
+            return <MoveOut title="Перемещение:" type="shareItems" />;
+        case pages.mixing:
+            return <MoveOut title="Смешивание:" type="mixing" />;
     }
     return <></>;
 };

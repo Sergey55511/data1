@@ -26,6 +26,13 @@ export const moveToWork = (data: {
         data,
     }).then((res) => res.data);
 };
+export const mixing = (data: { data: iDataTable[]; storeId: number; maxId: number }) => {
+    return axios({
+        url: `/api/data/mixing`,
+        method: 'POST',
+        data,
+    }).then((res) => res.data);
+};
 export const postOrderResult = (data: iDataTable[]) => {
     return axios({
         url: `/api/data/orders/order`,

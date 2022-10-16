@@ -14,6 +14,8 @@ export const OPERATIONS = {
     polishing: { id: 14 }, //шарокрут
     slice: { id: 15 }, //шарокрут
     sale: { id: 16 }, //Отгрузка
+    shareItems: { id: 17 }, //Перемещение
+    mixing: { id: 18 }, //Смешивание
 };
 export const STATE = {
     washed: { id: 1 },

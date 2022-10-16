@@ -8,6 +8,7 @@ export const prepareDataTable = (data: iData): iDataTable => {
         'numProduction',
         'pp',
         'workpieceTypeId',
+        'numShipment',
         'userId',
         'managerId',
         'modelId',

@@ -66,7 +66,6 @@ export class ListsStore {
             this.getFraction();
             this.getStores();
             this.getWorkpieceType();
-            this.getRecipient();
             this.isFetched = true;
         } catch (err) {
             this.errorStore.setError(err as iError);
@@ -201,9 +200,9 @@ export class ListsStore {
             this.errorStore.setError(err as iError);
         }
     });
-    getRecipient = flow(function* (this: ListsStore) {
+    getRecipient = flow(function* (this: ListsStore, storeId?: number) {
         try {
-            this.recipient = yield api.getRecipient();
+            this.recipient = yield api.getRecipient(storeId);
         } catch (err) {
             this.errorStore.setError(err as iError);
         }

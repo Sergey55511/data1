@@ -31,7 +31,6 @@ model Data {
   moneyDefect      Decimal?
   typeOfProcessing String?
   stock            String?
-  numShipment      Int?
   shade            String?
   materialGroup    MaterialGroup? @relation(fields: [materialGroupId], references: [id])
   materialGroupId  Int?
@@ -64,7 +63,7 @@ model Data {
   fractionId       Int?
   Types            Types?         @relation(fields: [typeId], references: [id])
   typeId           Int?
-  Recipient        Recipients?     @relation(fields: [recipientId], references: [id])
+  Recipient        Recipients?    @relation(fields: [recipientId], references: [id])
   recipientId      Int?
 }
 
@@ -107,6 +106,7 @@ model Stores {
   BilletStore    BilletStore[]
   Productions    Productions[]
   Managers       Managers[]
+  Recipients     Recipients[]
 }
 
 model Operations {
@@ -264,4 +264,6 @@ model Recipients {
   recipient String
   active    Boolean @default(true)
   Data      Data[]
+  Stores    Stores? @relation(fields: [storeId], references: [id])
+  storeId   Int?
 }

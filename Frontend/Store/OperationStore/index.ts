@@ -74,6 +74,22 @@ export class OperationStore {
             this.errorStore.setError(err as iError);
         }
     });
+    mixing = flow(function* (
+        this: OperationStore,
+        data: iDataTable[],
+        callBack?: () => void,
+    ) {
+        try {
+            yield api.mixing({
+                data: data,
+                storeId: this.loginStore.user.storeId,
+                maxId: this.listsStore.maxId,
+            });
+            if (callBack) callBack();
+        } catch (err) {
+            this.errorStore.setError(err as iError);
+        }
+    });
 
     postOrderResult = flow(function* (
         this: OperationStore,

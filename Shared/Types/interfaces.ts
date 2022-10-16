@@ -26,6 +26,7 @@ export interface iError {
 export interface iDataTable {
     lot?: number;
     numProduction?: string;
+    numDocument?: string;
     pp?: number;
     workpieceTypeId?: number;
     userId?: number;
