@@ -6,6 +6,8 @@ export const pages = {
     orders: 'orders',
     getOrder: 'getOrder',
     moveOut: 'moveOut',
+    moveOin: 'moveOin',
     shareItems: 'shareItems',
     mixing: 'mixing',
+    moveIn: 'moveIn',
 };

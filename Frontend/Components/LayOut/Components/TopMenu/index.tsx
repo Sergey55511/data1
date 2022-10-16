@@ -19,6 +19,7 @@ import { pages, tPages } from '../../../Pages/constants';
 export const TopMenu = observer(({ page }: { page: tPages }) => {
     const { loginStore, ListsStore } = useStores();
     const ordersCount = ListsStore.orders.length;
+    const sharedCount = ListsStore.shared.length;
     return (
         <Wrapper>
             <div className="menu">
@@ -45,8 +46,18 @@ export const TopMenu = observer(({ page }: { page: tPages }) => {
                             icon: <StarOutlined />,
                         },
                         {
-                            label: <Link href="/newItem654">Приход перемещение</Link>,
-                            key: pages.newItem+'asd',
+                            label: (
+                                <Badge
+                                    size="small"
+                                    count={sharedCount}
+                                    overflowCount={999}
+                                >
+                                    <Link href="/operations/movein">
+                                        Приход перемещение
+                                    </Link>
+                                </Badge>
+                            ),
+                            key: pages.moveIn,
                             icon: <VerticalAlignBottomOutlined />,
                         },
                         {

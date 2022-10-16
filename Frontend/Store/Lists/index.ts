@@ -11,6 +11,7 @@ import {
     iOperation,
     iProductions,
     iRecipient,
+    iShared,
     iSizeRange,
     iType,
     iUser,
@@ -38,6 +39,7 @@ export class ListsStore {
     productions: iProductions[] = [];
     leftovers: iData[] = [];
     orders: iData[] = [];
+    shared: iShared[] = [];
     materialGroup: iMaterialGroup[] = [];
     sizeRange: iSizeRange[] = [];
     fraction: iFraction[] = [];
@@ -54,6 +56,7 @@ export class ListsStore {
     fetchLists = flow(function* (this: ListsStore, storeId: number) {
         if (this.isFetched) return;
         try {
+            this.getShared(storeId);
             this.getOrders(storeId);
             this.getGrades(storeId);
             this.getTypes(storeId);
@@ -67,6 +70,14 @@ export class ListsStore {
             this.getStores();
             this.getWorkpieceType();
             this.isFetched = true;
+        } catch (err) {
+            this.errorStore.setError(err as iError);
+        }
+    });
+
+    getShared = flow(function* (this: ListsStore, storeId: number) {
+        try {
+            this.shared = yield api.getShared(storeId);
         } catch (err) {
             this.errorStore.setError(err as iError);
         }

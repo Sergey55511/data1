@@ -62,12 +62,14 @@ export class OperationStore {
         this: OperationStore,
         data: iDataTable[],
         callBack?: () => void,
+        isSetNewPP?:boolean,
     ) {
         try {
             yield api.moveToWork({
                 data: data,
                 storeId: this.loginStore.user.storeId,
                 maxId: this.listsStore.maxId,
+                isSetNewPP
             });
             if (callBack) callBack();
         } catch (err) {

@@ -23,6 +23,13 @@ export interface iError {
         data: { message: string };
     };
 }
+export interface iShared {
+    date: string;
+    login: string;
+    store: string;
+    numDocument: string;
+    countRows: number;
+}
 export interface iDataTable {
     lot?: number;
     numProduction?: string;

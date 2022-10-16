@@ -140,9 +140,13 @@ export const MoveOut = observer(
                     notification.success({ message: 'Смешивание прошла успешно' });
                 });
             } else {
-                await OperationStore.moveToWork(dataSendPrepared, () => {
-                    notification.success({ message: 'Отгрузка прошла успешно' });
-                });
+                await OperationStore.moveToWork(
+                    dataSendPrepared,
+                    () => {
+                        notification.success({ message: 'Отгрузка прошла успешно' });
+                    },
+                    false,
+                );
             }
 
             await ListsStore.getLeftovers(loginStore.user.storeId);

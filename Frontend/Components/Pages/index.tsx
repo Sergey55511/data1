@@ -5,6 +5,7 @@ import Leftover from './Leftover';
 import { NewItem } from './Moves/MoveIn/NewItem';
 import { Orders } from './Orders';
 import { MoveOut } from './Operations/MoveOut';
+import { MoveIn } from './Operations/MoveIn';
 
 interface iProps {
     page: tPages;
@@ -33,6 +34,8 @@ const PageSwitcher = ({ page }: { page: tPages }) => {
             return <MoveOut title="Перемещение:" type="shareItems" />;
         case pages.mixing:
             return <MoveOut title="Смешивание:" type="mixing" />;
+        case pages.moveIn:
+            return <MoveIn />;
     }
     return <></>;
 };

@@ -106,6 +106,13 @@ export const getRecipient = (storeId?: number) => {
     }).then((res) => res.data);
 };
 
+export const getShared = (storeId: number) => {
+    return axios({
+        url: `/api/data/shared?storeId=${storeId}`,
+        method: 'GET',
+    }).then((res) => res.data);
+};
+
 export const getMaxId = (storeId: number) => {
     return axios({
         url: `/api/data/getMaxId?storeId=${storeId}`,

@@ -19,6 +19,7 @@ export const moveToWork = (data: {
     data: iDataTable[];
     storeId: number;
     maxId: number;
+    isSetNewPP?: boolean;
 }) => {
     return axios({
         url: `/api/data/moveToWork`,
