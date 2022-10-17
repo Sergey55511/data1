@@ -10,4 +10,5 @@ export const pages = {
     shareItems: 'shareItems',
     mixing: 'mixing',
     moveIn: 'moveIn',
+    moveInDetales: 'moveInDetales',
 };

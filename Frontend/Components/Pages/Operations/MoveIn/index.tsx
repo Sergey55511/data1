@@ -10,10 +10,13 @@ import { Wrapper } from './style';
 import { ColumnsType, FilterValue } from 'antd/es/table/interface';
 import { KEYSLEFTOVERS } from '../../../Shared/Table/constants';
 import moment from 'moment';
+import { useRouter } from 'next/router';
 
 export const MoveIn = observer(() => {
     const [filters, setFilters] = useState<Record<string, FilterValue | null>>({});
     const { ListsStore, loginStore } = useStores();
+    const router=useRouter()
+
     useEffect(() => {
         if (loginStore.user.storeId) ListsStore.getShared(loginStore.user.storeId);
     }, [loginStore.user.storeId]);
@@ -74,16 +77,13 @@ export const MoveIn = observer(() => {
         <Wrapper>
             <Title text="Приход перемещение" />
             <TableApp
-                // onRow={(record, rowIndex) => {
-                //     return {
-                //         onDoubleClick: (event) => {
-                //             MyDrawer({
-                //                 title: 'Выдать в работу',
-                //                 content: <MoveOutSolo record={record} />,
-                //             });
-                //         },
-                //     };
-                // }}
+                onRow={(record, _rowIndex) => {
+                    return {
+                        onDoubleClick: (_event) => {
+                            router.push(`/operations/movein/${record.numDocument}`)
+                        },
+                    };
+                }}
                 columns={columns}
                 dataSource={data}
                 onChange={handleChange}
