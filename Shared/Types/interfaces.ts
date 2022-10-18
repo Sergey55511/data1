@@ -52,6 +52,7 @@ export interface iDataTable {
     productionId?: number;
     operationId?: number;
     countItemsOut?: number;
+    countItemsIn?: number;
     widthOut?: number;
     widthIn?: number;
     date?: moment.Moment | null | any;

@@ -113,6 +113,13 @@ export const getShared = (storeId: number) => {
     }).then((res) => res.data);
 };
 
+export const getMoveIn = (storeId: number, numDocument: string) => {
+    return axios({
+        url: `/api/data/shared/getMoveIn?storeId=${storeId}&numDocument=${numDocument}`,
+        method: 'GET',
+    }).then((res) => res.data);
+};
+
 export const getMaxId = (storeId: number) => {
     return axios({
         url: `/api/data/getMaxId?storeId=${storeId}`,

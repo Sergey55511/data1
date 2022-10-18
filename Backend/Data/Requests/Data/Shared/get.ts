@@ -9,7 +9,7 @@ export const getShared = <T>(storeId: number): PrismaPromise<T> => {
             "Users".login as "userLogin",
             "Stores"."name" as store,
             "numDocument",
-            count(*)::int as "countRows"
+            count(*)::int as countRows
         FROM "Data" 
             LEFT JOIN "Recipients" ON
                 "Data"."recipientId" = "Recipients".id
@@ -17,11 +17,12 @@ export const getShared = <T>(storeId: number): PrismaPromise<T> => {
                 "Data"."storeId" = "Stores".id
             LEFT JOIN "Users" ON 
                 "Data"."userId" = "Users".id
-        WHERE "Recipients"."storeId"=${+storeId!} AND 
+        WHERE "Recipients"."storeId"=${+storeId} AND 
             "Data"."numDocument" in (
                 SELECT "numDocument"
                 FROM "Data"
-                WHERE COALESCE("widthIn",0) + COALESCE("countItemsIn",0)=0
+                GROUP BY "numDocument"
+                HAVING COALESCE(SUM("widthIn"),0) + COALESCE(SUM("countItemsIn"),0)=0
             )
         GROUP BY 
             date,

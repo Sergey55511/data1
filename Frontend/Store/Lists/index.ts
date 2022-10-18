@@ -83,6 +83,15 @@ export class ListsStore {
         }
     });
 
+    getMoveIn = flow(function* (this: ListsStore, storeId: number, numDocument: string) {
+        
+        try {
+            return yield api.getMoveIn(storeId, numDocument);
+        } catch (err) {
+            this.errorStore.setError(err as iError);
+        }
+    });
+
     getMaxId = flow(function* (this: ListsStore) {
         this.maxId = yield api.getMaxId(this.loginStore.user.storeId);
     });
