@@ -31,6 +31,7 @@ export interface iShared {
     countRows: number;
 }
 export interface iDataTable {
+    id?: number;
     lot?: number;
     numProduction?: string;
     numDocument?: string;

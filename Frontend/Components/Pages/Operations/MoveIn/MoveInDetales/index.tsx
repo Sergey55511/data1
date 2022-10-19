@@ -4,6 +4,7 @@ import { FilterValue } from 'antd/es/table/interface';
 import { observer } from 'mobx-react-lite';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
+import { prepareDataTable } from '../../../../../../Shared/Helpers';
 import { iData, iDataTable } from '../../../../../../Shared/Types/interfaces';
 import { useStores } from '../../../../../Store/useStores';
 import { InputNumber } from '../../../../Shared/InputNumber';
@@ -17,6 +18,7 @@ export const MoveInDetales = observer(() => {
     const { ListsStore, loginStore } = useStores();
     const [filters, setFilters] = useState<Record<string, FilterValue | null>>({});
     const [data, setData] = useState<iDataTable[]>([]);
+    const [isLoading, setIsLoading] = useState(false);
     const router = useRouter();
     const numDocument = router.query.numDocument;
 
@@ -28,7 +30,7 @@ export const MoveInDetales = observer(() => {
                     numDocument as string,
                 );
 
-                newData = newData.map((item) => ({
+                newData = newData?.map((item) => ({
                     ...item,
                     widthIn: item.widthOut,
                     countItemsIn: item.countItemsOut,
@@ -133,7 +135,9 @@ export const MoveInDetales = observer(() => {
                 return (
                     <InputNumber
                         value={record.widthIn}
-                        onChangeHandler={(v) => console.log(v)}
+                        onChangeHandler={(v) =>
+                            onChangeHandler(record.id!, 'widthIn', v ? +v : undefined)
+                        }
                     />
                 );
             },
@@ -142,31 +146,58 @@ export const MoveInDetales = observer(() => {
         },
         {
             dataIndex: 'countItemsIn',
-            render: () => {
-                return <InputNumber value={0} onChangeHandler={(v) => console.log(v)} />;
+            render: (_value, record) => {
+                return (
+                    <InputNumber
+                        value={record.countItemsIn}
+                        onChangeHandler={(v) =>
+                            onChangeHandler(
+                                record.id!,
+                                'countItemsIn',
+                                v ? +v : undefined,
+                            )
+                        }
+                    />
+                );
             },
             title: 'Приянть шт.',
             width: 100,
         },
     ];
+
+    const onChangeHandler = (id: number, field: keyof iDataTable, v?: number) => {
+        setData((prev) => {
+            const item = prev.find((i) => i.id == id);
+            if (item) item[field] = v;
+            return [...prev];
+        });
+    };
+
+    const submitHandler = async () => {
+        let preparedData = data.filter((item) => item.widthIn || item.countItemsIn);
+        preparedData = preparedData.map((item) => {
+            const data = prepareDataTable(item);
+            data.userId = loginStore.user.id;
+            data.storeId = loginStore.user.storeId;
+            data.widthOut = undefined;
+            data.countItemsOut = undefined;
+            return data;
+        });
+        if (!preparedData.length) return;
+        setIsLoading(true);
+        await ListsStore.postMoveInShared(preparedData);
+        router.push('/operations/movein');
+        setIsLoading(false);
+    };
     return (
         <Wrapper>
             <div className="header">
                 <Title text={`Принять перемещение №${numDocument}`} />
-                <Button type="primary">Принять</Button>
+                <Button onClick={submitHandler} type="primary" loading={isLoading}>
+                    Принять
+                </Button>
             </div>
-            <TableApp
-                // onRow={(record, _rowIndex) => {
-                //     return {
-                //         onDoubleClick: (_event) => {
-                //             router.push(`/operations/movein/${record.numDocument}`)
-                //         },
-                //     };
-                // }}
-                columns={columns}
-                dataSource={data}
-                onChange={handleChange}
-            />
+            <TableApp columns={columns} dataSource={data} onChange={handleChange} />
         </Wrapper>
     );
 });

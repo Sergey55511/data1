@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { iDataTable } from '../../../Shared/Types/interfaces';
 
 export const getMaterialGroup = () => {
     return axios({
@@ -117,6 +118,14 @@ export const getMoveIn = (storeId: number, numDocument: string) => {
     return axios({
         url: `/api/data/shared/getMoveIn?storeId=${storeId}&numDocument=${numDocument}`,
         method: 'GET',
+    }).then((res) => res.data);
+};
+
+export const postMoveInShared = (data: iDataTable[]) => {
+    return axios({
+        url: `/api/data/shared`,
+        method: 'POST',
+        data,
     }).then((res) => res.data);
 };
 

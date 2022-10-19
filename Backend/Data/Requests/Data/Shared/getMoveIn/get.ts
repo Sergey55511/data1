@@ -5,6 +5,7 @@ export const getMoveIn = <T>(storeId: number, numDocument: string): PrismaPromis
     const prisma = new PrismaClient();
     return prisma.$queryRaw`
         SELECT 
+            "Data".id,
             "Users".login as "userLogin",
             "Stores"."name" as store,
             "numDocument",

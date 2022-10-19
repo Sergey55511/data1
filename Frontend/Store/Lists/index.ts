@@ -2,6 +2,7 @@ import { flow, makeAutoObservable } from 'mobx';
 import {
     iColor,
     iData,
+    iDataTable,
     iError,
     iFraction,
     iGrade,
@@ -84,9 +85,16 @@ export class ListsStore {
     });
 
     getMoveIn = flow(function* (this: ListsStore, storeId: number, numDocument: string) {
-        
         try {
             return yield api.getMoveIn(storeId, numDocument);
+        } catch (err) {
+            this.errorStore.setError(err as iError);
+        }
+    });
+
+    postMoveInShared = flow(function* (this: ListsStore, data: iDataTable[]) {
+        try {
+            return yield api.postMoveInShared(data);
         } catch (err) {
             this.errorStore.setError(err as iError);
         }
