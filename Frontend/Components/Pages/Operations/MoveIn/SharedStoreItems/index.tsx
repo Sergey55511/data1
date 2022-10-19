@@ -1,24 +1,24 @@
 import { TableProps } from 'antd';
 import { observer } from 'mobx-react-lite';
 import { useEffect, useState } from 'react';
-import { iShared } from '../../../../../Shared/Types/interfaces';
-import { useStores } from '../../../../Store/useStores';
-import { TableApp } from '../../../Shared/Table';
-import { getColumnProps } from '../../../Shared/Table/Helpers/getColumnProps';
-import { Title } from '../../../Shared/Title';
+import { iShared } from '../../../../../../Shared/Types/interfaces';
+import { useStores } from '../../../../../Store/useStores';
+import { TableApp } from '../../../../Shared/Table';
+import { getColumnProps } from '../../../../Shared/Table/Helpers/getColumnProps';
+import { Title } from '../../../../Shared/Title';
 import { Wrapper } from './style';
 import { ColumnsType, FilterValue } from 'antd/es/table/interface';
-import { KEYSLEFTOVERS } from '../../../Shared/Table/constants';
+import { KEYSLEFTOVERS } from '../../../../Shared/Table/constants';
 import moment from 'moment';
 import { useRouter } from 'next/router';
 
 export const MoveIn = observer(() => {
     const [filters, setFilters] = useState<Record<string, FilterValue | null>>({});
-    const { ListsStore, loginStore } = useStores();
-    const router=useRouter()
+    const { loginStore, OperationStore } = useStores();
+    const router = useRouter();
 
     useEffect(() => {
-        if (loginStore.user.storeId) ListsStore.getShared(loginStore.user.storeId);
+        if (loginStore.user.storeId) OperationStore.getShared(loginStore.user.storeId);
     }, [loginStore.user.storeId]);
 
     const handleChange: TableProps<iShared>['onChange'] = (
@@ -30,7 +30,7 @@ export const MoveIn = observer(() => {
         // setSortedInfo(sorter as SorterResult<DataType>);
     };
 
-    const data = ListsStore.shared.map((item, index) => ({
+    const data = OperationStore.shared.map((item, index) => ({
         ...item,
         date: moment(item.date).format('DD.MM.YYYY'),
         key: index,
@@ -80,7 +80,7 @@ export const MoveIn = observer(() => {
                 onRow={(record, _rowIndex) => {
                     return {
                         onDoubleClick: (_event) => {
-                            router.push(`/operations/movein/${record.numDocument}`)
+                            router.push(`/operations/movein/${record.numDocument}`);
                         },
                     };
                 }}

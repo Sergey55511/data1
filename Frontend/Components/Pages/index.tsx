@@ -2,11 +2,11 @@ import { LayOut } from '../LayOut';
 import { pages, tPages } from './constants';
 import { GetOrder } from './Orders/GetOrder';
 import Leftover from './Leftover';
-import { NewItem } from './Moves/MoveIn/NewItem';
+import { NewItem } from './Operations/MoveIn/NewItem';
 import { Orders } from './Orders';
 import { MoveOut } from './Operations/MoveOut';
-import { MoveIn } from './Operations/MoveIn';
-import { MoveInDetales } from './Operations/MoveIn/MoveInDetales';
+import { MoveIn } from './Operations/MoveIn/SharedStoreItems';
+import { MoveInDetales } from './Operations/MoveIn/SharedStoreItems/MoveInDetales';
 
 interface iProps {
     page: tPages;

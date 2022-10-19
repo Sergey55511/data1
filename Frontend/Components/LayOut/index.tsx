@@ -30,7 +30,7 @@ const GlobalStyle = createGlobalStyle`
 
 export const LayOut = observer(
     ({ children, page }: { children: JSX.Element; page: tPages }) => {
-        const { loginStore, UIStore, ListsStore } = useStores();
+        const { loginStore, UIStore, OperationStore } = useStores();
 
         useEffect(() => {
             UIStore.setIsLoading(true);
@@ -46,7 +46,7 @@ export const LayOut = observer(
         }, []);
         useEffect(() => {
             if (loginStore.user.storeId) {
-                ListsStore.fetchLists(loginStore.user.storeId);
+                OperationStore.fetchInitData(loginStore.user.storeId);
             }
         }, [loginStore.user.storeId]);
 

@@ -32,7 +32,7 @@ export const MoveOut = observer(
             'lefovers',
         );
         const { ListsStore, loginStore, OperationStore } = useStores();
-        const { leftovers } = ListsStore;
+        const { leftovers } = OperationStore;
 
         useEffect(() => {
             let data: iDataIndex[] = leftovers;
@@ -47,7 +47,7 @@ export const MoveOut = observer(
 
         useEffect(() => {
             if (loginStore.user.storeId) {
-                ListsStore.getLeftovers(loginStore.user.storeId);
+                OperationStore.getLeftovers(loginStore.user.storeId);
                 ListsStore.getRecipient(
                     type == 'shareItems' ? loginStore.user.storeId : undefined,
                 );
@@ -149,7 +149,7 @@ export const MoveOut = observer(
                 );
             }
 
-            await ListsStore.getLeftovers(loginStore.user.storeId);
+            await OperationStore.getLeftovers(loginStore.user.storeId);
             setIsSubmitLoading(false);
             setRecipient(undefined);
             setSelectedRows([]);

@@ -96,13 +96,13 @@ export const MoveOutSolo = observer(
 
             await OperationStore.moveToWork([data]);
             if (loginStore.user.storeId)
-                await ListsStore.getOrders(loginStore.user.storeId!);
+                await OperationStore.getOrders(loginStore.user.storeId!);
 
             setIsLoading(false);
 
             UIStore.setIsLoading(true);
             if (onClose) onClose();
-            await ListsStore.getLeftovers(loginStore.user.storeId);
+            await OperationStore.getLeftovers(loginStore.user.storeId);
             UIStore.setIsLoading(false);
         };
 

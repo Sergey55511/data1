@@ -19,18 +19,6 @@ export const getFraction = () => {
         method: 'GET',
     }).then((res) => res.data);
 };
-export const leftovers = (storeId: number) => {
-    return axios({
-        url: `/api/data/leftovers?storeId=${storeId}`,
-        method: 'GET',
-    }).then((res) => res.data);
-};
-export const getOrders = (storeId: number) => {
-    return axios({
-        url: `/api/data/orders?storeId=${storeId}`,
-        method: 'GET',
-    }).then((res) => res.data);
-};
 export const getOperations = (storeId: number, stateId: number) => {
     return axios({
         url: `/api/list/operations?storeId=${storeId}&stateId=${stateId}`,
@@ -103,35 +91,6 @@ export const getRecipient = (storeId?: number) => {
     const patams = storeId ? `?storeId=${storeId}` : '';
     return axios({
         url: `/api/list/recipient${patams}`,
-        method: 'GET',
-    }).then((res) => res.data);
-};
-
-export const getShared = (storeId: number) => {
-    return axios({
-        url: `/api/data/shared?storeId=${storeId}`,
-        method: 'GET',
-    }).then((res) => res.data);
-};
-
-export const getMoveIn = (storeId: number, numDocument: string) => {
-    return axios({
-        url: `/api/data/shared/getMoveIn?storeId=${storeId}&numDocument=${numDocument}`,
-        method: 'GET',
-    }).then((res) => res.data);
-};
-
-export const postMoveInShared = (data: iDataTable[]) => {
-    return axios({
-        url: `/api/data/shared`,
-        method: 'POST',
-        data,
-    }).then((res) => res.data);
-};
-
-export const getMaxId = (storeId: number) => {
-    return axios({
-        url: `/api/data/getMaxId?storeId=${storeId}`,
         method: 'GET',
     }).then((res) => res.data);
 };

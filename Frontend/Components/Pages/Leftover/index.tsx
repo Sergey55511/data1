@@ -7,10 +7,10 @@ import { observer } from 'mobx-react-lite';
 
 export default observer(() => {
     const [filters, setFilters] = useState<Record<string, FilterValue | null>>({});
-    const { loginStore, ListsStore } = useStores();
+    const { loginStore, OperationStore } = useStores();
 
     useEffect(() => {
-        if (loginStore.user.storeId) ListsStore.getLeftovers(loginStore.user.storeId);
+        if (loginStore.user.storeId) OperationStore.getLeftovers(loginStore.user.storeId);
     }, [loginStore.user.storeId]);
 
     return (

@@ -23,9 +23,6 @@ import { Login } from '../LoginStore';
 import * as api from './api';
 
 export class ListsStore {
-    isFetched = false;
-    maxId = 0;
-
     errorStore: ErrorStore;
     loginStore: Login;
     stores: { id: number; name: string }[] = [];
@@ -38,9 +35,6 @@ export class ListsStore {
 
     operations: iOperation[] = [];
     productions: iProductions[] = [];
-    leftovers: iData[] = [];
-    orders: iData[] = [];
-    shared: iShared[] = [];
     materialGroup: iMaterialGroup[] = [];
     sizeRange: iSizeRange[] = [];
     fraction: iFraction[] = [];
@@ -53,72 +47,6 @@ export class ListsStore {
         this.errorStore = errorStore;
         this.loginStore = loginStore;
     }
-
-    fetchLists = flow(function* (this: ListsStore, storeId: number) {
-        if (this.isFetched) return;
-        try {
-            this.getShared(storeId);
-            this.getOrders(storeId);
-            this.getGrades(storeId);
-            this.getTypes(storeId);
-            this.getColors(storeId);
-            this.getProductions(storeId);
-            this.getUsers(storeId);
-            this.getMaterialGroup();
-            this.getSizeRange();
-            this.getFraction();
-            this.getStores();
-            this.getWorkpieceType();
-            this.isFetched = true;
-        } catch (err) {
-            this.errorStore.setError(err as iError);
-        }
-    });
-
-    getShared = flow(function* (this: ListsStore, storeId: number) {
-        try {
-            this.shared = yield api.getShared(storeId);
-        } catch (err) {
-            this.errorStore.setError(err as iError);
-        }
-    });
-
-    getMoveIn = flow(function* (this: ListsStore, storeId: number, numDocument: string) {
-        try {
-            return yield api.getMoveIn(storeId, numDocument);
-        } catch (err) {
-            this.errorStore.setError(err as iError);
-        }
-    });
-
-    postMoveInShared = flow(function* (this: ListsStore, data: iDataTable[]) {
-        try {
-            return yield api.postMoveInShared(data);
-        } catch (err) {
-            this.errorStore.setError(err as iError);
-        }
-    });
-
-    getMaxId = flow(function* (this: ListsStore) {
-        this.maxId = yield api.getMaxId(this.loginStore.user.storeId);
-    });
-
-    getLeftovers = flow(function* (this: ListsStore, storeId: number) {
-        try {
-            this.leftovers = yield api.leftovers(storeId);
-            yield this.getMaxId();
-        } catch (err) {
-            this.errorStore.setError(err as iError);
-        }
-    });
-    getOrders = flow(function* (this: ListsStore, storeId: number) {
-        try {
-            this.orders = yield api.getOrders(storeId);
-            yield this.getMaxId();
-        } catch (err) {
-            this.errorStore.setError(err as iError);
-        }
-    });
 
     getOperations = flow(function* (this: ListsStore, storeId: number, stateId: number) {
         try {

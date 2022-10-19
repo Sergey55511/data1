@@ -4,18 +4,18 @@ import { FilterValue } from 'antd/es/table/interface';
 import { observer } from 'mobx-react-lite';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import { prepareDataTable } from '../../../../../../Shared/Helpers';
-import { iData, iDataTable } from '../../../../../../Shared/Types/interfaces';
-import { useStores } from '../../../../../Store/useStores';
-import { InputNumber } from '../../../../Shared/InputNumber';
-import { TableApp } from '../../../../Shared/Table';
-import { KEYSLEFTOVERS } from '../../../../Shared/Table/constants';
-import { getColumnProps } from '../../../../Shared/Table/Helpers/getColumnProps';
-import { Title } from '../../../../Shared/Title';
+import { prepareDataTable } from '../../../../../../../Shared/Helpers';
+import { iData, iDataTable } from '../../../../../../../Shared/Types/interfaces';
+import { useStores } from '../../../../../../Store/useStores';
+import { InputNumber } from '../../../../../Shared/InputNumber';
+import { TableApp } from '../../../../../Shared/Table';
+import { KEYSLEFTOVERS } from '../../../../../Shared/Table/constants';
+import { getColumnProps } from '../../../../../Shared/Table/Helpers/getColumnProps';
+import { Title } from '../../../../../Shared/Title';
 import { Wrapper } from './style';
 
 export const MoveInDetales = observer(() => {
-    const { ListsStore, loginStore } = useStores();
+    const { loginStore, OperationStore } = useStores();
     const [filters, setFilters] = useState<Record<string, FilterValue | null>>({});
     const [data, setData] = useState<iDataTable[]>([]);
     const [isLoading, setIsLoading] = useState(false);
@@ -25,7 +25,7 @@ export const MoveInDetales = observer(() => {
     useEffect(() => {
         if (loginStore.user.storeId && numDocument) {
             (async () => {
-                let newData: iData[] = await ListsStore.getMoveIn(
+                let newData: iData[] = await OperationStore.getMoveIn(
                     loginStore.user.storeId,
                     numDocument as string,
                 );
@@ -185,7 +185,7 @@ export const MoveInDetales = observer(() => {
         });
         if (!preparedData.length) return;
         setIsLoading(true);
-        await ListsStore.postMoveInShared(preparedData);
+        await OperationStore.postMoveInShared(preparedData);
         router.push('/operations/movein');
         setIsLoading(false);
     };
