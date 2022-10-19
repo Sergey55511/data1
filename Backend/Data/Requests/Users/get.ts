@@ -1,7 +1,6 @@
-import { PrismaClient } from '@prisma/client';
+import { tPrisma } from '../../../types';
 
-export const getUsers = <T>(storeId: number): Promise<T> => {
-    const prisma = new PrismaClient();
+export const getUsers = <T>(prisma: tPrisma, storeId: number): Promise<T> => {
     return prisma.users.findMany({
         select: {
             id: true,

@@ -1,10 +1,9 @@
 import { NextApiRequest } from 'next';
-import { PrismaClient } from '@prisma/client';
 import { MyError } from '../../../../../Shared/Classes/error';
 import { iDataTable } from '../../../../../Shared/Types/interfaces';
+import { tPrisma } from '../../../../types';
 
-export const postMoveInValidation = async (req: NextApiRequest) => {
-    const prisma = new PrismaClient();
+export const postMoveInValidation = async (prisma: tPrisma, req: NextApiRequest) => {
     const body = req.body as iDataTable[];
     const numDocument = body[0].numDocument;
     if (!numDocument) throw new MyError(400, 'Пустой запрос.');

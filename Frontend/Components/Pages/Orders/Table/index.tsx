@@ -11,11 +11,11 @@ import { useRouter } from 'next/router';
 
 export const OrdersTable = observer(() => {
     const [filters, setFilters] = useState<Record<string, FilterValue | null>>({});
-    const { ListsStore } = useStores();
-    const data = ListsStore.orders.map((item, index) => ({ ...item, key: index }));
+    const { OperationStore } = useStores();
+    const data = OperationStore.orders.map((item, index) => ({ ...item, key: index }));
     const router = useRouter();
 
-    const filteredleftovers = ListsStore.orders.filter((item) => {
+    const filteredleftovers = OperationStore.orders.filter((item) => {
         for (const key in item) {
             const value: any = item[key as keyof typeof item];
             if (filters[key]?.length) {

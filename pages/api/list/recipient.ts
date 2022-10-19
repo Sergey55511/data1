@@ -2,6 +2,7 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 import { getRecipient } from '../../../Backend/Data/Requests/recipient/get';
 import { postRecipient } from '../../../Backend/Data/Requests/recipient/post';
 import { fetchService } from '../../../Backend/Data/Services/fetch';
+import { tPrisma } from '../../../Backend/types';
 import { iUser } from '../../../Shared/Types/interfaces';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
@@ -10,7 +11,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             await fetchService<iUser>({
                 req,
                 res,
-                fetch: () => getRecipient(req),
+                fetch: (prisma: tPrisma) => getRecipient(prisma, req),
             });
             break;
         }
@@ -18,7 +19,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             await fetchService<iUser>({
                 req,
                 res,
-                fetch: () => postRecipient(req.body),
+                fetch: (prisma: tPrisma) => postRecipient(prisma, req.body),
             });
             break;
         }

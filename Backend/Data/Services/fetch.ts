@@ -1,6 +1,8 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { resError } from '../../../Shared/Helpers';
 import { varifyJWT } from './verifyJWT';
+import { Prisma, PrismaClient } from '@prisma/client';
+import { tPrisma } from '../../types';
 
 export const fetchService = async <T>({
     req,
@@ -10,20 +12,22 @@ export const fetchService = async <T>({
 }: {
     req: NextApiRequest;
     res: NextApiResponse;
-    fetch: () => Promise<T>;
-    validation?: (req?: NextApiRequest) => void;
+    fetch: (prisma: tPrisma) => Promise<T>;
+    validation?: (prisma: tPrisma) => void;
 }) => {
+    const prisma = new PrismaClient();
     try {
-        await varifyJWT(req, res);
-        if (validation) await validation(req);
-        const result = await fetch();
-
+        await varifyJWT(req, res, prisma);
+        if (validation) await validation(prisma);
+        const result = await fetch(prisma);
+        prisma.$disconnect();
         if (result) {
             res.status(200).json(result);
             return;
         }
         res.status(204).json('no content');
     } catch (err) {
+        prisma.$disconnect();
         resError(err, res);
     }
 };

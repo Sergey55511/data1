@@ -1,7 +1,7 @@
-import { PrismaClient } from '@prisma/client';
 import { NextApiRequest } from 'next';
+import { tPrisma } from '../../../types';
 
-export const getRecipient = <T>(req: NextApiRequest): Promise<T> => {
+export const getRecipient = <T>(prisma: tPrisma, req: NextApiRequest): Promise<T> => {
     let storeId = req.query.storeId as number | undefined;
     storeId = storeId ? +storeId : undefined;
     let where: any = { storeId: null, active: true };
@@ -14,7 +14,6 @@ export const getRecipient = <T>(req: NextApiRequest): Promise<T> => {
             ],
         };
     }
-    const prisma = new PrismaClient();
     return prisma.recipients.findMany({
         select: {
             id: true,

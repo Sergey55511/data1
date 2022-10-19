@@ -1,10 +1,9 @@
 import { NextApiRequest } from 'next';
-import { PrismaClient } from '@prisma/client';
 import { MyError } from '../../../../Shared/Classes/error';
 import { iData } from '../../../../Shared/Types/interfaces';
+import { tPrisma } from '../../../types';
 
-export const validateLeftovers = async (req: NextApiRequest) => {
-    const prisma = new PrismaClient();
+export const validateLeftovers = async (prisma: tPrisma, req: NextApiRequest) => {
     const data = req.body.data as iData[];
     const storeId = req.body.storeId as number;
     const maxId = req.body.maxId as number;

@@ -1,8 +1,7 @@
 import { PrismaPromise } from '@prisma/client';
-import { PrismaClient } from '@prisma/client';
 import { iDataTable } from '../../../../../Shared/Types/interfaces';
+import { tPrisma } from '../../../../types';
 
-export const postMoveIn = <T>(data: iDataTable[]): PrismaPromise<T> => {
-    const prisma = new PrismaClient();
+export const postMoveIn = <T>(prisma: tPrisma, data: iDataTable[]): PrismaPromise<T> => {
     return prisma.data.createMany({ data }) as any;
 };

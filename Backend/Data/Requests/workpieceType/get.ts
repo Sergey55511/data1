@@ -1,7 +1,6 @@
-import { PrismaClient } from '@prisma/client';
+import { tPrisma } from '../../../types';
 
-export const getWorkpieceType = <T>(): Promise<T> => {
-    const prisma = new PrismaClient();
+export const getWorkpieceType = <T>(prisma: tPrisma): Promise<T> => {
     return prisma.workpieceType.findMany({
         select: {
             id: true,

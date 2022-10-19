@@ -34,7 +34,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             } as iUser;
 
             if (user.login) {
-                await createJWT(req, res, user);
+                await createJWT(req, res, user, prisma);
                 res.status(200).json(user);
                 return;
             }

@@ -1,8 +1,8 @@
 import { PrismaPromise } from '@prisma/client';
-import { PrismaClient } from '@prisma/client';
+import { tPrisma } from '../../../types';
 
-export const getProductions = <T>(storeId: number): PrismaPromise<T> => {
-    const prisma = new PrismaClient();
+export const getProductions = <T>(prisma: tPrisma,storeId: number): PrismaPromise<T> => {
+
     return prisma.productions.findMany({
         select: {
             id: true,

@@ -4,6 +4,7 @@ import { iData } from '../../../../../Shared/Types/interfaces';
 import { getOrder } from '../../../../../Backend/Data/Requests/Data/Orders/Order/getOrder';
 import { postOrderResult } from '../../../../../Backend/Data/Requests/Data/Orders/Order/postOrder';
 import { validOrderResult } from '../../../../../Backend/Data/Validation/Data/Order/validOrderResult';
+import { tPrisma } from '../../../../../Backend/types';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     switch (req.method) {
@@ -11,7 +12,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             await fetchService<iData>({
                 req,
                 res,
-                fetch: () => getOrder(req),
+                fetch: (prisma: tPrisma) => getOrder(prisma, req),
             });
             break;
         }
@@ -19,8 +20,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             await fetchService<iData>({
                 req,
                 res,
-                validation: () => validOrderResult(req),
-                fetch: () => postOrderResult(req),
+                validation: (prisma: tPrisma) => validOrderResult(prisma, req),
+                fetch: (prisma: tPrisma) => postOrderResult(prisma, req),
             });
             break;
         }

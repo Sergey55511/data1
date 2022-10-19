@@ -1,11 +1,10 @@
 import { makeRandomString } from '../../../Shared/Helpers/index';
 import { iUser } from '../../../Shared/Types/interfaces';
 import jwt from 'jsonwebtoken';
-import { PrismaClient } from '@prisma/client';
 import Cookies from 'cookies';
 import { NextApiRequest, NextApiResponse } from 'next';
 import { createAtkn } from '../../../Shared/Helpers';
-const prisma = new PrismaClient();
+import { Prisma, PrismaClient } from '@prisma/client';
 
 export const KEY = 'fb9ae69cdc6f6a3c61b91c658e9cd2f2';
 
@@ -13,6 +12,11 @@ export const createJWT = async (
     req: NextApiRequest,
     res: NextApiResponse,
     user: iUser,
+    prisma: PrismaClient<
+        Prisma.PrismaClientOptions,
+        never,
+        Prisma.RejectOnNotFound | Prisma.RejectPerOperation | undefined
+    >,
 ) => {
     const refrashToken = makeRandomString();
 

@@ -1,8 +1,7 @@
-import { PrismaClient } from '@prisma/client';
 import { NextApiRequest } from 'next';
+import { tPrisma } from '../../../types';
 
-export const getLength = <T>(req: NextApiRequest): Promise<T> => {
-    const prisma = new PrismaClient();
+export const getLength = <T>(prisma: tPrisma, req: NextApiRequest): Promise<T> => {
     const sizeRangeId = req.query.sizeRangeId;
     return prisma.length.findMany({
         select: {

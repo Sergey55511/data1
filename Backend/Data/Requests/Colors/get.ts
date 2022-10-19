@@ -1,7 +1,6 @@
-import { PrismaClient } from '@prisma/client';
+import { tPrisma } from '../../../types';
 
-export const getColors = <T>(storeId: number): Promise<T> => {
-    const prisma = new PrismaClient();
+export const getColors = <T>(prisma: tPrisma, storeId: number): Promise<T> => {
     return prisma.color.findMany({
         select: {
             id: true,

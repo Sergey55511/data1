@@ -1,7 +1,10 @@
-import { PrismaClient } from '@prisma/client';
+import { tPrisma } from '../../../types';
 
-export const getManagers = <T>(storeId: number, operationId: number): Promise<T> => {
-    const prisma = new PrismaClient();
+export const getManagers = <T>(
+    prisma: tPrisma,
+    storeId: number,
+    operationId: number,
+): Promise<T> => {
     return prisma.managers.findMany({
         select: {
             id: true,

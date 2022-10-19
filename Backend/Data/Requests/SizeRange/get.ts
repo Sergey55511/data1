@@ -1,8 +1,7 @@
 import { PrismaPromise } from '@prisma/client';
-import { PrismaClient } from '@prisma/client';
+import { tPrisma } from '../../../types';
 
-export const getSizeRange = <T>(): PrismaPromise<T> => {
-    const prisma = new PrismaClient();
+export const getSizeRange = <T>(prisma: tPrisma): PrismaPromise<T> => {
     return prisma.sizeRange.findMany({
         select: { id: true, sizeRange: true },
         where: { active: true },

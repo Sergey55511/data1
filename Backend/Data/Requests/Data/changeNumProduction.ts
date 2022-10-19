@@ -1,11 +1,12 @@
-import { PrismaClient } from '@prisma/client';
 import moment from 'moment';
 import { OPERATIONS } from '../../../../Shared/constants';
 import { iDataTable } from '../../../../Shared/Types/interfaces';
+import { tPrisma } from '../../../types';
 
-export const changeNumProduction = async <T>(data: iDataTable[]): Promise<T> => {
-    const prisma = new PrismaClient();
-
+export const changeNumProduction = async <T>(
+    prisma: tPrisma,
+    data: iDataTable[],
+): Promise<T> => {
     const tmpData = (item: iDataTable) => ({
         ...item,
         date: moment(item.date)?.toDate(),

@@ -1,13 +1,20 @@
 import { iCookies, iUser } from '../../../Shared/Types/interfaces';
 import jwt from 'jsonwebtoken';
-import { PrismaClient } from '@prisma/client';
+import { Prisma, PrismaClient } from '@prisma/client';
 import { createJWT, KEY } from './createJWT';
 import { NextApiRequest, NextApiResponse } from 'next';
 import { MyError } from '../../../Shared/Classes/error';
 import { createAtkn } from '../../../Shared/Helpers';
-const prisma = new PrismaClient();
 
-export const varifyJWT = async (req: NextApiRequest, res: NextApiResponse) => {
+export const varifyJWT = async (
+    req: NextApiRequest,
+    res: NextApiResponse,
+    prisma: PrismaClient<
+        Prisma.PrismaClientOptions,
+        never,
+        Prisma.RejectOnNotFound | Prisma.RejectPerOperation | undefined
+    >,
+) => {
     const cookies = req.cookies as iCookies;
     try {
         const atkn = jwt.verify(cookies.atkn, KEY) as iUser;
@@ -37,11 +44,11 @@ export const varifyJWT = async (req: NextApiRequest, res: NextApiResponse) => {
             } as iUser;
 
             if (user.key == rtkn.key) {
-                await createJWT(req, res, user)
+                await createJWT(req, res, user, prisma);
             } else {
                 throw new MyError(401);
             }
-            return user
+            return user;
         } catch (error) {
             throw new MyError(401);
         }

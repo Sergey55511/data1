@@ -17,8 +17,8 @@ import { useStores } from '../../../../Store/useStores';
 import { pages, tPages } from '../../../Pages/constants';
 
 export const TopMenu = observer(({ page }: { page: tPages }) => {
-    const { loginStore, ListsStore, OperationStore } = useStores();
-    const ordersCount = ListsStore.orders.length;
+    const { loginStore, OperationStore } = useStores();
+    const ordersCount = OperationStore.orders.length;
     const sharedCount = OperationStore.shared.length;
     return (
         <Wrapper>

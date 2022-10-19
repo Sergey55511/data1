@@ -18,8 +18,8 @@ export const TableLeftOvers = observer(
         filters: Record<string, FilterValue | null>;
         setFilters: Dispatch<SetStateAction<Record<string, FilterValue | null>>>;
     }) => {
-        const { ListsStore } = useStores();
-        const { leftovers } = ListsStore;
+        const { OperationStore } = useStores();
+        const { leftovers } = OperationStore;
 
         const data = leftovers.map((item, index) => ({ ...item, key: index }));
 

@@ -1,8 +1,7 @@
 import { PrismaPromise } from '@prisma/client';
-import { PrismaClient } from '@prisma/client';
+import { tPrisma } from '../../../types';
 
-export const leftovers = <T>(storeId: number): PrismaPromise<T> => {
-    const prisma = new PrismaClient();
+export const leftovers = <T>(prisma:tPrisma,storeId: number): PrismaPromise<T> => {
     return prisma.$queryRaw`
         SELECT 
             "workpieceTypeId",

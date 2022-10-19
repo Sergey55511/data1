@@ -1,7 +1,6 @@
-import { PrismaClient } from '@prisma/client';
+import { tPrisma } from '../../../types';
 
-export const getGrades = <T>(storeId: number): Promise<T> => {
-    const prisma = new PrismaClient();
+export const getGrades = <T>(prisma: tPrisma, storeId: number): Promise<T> => {
     return prisma.grade.findMany({
         select: {
             id: true,

@@ -1,6 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { getWorkpieceType } from '../../../Backend/Data/Requests/workpieceType/get';
 import { fetchService } from '../../../Backend/Data/Services/fetch';
+import { tPrisma } from '../../../Backend/types';
 import { iUser } from '../../../Shared/Types/interfaces';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
@@ -9,7 +10,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             await fetchService<iUser>({
                 req,
                 res,
-                fetch: () => getWorkpieceType(),
+                fetch: (prisma: tPrisma) => getWorkpieceType(prisma),
             });
             break;
         }

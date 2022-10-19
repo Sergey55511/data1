@@ -8,7 +8,7 @@ export const KEY = 'b6d48d1d41be922130ce2a32e1dab1fc';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     try {
-        const user = await varifyJWT(req, res);
+        const user = await varifyJWT(req, res, prisma);
         const login = req.body.login.toLowerCase();
         const status = req.body.status;
         const storeId = req.body.store;

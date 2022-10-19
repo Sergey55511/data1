@@ -1,8 +1,8 @@
 import { PrismaPromise } from '@prisma/client';
-import { PrismaClient } from '@prisma/client';
+import { tPrisma } from '../../../../../types';
 
-export const getMoveIn = <T>(storeId: number, numDocument: string): PrismaPromise<T> => {
-    const prisma = new PrismaClient();
+export const getMoveIn = <T>(prisma: tPrisma,storeId: number, numDocument: string): PrismaPromise<T> => {
+
     return prisma.$queryRaw`
         SELECT 
             "Data".id,

@@ -1,8 +1,8 @@
 import { PrismaPromise } from '@prisma/client';
-import { PrismaClient } from '@prisma/client';
+import { tPrisma } from '../../../types';
 
-export const getMaterialGroup = <T>(): PrismaPromise<T> => {
-    const prisma = new PrismaClient();
+export const getMaterialGroup = <T>(prisma: tPrisma): PrismaPromise<T> => {
+
     return prisma.materialGroup.findMany({
         select: { id: true, materialGroup: true },
         where: { active: true },

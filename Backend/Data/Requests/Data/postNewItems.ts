@@ -1,12 +1,12 @@
-import { PrismaClient } from '@prisma/client';
 import moment from 'moment';
 import { iDataTable } from '../../../../Shared/Types/interfaces';
+import { tPrisma } from '../../../types';
 
 export const postNewItems = async <T>(
+    prisma: tPrisma,
     data: iDataTable[],
     isSetNewPP = true,
 ): Promise<T> => {
-    const prisma = new PrismaClient();
     let pp: number;
     if (isSetNewPP) {
         const queryMaxPP = await prisma.$queryRaw`SELECT max(pp) as maxpp FROM "Data";`;
