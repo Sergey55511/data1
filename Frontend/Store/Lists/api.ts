@@ -31,9 +31,9 @@ export const getOrders = (storeId: number) => {
         method: 'GET',
     }).then((res) => res.data);
 };
-export const getOperations = (storeId: number) => {
+export const getOperations = (storeId: number, stateId: number) => {
     return axios({
-        url: `/api/list/operations?storeId=${storeId}`,
+        url: `/api/list/operations?storeId=${storeId}&stateId=${stateId}`,
         method: 'GET',
     }).then((res) => res.data);
 };

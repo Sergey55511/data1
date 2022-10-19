@@ -98,34 +98,35 @@ model Users {
 }
 
 model Stores {
-  id             Int               @id @default(autoincrement())
-  name           String
-  Data           Data[]
-  Users          Users[]
-  StoreOperation StoreOperations[]
-  BilletStore    BilletStore[]
-  Productions    Productions[]
-  Managers       Managers[]
-  Recipients     Recipients[]
+  id                    Int                     @id @default(autoincrement())
+  name                  String
+  Data                  Data[]
+  Users                 Users[]
+  StoreOperationsBridge StoreOperationsBridge[]
+  BilletStore           BilletStore[]
+  Productions           Productions[]
+  Managers              Managers[]
+  Recipients            Recipients[]
 }
 
 model Operations {
-  id                Int                 @id @default(autoincrement())
-  operation         String              @unique
-  result            String?
-  sborka            Int?
-  activ             Boolean             @default(true)
-  StoreOperations   StoreOperations?    @relation(fields: [storeOperationsId], references: [id])
-  storeOperationsId Int?
-  Data              Data[]
-  ManagerOperations ManagerOperations[]
+  id                    Int                     @id @default(autoincrement())
+  operation             String                  @unique
+  result                String?
+  sborka                Int?
+  activ                 Boolean                 @default(true)
+  StoreOperationsBridge StoreOperationsBridge[]
+  Data                  Data[]
+  ManagerOperations     ManagerOperations[]
+  StateOperationBridge  StateOperationBridge[]
 }
 
-model StoreOperations {
-  id        Int          @id @default(autoincrement())
-  store     Stores?      @relation(fields: [storeId], references: [id])
-  storeId   Int?         @map("storesId")
-  Operation Operations[]
+model StoreOperationsBridge {
+  id          Int         @id @default(autoincrement())
+  store       Stores?     @relation(fields: [storeId], references: [id])
+  storeId     Int?        @map("storesId")
+  Operations  Operations? @relation(fields: [operationId], references: [id])
+  operationId Int?
 }
 
 model Types {
@@ -219,6 +220,14 @@ model SizeRangeLengthBridge {
   sizeRangeId Int?
 }
 
+model StateOperationBridge {
+  id          Int         @id @default(autoincrement())
+  State       State?      @relation(fields: [stateId], references: [id])
+  stateId     Int?
+  Operation   Operations? @relation(fields: [operationId], references: [id])
+  operationId Int?
+}
+
 model MaterialGroup {
   id            Int     @id @default(autoincrement())
   materialGroup String
@@ -246,10 +255,11 @@ model Productions {
 }
 
 model State {
-  id     Int     @id @default(autoincrement())
-  state  String
-  active Boolean @default(true)
-  Data   Data[]
+  id                   Int                    @id @default(autoincrement())
+  state                String
+  active               Boolean                @default(true)
+  Data                 Data[]
+  StateOperationBridge StateOperationBridge[]
 }
 
 model Channel {

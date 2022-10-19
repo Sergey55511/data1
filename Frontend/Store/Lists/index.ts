@@ -62,7 +62,6 @@ export class ListsStore {
             this.getGrades(storeId);
             this.getTypes(storeId);
             this.getColors(storeId);
-            this.getOperations(storeId);
             this.getProductions(storeId);
             this.getUsers(storeId);
             this.getMaterialGroup();
@@ -121,9 +120,9 @@ export class ListsStore {
         }
     });
 
-    getOperations = flow(function* (this: ListsStore, storeId: number) {
+    getOperations = flow(function* (this: ListsStore, storeId: number, stateId: number) {
         try {
-            this.operations = yield api.getOperations(storeId);
+            this.operations = yield api.getOperations(storeId, stateId);
         } catch (err) {
             this.errorStore.setError(err as iError);
         }

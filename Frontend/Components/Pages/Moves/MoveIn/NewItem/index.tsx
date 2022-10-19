@@ -8,9 +8,9 @@ import { Field, PrimeField, SelectField } from './Components/fields';
 import isNumber from 'lodash/isNumber';
 import { observer } from 'mobx-react-lite';
 import { useStores } from '../../../../../Store/useStores';
-import { iNewItems } from '../../../../../../Shared/Types/interfaces';
+import { iData } from '../../../../../../Shared/Types/interfaces';
 import { Frame } from '../../../../Shared/Frame';
-import { WORKPIECETYPE } from '../../../../../../Shared/constants';
+import { STATE, WORKPIECETYPE } from '../../../../../../Shared/constants';
 
 export const NewItem = observer(() => {
     const [primeData, setPrimeData] = useState<iPrimeData>(initPrimeData());
@@ -64,18 +64,19 @@ export const NewItem = observer(() => {
         tuched.current = true;
 
         if (isValid()) {
-            const preparedData: iNewItems[] = data.map((item) => {
-                const res: any = {
+            const preparedData: iData[] = data.map((item) => {
+                const res: iData = {
                     [primeData.lot.field]: primeData.lot.value,
                     [primeData.numDocument.field]: primeData.numDocument.value,
                     operationId: 1,
                     workpieceTypeId: WORKPIECETYPE.stone.id,
                     userId: loginStore.user.id,
                     storeId: loginStore.user.storeId,
+                    stateId: STATE.stone.id,
                 };
                 for (const key in item) {
                     const keyField = key as keyof typeof item;
-                    res[item[keyField].field] = item[keyField].value;
+                    res[item[keyField].field as keyof iData] = item[keyField].value;
                 }
                 return res;
             });

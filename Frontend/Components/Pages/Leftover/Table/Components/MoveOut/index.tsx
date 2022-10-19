@@ -2,7 +2,6 @@ import { Button, DatePicker, Divider, Input, Select } from 'antd';
 import { observer } from 'mobx-react-lite';
 import moment from 'moment';
 import { SetStateAction, useEffect, useRef, useState } from 'react';
-import { OPERATIONS } from '../../../../../../../Shared/constants';
 import { prepareDataTable } from '../../../../../../../Shared/Helpers';
 import { iData, iDataTable } from '../../../../../../../Shared/Types/interfaces';
 import { useStores } from '../../../../../../Store/useStores';
@@ -28,8 +27,11 @@ export const MoveOutSolo = observer(
         useEffect(() => {
             setManagerId(undefined);
             ListsStore.resetManagers();
-            if (loginStore.user.storeId && operation)
-                ListsStore.getManagers(loginStore.user.storeId, operation!);
+            if (loginStore.user.storeId) {
+                ListsStore.getOperations(loginStore.user.storeId, record.stateId!);
+                if (operation)
+                    ListsStore.getManagers(loginStore.user.storeId, operation!);
+            }
         }, [loginStore.user.storeId, operation]);
 
         const keys = Object.keys(record);

@@ -18,6 +18,7 @@ export const OPERATIONS = {
     mixing: { id: 18 }, //Смешивание
 };
 export const STATE = {
+    stone: { id: 14 },
     washed: { id: 1 },
     sorted: { id: 2 },
     glued: { id: 3 },

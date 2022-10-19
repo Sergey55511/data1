@@ -5,12 +5,13 @@ import { getOperations } from '../../../Backend/Data/Requests/Operations/get';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     const storeId: number = +req.query.storeId!;
+    const stateId: number = +req.query.stateId!;
     switch (req.method) {
         case 'GET': {
             await fetchService<iOperation>({
                 req,
                 res,
-                fetch: () => getOperations(storeId),
+                fetch: () => getOperations(storeId, stateId),
             });
             break;
         }
