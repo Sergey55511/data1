@@ -89,6 +89,12 @@ export const MoveOutSolo = observer(
             data.operationId = operation;
             data.productionId = numProd || +record.productionId! || undefined;
 
+            const code = record.code || 0;
+            const moneyOut = (code / (record.width || code)) * (data.widthOut || 0);
+            console.log(record.code, code, record.width, data.widthOut);
+
+            data.moneyOut = moneyOut;
+
             if (isNewProductionId.current)
                 await OperationStore.changeNumProduction({
                     ...data,

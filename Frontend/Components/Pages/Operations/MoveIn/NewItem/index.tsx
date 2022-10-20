@@ -77,6 +77,7 @@ export const NewItem = observer(() => {
                 for (const key in item) {
                     const keyField = key as keyof typeof item;
                     res[item[keyField].field as keyof iData] = item[keyField].value;
+                    res.moneyIn = +item.widthIn.value;
                 }
                 return res;
             });

@@ -47,7 +47,7 @@ class Field implements iField {
 
 export const Slicing = observer(
     ({ record, stateId }: { record: iData; stateId: number }) => {
-        const { ListsStore, OperationStore } = useStores();
+        const { OperationStore } = useStores();
         const [state, setState] = useState<iState[]>([]);
         const [losses, setLosses] = useState<number>(0);
         const [garbage, setGarbage] = useState<number | undefined>(undefined);
@@ -137,7 +137,8 @@ export const Slicing = observer(
                 errorNote();
                 return;
             }
-
+            const code = record.code ? record.code * -1 : 0;
+            const codeOneItem = record.width ? code / totalSum : 0;
             const data: iData[] = state.map((item) => ({
                 ...record,
                 workpieceTypeId: +item.workpieceTypeId.value,
@@ -148,6 +149,7 @@ export const Slicing = observer(
                 widthOut: undefined,
                 widthIn: +item.widthIn.value!,
                 stateId,
+                moneyIn: item.widthIn.value ? codeOneItem * +item.widthIn.value : 0,
             }));
             if (losses) {
                 data.push(getLosseObject(record, WORKPIECETYPE.losses.id, losses));

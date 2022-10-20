@@ -125,7 +125,8 @@ export const Sorting = observer(({ record }: { record: iData }) => {
             errorNote();
             return;
         }
-
+        const code = record.code ? record.code * -1 : 0;
+        const codeOneItem = record.width ? code / totalSum : 0;
         const data: iData[] = state.map((item) => ({
             ...record,
             typeId: +item.typeId.value,
@@ -135,6 +136,7 @@ export const Sorting = observer(({ record }: { record: iData }) => {
             widthOut: undefined,
             widthIn: +item.widthIn.value!,
             stateId: STATE.sorted.id,
+            moneyIn: item.widthIn.value ? codeOneItem * +item.widthIn.value : 0,
         }));
         if (losses) {
             data.push(getLosseObject(record, WORKPIECETYPE.losses.id, losses));

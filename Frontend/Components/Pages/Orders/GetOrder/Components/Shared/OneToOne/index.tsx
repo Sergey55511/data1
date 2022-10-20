@@ -54,12 +54,14 @@ export const OneToOne = ({
     };
 
     const subbmitHandler = async () => {
+        const code = record.code ? record.code * -1 : 0;
         const data: iData[] = [
             {
                 ...record,
                 widthOut: undefined,
                 widthIn: state.widthIn,
                 stateId: stateId,
+                moneyIn: code,
             },
         ];
         if (state.losses) {

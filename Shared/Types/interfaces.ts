@@ -56,6 +56,8 @@ export interface iDataTable {
     countItemsIn?: number;
     widthOut?: number;
     widthIn?: number;
+    moneyIn?: number;
+    moneyOut?: number;
     date?: moment.Moment | null | any;
 }
 

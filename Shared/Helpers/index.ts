@@ -28,6 +28,8 @@ export const prepareDataTable = (data: iData): iDataTable => {
         'widthOut',
         'widthIn',
         'date',
+        'moneyIn',
+        'moneyOut',
     ];
     const result: iDataTable = {};
     Object.keys(data).forEach((key) => {
