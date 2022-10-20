@@ -1,4 +1,4 @@
-import { iData } from "../../../Shared/Types/interfaces";
+import { iData } from '../../../Shared/Types/interfaces';
 
 export const getLosseObject = (
     record: iData,
@@ -18,3 +18,13 @@ export const getLosseObject = (
     widthOut: undefined,
     widthIn: +losses.toFixed(2),
 });
+
+export const getMoveBackMoney = (
+    code: number | undefined,
+    width: number | undefined,
+    moveBack: number | undefined,
+) => {
+    const newCode = code || 0;
+    const moveBackMoneyOne = newCode / (width || newCode);
+    return (moveBack || 0) * moveBackMoneyOne * -1;
+};

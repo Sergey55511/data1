@@ -1,7 +1,7 @@
 import { Input, InputProps } from 'antd';
 import { ChangeEvent } from 'react';
 
-type tValue = number | string | undefined;
+export type tValue = number | string | undefined;
 
 interface iInputNumberProps extends InputProps {
     onChangeHandler: (v: tValue) => void;

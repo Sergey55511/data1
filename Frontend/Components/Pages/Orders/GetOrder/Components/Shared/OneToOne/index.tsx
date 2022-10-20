@@ -2,12 +2,14 @@ import { Button, DatePicker, Input, notification } from 'antd';
 import moment from 'moment';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
-import { STATE, WORKPIECETYPE } from '../../../../../../../../Shared/constants';
+import { WORKPIECETYPE } from '../../../../../../../../Shared/constants';
 import { prepareDataTable } from '../../../../../../../../Shared/Helpers';
 import { iData } from '../../../../../../../../Shared/Types/interfaces';
 import { useStores } from '../../../../../../../Store/useStores';
-import { getLosseObject } from '../../../../../../Helpers';
+import { getLosseObject, getMoveBackMoney } from '../../../../../../Helpers';
 import { confirmAction } from '../../../../../../Shared/ConfirmSubbmit';
+import { InputField } from '../../../../../../Shared/InputField';
+import { InputNumber } from '../../../../../../Shared/InputNumber';
 import { Wrapper } from './style';
 
 export interface iProps {
@@ -19,6 +21,7 @@ export interface iProps {
 interface iState {
     date?: moment.Moment;
     widthIn?: number;
+    moveBack?: number;
     losses?: number;
 }
 
@@ -67,6 +70,18 @@ export const OneToOne = ({
         if (state.losses) {
             data.push(getLosseObject(record, WORKPIECETYPE.losses.id, state.losses));
         }
+        if (state.moveBack) {
+            const moveBackMoney = getMoveBackMoney(
+                record.code,
+                record.width,
+                state.moveBack,
+            );
+            data.push({
+                ...record,
+                widthOut: state.moveBack * -1,
+                moneyOut: moveBackMoney,
+            });
+        }
 
         const dataTable = data.map((item) => prepareDataTable(item));
         setIsLoading(true);
@@ -76,6 +91,16 @@ export const OneToOne = ({
         });
         router.push('/orders');
         setIsLoading(false);
+    };
+
+    const onChangeInput = (fieldName: keyof iState, v: any) => {
+        const anotherFieldName: keyof iState =
+            fieldName == 'moveBack' ? 'widthIn' : 'moveBack';
+        setState((prev) => ({
+            ...prev,
+            [fieldName]: v ? +v : undefined,
+            losses: (record?.widthOut || 0) - (+v! || 0) - (prev[anotherFieldName] || 0),
+        }));
     };
 
     return (
@@ -90,28 +115,29 @@ export const OneToOne = ({
                 />
             </Item>
             <Item title="Результат гр.">
-                <>
-                    <Input
-                        type="number"
-                        className="input"
-                        value={state.widthIn}
+                <InputField
+                    isError={(state.widthIn || 0) < 0}
+                    errorMsg="Отрицательное значение"
+                >
+                    <InputNumber
                         placeholder="Введите данные"
-                        step={0.01}
-                        onChange={(v) => {
-                            const value = v.target.value;
-                            setState((prev) => ({
-                                ...prev,
-                                widthIn: value ? +value : undefined,
-                                losses: (record?.widthOut || 0) - +value! || 0,
-                            }));
+                        value={state.widthIn}
+                        onChangeHandler={(v) => {
+                            onChangeInput('widthIn', v);
                         }}
                     />
-                    {(state.widthIn || 0) < 0 && (
-                        <div className="error">
-                            <small>Отрицательное значение</small>
-                        </div>
-                    )}
-                </>
+                </InputField>
+            </Item>
+            <Item title="Возврат гр.">
+                <InputField>
+                    <InputNumber
+                        placeholder="Не обязательное поле"
+                        value={state.moveBack}
+                        onChangeHandler={(v) => {
+                            onChangeInput('moveBack', v);
+                        }}
+                    />
+                </InputField>
             </Item>
             <Item title="Потеря гр.">
                 <>

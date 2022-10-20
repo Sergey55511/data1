@@ -7,13 +7,13 @@ import { WORKPIECETYPE } from '../../../../../../../../Shared/constants';
 import { prepareDataTable } from '../../../../../../../../Shared/Helpers';
 import { iData } from '../../../../../../../../Shared/Types/interfaces';
 import { useStores } from '../../../../../../../Store/useStores';
-import { InputNumber } from '../../../../../../Shared/InputNumber';
+import { InputNumber, tValue } from '../../../../../../Shared/InputNumber';
 import { Row } from './Components/Row';
 import { Wrapper } from './style';
 import { ExclamationCircleOutlined } from '@ant-design/icons';
 import { Modal } from 'antd';
 import { confirmAction } from '../../../../../../Shared/ConfirmSubbmit';
-import { getLosseObject } from '../../../../../../Helpers';
+import { getLosseObject, getMoveBackMoney } from '../../../../../../Helpers';
 
 const { confirm } = Modal;
 
@@ -51,6 +51,7 @@ export const Slicing = observer(
         const [state, setState] = useState<iState[]>([]);
         const [losses, setLosses] = useState<number>(0);
         const [garbage, setGarbage] = useState<number | undefined>(undefined);
+        const [moveBack, setMoveBack] = useState<tValue>(undefined);
         const [isLoading, setIsLoading] = useState(false);
         const router = useRouter();
         const getTotalSum = () =>
@@ -60,9 +61,13 @@ export const Slicing = observer(
 
         useEffect(() => {
             const totalSum = getTotalSum();
-            const res = (record?.widthOut || 0) - totalSum - (garbage || 0);
+            const res =
+                (record?.widthOut || 0) -
+                totalSum -
+                (garbage || 0) -
+                (moveBack ? +moveBack : 0);
             setLosses(isNaN(res) ? 0 : res);
-        }, [state, garbage]);
+        }, [state, garbage, moveBack]);
 
         const addRowHandler = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
             e.preventDefault();
@@ -159,6 +164,19 @@ export const Slicing = observer(
                 data.push(getLosseObject(record, WORKPIECETYPE.garbage.id, garbage));
             }
 
+            if (moveBack) {
+                const moveBackMoney = getMoveBackMoney(
+                    record.code,
+                    record.width,
+                    moveBack ? +moveBack : undefined,
+                );
+                data.push({
+                    ...record,
+                    widthOut: +moveBack * -1,
+                    moneyOut: moveBackMoney,
+                });
+            }
+
             const dataTable = data.map((item) => prepareDataTable(item));
             setIsLoading(true);
             await OperationStore.postOrderResult(dataTable);
@@ -188,6 +206,15 @@ export const Slicing = observer(
                             placeholder="Отход"
                             onChangeHandler={(v) => setGarbage(v ? +v : undefined)}
                             value={garbage}
+                        />
+                    </div>
+                    <div>
+                        <InputNumber
+                            placeholder="Возврат"
+                            value={moveBack}
+                            onChangeHandler={(v) => {
+                                setMoveBack(v);
+                            }}
                         />
                     </div>
                     <div className={losses < 0 ? 'red' : ''}>потеря: {losses}</div>

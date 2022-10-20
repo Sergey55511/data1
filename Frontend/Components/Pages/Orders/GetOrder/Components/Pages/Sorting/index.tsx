@@ -7,10 +7,10 @@ import { STATE, WORKPIECETYPE } from '../../../../../../../../Shared/constants';
 import { prepareDataTable } from '../../../../../../../../Shared/Helpers';
 import { iData } from '../../../../../../../../Shared/Types/interfaces';
 import { useStores } from '../../../../../../../Store/useStores';
-import { getLosseObject } from '../../../../../../Helpers';
+import { getLosseObject, getMoveBackMoney } from '../../../../../../Helpers';
 import { confirmAction } from '../../../../../../Shared/ConfirmSubbmit';
 import { InputField } from '../../../../../../Shared/InputField';
-import { InputNumber } from '../../../../../../Shared/InputNumber';
+import { InputNumber, tValue } from '../../../../../../Shared/InputNumber';
 import { SelectField } from '../../../../../../Shared/SelectField';
 import { Wrapper } from './style';
 
@@ -41,6 +41,7 @@ class Field implements iField {
 export const Sorting = observer(({ record }: { record: iData }) => {
     const { ListsStore, OperationStore } = useStores();
     const [state, setState] = useState<iState[]>([]);
+    const [moveBack, setMoveBack] = useState<tValue>(undefined);
     const [losses, setLosses] = useState<number>(0);
     const [isLoading, setIsLoading] = useState(false);
     const router = useRouter();
@@ -51,9 +52,9 @@ export const Sorting = observer(({ record }: { record: iData }) => {
 
     useEffect(() => {
         const totalSum = getTotalSum();
-        const res = (record?.widthOut || 0) - totalSum;
+        const res = (record?.widthOut || 0) - totalSum - (moveBack ? +moveBack : 0);
         setLosses(isNaN(res) ? 0 : res);
-    }, [state]);
+    }, [state, moveBack]);
 
     const addRowHandler = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
         e.preventDefault();
@@ -141,6 +142,18 @@ export const Sorting = observer(({ record }: { record: iData }) => {
         if (losses) {
             data.push(getLosseObject(record, WORKPIECETYPE.losses.id, losses));
         }
+        if (moveBack) {
+            const moveBackMoney = getMoveBackMoney(
+                record.code,
+                record.width,
+                moveBack ? +moveBack : undefined,
+            );
+            data.push({
+                ...record,
+                widthOut: +moveBack * -1,
+                moneyOut: moveBackMoney,
+            });
+        }
 
         const dataTable = data.map((item) => prepareDataTable(item));
         setIsLoading(true);
@@ -166,6 +179,15 @@ export const Sorting = observer(({ record }: { record: iData }) => {
                 <a href="#" onClick={addRowHandler}>
                     Добавить строку
                 </a>
+                <div>
+                    <InputNumber
+                        placeholder="Возврат"
+                        value={moveBack}
+                        onChangeHandler={(v) => {
+                            setMoveBack(v);
+                        }}
+                    />
+                </div>
                 <div className={losses < 0 ? 'red' : ''}>потеря: {losses}</div>
             </div>
             <div>
