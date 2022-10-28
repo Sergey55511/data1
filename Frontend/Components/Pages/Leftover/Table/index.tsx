@@ -47,8 +47,8 @@ export const TableLeftOvers = observer(
                 title: KEYSLEFTOVERS.state.title,
             },
             {
-                ...getColumnPropsHoc(KEYSLEFTOVERS.model.key),
-                title: KEYSLEFTOVERS.model.title,
+                ...getColumnPropsHoc(KEYSLEFTOVERS.type.key),
+                title: KEYSLEFTOVERS.type.title,
             },
             {
                 ...getColumnPropsHoc(KEYSLEFTOVERS.fraction.key),
