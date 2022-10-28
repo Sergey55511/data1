@@ -127,7 +127,6 @@ export const MoveOut = observer(
 
                 if (item.widthOut) item.widthOut = +item.widthOut;
                 if (item.countItemsOut) item.countItemsOut = +item.countItemsOut;
-                item.grade = type == 'mixing' ? undefined : item.grade;
                 item.numDocument = numDocument;
                 item.recipientId = recipient;
                 item.operationId = operationId;

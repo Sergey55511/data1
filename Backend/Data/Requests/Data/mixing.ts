@@ -21,6 +21,7 @@ export const mixing = async <T>(
     const dataCom = dataPrepared?.map((item) => ({
         ...item,
         productionId: undefined,
+        gradeId: undefined,
         widthOut: undefined,
         countItemsOut: undefined,
         widthIn: item.widthOut,
