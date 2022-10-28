@@ -10,7 +10,6 @@ import { useStores } from '../../../../../../../Store/useStores';
 import { InputNumber, tValue } from '../../../../../../Shared/InputNumber';
 import { Row } from './Components/Row';
 import { Wrapper } from './style';
-import { ExclamationCircleOutlined } from '@ant-design/icons';
 import { Modal } from 'antd';
 import { confirmAction } from '../../../../../../Shared/ConfirmSubbmit';
 import { getLosseObject, getMoveBackMoney } from '../../../../../../Helpers';
@@ -153,6 +152,10 @@ export const Slicing = observer(
                 sizeRangeId: +item.sizeRangeId.value,
                 widthOut: undefined,
                 widthIn: +item.widthIn.value!,
+                fractionId: undefined,
+                grade: undefined,
+                workpieceType: undefined,
+                productionId: undefined,
                 stateId,
                 moneyIn: item.widthIn.value ? codeOneItem * +item.widthIn.value : 0,
             }));
