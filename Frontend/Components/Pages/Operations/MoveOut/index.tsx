@@ -127,6 +127,7 @@ export const MoveOut = observer(
 
                 if (item.widthOut) item.widthOut = +item.widthOut;
                 if (item.countItemsOut) item.countItemsOut = +item.countItemsOut;
+                item.grade = type == 'mixing' ? undefined : item.grade;
                 item.numDocument = numDocument;
                 item.recipientId = recipient;
                 item.operationId = operationId;
@@ -154,6 +155,32 @@ export const MoveOut = observer(
             setRecipient(undefined);
             setSelectedRows([]);
             setButtonState('lefovers');
+        };
+
+        const selectRow = (i: number) => {
+            if (selectedRows.length) {
+                if (type == 'mixing') {
+                    const sizeRangeId = data[i].sizeRangeId;
+                    const lot = data[i].lot;
+                    for (const iSelected of selectedRows) {
+                        if (data[iSelected].lot != lot) {
+                            notification.error({
+                                message: 'Запрещенно добавлять разные партии',
+                            });
+                            return;
+                        }
+                        if (data[iSelected].sizeRangeId != sizeRangeId) {
+                            notification.error({
+                                message: 'Запрещенно добавлять разные размеры',
+                            });
+                            return;
+                        }
+                    }
+                }
+                setSelectedRows([...selectedRows, i]);
+            } else {
+                setSelectedRows([i]);
+            }
         };
 
         return (
@@ -228,8 +255,7 @@ export const MoveOut = observer(
                                 filters,
                                 setFilters,
                                 leftovers: leftoversData,
-                                selectRow: (i: number) =>
-                                    setSelectedRows((prev) => [...prev, i]),
+                                selectRow,
                             }}
                         />
                     )}
