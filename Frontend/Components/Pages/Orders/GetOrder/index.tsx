@@ -58,10 +58,10 @@ export const GetOrder = () => {
                             <Item keyObj="workpieceType" />
                             <Item keyObj="materialGroup" />
                             <Item keyObj="grade" />
-                            <Item keyObj="model" />
+                            <Item keyObj="type" />
                             <Item keyObj="color" />
                             <Item keyObj="length" />
-                            <Item keyObj="channel" />
+                            <Item keyObj="sizeRange" />
                             <Item keyObj="state" />
                             <Item keyObj="width" title="В работе гр." />
                             <Item keyObj="count" title="В работе шт." />

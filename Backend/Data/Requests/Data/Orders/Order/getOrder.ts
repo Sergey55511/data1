@@ -19,6 +19,10 @@ export const getOrder = <T>(prisma: tPrisma,req: NextApiRequest): PrismaPromise<
 			u."login" as "userLogin",
 			"managerId",
 			m."name" as "managerLogin",
+            "typeId",
+            type,
+            "sizeRangeId",
+            "sizeRange",
 			"operationId",
 			"operation",
 			"workpieceTypeId",
@@ -57,6 +61,8 @@ export const getOrder = <T>(prisma: tPrisma,req: NextApiRequest): PrismaPromise<
 			left join "Users" u on "Data"."userId"=u.id
 			left join "Operations" on "Data"."operationId"="Operations".id
             left join "State" on "Data"."stateId"="State".id
+            left join "Types" on "Data"."typeId"="Types".id
+            left join "SizeRange" on "Data"."sizeRangeId"="SizeRange".id
 		WHERE "Data"."storeId"=${+storeId!} and "Data".pp=${+pp!}
         GROUP BY 
 			pp,
@@ -65,6 +71,10 @@ export const getOrder = <T>(prisma: tPrisma,req: NextApiRequest): PrismaPromise<
 			u."login",
 			"managerId",
 			m."name",
+            "typeId",
+            type,
+            "sizeRangeId",
+            "sizeRange",
 			"operationId",
 			"operation",
             "workpieceTypeId",

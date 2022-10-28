@@ -56,8 +56,8 @@ export const OrdersTable = observer(() => {
             title: KEYSLEFTOVERS.state.title,
         },
         {
-            ...getColumnPropsHoc(KEYSLEFTOVERS.model.key),
-            title: KEYSLEFTOVERS.model.title,
+            ...getColumnPropsHoc(KEYSLEFTOVERS.type.key),
+            title: KEYSLEFTOVERS.type.title,
         },
         {
             ...getColumnPropsHoc(KEYSLEFTOVERS.fraction.key),
@@ -76,8 +76,8 @@ export const OrdersTable = observer(() => {
             title: KEYSLEFTOVERS.length.title,
         },
         {
-            ...getColumnPropsHoc(KEYSLEFTOVERS.channel.key),
-            title: KEYSLEFTOVERS.channel.title,
+            ...getColumnPropsHoc(KEYSLEFTOVERS.sizeRange.key),
+            title: KEYSLEFTOVERS.sizeRange.title,
         },
         {
             ...getColumnPropsHoc(KEYSLEFTOVERS.grade.key),

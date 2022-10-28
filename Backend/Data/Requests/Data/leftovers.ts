@@ -7,6 +7,9 @@ export const leftovers = <T>(prisma: tPrisma, storeId: number): PrismaPromise<T>
             "workpieceTypeId",
             "workpieceType",
             "typeId",
+            type,
+            "sizeRangeId",
+            "sizeRange",
 			"productionId",
 			"Productions".description as "production",
             "modelId",
@@ -41,11 +44,15 @@ export const leftovers = <T>(prisma: tPrisma, storeId: number): PrismaPromise<T>
 			left join "Productions" on "Data"."productionId"="Productions".id
             left join "State" on "Data"."stateId"="State".id
             left join "Types" on "Data"."typeId"="Types".id
+            left join "SizeRange" on "Data"."sizeRangeId"="SizeRange".id
 		WHERE "Data"."storeId"=${+storeId} AND "WorkpieceType"."isShow"=true
         GROUP BY 
             "workpieceTypeId",
             "workpieceType",
             "typeId",
+            type,
+            "sizeRangeId",
+            "sizeRange",
 			"productionId",
 			"Productions".description,
 			"modelId",

@@ -67,8 +67,8 @@ export const TableLeftOvers = observer(
                 title: KEYSLEFTOVERS.length.title,
             },
             {
-                ...getColumnPropsHoc(KEYSLEFTOVERS.channel.key),
-                title: KEYSLEFTOVERS.channel.title,
+                ...getColumnPropsHoc(KEYSLEFTOVERS.sizeRange.key),
+                title: KEYSLEFTOVERS.sizeRange.title,
             },
             {
                 ...getColumnPropsHoc(KEYSLEFTOVERS.grade.key),
