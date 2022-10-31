@@ -103,6 +103,8 @@ export const OneToOne = ({
         }));
     };
 
+    const isShowLosses = (state.losses || 0) < 0 && isCheckLosses;
+
     return (
         <Wrapper>
             <Item title="Дата">
@@ -142,7 +144,7 @@ export const OneToOne = ({
             <Item title="Потеря гр.">
                 <>
                     <Input className="input" value={state.losses?.toFixed(2)} disabled />
-                    {(state.losses || 0) < 0 && (
+                    {isShowLosses && (
                         <div className="error">
                             <small>Отрицательный остаток</small>
                         </div>
