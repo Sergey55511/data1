@@ -3,7 +3,7 @@ version: "3.4"
 services:
 
   tdata1:
-    image: "ghcr.io/sergey55511/data1:dev"
+    image: kpp2355575/tdata:latest
     container_name: tdata1
     ports:
       - "3000:3000"
