@@ -57,7 +57,7 @@ jobs:
           script: |            
             cd /app/
             rm .env 
-            echo APP_VERSION=v0.0.13 >> .env
+            echo APP_VERSION=${{ github.ref_name }} >> .env
             cat .env 
             docker-compose down --rmi local
             docker image prune -a -f

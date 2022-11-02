@@ -34,6 +34,7 @@ export const LayOut = observer(
 
         useEffect(() => {
             console.log('version', process?.env?.APP_VERSION || 0);
+            console.log('env', process?.env || 0);
             
             UIStore.setIsLoading(true);
             const whoami = async () => {
