@@ -21,6 +21,8 @@ RUN npm set strict-ssl false
 #Execute commands in a new layer on top of the current image and commit the results
 RUN npm install
 
+ARG APP_VERSION
+ENV APP_VERSION=${APP_VERSION}
 ENV NODE_TLS_REJECT_UNAUTHORIZED 0
 
 RUN npx prisma generate

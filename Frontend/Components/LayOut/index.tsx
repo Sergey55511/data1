@@ -33,6 +33,8 @@ export const LayOut = observer(
         const { loginStore, UIStore, OperationStore } = useStores();
 
         useEffect(() => {
+            console.log('version', process?.env?.APP_VERSION || 0);
+
             UIStore.setIsLoading(true);
             const whoami = async () => {
                 await loginStore.whoami();

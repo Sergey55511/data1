@@ -11,9 +11,6 @@ jobs:
          
       - name: Checkout
         uses: actions/checkout@v2.5.0
-
-      - name: Set env
-        run: export RELEASE_VERSION = ${{ github.ref_name }}
         
       -
         name: Set up QEMU
