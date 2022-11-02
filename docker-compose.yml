@@ -3,12 +3,13 @@ version: "3.4"
 services:
 
   tdata1:
-    image: kpp2355575/tdata:latest
+    image: "kpp2355575/tdata:${APP_VERSION}"
     container_name: tdata1
     ports:
       - "3000:3000"
     env_file:
       - ./docker/app.global.env
+      - ./.env
 
   nginx:
     image: nginx
