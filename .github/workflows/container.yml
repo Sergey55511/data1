@@ -34,8 +34,8 @@ jobs:
           builder: ${{ steps.buildx.outputs.name }}
           push: true
           tags: ${{ secrets.DOCKER_HUB_USERNAME }}/tdata:${{ github.ref_name }}
-          # cache-from: type=registry,ref=${{ secrets.DOCKER_HUB_USERNAME }}/tdata:latest
-          # cache-to: type=registry,ref=${{ secrets.DOCKER_HUB_USERNAME }}/tdata:latest,mode=max
+          cache-from: type=registry,ref=${{ secrets.DOCKER_HUB_USERNAME }}/tdata:buildcache
+          cache-to: type=registry,ref=${{ secrets.DOCKER_HUB_USERNAME }}/tdata:buildcache,mode=max
 
       - name: copy file via ssh password
         uses: appleboy/scp-action@master
@@ -56,6 +56,9 @@ jobs:
           port: ${{secrets.TDATA_SERVER_PORT}}
           script: |            
             cd /app/
+            rm .env 
+            echo APP_VERSION=v0.0.13 >> .env
+            cat .env 
             docker-compose down --rmi local
             docker image prune -a -f
             docker-compose up -d
