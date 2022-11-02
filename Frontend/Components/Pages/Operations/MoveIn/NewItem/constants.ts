@@ -5,6 +5,7 @@ export interface iRow {
     materialGroup: iItem;
     widthInDocument: iItem;
     widthIn: iItem;
+    moneyIn: iItem;
 }
 
 export interface iItem {
@@ -63,6 +64,12 @@ export const initData = () => ({
     widthIn: new Item({
         field: 'widthIn',
         placeholder: 'Вес факт гр.',
+        type: 'number',
+        step: '0.01',
+    }),
+    moneyIn: new Item({
+        field: 'moneyIn',
+        placeholder: 'Стоимость',
         type: 'number',
         step: '0.01',
     }),

@@ -3,7 +3,7 @@ import { Title } from '../../../../Shared/Title';
 import { Wrapper } from './style';
 import { CheckOutlined, MinusOutlined } from '@ant-design/icons';
 import { useEffect, useRef, useState } from 'react';
-import { iItem, initData, initPrimeData, iPrimeData, iRow, Item } from './constants';
+import { iItem, initData, initPrimeData, iPrimeData, iRow } from './constants';
 import { Field, PrimeField, SelectField } from './Components/fields';
 import isNumber from 'lodash/isNumber';
 import { observer } from 'mobx-react-lite';
@@ -14,6 +14,7 @@ import { STATE, WORKPIECETYPE } from '../../../../../../Shared/constants';
 
 export const NewItem = observer(() => {
     const [primeData, setPrimeData] = useState<iPrimeData>(initPrimeData());
+    const [isLoading, setIsLoading] = useState(false);
     const [data, setData] = useState<iRow[]>([]);
     const tuched = useRef(false);
     const { ListsStore, OperationStore, loginStore } = useStores();
@@ -64,6 +65,7 @@ export const NewItem = observer(() => {
         tuched.current = true;
 
         if (isValid()) {
+            setIsLoading(true);
             const preparedData: iData[] = data.map((item) => {
                 const res: iData = {
                     [primeData.lot.field]: primeData.lot.value,
@@ -77,7 +79,6 @@ export const NewItem = observer(() => {
                 for (const key in item) {
                     const keyField = key as keyof typeof item;
                     res[item[keyField].field as keyof iData] = item[keyField].value;
-                    res.moneyIn = +item.widthIn.value;
                 }
                 return res;
             });
@@ -90,6 +91,7 @@ export const NewItem = observer(() => {
                     description: 'Приход сохранен успешно',
                 });
             });
+            setIsLoading(false);
         } else {
             notification.error({
                 message: 'Ошибка',
@@ -154,6 +156,7 @@ export const NewItem = observer(() => {
                                 shape="circle"
                                 icon={<CheckOutlined />}
                                 onClick={() => subbmitHandler()}
+                                loading={isLoading}
                             />
                         </Tooltip>
                     </div>
@@ -216,6 +219,12 @@ export const NewItem = observer(() => {
                         onChangeHandler={(v) => setValue(index, 'widthIn', +v)}
                         type={item.widthIn.type}
                         step={item.widthIn.step}
+                    />
+                    <Field
+                        item={item.moneyIn}
+                        onChangeHandler={(v) => setValue(index, 'moneyIn', +v)}
+                        type={item.moneyIn.type}
+                        step={item.moneyIn.step}
                     />
                 </div>
             ))}
