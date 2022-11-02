@@ -6,8 +6,8 @@ import { OperationStore } from './OperationStore';
 import { UIStore } from './UIStore';
 
 class Store {
-    UIStore = new UIStore();
     ErrorStore = new ErrorStore();
+    UIStore = new UIStore(this.ErrorStore);
     loginStore = new Login(this.ErrorStore);
     ListsStore = new ListsStore(this.ErrorStore, this.loginStore);
     OperationStore = new OperationStore(

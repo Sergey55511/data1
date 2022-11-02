@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "cross-env DATABASE_URL=$DATABASE_URL cross-env APP_VERSION=hello next start",
+    "start": "next start",
     "lint": "next lint",
     "pm": "npx prisma migrate dev",
     "ps": "npx prisma studio",

@@ -33,9 +33,8 @@ export const LayOut = observer(
         const { loginStore, UIStore, OperationStore } = useStores();
 
         useEffect(() => {
-            console.log('version', process?.env?.APP_VERSION || 0);
-            console.log('env', process?.env || 0);
-            
+            UIStore.getVersion();
+
             UIStore.setIsLoading(true);
             const whoami = async () => {
                 await loginStore.whoami();
@@ -52,6 +51,11 @@ export const LayOut = observer(
                 OperationStore.fetchInitData(loginStore.user.storeId);
             }
         }, [loginStore.user.storeId]);
+        useEffect(() => {
+            if (UIStore.version) {
+                console.log('version', UIStore.version);
+            }
+        }, [UIStore.version]);
 
         return (
             <Spin
