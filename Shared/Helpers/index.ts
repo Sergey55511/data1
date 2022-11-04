@@ -7,6 +7,7 @@ export const prepareDataTable = (data: iData): iDataTable => {
         'lot',
         'numProduction',
         'pp',
+        'typeId',
         'workpieceTypeId',
         'numDocument',
         'userId',
