@@ -10,9 +10,9 @@ export const OPERATIONS = {
     turning: { id: 10 }, //обточка
     makeBall: { id: 11 }, //шарокрут
     makeSuperBall: { id: 12 }, //Докат
-    grindingSuper: { id: 13 }, //Полировка
-    polishing: { id: 14 }, //шарокрут
-    slice: { id: 15 }, //шарокрут
+    grindingSuper: { id: 13 }, //Шлифование
+    polishing: { id: 14 }, //Полировка
+    slice: { id: 15 }, //Распил
     sale: { id: 16 }, //Отгрузка
     shareItems: { id: 17 }, //Перемещение
     mixing: { id: 18 }, //Смешивание
@@ -24,7 +24,7 @@ export const STATE = {
     glued: { id: 3 },
     improved: { id: 4 },
     autoclaved: { id: 5 },
-    grindedEngraver: { id: 6 },
+    grindedEngraver: { id: 6 },  //шлифованный гравер
     formated: { id: 7 },
     turned: { id: 8 },
     balled: { id: 9 },

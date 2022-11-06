@@ -1,17 +1,20 @@
-import { CheckOutlined, MinusOutlined } from '@ant-design/icons';
+import { CheckOutlined } from '@ant-design/icons';
 import { Button, notification, Tooltip } from 'antd';
 import { observer } from 'mobx-react-lite';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import { STATE, WORKPIECETYPE } from '../../../../../../../../Shared/constants';
+import {
+    OPERATIONS,
+    STATE,
+    WORKPIECETYPE,
+} from '../../../../../../../../Shared/constants';
 import { prepareDataTable } from '../../../../../../../../Shared/Helpers';
 import { iData } from '../../../../../../../../Shared/Types/interfaces';
 import { useStores } from '../../../../../../../Store/useStores';
 import { getLosseObject, getMoveBackMoney } from '../../../../../../Helpers';
 import { confirmAction } from '../../../../../../Shared/ConfirmSubbmit';
-import { InputField } from '../../../../../../Shared/InputField';
 import { InputNumber, tValue } from '../../../../../../Shared/InputNumber';
-import { SelectField } from '../../../../../../Shared/SelectField';
+import { Row } from './Components/Row';
 import { Wrapper } from './style';
 
 interface iField {
@@ -20,7 +23,7 @@ interface iField {
     value: string | number;
     isError: boolean;
 }
-interface iState {
+export interface iState {
     typeId: iField;
     gradeId: iField;
     colorId: iField;
@@ -39,7 +42,7 @@ class Field implements iField {
 }
 
 export const Sorting = observer(({ record }: { record: iData }) => {
-    const { ListsStore, OperationStore } = useStores();
+    const { ListsStore, OperationStore, loginStore } = useStores();
     const [state, setState] = useState<iState[]>([]);
     const [moveBack, setMoveBack] = useState<tValue>(undefined);
     const [losses, setLosses] = useState<number>(0);
@@ -49,6 +52,14 @@ export const Sorting = observer(({ record }: { record: iData }) => {
         state.reduce((res, item) => {
             return (res += +item.widthIn.value || 0);
         }, 0);
+
+    useEffect(() => {
+        if (loginStore.user.storeId)
+            ListsStore.getTypes({
+                storeId: loginStore.user.storeId,
+                operationId: OPERATIONS.sorting.id,
+            });
+    }, [loginStore.user.storeId]);
 
     useEffect(() => {
         const totalSum = getTotalSum();
@@ -192,92 +203,15 @@ export const Sorting = observer(({ record }: { record: iData }) => {
             </div>
             <div>
                 {state.map((item, index) => {
-                    const onChange = (
-                        v: string | number,
-                        index: number,
-                        fieldName: keyof iState,
-                    ) => {
-                        setState((prev) => {
-                            prev[index][fieldName].value = v;
-                            return [...prev];
-                        });
-                    };
                     return (
-                        <div key={index} className="row">
-                            <Tooltip title="Удалить строку">
-                                <Button
-                                    shape="circle"
-                                    icon={<MinusOutlined />}
-                                    onClick={() => removeRow(index)}
-                                    loading={isLoading}
-                                />
-                            </Tooltip>
-                            <div className="item">
-                                <InputField isError={item.typeId.isError}>
-                                    <SelectField
-                                        placeholder={item.typeId.placeholder}
-                                        value={+item.typeId.value || undefined}
-                                        onChange={(v) => onChange(v, index, 'typeId')}
-                                        options={ListsStore.types.map((item) => ({
-                                            value: item.id,
-                                            caption: item.type,
-                                        }))}
-                                    />
-                                </InputField>
-                            </div>
-                            <div className="item">
-                                <InputField isError={item.gradeId.isError}>
-                                    <SelectField
-                                        placeholder={item.gradeId.placeholder}
-                                        value={+item.gradeId.value || undefined}
-                                        onChange={(v) => onChange(v, index, 'gradeId')}
-                                        options={ListsStore.grades.map((item) => ({
-                                            value: item.id,
-                                            caption: item.grade,
-                                        }))}
-                                    />
-                                </InputField>
-                            </div>
-                            <div className="item">
-                                <InputField isError={item.colorId.isError}>
-                                    <SelectField
-                                        placeholder={item.colorId.placeholder}
-                                        value={+item.colorId.value || undefined}
-                                        onChange={(v) => onChange(v, index, 'colorId')}
-                                        options={ListsStore.colors.map((item) => ({
-                                            value: item.id,
-                                            caption: item.color,
-                                        }))}
-                                    />
-                                </InputField>
-                            </div>
-                            <div className="item">
-                                <InputField isError={item.sizeRangeId.isError}>
-                                    <SelectField
-                                        placeholder={item.sizeRangeId.placeholder}
-                                        value={+item.sizeRangeId.value || undefined}
-                                        onChange={(v) =>
-                                            onChange(v, index, 'sizeRangeId')
-                                        }
-                                        options={ListsStore.sizeRange.map((item) => ({
-                                            value: item.id,
-                                            caption: item.sizeRange,
-                                        }))}
-                                    />
-                                </InputField>
-                            </div>
-                            <div className="item">
-                                <InputField isError={item.widthIn.isError}>
-                                    <InputNumber
-                                        placeholder={item.widthIn.placeholder}
-                                        onChangeHandler={(v) => {
-                                            onChange(v!, index, 'widthIn');
-                                        }}
-                                        value={item.widthIn.value || ''}
-                                    />
-                                </InputField>
-                            </div>
-                        </div>
+                        <Row
+                            key={index}
+                            index={index}
+                            state={item}
+                            setState={setState}
+                            isLoading={isLoading}
+                            removeRow={removeRow}
+                        />
                     );
                 })}
             </div>

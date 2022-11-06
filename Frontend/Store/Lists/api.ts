@@ -1,5 +1,6 @@
 import axios from 'axios';
-import { iDataTable } from '../../../Shared/Types/interfaces';
+import { getQueryParams } from '../../../Shared/Helpers';
+import { iDataTable, iQueryFilters } from '../../../Shared/Types/interfaces';
 
 export const getMaterialGroup = () => {
     return axios({
@@ -7,9 +8,10 @@ export const getMaterialGroup = () => {
         method: 'GET',
     }).then((res) => res.data);
 };
-export const getSizeRange = () => {
+export const getSizeRange = (filters: iQueryFilters) => {
+    const params = getQueryParams(filters);
     return axios({
-        url: '/api/list/sizeRange',
+        url: `/api/list/sizeRange${params}`,
         method: 'GET',
     }).then((res) => res.data);
 };
@@ -26,21 +28,24 @@ export const getOperations = (storeId: number, stateId: number) => {
     }).then((res) => res.data);
 };
 
-export const getGrades = (storeId: number) => {
+export const getGrades = (filters: iQueryFilters) => {
+    const params = getQueryParams(filters);
     return axios({
-        url: `/api/list/grades?storeId=${storeId}`,
+        url: `/api/list/grades${params}`,
         method: 'GET',
     }).then((res) => res.data);
 };
-export const getTypes = (storeId: number) => {
+export const getTypes = (filters: iQueryFilters) => {
+    const params = getQueryParams(filters);
     return axios({
-        url: `/api/list/types?storeId=${storeId}`,
+        url: `/api/list/types${params}`,
         method: 'GET',
     }).then((res) => res.data);
 };
-export const getColors = (storeId: number) => {
+export const getColors = (filters: iQueryFilters) => {
+    const params = getQueryParams(filters);
     return axios({
-        url: `/api/list/colors?storeId=${storeId}`,
+        url: `/api/list/colors${params}`,
         method: 'GET',
     }).then((res) => res.data);
 };
@@ -69,21 +74,17 @@ export const getStores = () => {
         method: 'GET',
     }).then((res) => res.data);
 };
-export const getWorkpieceType = () => {
+export const getWorkpieceType = (filters: iQueryFilters) => {
+    const params = getQueryParams(filters);
     return axios({
-        url: '/api/list/workpieceType',
+        url: `/api/list/workpieceType${params}`,
         method: 'GET',
     }).then((res) => res.data);
 };
-export const getLength = () => {
+export const getLength = (filters: iQueryFilters) => {
+    const params = getQueryParams(filters);
     return axios({
-        url: '/api/list/length',
-        method: 'GET',
-    }).then((res) => res.data);
-};
-export const getLengthBySize = (sizeRangeId: number) => {
-    return axios({
-        url: `/api/list/length?sizeRangeId=${sizeRangeId}`,
+        url: `/api/list/length${params}`,
         method: 'GET',
     }).then((res) => res.data);
 };

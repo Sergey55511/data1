@@ -1,6 +1,6 @@
 import { NextApiResponse } from 'next';
 import { MyError } from '../Classes/error';
-import { iData, iDataTable, iUser } from '../Types/interfaces';
+import { iData, iDataTable, iQueryFilters, iUser } from '../Types/interfaces';
 
 export const prepareDataTable = (data: iData): iDataTable => {
     const dataTableKeys = [
@@ -64,6 +64,23 @@ export const makeRandomString = (length = 25) => {
     const charactersLength = characters.length;
     for (let i = 0; i < length; i++) {
         result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
+    return result;
+};
+
+export const getQueryParams = (params: iQueryFilters) => {
+    let result = '';
+    const get = (FieldName: keyof iQueryFilters) => {
+        const param = params[FieldName] ? `${FieldName}=${params[FieldName]}` : '';
+        if (result) {
+            result = param ? `${result}&${param}` : result;
+        } else {
+            result = param ? `?${param}` : result;
+        }
+    };
+
+    for (const key in params) {
+        get(key as keyof iQueryFilters);
     }
     return result;
 };

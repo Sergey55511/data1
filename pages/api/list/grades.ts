@@ -10,7 +10,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             await fetchService<iUser>({
                 req,
                 res,
-                fetch: (prisma: tPrisma) => getGrades(prisma, +req.query.storeId!),
+                fetch: (prisma: tPrisma) => getGrades(prisma, req),
             });
             break;
         }

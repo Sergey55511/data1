@@ -67,6 +67,26 @@ model Data {
   recipientId      Int?
 }
 
+model Bridge {
+  id              Int            @id @default(autoincrement())
+  Store           Stores?        @relation(fields: [storeId], references: [id])
+  storeId         Int?
+  Operation       Operations?    @relation(fields: [operationId], references: [id])
+  operationId     Int?
+  WorkPieceType   WorkpieceType? @relation(fields: [workpieceTypeId], references: [id])
+  workpieceTypeId Int?
+  Type            Types?         @relation(fields: [typeId], references: [id])
+  typeId          Int?
+  Grade           Grade?         @relation(fields: [gradeId], references: [id])
+  gradeId         Int?
+  Color           Color?         @relation(fields: [colorId], references: [id])
+  colorId         Int?
+  SizeRange       SizeRange?     @relation(fields: [sizeRangeId], references: [id])
+  sizeRangeId     Int?
+  Length          Length?        @relation(fields: [lengthId], references: [id])
+  lengthId        Int?
+}
+
 model Managers {
   id                Int                 @id @default(autoincrement())
   name              String
@@ -107,6 +127,7 @@ model Stores {
   Productions           Productions[]
   Managers              Managers[]
   Recipients            Recipients[]
+  Brige                 Bridge[]
 }
 
 model Operations {
@@ -119,6 +140,7 @@ model Operations {
   Data                  Data[]
   ManagerOperations     ManagerOperations[]
   StateOperationBridge  StateOperationBridge[]
+  Brige                 Bridge[]
 }
 
 model StoreOperationsBridge {
@@ -130,19 +152,21 @@ model StoreOperationsBridge {
 }
 
 model Types {
-  id     Int     @id @default(autoincrement())
+  id     Int      @id @default(autoincrement())
   type   String
-  active Boolean @default(true)
+  active Boolean  @default(true)
   Data   Data[]
+  Bridge Bridge[]
 }
 
 model Grade {
-  id      Int     @id @default(autoincrement())
-  grade   String  @unique
+  id      Int      @id @default(autoincrement())
+  grade   String   @unique
   for     String?
   variant Int
-  activ   Boolean @default(true)
+  activ   Boolean  @default(true)
   Data    Data[]
+  Bridge  Bridge[]
 }
 
 model Fraction {
@@ -154,12 +178,13 @@ model Fraction {
 }
 
 model Color {
-  id      Int     @id @default(autoincrement())
-  color   String  @unique
+  id      Int      @id @default(autoincrement())
+  color   String   @unique
   for     String?
   variant Int
-  activ   Boolean @default(true)
+  activ   Boolean  @default(true)
   Data    Data[]
+  Bridge  Bridge[]
 }
 
 model Billets {
@@ -201,7 +226,7 @@ model SizeRange {
   position              Int                     @default(autoincrement())
   active                Boolean                 @default(true)
   Data                  Data[]
-  SizeRangeLengthBridge SizeRangeLengthBridge[]
+  Bridge                Bridge[]
 }
 
 model Length {
@@ -209,15 +234,7 @@ model Length {
   length                String
   active                Boolean                 @default(true)
   Data                  Data[]
-  SizeRangeLengthBridge SizeRangeLengthBridge[]
-}
-
-model SizeRangeLengthBridge {
-  id          Int        @id @default(autoincrement())
-  Length      Length?    @relation(fields: [lengthId], references: [id])
-  lengthId    Int?
-  SizeRange   SizeRange? @relation(fields: [sizeRangeId], references: [id])
-  sizeRangeId Int?
+  Bridge                Bridge[]
 }
 
 model StateOperationBridge {
@@ -237,12 +254,13 @@ model MaterialGroup {
 }
 
 model WorkpieceType {
-  id            Int     @id @default(autoincrement())
+  id            Int      @id @default(autoincrement())
   workpieceType String
-  position      Int     @default(autoincrement())
-  active        Boolean @default(true)
-  isShow        Boolean @default(true)
+  position      Int      @default(autoincrement())
+  active        Boolean  @default(true)
+  isShow        Boolean  @default(true)
   Data          Data[]
+  Brige         Bridge[]
 }
 
 model Productions {

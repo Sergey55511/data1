@@ -10,7 +10,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             await fetchService<iUser>({
                 req,
                 res,
-                fetch: (prisma: tPrisma) => getWorkpieceType(prisma),
+                fetch: (prisma: tPrisma) => getWorkpieceType(prisma, req),
             });
             break;
         }

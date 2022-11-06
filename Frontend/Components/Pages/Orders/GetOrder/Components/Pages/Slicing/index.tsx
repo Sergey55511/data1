@@ -3,7 +3,7 @@ import { Button, notification, Tooltip } from 'antd';
 import { observer } from 'mobx-react-lite';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import { WORKPIECETYPE } from '../../../../../../../../Shared/constants';
+import { OPERATIONS, WORKPIECETYPE } from '../../../../../../../../Shared/constants';
 import { prepareDataTable } from '../../../../../../../../Shared/Helpers';
 import { iData } from '../../../../../../../../Shared/Types/interfaces';
 import { useStores } from '../../../../../../../Store/useStores';
@@ -46,7 +46,7 @@ class Field implements iField {
 
 export const Slicing = observer(
     ({ record, stateId }: { record: iData; stateId: number }) => {
-        const { OperationStore } = useStores();
+        const { OperationStore, ListsStore, loginStore } = useStores();
         const [state, setState] = useState<iState[]>([]);
         const [losses, setLosses] = useState<number>(0);
         const [garbage, setGarbage] = useState<number | undefined>(undefined);
@@ -57,6 +57,14 @@ export const Slicing = observer(
             state.reduce((res, item) => {
                 return (res += +item.widthIn.value || 0);
             }, 0);
+
+        useEffect(() => {
+            if (loginStore.user.storeId)
+                ListsStore.getWorkpieceType({
+                    storeId: loginStore.user.storeId,
+                    operationId: OPERATIONS.slice.id,
+                });
+        }, [loginStore.user.storeId]);
 
         useEffect(() => {
             const totalSum = getTotalSum();

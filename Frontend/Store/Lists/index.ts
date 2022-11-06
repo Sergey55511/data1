@@ -1,8 +1,6 @@
 import { flow, makeAutoObservable } from 'mobx';
 import {
     iColor,
-    iData,
-    iDataTable,
     iError,
     iFraction,
     iGrade,
@@ -11,8 +9,8 @@ import {
     iMaterialGroup,
     iOperation,
     iProductions,
+    iQueryFilters,
     iRecipient,
-    iShared,
     iSizeRange,
     iType,
     iUser,
@@ -56,23 +54,23 @@ export class ListsStore {
         }
     });
 
-    getGrades = flow(function* (this: ListsStore, storeId: number) {
+    getGrades = flow(function* (this: ListsStore, filters: iQueryFilters) {
         try {
-            this.grades = yield api.getGrades(storeId);
+            this.grades = yield api.getGrades(filters);
         } catch (err) {
             this.errorStore.setError(err as iError);
         }
     });
-    getTypes = flow(function* (this: ListsStore, storeId: number) {
+    getTypes = flow(function* (this: ListsStore, filters: iQueryFilters) {
         try {
-            this.types = yield api.getTypes(storeId);
+            this.types = yield api.getTypes(filters);
         } catch (err) {
             this.errorStore.setError(err as iError);
         }
     });
-    getColors = flow(function* (this: ListsStore, storeId: number) {
+    getColors = flow(function* (this: ListsStore, filters: iQueryFilters) {
         try {
-            this.colors = yield api.getColors(storeId);
+            this.colors = yield api.getColors(filters);
         } catch (err) {
             this.errorStore.setError(err as iError);
         }
@@ -113,9 +111,9 @@ export class ListsStore {
             this.errorStore.setError(err as iError);
         }
     });
-    getSizeRange = flow(function* (this: ListsStore) {
+    getSizeRange = flow(function* (this: ListsStore, filters: iQueryFilters) {
         try {
-            this.sizeRange = yield api.getSizeRange();
+            this.sizeRange = yield api.getSizeRange(filters);
         } catch (err) {
             this.errorStore.setError(err as iError);
         }
@@ -134,23 +132,16 @@ export class ListsStore {
             this.errorStore.setError(err as iError);
         }
     });
-    getWorkpieceType = flow(function* (this: ListsStore) {
+    getWorkpieceType = flow(function* (this: ListsStore, filters: iQueryFilters) {
         try {
-            this.workpieceType = yield api.getWorkpieceType();
+            this.workpieceType = yield api.getWorkpieceType(filters);
         } catch (err) {
             this.errorStore.setError(err as iError);
         }
     });
-    getLength = flow(function* (this: ListsStore) {
+    getLength = flow(function* (this: ListsStore, filters: iQueryFilters) {
         try {
-            this.lengthes = yield api.getLength();
-        } catch (err) {
-            this.errorStore.setError(err as iError);
-        }
-    });
-    getLengthBySize = flow(function* (this: ListsStore, sizeRangeId: number) {
-        try {
-            return yield api.getLengthBySize(sizeRangeId);
+            this.lengthes = yield api.getLength(filters);
         } catch (err) {
             this.errorStore.setError(err as iError);
         }

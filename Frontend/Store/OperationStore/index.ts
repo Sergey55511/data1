@@ -28,16 +28,11 @@ export class OperationStore {
         try {
             this.getShared(storeId);
             this.getOrders(storeId);
-            this.listsStore.getGrades(storeId);
-            this.listsStore.getTypes(storeId);
-            this.listsStore.getColors(storeId);
             this.listsStore.getProductions(storeId);
             this.listsStore.getUsers(storeId);
             this.listsStore.getMaterialGroup();
-            this.listsStore.getSizeRange();
             this.listsStore.getFraction();
             this.listsStore.getStores();
-            this.listsStore.getWorkpieceType();
             this.isFetched = true;
         } catch (err) {
             this.errorStore.setError(err as iError);

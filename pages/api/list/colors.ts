@@ -10,7 +10,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             await fetchService<iUser>({
                 req,
                 res,
-                fetch: (prisma: tPrisma) => getColors(prisma,+req.query.storeId!),
+                fetch: (prisma: tPrisma) => getColors(prisma, req),
             });
             break;
         }

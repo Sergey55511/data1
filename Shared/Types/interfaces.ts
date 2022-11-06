@@ -134,3 +134,13 @@ export interface iRecipient {
     id: number;
     recipient: string;
 }
+export interface iQueryFilters {
+    storeId?: number;
+    operationId?: number;
+    workpieceTypeId?: number;
+    typeId?: number;
+    gradeId?: number;
+    sizeRangeId?: number;
+    lengthId?: number;
+    colorId?: number;
+}
