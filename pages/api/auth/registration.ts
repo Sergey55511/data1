@@ -11,7 +11,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         const user = await varifyJWT(req, res, prisma);
         const login = req.body.login.toLowerCase();
         const status = req.body.status;
-        const storeId = req.body.store;
+        const storeId = +req.body.storeId;
         const password = sha1(req.body.password + KEY);
 
         if (user?.status == 'admin') {
