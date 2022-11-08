@@ -10,6 +10,8 @@ services:
             - POSTGRES_USER=${POSTGRES_USER}
             - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
          #  - POSTGRES_PASSWORD_FILE=/run/secrets/db_password <-- alternative for POSTGRES_PASSWORD (to use with docker secrets)
+        ports:
+            - 5432:5432
     pgbackups:
         image: prodrigestivill/postgres-backup-local
         restart: always
