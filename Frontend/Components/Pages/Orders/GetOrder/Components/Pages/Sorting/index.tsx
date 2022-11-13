@@ -9,11 +9,12 @@ import {
     WORKPIECETYPE,
 } from '../../../../../../../../Shared/constants';
 import { prepareDataTable } from '../../../../../../../../Shared/Helpers';
-import { iData } from '../../../../../../../../Shared/Types/interfaces';
+import { iData, iGrade } from '../../../../../../../../Shared/Types/interfaces';
 import { useStores } from '../../../../../../../Store/useStores';
 import { getLosseObject, getMoveBackMoney } from '../../../../../../Helpers';
 import { confirmAction } from '../../../../../../Shared/ConfirmSubbmit';
 import { InputNumber, tValue } from '../../../../../../Shared/InputNumber';
+import { getRootLists } from './Components/Hooks';
 import { Row } from './Components/Row';
 import { Wrapper } from './style';
 
@@ -45,6 +46,7 @@ export const Sorting = observer(
     ({ record, stateId }: { record: iData; stateId: number }) => {
         const { ListsStore, OperationStore, loginStore } = useStores();
         const [state, setState] = useState<iState[]>([]);
+        const [grade, setGrade] = useState<iGrade[]>([]);
         const [moveBack, setMoveBack] = useState<tValue>(undefined);
         const [losses, setLosses] = useState<number>(0);
         const [isLoading, setIsLoading] = useState(false);
@@ -55,11 +57,7 @@ export const Sorting = observer(
             }, 0);
 
         useEffect(() => {
-            if (loginStore.user.storeId)
-                ListsStore.getTypes({
-                    storeId: loginStore.user.storeId,
-                    operationId: OPERATIONS.sorting.id,
-                });
+            getRootLists(ListsStore, setGrade, loginStore.user.storeId);
         }, [loginStore.user.storeId]);
 
         useEffect(() => {
@@ -207,6 +205,7 @@ export const Sorting = observer(
                         return (
                             <Row
                                 key={index}
+                                grade={grade}
                                 index={index}
                                 state={item}
                                 setState={setState}

@@ -7,8 +7,16 @@ import { MinusOutlined } from '@ant-design/icons';
 import { Wrapper } from './style';
 import { observer } from 'mobx-react-lite';
 import { useStores } from '../../../../../../../../../Store/useStores';
-import { Dispatch, SetStateAction } from 'react';
-import { useLists } from '../Hooks';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import { getSizeRange, useLists } from '../Hooks';
+import {
+    OPERATIONS,
+    WORKPIECETYPE,
+} from '../../../../../../../../../../Shared/constants';
+import {
+    iGrade,
+    iSizeRange,
+} from '../../../../../../../../../../Shared/Types/interfaces';
 
 export const Row = observer(
     ({
@@ -17,14 +25,17 @@ export const Row = observer(
         isLoading,
         removeRow,
         setState,
+        grade,
     }: {
         state: iState;
         index: number;
         isLoading?: boolean;
         removeRow: (index: number) => void;
         setState: Dispatch<SetStateAction<iState[]>>;
+        grade: iGrade[];
     }) => {
         const { ListsStore, loginStore } = useStores();
+        const [sizeRange, setSizeRange] = useState<iSizeRange[]>([]);
         const onChange = (v: string | number, index: number, fieldName: keyof iState) => {
             setState((prev) => {
                 prev[index][fieldName].value = v;
@@ -32,7 +43,10 @@ export const Row = observer(
             });
         };
 
-        useLists(loginStore.user.storeId, index, state, setState);
+        const storeId = loginStore.user.storeId;
+        useEffect(() => {
+            getSizeRange(ListsStore, setState, setSizeRange, index, storeId);
+        }, [storeId, WORKPIECETYPE.stone.id]);
 
         return (
             <Wrapper>
@@ -63,7 +77,7 @@ export const Row = observer(
                             placeholder={state.gradeId.placeholder}
                             value={+state.gradeId.value || undefined}
                             onChange={(v) => onChange(v, index, 'gradeId')}
-                            options={ListsStore.grades.map((item) => ({
+                            options={grade?.map((item) => ({
                                 value: item.id,
                                 caption: item.grade,
                             }))}
@@ -89,7 +103,7 @@ export const Row = observer(
                             placeholder={state.sizeRangeId.placeholder}
                             value={+state.sizeRangeId.value || undefined}
                             onChange={(v) => onChange(v, index, 'sizeRangeId')}
-                            options={ListsStore.sizeRange.map((item) => ({
+                            options={sizeRange.map((item) => ({
                                 value: item.id,
                                 caption: item.sizeRange,
                             }))}

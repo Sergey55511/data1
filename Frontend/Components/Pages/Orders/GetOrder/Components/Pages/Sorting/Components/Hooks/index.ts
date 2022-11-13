@@ -4,6 +4,13 @@ import {
     OPERATIONS,
     WORKPIECETYPE,
 } from '../../../../../../../../../../Shared/constants';
+import {
+    iGrade,
+    iQueryFilters,
+    iSizeRange,
+    iType,
+} from '../../../../../../../../../../Shared/Types/interfaces';
+import { ListsStore } from '../../../../../../../../../Store/Lists';
 import { useStores } from '../../../../../../../../../Store/useStores';
 
 export const useLists = (
@@ -20,20 +27,55 @@ export const useLists = (
             return [...prev];
         });
 
-        if (storeId)
-            ListsStore.getGrades({
-                storeId: storeId,
-                operationId: OPERATIONS.sorting.id,
-                // typeId: +state.typeId.value,
-            });
-        ListsStore.getColors({
-            storeId: storeId,
-            operationId: OPERATIONS.sorting.id,
-        });
         ListsStore.getSizeRange({
             storeId: storeId,
             operationId: OPERATIONS.sorting.id,
             workpieceTypeId: WORKPIECETYPE.stone.id,
         });
     }, [storeId]);
+};
+
+export const getSizeRange = async (
+    listsStore: ListsStore,
+    setState: (value: SetStateAction<iState[]>) => void,
+    setSizeRange: (value: SetStateAction<iSizeRange[]>) => void,
+    index: number,
+    storeId: number,
+) => {
+    setState((prev) => {
+        prev[index].gradeId.value = '';
+        return [...prev];
+    });
+
+    if (!WORKPIECETYPE.stone.id) return;
+
+    const list = await listsStore.getSizeRange({
+        storeId: storeId,
+        operationId: OPERATIONS.sorting.id,
+        workpieceTypeId: WORKPIECETYPE.stone.id,
+    });
+    setSizeRange(list);
+};
+
+export const getRootLists = async (
+    listsStore: ListsStore,
+    setGrade: (value: SetStateAction<iGrade[]>) => void,
+    storeId?: number,
+) => {
+    if (storeId)
+        listsStore.getTypes({
+            storeId,
+            operationId: OPERATIONS.sorting.id,
+        });
+    const grade = await listsStore.getGrades({
+        storeId,
+        operationId: OPERATIONS.sorting.id,
+        // typeId: +state.typeId.value,
+    });
+
+    setGrade(grade);
+    listsStore.getColors({
+        storeId,
+        operationId: OPERATIONS.sorting.id,
+    });
 };

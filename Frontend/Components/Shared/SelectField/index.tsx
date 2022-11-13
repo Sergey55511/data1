@@ -16,6 +16,11 @@ export const SelectField = ({
     return (
         <Select
             showSearch
+            filterOption={(input, option) => {
+                if (option?.children)
+                    return `${option?.children}`.toLowerCase().split(input).length > 1;
+                return true;
+            }}
             style={{ width: '100%' }}
             placeholder={placeholder}
             value={value}

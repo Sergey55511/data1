@@ -59,11 +59,15 @@ export const Slicing = observer(
             }, 0);
 
         useEffect(() => {
-            if (loginStore.user.storeId)
+            if (loginStore.user.storeId) {
                 ListsStore.getWorkpieceType({
                     storeId: loginStore.user.storeId,
                     operationId: OPERATIONS.slice.id,
                 });
+                ListsStore.getColors({
+                    storeId: loginStore.user.storeId,
+                });
+            }
         }, [loginStore.user.storeId]);
 
         useEffect(() => {

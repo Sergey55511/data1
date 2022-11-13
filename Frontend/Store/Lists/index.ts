@@ -26,18 +26,14 @@ export class ListsStore {
     stores: { id: number; name: string }[] = [];
     users: iUser[] = [];
     managers: iManager[] = [];
-
-    grades: iGrade[] = [];
     types: iType[] = [];
     colors: iColor[] = [];
 
     operations: iOperation[] = [];
     productions: iProductions[] = [];
     materialGroup: iMaterialGroup[] = [];
-    sizeRange: iSizeRange[] = [];
     fraction: iFraction[] = [];
     workpieceType: iWorkpieceType[] = [];
-    lengthes: iLength[] = [];
     recipient: iRecipient[] = [];
 
     constructor(errorStore: ErrorStore, loginStore: Login) {
@@ -56,7 +52,7 @@ export class ListsStore {
 
     getGrades = flow(function* (this: ListsStore, filters: iQueryFilters) {
         try {
-            this.grades = yield api.getGrades(filters);
+            return yield api.getGrades(filters);
         } catch (err) {
             this.errorStore.setError(err as iError);
         }
@@ -113,7 +109,7 @@ export class ListsStore {
     });
     getSizeRange = flow(function* (this: ListsStore, filters: iQueryFilters) {
         try {
-            this.sizeRange = yield api.getSizeRange(filters);
+            return yield api.getSizeRange(filters);
         } catch (err) {
             this.errorStore.setError(err as iError);
         }
@@ -141,7 +137,7 @@ export class ListsStore {
     });
     getLength = flow(function* (this: ListsStore, filters: iQueryFilters) {
         try {
-            this.lengthes = yield api.getLength(filters);
+            return yield api.getLength(filters);
         } catch (err) {
             this.errorStore.setError(err as iError);
         }

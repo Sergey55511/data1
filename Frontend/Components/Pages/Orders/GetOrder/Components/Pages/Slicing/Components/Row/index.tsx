@@ -8,7 +8,17 @@ import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { iState } from '../..';
 import { observer } from 'mobx-react-lite';
 import { useLists } from '../Hooks/useLists';
+import {
+    iGrade,
+    iLength,
+    iSizeRange,
+} from '../../../../../../../../../../Shared/Types/interfaces';
 
+export interface iLists {
+    sizeRange: iSizeRange[];
+    length: iLength[];
+    grade: iGrade[];
+}
 export const Row = observer(
     ({
         isLoading,
@@ -24,6 +34,7 @@ export const Row = observer(
         setState: Dispatch<SetStateAction<iState[]>>;
     }) => {
         const { ListsStore, loginStore } = useStores();
+        const [lists, setLists] = useState<iLists | undefined>(undefined);
         const [isLoadinglength, setIsLoadinglength] = useState<boolean>(false);
         const onChange = (v: string | number, index: number, fieldName: keyof iState) => {
             setState((prev) => {
@@ -32,7 +43,16 @@ export const Row = observer(
             });
         };
 
-        useLists(loginStore.user.storeId, state, index, setIsLoadinglength, onChange);
+        useLists(
+            setLists,
+            loginStore.user.storeId,
+            state,
+            index,
+            setIsLoadinglength,
+            onChange,
+        );
+
+        console.log('lists', lists);
 
         return (
             <div className="row">
@@ -50,7 +70,7 @@ export const Row = observer(
                             placeholder={state.workpieceTypeId.placeholder}
                             value={+state.workpieceTypeId.value || undefined}
                             onChange={(v) => onChange(v, index, 'workpieceTypeId')}
-                            options={ListsStore.workpieceType.map((item) => ({
+                            options={ListsStore.workpieceType?.map((item) => ({
                                 value: item.id,
                                 caption: item.workpieceType,
                             }))}
@@ -63,7 +83,7 @@ export const Row = observer(
                             placeholder={state.sizeRangeId.placeholder}
                             value={+state.sizeRangeId.value || undefined}
                             onChange={(v) => onChange(v, index, 'sizeRangeId')}
-                            options={ListsStore.sizeRange.map((item) => ({
+                            options={lists?.sizeRange?.map((item) => ({
                                 value: item.id,
                                 caption: item.sizeRange,
                             }))}
@@ -76,7 +96,7 @@ export const Row = observer(
                             placeholder={state.length.placeholder}
                             value={+state.length.value || undefined}
                             onChange={(v) => onChange(v, index, 'length')}
-                            options={ListsStore.lengthes.map((item) => ({
+                            options={lists?.length?.map((item) => ({
                                 value: item.id,
                                 caption: item.length,
                             }))}
@@ -93,7 +113,7 @@ export const Row = observer(
                             placeholder={state.colorId.placeholder}
                             value={+state.colorId.value || undefined}
                             onChange={(v) => onChange(v, index, 'colorId')}
-                            options={ListsStore.colors.map((item) => ({
+                            options={ListsStore.colors?.map((item) => ({
                                 value: item.id,
                                 caption: item.color,
                             }))}
@@ -106,7 +126,7 @@ export const Row = observer(
                             placeholder={state.gradeId.placeholder}
                             value={+state.gradeId.value || undefined}
                             onChange={(v) => onChange(v, index, 'gradeId')}
-                            options={ListsStore.grades.map((item) => ({
+                            options={lists?.grade?.map((item) => ({
                                 value: item.id,
                                 caption: item.grade,
                             }))}
