@@ -221,20 +221,21 @@ model ModelsSizes {
 }
 
 model SizeRange {
-  id                    Int                     @id @default(autoincrement())
-  sizeRange             String
-  position              Int                     @default(autoincrement())
-  active                Boolean                 @default(true)
-  Data                  Data[]
-  Bridge                Bridge[]
+  id        Int      @id @default(autoincrement())
+  sizeRange String
+  range     Int      @default(0)
+  position  Int      @default(autoincrement())
+  active    Boolean  @default(true)
+  Data      Data[]
+  Bridge    Bridge[]
 }
 
 model Length {
-  id                    Int                     @id @default(autoincrement())
-  length                String
-  active                Boolean                 @default(true)
-  Data                  Data[]
-  Bridge                Bridge[]
+  id     Int      @id @default(autoincrement())
+  length String
+  active Boolean  @default(true)
+  Data   Data[]
+  Bridge Bridge[]
 }
 
 model StateOperationBridge {

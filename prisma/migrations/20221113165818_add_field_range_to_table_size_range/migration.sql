@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE "SizeRange" ADD COLUMN     "range" INTEGER NOT NULL DEFAULT 0;

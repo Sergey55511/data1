@@ -1,6 +1,9 @@
 import { SetStateAction, useEffect } from 'react';
 import { iState } from '../..';
-import { OPERATIONS } from '../../../../../../../../../../Shared/constants';
+import {
+    OPERATIONS,
+    WORKPIECETYPE,
+} from '../../../../../../../../../../Shared/constants';
 import { useStores } from '../../../../../../../../../Store/useStores';
 
 export const useLists = (
@@ -17,26 +20,20 @@ export const useLists = (
             return [...prev];
         });
 
-        if (storeId && state.typeId.value)
+        if (storeId)
             ListsStore.getGrades({
                 storeId: storeId,
                 operationId: OPERATIONS.sorting.id,
-                typeId: +state.typeId.value,
+                // typeId: +state.typeId.value,
             });
-    }, [storeId, state.typeId.value]);
-
-    useEffect(() => {
-        setState((prev) => {
-            prev[index].colorId.value = '';
-            return [...prev];
+        ListsStore.getColors({
+            storeId: storeId,
+            operationId: OPERATIONS.sorting.id,
         });
-
-        if (storeId && state.typeId.value && state.gradeId.value)
-            ListsStore.getColors({
-                storeId: storeId,
-                operationId: OPERATIONS.sorting.id,
-                typeId: +state.typeId.value,
-                gradeId: +state.gradeId.value,
-            });
-    }, [storeId, state.typeId.value, state.gradeId.value]);
+        ListsStore.getSizeRange({
+            storeId: storeId,
+            operationId: OPERATIONS.sorting.id,
+            workpieceTypeId: WORKPIECETYPE.stone.id,
+        });
+    }, [storeId]);
 };

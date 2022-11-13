@@ -12,7 +12,7 @@ export const getTypes = <T>(prisma: tPrisma, req: NextApiRequest): Promise<T> =>
         },
         where: {
             active: true,
-            Bridge: { some: params },
+            // Bridge: { some: params },
         },
         orderBy: { type: 'asc' },
     }) as any;

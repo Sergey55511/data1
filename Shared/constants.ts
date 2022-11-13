@@ -2,6 +2,8 @@ export const OPERATIONS = {
     wash: { id: 2 }, //мойка
     changeProduction: { id: 3 }, //номер пр-ва
     sorting: { id: 4 }, //сортировка
+    sortingN: { id: 19 }, //сортировка насыщенный
+    sortingA: { id: 20 }, //сортировка автоклавированого
     glue: { id: 5 }, //клей
     improve: { id: 6 }, //насыщение
     autoclave: { id: 7 }, //автоклав
@@ -21,6 +23,8 @@ export const STATE = {
     stone: { id: 14 },
     washed: { id: 1 },
     sorted: { id: 2 },
+    sortedA: { id: 16 },
+    sortedN: { id: 15 },
     glued: { id: 3 },
     improved: { id: 4 },
     autoclaved: { id: 5 },

@@ -41,180 +41,182 @@ class Field implements iField {
     }
 }
 
-export const Sorting = observer(({ record }: { record: iData }) => {
-    const { ListsStore, OperationStore, loginStore } = useStores();
-    const [state, setState] = useState<iState[]>([]);
-    const [moveBack, setMoveBack] = useState<tValue>(undefined);
-    const [losses, setLosses] = useState<number>(0);
-    const [isLoading, setIsLoading] = useState(false);
-    const router = useRouter();
-    const getTotalSum = () =>
-        state.reduce((res, item) => {
-            return (res += +item.widthIn.value || 0);
-        }, 0);
+export const Sorting = observer(
+    ({ record, stateId }: { record: iData; stateId: number }) => {
+        const { ListsStore, OperationStore, loginStore } = useStores();
+        const [state, setState] = useState<iState[]>([]);
+        const [moveBack, setMoveBack] = useState<tValue>(undefined);
+        const [losses, setLosses] = useState<number>(0);
+        const [isLoading, setIsLoading] = useState(false);
+        const router = useRouter();
+        const getTotalSum = () =>
+            state.reduce((res, item) => {
+                return (res += +item.widthIn.value || 0);
+            }, 0);
 
-    useEffect(() => {
-        if (loginStore.user.storeId)
-            ListsStore.getTypes({
-                storeId: loginStore.user.storeId,
-                operationId: OPERATIONS.sorting.id,
-            });
-    }, [loginStore.user.storeId]);
+        useEffect(() => {
+            if (loginStore.user.storeId)
+                ListsStore.getTypes({
+                    storeId: loginStore.user.storeId,
+                    operationId: OPERATIONS.sorting.id,
+                });
+        }, [loginStore.user.storeId]);
 
-    useEffect(() => {
-        const totalSum = getTotalSum();
-        const res = (record?.widthOut || 0) - totalSum - (moveBack ? +moveBack : 0);
-        setLosses(isNaN(res) ? 0 : res);
-    }, [state, moveBack]);
+        useEffect(() => {
+            const totalSum = getTotalSum();
+            const res = (record?.widthOut || 0) - totalSum - (moveBack ? +moveBack : 0);
+            setLosses(isNaN(res) ? 0 : res);
+        }, [state, moveBack]);
 
-    const addRowHandler = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
-        e.preventDefault();
-        setState((prev) => {
-            const res: iState[] = [
-                ...prev,
-                {
-                    typeId: new Field('typeId', 'Тип'),
-                    gradeId: new Field('gradeId', 'Сорт'),
-                    colorId: new Field('colorId', 'Цвет'),
-                    sizeRangeId: new Field('sizeRangeId', 'Размерный ряд'),
-                    widthIn: new Field('widthIn', 'Вес гр.'),
-                },
-            ];
-            return res;
-        });
-    };
-
-    const removeRow = (index: number) => {
-        setState((prev) => prev.filter((_, i) => i != index));
-    };
-
-    const validation = () => {
-        let isError = false;
-        setState((prev) => {
-            const res = prev.map((item) => {
-                for (const k in item) {
-                    const key = k as keyof iState;
-                    if (!item[key].value) {
-                        isError = true;
-                        item[key].isError = true;
-                    } else item[key].isError = false;
-                }
-                return { ...item };
-            });
-            return res;
-        });
-        return isError;
-    };
-
-    const confirmSubbmit = () => {
-        confirmAction({ subbmitHandler });
-    };
-
-    const subbmitHandler = async () => {
-        const errorNote = () => {
-            notification.error({
-                message: 'Ошибка!',
-                description: 'Не верно заполнены поля!',
+        const addRowHandler = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
+            e.preventDefault();
+            setState((prev) => {
+                const res: iState[] = [
+                    ...prev,
+                    {
+                        typeId: new Field('typeId', 'Тип'),
+                        gradeId: new Field('gradeId', 'Сорт'),
+                        colorId: new Field('colorId', 'Цвет'),
+                        sizeRangeId: new Field('sizeRangeId', 'Размерный ряд'),
+                        widthIn: new Field('widthIn', 'Вес гр.'),
+                    },
+                ];
+                return res;
             });
         };
-        if (!state.length) {
-            errorNote();
-            return;
-        }
 
-        const isError = validation();
-        if (isError) {
-            errorNote();
-            return;
-        }
+        const removeRow = (index: number) => {
+            setState((prev) => prev.filter((_, i) => i != index));
+        };
 
-        const totalSum = getTotalSum();
-        if (!totalSum) {
-            errorNote();
-            return;
-        }
-        if (losses < 0) {
-            errorNote();
-            return;
-        }
-        const code = record.code ? record.code * -1 : 0;
-        const codeOneItem = record.width ? code / totalSum : 0;
-        const data: iData[] = state.map((item) => ({
-            ...record,
-            typeId: +item.typeId.value,
-            gradeId: +item.gradeId.value,
-            colorId: +item.colorId.value,
-            sizeRangeId: +item.sizeRangeId.value,
-            widthOut: undefined,
-            widthIn: +item.widthIn.value!,
-            stateId: STATE.sorted.id,
-            moneyIn: item.widthIn.value ? codeOneItem * +item.widthIn.value : 0,
-        }));
-        if (losses) {
-            data.push(getLosseObject(record, WORKPIECETYPE.losses.id, losses));
-        }
-        if (moveBack) {
-            const moveBackMoney = getMoveBackMoney(
-                record.code,
-                record.width,
-                moveBack ? +moveBack : undefined,
-            );
-            data.push({
-                ...record,
-                widthOut: +moveBack * -1,
-                moneyOut: moveBackMoney,
+        const validation = () => {
+            let isError = false;
+            setState((prev) => {
+                const res = prev.map((item) => {
+                    for (const k in item) {
+                        const key = k as keyof iState;
+                        if (!item[key].value) {
+                            isError = true;
+                            item[key].isError = true;
+                        } else item[key].isError = false;
+                    }
+                    return { ...item };
+                });
+                return res;
             });
-        }
+            return isError;
+        };
 
-        const dataTable = data.map((item) => prepareDataTable(item));
-        setIsLoading(true);
-        await OperationStore.postOrderResult(dataTable);
-        notification.success({
-            message: 'Сохранение прошло успешно',
-        });
-        router.push('/orders');
-        setIsLoading(false);
-    };
+        const confirmSubbmit = () => {
+            confirmAction({ subbmitHandler });
+        };
 
-    return (
-        <Wrapper>
-            <div className="title">
-                <Tooltip title="Сохранить">
-                    <Button
-                        shape="circle"
-                        icon={<CheckOutlined />}
-                        onClick={confirmSubbmit}
-                        loading={isLoading}
-                    />
-                </Tooltip>
-                <a href="#" onClick={addRowHandler}>
-                    Добавить строку
-                </a>
-                <div>
-                    <InputNumber
-                        placeholder="Возврат"
-                        value={moveBack}
-                        onChangeHandler={(v) => {
-                            setMoveBack(v);
-                        }}
-                    />
-                </div>
-                <div className={losses < 0 ? 'red' : ''}>потеря: {losses}</div>
-            </div>
-            <div>
-                {state.map((item, index) => {
-                    return (
-                        <Row
-                            key={index}
-                            index={index}
-                            state={item}
-                            setState={setState}
-                            isLoading={isLoading}
-                            removeRow={removeRow}
+        const subbmitHandler = async () => {
+            const errorNote = () => {
+                notification.error({
+                    message: 'Ошибка!',
+                    description: 'Не верно заполнены поля!',
+                });
+            };
+            if (!state.length) {
+                errorNote();
+                return;
+            }
+
+            const isError = validation();
+            if (isError) {
+                errorNote();
+                return;
+            }
+
+            const totalSum = getTotalSum();
+            if (!totalSum) {
+                errorNote();
+                return;
+            }
+            if (losses < 0) {
+                errorNote();
+                return;
+            }
+            const code = record.code ? record.code * -1 : 0;
+            const codeOneItem = record.width ? code / totalSum : 0;
+            const data: iData[] = state.map((item) => ({
+                ...record,
+                typeId: +item.typeId.value,
+                gradeId: +item.gradeId.value,
+                colorId: +item.colorId.value,
+                sizeRangeId: +item.sizeRangeId.value,
+                widthOut: undefined,
+                widthIn: +item.widthIn.value!,
+                stateId,
+                moneyIn: item.widthIn.value ? codeOneItem * +item.widthIn.value : 0,
+            }));
+            if (losses) {
+                data.push(getLosseObject(record, WORKPIECETYPE.losses.id, losses));
+            }
+            if (moveBack) {
+                const moveBackMoney = getMoveBackMoney(
+                    record.code,
+                    record.width,
+                    moveBack ? +moveBack : undefined,
+                );
+                data.push({
+                    ...record,
+                    widthOut: +moveBack * -1,
+                    moneyOut: moveBackMoney,
+                });
+            }
+
+            const dataTable = data.map((item) => prepareDataTable(item));
+            setIsLoading(true);
+            await OperationStore.postOrderResult(dataTable);
+            notification.success({
+                message: 'Сохранение прошло успешно',
+            });
+            router.push('/orders');
+            setIsLoading(false);
+        };
+
+        return (
+            <Wrapper>
+                <div className="title">
+                    <Tooltip title="Сохранить">
+                        <Button
+                            shape="circle"
+                            icon={<CheckOutlined />}
+                            onClick={confirmSubbmit}
+                            loading={isLoading}
                         />
-                    );
-                })}
-            </div>
-        </Wrapper>
-    );
-});
+                    </Tooltip>
+                    <a href="#" onClick={addRowHandler}>
+                        Добавить строку
+                    </a>
+                    <div>
+                        <InputNumber
+                            placeholder="Возврат"
+                            value={moveBack}
+                            onChangeHandler={(v) => {
+                                setMoveBack(v);
+                            }}
+                        />
+                    </div>
+                    <div className={losses < 0 ? 'red' : ''}>потеря: {losses}</div>
+                </div>
+                <div>
+                    {state.map((item, index) => {
+                        return (
+                            <Row
+                                key={index}
+                                index={index}
+                                state={item}
+                                setState={setState}
+                                isLoading={isLoading}
+                                removeRow={removeRow}
+                            />
+                        );
+                    })}
+                </div>
+            </Wrapper>
+        );
+    },
+);

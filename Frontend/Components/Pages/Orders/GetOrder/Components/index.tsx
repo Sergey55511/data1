@@ -15,7 +15,11 @@ export const GetOrderSwitcher = ({
         case OPERATIONS.wash.id:
             return <OneToOne record={record} stateId={STATE.washed.id} />;
         case OPERATIONS.sorting.id:
-            return <Sorting record={record} />;
+            return <Sorting record={record} stateId={STATE.sorted.id} />;
+        case OPERATIONS.sortingN.id:
+            return <Sorting record={record} stateId={STATE.sortedN.id}/>;
+        case OPERATIONS.sortingA.id:
+            return <Sorting record={record} stateId={STATE.sortedA.id}/>;
         case OPERATIONS.glue.id:
             return (
                 <OneToOne

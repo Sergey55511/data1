@@ -12,7 +12,7 @@ export const getColors = <T>(prisma: tPrisma, req: NextApiRequest): Promise<T> =
         },
         where: {
             activ: true,
-            Bridge: { some: params },
+            // Bridge: { some: params },
         },
         orderBy: { color: 'asc' },
     }) as any;

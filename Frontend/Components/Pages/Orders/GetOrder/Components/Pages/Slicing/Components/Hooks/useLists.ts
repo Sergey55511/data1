@@ -78,7 +78,6 @@ export const useLists = (
         if (!state.workpieceTypeId.value) return;
         if (!state.sizeRangeId.value) return;
         if (!state.length.value) return;
-        if (!state.colorId.value) return;
 
         const fetchLength = async () => {
             setIsLoadinglength(true);
@@ -88,7 +87,6 @@ export const useLists = (
                 workpieceTypeId: +state.workpieceTypeId.value,
                 sizeRangeId: +state.sizeRangeId.value,
                 lengthId: +state.length.value,
-                colorId: +state.colorId.value,
             });
 
             setIsLoadinglength(false);
@@ -98,7 +96,6 @@ export const useLists = (
         storeId,
         state.workpieceTypeId.value,
         state.sizeRangeId.value,
-        state.length.value,
-        state.colorId.value,
+        state.length.value
     ]);
 };
