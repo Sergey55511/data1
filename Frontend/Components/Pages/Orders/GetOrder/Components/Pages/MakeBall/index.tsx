@@ -1,19 +1,23 @@
+import { notification } from 'antd';
+import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { OPERATIONS } from '../../../../../../../../Shared/constants';
-import { iData, iSizeRange } from '../../../../../../../../Shared/Types/interfaces';
+import {
+    iData,
+    iField,
+    iSizeRange,
+} from '../../../../../../../../Shared/Types/interfaces';
 import { useStores } from '../../../../../../../Store/useStores';
+import {
+    getTotalSum,
+    validation,
+    sendData,
+} from '../../../../../../Helpers';
+import { Field } from '../../../../../../Helpers/classes';
 import { tValue } from '../../../../../../Shared/InputNumber';
 import { Title } from '../../Shared/Title';
 import { RowWrapper } from './Components/RowWrapper';
 import { Wrapper } from './style';
-
-interface iField {
-    key: string;
-    placeholder: string;
-    value: string | number;
-    isError: boolean;
-    isReqired: boolean;
-}
 
 export interface iState {
     sizeRange: iField;
@@ -21,28 +25,26 @@ export interface iState {
     widthIn: iField;
 }
 
-class Field implements iField {
-    key;
-    placeholder;
-    value = '';
-    isError = false;
-    isReqired = true;
-    constructor(key: string, placeholder: string, isReqired = true) {
-        this.key = key;
-        this.placeholder = placeholder;
-        this.isReqired = isReqired;
-    }
-}
-
 export const MakeBall = ({ record, stateId }: { record: iData; stateId: number }) => {
     const [moveBack, setMoveBack] = useState<tValue>(undefined);
-    const { ListsStore, loginStore } = useStores();
+    const { ListsStore, loginStore, OperationStore } = useStores();
     const [state, setState] = useState<iState[]>([]);
     const [defect, setDefect] = useState<tValue>(undefined);
     const [losses, setLosses] = useState<number>(0);
     const [isLoading, setIsLoading] = useState(false);
-    const subbmitHandler = () => console.log('subbmitHandler');
     const [sizeRange, setSizeRange] = useState<iSizeRange[]>([]);
+
+    const router = useRouter();
+
+    useEffect(() => {
+        const totalSum = getTotalSum(state);
+        const res =
+            (record?.widthOut || 0) -
+            totalSum -
+            (defect ? +defect : 0) -
+            (moveBack ? +moveBack : 0);
+        setLosses(isNaN(res) ? 0 : res);
+    }, [state, defect, moveBack]);
 
     useEffect(() => {
         const getSizeRange = async () => {
@@ -84,6 +86,57 @@ export const MakeBall = ({ record, stateId }: { record: iData; stateId: number }
                 },
             ];
             return res;
+        });
+    };
+
+    const subbmitHandler = async () => {
+        const errorNote = () => {
+            notification.error({
+                message: 'Ошибка!',
+                description: 'Не верно заполнены поля!',
+            });
+        };
+        if (!state.length) {
+            errorNote();
+            return;
+        }
+
+        const isError = validation(setState);
+
+        if (isError) {
+            errorNote();
+            return;
+        }
+
+        const totalSum = getTotalSum(state);
+        if (!totalSum) {
+            errorNote();
+            return;
+        }
+        if (losses < 0) {
+            errorNote();
+            return;
+        }
+        const code = record.code ? record.code * -1 : 0;
+        const codeOneItem = record.width ? code / totalSum : 0;
+        const data: iData[] = state.map((item) => ({
+            ...record,
+            lengthId: item.length.value ? +item.length.value : undefined,
+            sizeRangeId: +item.sizeRange.value,
+            widthOut: undefined,
+            widthIn: +item.widthIn.value!,
+            stateId,
+            moneyIn: item.widthIn.value ? codeOneItem * +item.widthIn.value : 0,
+        }));
+        sendData({
+            data,
+            record,
+            setIsLoading,
+            postOrderResult: OperationStore.postOrderResult,
+            router,
+            defect,
+            losses,
+            moveBack,
         });
     };
 

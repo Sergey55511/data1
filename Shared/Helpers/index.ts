@@ -2,44 +2,6 @@ import { NextApiResponse } from 'next';
 import { MyError } from '../Classes/error';
 import { iData, iDataTable, iQueryFilters, iUser } from '../Types/interfaces';
 
-export const prepareDataTable = (data: iData): iDataTable => {
-    const dataTableKeys = [
-        'lot',
-        'numProduction',
-        'pp',
-        'typeId',
-        'workpieceTypeId',
-        'numDocument',
-        'userId',
-        'managerId',
-        'modelId',
-        'recipientId',
-        'sizeRangeId',
-        'fractionId',
-        'materialGroupId',
-        'colorId',
-        'lengthId',
-        'channelId',
-        'gradeId',
-        'stateId',
-        'storeId',
-        'productionId',
-        'operationId',
-        'countItemsOut',
-        'widthOut',
-        'widthIn',
-        'date',
-        'moneyIn',
-        'moneyOut',
-    ];
-    const result: iDataTable = {};
-    Object.keys(data).forEach((key) => {
-        const keyDt = key as keyof iDataTable;
-        if (dataTableKeys.includes(key)) result[keyDt] = data[keyDt];
-    });
-    return result;
-};
-
 export const resError = (err: any, res: NextApiResponse) => {
     console.log('err', err);
     const error = err as MyError;

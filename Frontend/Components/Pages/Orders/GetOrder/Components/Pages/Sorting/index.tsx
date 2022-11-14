@@ -1,46 +1,24 @@
-import { CheckOutlined } from '@ant-design/icons';
-import { Button, notification, Tooltip } from 'antd';
+import { notification } from 'antd';
 import { observer } from 'mobx-react-lite';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import {
-    OPERATIONS,
-    STATE,
-    WORKPIECETYPE,
-} from '../../../../../../../../Shared/constants';
-import { prepareDataTable } from '../../../../../../../../Shared/Helpers';
-import { iData, iGrade } from '../../../../../../../../Shared/Types/interfaces';
+import { iData, iField, iGrade } from '../../../../../../../../Shared/Types/interfaces';
 import { useStores } from '../../../../../../../Store/useStores';
-import { getLosseObject, getMoveBackMoney } from '../../../../../../Helpers';
+import { getTotalSum, sendData, validation } from '../../../../../../Helpers';
+import { Field } from '../../../../../../Helpers/classes';
 import { confirmAction } from '../../../../../../Shared/ConfirmSubbmit';
-import { InputNumber, tValue } from '../../../../../../Shared/InputNumber';
+import { tValue } from '../../../../../../Shared/InputNumber';
 import { Title } from '../../Shared/Title';
 import { getRootLists } from './Components/Hooks';
 import { Row } from './Components/Row';
 import { Wrapper } from './style';
 
-interface iField {
-    key: string;
-    placeholder: string;
-    value: string | number;
-    isError: boolean;
-}
 export interface iState {
     typeId: iField;
     gradeId: iField;
     colorId: iField;
     sizeRangeId: iField;
     widthIn: iField;
-}
-class Field implements iField {
-    key;
-    placeholder;
-    value = '';
-    isError = false;
-    constructor(key: string, placeholder: string) {
-        this.key = key;
-        this.placeholder = placeholder;
-    }
 }
 
 export const Sorting = observer(
@@ -52,17 +30,13 @@ export const Sorting = observer(
         const [losses, setLosses] = useState<number>(0);
         const [isLoading, setIsLoading] = useState(false);
         const router = useRouter();
-        const getTotalSum = () =>
-            state.reduce((res, item) => {
-                return (res += +item.widthIn.value || 0);
-            }, 0);
 
         useEffect(() => {
             getRootLists(ListsStore, setGrade, loginStore.user.storeId);
         }, [loginStore.user.storeId]);
 
         useEffect(() => {
-            const totalSum = getTotalSum();
+            const totalSum = getTotalSum(state);
             const res = (record?.widthOut || 0) - totalSum - (moveBack ? +moveBack : 0);
             setLosses(isNaN(res) ? 0 : res);
         }, [state, moveBack]);
@@ -88,28 +62,6 @@ export const Sorting = observer(
             setState((prev) => prev.filter((_, i) => i != index));
         };
 
-        const validation = () => {
-            let isError = false;
-            setState((prev) => {
-                const res = prev.map((item) => {
-                    for (const k in item) {
-                        const key = k as keyof iState;
-                        if (!item[key].value) {
-                            isError = true;
-                            item[key].isError = true;
-                        } else item[key].isError = false;
-                    }
-                    return { ...item };
-                });
-                return res;
-            });
-            return isError;
-        };
-
-        const confirmSubbmit = () => {
-            confirmAction({ subbmitHandler });
-        };
-
         const subbmitHandler = async () => {
             const errorNote = () => {
                 notification.error({
@@ -122,13 +74,15 @@ export const Sorting = observer(
                 return;
             }
 
-            const isError = validation();
+            const isError = validation(setState);
+            console.log('isError', isError);
+
             if (isError) {
                 errorNote();
                 return;
             }
 
-            const totalSum = getTotalSum();
+            const totalSum = getTotalSum(state);
             if (!totalSum) {
                 errorNote();
                 return;
@@ -150,30 +104,15 @@ export const Sorting = observer(
                 stateId,
                 moneyIn: item.widthIn.value ? codeOneItem * +item.widthIn.value : 0,
             }));
-            if (losses) {
-                data.push(getLosseObject(record, WORKPIECETYPE.losses.id, losses));
-            }
-            if (moveBack) {
-                const moveBackMoney = getMoveBackMoney(
-                    record.code,
-                    record.width,
-                    moveBack ? +moveBack : undefined,
-                );
-                data.push({
-                    ...record,
-                    widthOut: +moveBack * -1,
-                    moneyOut: moveBackMoney,
-                });
-            }
-
-            const dataTable = data.map((item) => prepareDataTable(item));
-            setIsLoading(true);
-            await OperationStore.postOrderResult(dataTable);
-            notification.success({
-                message: 'Сохранение прошло успешно',
+            sendData({
+                data,
+                record,
+                setIsLoading,
+                postOrderResult: OperationStore.postOrderResult,
+                router,
+                losses,
+                moveBack,
             });
-            router.push('/orders');
-            setIsLoading(false);
         };
 
         return (

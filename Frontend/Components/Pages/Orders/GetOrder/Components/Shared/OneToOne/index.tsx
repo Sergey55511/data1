@@ -1,12 +1,10 @@
-import { Button, DatePicker, Input, notification } from 'antd';
+import { Button, DatePicker, Input } from 'antd';
 import moment from 'moment';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
-import { WORKPIECETYPE } from '../../../../../../../../Shared/constants';
-import { prepareDataTable } from '../../../../../../../../Shared/Helpers';
 import { iData } from '../../../../../../../../Shared/Types/interfaces';
 import { useStores } from '../../../../../../../Store/useStores';
-import { getLosseObject, getMoveBackMoney } from '../../../../../../Helpers';
+import { sendData } from '../../../../../../Helpers';
 import { confirmAction } from '../../../../../../Shared/ConfirmSubbmit';
 import { InputField } from '../../../../../../Shared/InputField';
 import { InputNumber } from '../../../../../../Shared/InputNumber';
@@ -67,30 +65,13 @@ export const OneToOne = ({
                 moneyIn: code,
             },
         ];
-        if (state.losses) {
-            data.push(getLosseObject(record, WORKPIECETYPE.losses.id, state.losses));
-        }
-        if (state.moveBack) {
-            const moveBackMoney = getMoveBackMoney(
-                record.code,
-                record.width,
-                state.moveBack,
-            );
-            data.push({
-                ...record,
-                widthOut: state.moveBack * -1,
-                moneyOut: moveBackMoney,
-            });
-        }
-
-        const dataTable = data.map((item) => prepareDataTable(item));
-        setIsLoading(true);
-        await OperationStore.postOrderResult(dataTable);
-        notification.success({
-            message: 'Сохранение прошло успешно',
+        sendData({
+            data,
+            record,
+            setIsLoading,
+            postOrderResult: OperationStore.postOrderResult,
+            router,
         });
-        router.push('/orders');
-        setIsLoading(false);
     };
 
     const onChangeInput = (fieldName: keyof iState, v: any) => {

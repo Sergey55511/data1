@@ -145,3 +145,11 @@ export interface iQueryFilters {
     lengthId?: number;
     colorId?: number;
 }
+
+export interface iField {
+    key: string;
+    placeholder: string;
+    value: string | number;
+    isError: boolean;
+    isReqired: boolean;
+}
