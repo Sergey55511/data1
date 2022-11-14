@@ -9,7 +9,7 @@ export const getSizeRange = <T>(
 ): PrismaPromise<T> => {
     const params = getFilters(req.query);
     return prisma.sizeRange.findMany({
-        select: { id: true, sizeRange: true },
+        select: { id: true, sizeRange: true, size: true },
         where: { active: true, Bridge: { some: params } },
         orderBy: { position: 'asc' },
     }) as any;
