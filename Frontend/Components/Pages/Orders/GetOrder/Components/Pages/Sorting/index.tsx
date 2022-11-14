@@ -14,6 +14,7 @@ import { useStores } from '../../../../../../../Store/useStores';
 import { getLosseObject, getMoveBackMoney } from '../../../../../../Helpers';
 import { confirmAction } from '../../../../../../Shared/ConfirmSubbmit';
 import { InputNumber, tValue } from '../../../../../../Shared/InputNumber';
+import { Title } from '../../Shared/Title';
 import { getRootLists } from './Components/Hooks';
 import { Row } from './Components/Row';
 import { Wrapper } from './style';
@@ -177,29 +178,14 @@ export const Sorting = observer(
 
         return (
             <Wrapper>
-                <div className="title">
-                    <Tooltip title="Сохранить">
-                        <Button
-                            shape="circle"
-                            icon={<CheckOutlined />}
-                            onClick={confirmSubbmit}
-                            loading={isLoading}
-                        />
-                    </Tooltip>
-                    <a href="#" onClick={addRowHandler}>
-                        Добавить строку
-                    </a>
-                    <div>
-                        <InputNumber
-                            placeholder="Возврат"
-                            value={moveBack}
-                            onChangeHandler={(v) => {
-                                setMoveBack(v);
-                            }}
-                        />
-                    </div>
-                    <div className={losses < 0 ? 'red' : ''}>потеря: {losses}</div>
-                </div>
+                <Title
+                    subbmitHandler={subbmitHandler}
+                    addRowHandler={addRowHandler}
+                    setMoveBack={setMoveBack}
+                    moveBack={moveBack}
+                    losses={losses}
+                    isLoading={isLoading}
+                />
                 <div>
                     {state.map((item, index) => {
                         return (

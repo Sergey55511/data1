@@ -52,8 +52,6 @@ export const Row = observer(
             onChange,
         );
 
-        console.log('lists', lists);
-
         return (
             <div className="row">
                 <Tooltip title="Удалить строку">

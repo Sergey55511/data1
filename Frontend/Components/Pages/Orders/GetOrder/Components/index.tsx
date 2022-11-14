@@ -1,5 +1,6 @@
 import { OPERATIONS, STATE } from '../../../../../../Shared/constants';
 import { iData } from '../../../../../../Shared/Types/interfaces';
+import { MakeBall } from './Pages/MakeBall';
 import { Slicing } from './Pages/Slicing';
 import { Sorting } from './Pages/Sorting';
 import { OneToOne } from './Shared/OneToOne';
@@ -39,7 +40,7 @@ export const GetOrderSwitcher = ({
         case OPERATIONS.turning.id:
             return <OneToOne record={record} stateId={STATE.turned.id} />;
         case OPERATIONS.makeBall.id:
-            return <OneToOne record={record} stateId={STATE.balled.id} />;
+            return <MakeBall record={record} stateId={STATE.balled.id} />;
         case OPERATIONS.makeSuperBall.id:
             return <OneToOne record={record} stateId={STATE.makedSuperBall.id} />;
         case OPERATIONS.grindingSuper.id:

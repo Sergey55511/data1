@@ -53,8 +53,6 @@ export const useLists = (
                 sizeRangeId: state.sizeRangeId.value as number,
             });
 
-            console.log('length', length);
-
             setLists((prev) => {
                 if (prev) {
                     prev.length = length;

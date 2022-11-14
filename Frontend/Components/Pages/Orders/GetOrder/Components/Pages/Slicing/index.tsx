@@ -1,5 +1,4 @@
-import { CheckOutlined } from '@ant-design/icons';
-import { Button, notification, Tooltip } from 'antd';
+import { notification } from 'antd';
 import { observer } from 'mobx-react-lite';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
@@ -7,14 +6,12 @@ import { OPERATIONS, WORKPIECETYPE } from '../../../../../../../../Shared/consta
 import { prepareDataTable } from '../../../../../../../../Shared/Helpers';
 import { iData } from '../../../../../../../../Shared/Types/interfaces';
 import { useStores } from '../../../../../../../Store/useStores';
-import { InputNumber, tValue } from '../../../../../../Shared/InputNumber';
+import { tValue } from '../../../../../../Shared/InputNumber';
 import { Row } from './Components/Row';
 import { Wrapper } from './style';
-import { Modal } from 'antd';
 import { confirmAction } from '../../../../../../Shared/ConfirmSubbmit';
 import { getLosseObject, getMoveBackMoney } from '../../../../../../Helpers';
-
-const { confirm } = Modal;
+import { Title } from '../../Shared/Title';
 
 interface iField {
     key: string;
@@ -204,36 +201,16 @@ export const Slicing = observer(
 
         return (
             <Wrapper>
-                <div className="title">
-                    <Tooltip title="Сохранить">
-                        <Button
-                            shape="circle"
-                            icon={<CheckOutlined />}
-                            onClick={confirmSubbmit}
-                            loading={isLoading}
-                        />
-                    </Tooltip>
-                    <a href="#" onClick={addRowHandler}>
-                        Добавить строку
-                    </a>
-                    <div>
-                        <InputNumber
-                            placeholder="Отход"
-                            onChangeHandler={(v) => setGarbage(v ? +v : undefined)}
-                            value={garbage}
-                        />
-                    </div>
-                    <div>
-                        <InputNumber
-                            placeholder="Возврат"
-                            value={moveBack}
-                            onChangeHandler={(v) => {
-                                setMoveBack(v);
-                            }}
-                        />
-                    </div>
-                    <div className={losses < 0 ? 'red' : ''}>потеря: {losses}</div>
-                </div>
+                <Title
+                    subbmitHandler={subbmitHandler}
+                    addRowHandler={addRowHandler}
+                    setGarbage={setGarbage}
+                    setMoveBack={setMoveBack}
+                    garbage={garbage}
+                    moveBack={moveBack}
+                    losses={losses}
+                    isLoading={isLoading}
+                />
                 <div>
                     {state.map((item, index) => (
                         <Row
