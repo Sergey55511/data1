@@ -29,6 +29,18 @@ export const GetOrderSwitcher = ({
                     isCheckLosses={false}
                 />
             );
+        case OPERATIONS.glueBlank.id:
+            return (
+                <OneToOne
+                    record={record}
+                    stateId={STATE.gluedBlank.id}
+                    isCheckLosses={false}
+                />
+            );
+        case OPERATIONS.sortingB.id:
+            return (
+                <Sorting record={record} stateId={STATE.sortedA.id}/>
+            );
         case OPERATIONS.improve.id:
             return <OneToOne record={record} stateId={STATE.improved.id} />;
         case OPERATIONS.autoclave.id:
