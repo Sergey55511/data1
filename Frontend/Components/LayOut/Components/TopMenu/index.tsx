@@ -1,4 +1,4 @@
-import { Avatar, Badge, Menu } from 'antd';
+import { Avatar, Badge, Menu, Tooltip } from 'antd';
 import {
     DatabaseOutlined,
     VerticalAlignBottomOutlined,
@@ -9,6 +9,8 @@ import {
     ExportOutlined,
     CarOutlined,
     FullscreenExitOutlined,
+    CheckCircleOutlined,
+    ExclamationCircleOutlined,
 } from '@ant-design/icons';
 import Link from 'next/link';
 import { Wrapper } from './style';
@@ -97,6 +99,18 @@ export const TopMenu = observer(({ page }: { page: tPages }) => {
                         },
                     ]}
                 />
+            </div>
+            <div className="icon">
+                {true && (
+                    <Tooltip placement="bottom" title="Синхронизован">
+                        <CheckCircleOutlined className="green" />
+                    </Tooltip>
+                )}
+                {false && (
+                    <Tooltip placement="bottom" title="Десинхронизован">
+                        <ExclamationCircleOutlined className="red" />
+                    </Tooltip>
+                )}
             </div>
             <div className="store">
                 Склад: <span>{loginStore.user?.store || ''}</span>

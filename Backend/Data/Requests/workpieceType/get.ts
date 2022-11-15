@@ -9,6 +9,7 @@ export const getWorkpieceType = <T>(prisma: tPrisma, req: NextApiRequest): Promi
         select: {
             id: true,
             workpieceType: true,
+            nextTypeId: true,
         },
         where: { active: true, isShow: true, Brige: { some: params } },
         orderBy: { workpieceType: 'asc' },

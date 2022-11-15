@@ -126,6 +126,7 @@ export interface iColor {
 export interface iWorkpieceType {
     id: number;
     workpieceType: string;
+    nextTypeId?: number;
 }
 export interface iLength {
     id: number;

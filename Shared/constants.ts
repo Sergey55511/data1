@@ -47,4 +47,8 @@ export const WORKPIECETYPE = {
     stone: { id: 1 },
     losses: { id: 2 },
     garbage: { id: 3 },
+    defect: { id: 4 },
+};
+export const GRADE = {
+    mix: { id: 1 },
 };

@@ -9,6 +9,19 @@ export const Wrapper = styled.div`
         flex: 1;
         margin-right: 16px;
     }
+    .icon {
+        margin-right: 16px;
+        .green {
+            path {
+                fill: green;
+            }
+        }
+        .red {
+            path {
+                fill: red;
+            }
+        }
+    }
     .store {
         margin-right: 16px;
         span {

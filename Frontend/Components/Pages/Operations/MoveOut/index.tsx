@@ -218,13 +218,15 @@ export const MoveOut = observer(
                             </a>
                         </div>
                     )}
-                    <div className="numShipment">
-                        <Input
-                            value={numDocument}
-                            onChange={(e) => setNumDocument(e.target.value)}
-                            placeholder="Номер документа"
-                        />
-                    </div>
+                    {type != 'mixing' && (
+                        <div className="numShipment">
+                            <Input
+                                value={numDocument}
+                                onChange={(e) => setNumDocument(e.target.value)}
+                                placeholder="Номер документа"
+                            />
+                        </div>
+                    )}
                 </div>
                 <div className="buttonGroup">
                     <Radio.Group

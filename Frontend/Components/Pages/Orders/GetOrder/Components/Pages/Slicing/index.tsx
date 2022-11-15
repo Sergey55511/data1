@@ -133,6 +133,7 @@ export const Slicing = observer(
                 router,
                 losses,
                 moveBack,
+                garbage
             });
         };
 

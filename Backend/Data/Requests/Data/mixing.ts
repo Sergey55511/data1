@@ -1,4 +1,5 @@
 import moment from 'moment';
+import { GRADE } from '../../../../Shared/constants';
 import { iDataTable } from '../../../../Shared/Types/interfaces';
 import { tPrisma } from '../../../types';
 
@@ -21,7 +22,7 @@ export const mixing = async <T>(
     const dataCom = dataPrepared?.map((item) => ({
         ...item,
         productionId: undefined,
-        gradeId: undefined,
+        gradeId: GRADE.mix.id,
         widthOut: undefined,
         countItemsOut: undefined,
         widthIn: item.widthOut,

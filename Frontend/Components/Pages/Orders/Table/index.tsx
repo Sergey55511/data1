@@ -84,10 +84,6 @@ export const OrdersTable = observer(() => {
             title: KEYSLEFTOVERS.grade.title,
         },
         {
-            ...getColumnPropsHoc(KEYSLEFTOVERS.state.key),
-            title: KEYSLEFTOVERS.state.title,
-        },
-        {
             ...getColumnPropsHoc(KEYSLEFTOVERS.lot.key),
             title: KEYSLEFTOVERS.lot.title,
         },

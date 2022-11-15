@@ -223,7 +223,7 @@ model ModelsSizes {
 model SizeRange {
   id        Int      @id @default(autoincrement())
   sizeRange String
-  size     Int      @default(0) @map("range")
+  size      Int      @default(0) @map("range")
   position  Int      @default(autoincrement())
   active    Boolean  @default(true)
   Data      Data[]
@@ -257,6 +257,7 @@ model MaterialGroup {
 model WorkpieceType {
   id            Int      @id @default(autoincrement())
   workpieceType String
+  nextTypeId    Int?
   position      Int      @default(autoincrement())
   active        Boolean  @default(true)
   isShow        Boolean  @default(true)

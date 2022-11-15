@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { iState } from '../..';
 import { OPERATIONS } from '../../../../../../../../../../Shared/constants';
 import {
+    iGrade,
     iLength,
     iSizeRange,
 } from '../../../../../../../../../../Shared/Types/interfaces';
@@ -18,6 +19,8 @@ export const RowWrapper = ({
     onChange,
     sizeRange,
     storeId,
+    grades,
+    removeRow,
 }: {
     state: iState;
     index: number;
@@ -25,6 +28,8 @@ export const RowWrapper = ({
     onChange: (v: string | number, index: number, fieldName: keyof iState) => void;
     sizeRange: iSizeRange[];
     storeId?: number;
+    grades: iGrade[];
+    removeRow: (index: number) => void;
 }) => {
     const { ListsStore } = useStores();
     const [length, setLength] = useState<iLength[]>([]);
@@ -71,6 +76,17 @@ export const RowWrapper = ({
                         }))}
                     />
                 </InputField>,
+                <InputField key="grade" isError={state.grade.isError}>
+                    <SelectField
+                        placeholder={state.grade.placeholder}
+                        value={+state.grade.value || undefined}
+                        onChange={(v) => onChange(v, index, 'grade')}
+                        options={grades?.map((item) => ({
+                            value: item.id,
+                            caption: item.grade,
+                        }))}
+                    />
+                </InputField>,
                 <InputField key="key" isError={state.widthIn.isError}>
                     <InputNumber
                         placeholder={state.widthIn.placeholder}
@@ -81,7 +97,7 @@ export const RowWrapper = ({
                     />
                 </InputField>,
             ]}
-            removeRow={() => console.log('removeRow')}
+            removeRow={() => removeRow(index)}
         />
     );
 };

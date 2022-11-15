@@ -44,6 +44,7 @@ export const sendData = async ({
     record,
     data,
     losses,
+    garbage,
     defect,
     moveBack,
     setIsLoading,
@@ -53,6 +54,7 @@ export const sendData = async ({
     record: iData;
     data: iData[];
     losses?: tValue;
+    garbage?: tValue;
     defect?: tValue;
     moveBack?: tValue;
     setIsLoading: (flag: boolean) => void;
@@ -67,7 +69,10 @@ export const sendData = async ({
     }
 
     if (defect) {
-        data.push(getLosseObject(record, WORKPIECETYPE.garbage.id, +defect));
+        data.push(getLosseObject(record, WORKPIECETYPE.defect.id, +defect));
+    }
+    if (garbage) {
+        data.push(getLosseObject(record, WORKPIECETYPE.garbage.id, +garbage));
     }
 
     if (moveBack) {

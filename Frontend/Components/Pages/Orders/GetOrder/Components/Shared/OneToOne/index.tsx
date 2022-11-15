@@ -71,6 +71,7 @@ export const OneToOne = ({
             setIsLoading,
             postOrderResult: OperationStore.postOrderResult,
             router,
+            losses: state.losses,
         });
     };
 
