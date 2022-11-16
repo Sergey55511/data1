@@ -27,8 +27,9 @@ export class SocketIo {
         });
 
     connect = (storeId: number) => {
-        return io('wss://tdata1.ru/login:5000', {
+        this.socket = io('ws://tdata1.ru:5000/', {
             reconnectionDelayMax: 10000,
+            transports: ['websocket'],
             // auth: {
             //     token: '123',
             // },
