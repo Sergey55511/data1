@@ -91,7 +91,6 @@ export const MoveOutSolo = observer(
 
             const code = record.code || 0;
             const moneyOut = (code / (record.width || code)) * (data.widthOut || 0);
-            console.log(record.code, code, record.width, data.widthOut);
 
             data.moneyOut = moneyOut;
 

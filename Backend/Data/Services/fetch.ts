@@ -20,12 +20,12 @@ export const fetchService = async <T>({
 }) => {
     const prisma = new PrismaClient();
     try {
-        await varifyJWT(req, res, prisma);
+        const user = await varifyJWT(req, res, prisma);
         if (validation) await validation(prisma);
         const result = await fetch(prisma);
 
         if (isSendUsersNewMaxId) {
-            await sendUsersNewMaxId(prisma, req);
+            await sendUsersNewMaxId(prisma, user.storeId);
         }
 
         prisma.$disconnect();

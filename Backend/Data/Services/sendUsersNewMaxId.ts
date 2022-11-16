@@ -1,24 +1,20 @@
 import axios from 'axios';
-import { NextApiRequest } from 'next';
+import { MyError } from '../../../Shared/Classes/error';
 import { tPrisma } from '../../types';
 import { getMaxId } from '../Requests/Data/getMaxId';
 
-export const sendUsersNewMaxId = async (prisma: tPrisma, req: NextApiRequest) => {
-    const method = req.method;
-    let storeId = 0;
-    switch (method) {
-        case 'GET':
-            storeId = +(req.query.storeId || 0);
-            break;
-        case 'POST':
-            storeId = +(req.body.storeId || 0);
-            break;
-    }
-    const maxId = await getMaxId(prisma, storeId);
+export const sendUsersNewMaxId = async (
+    prisma: tPrisma,
+    storeId?: string | undefined,
+) => {
+    if (!storeId) throw new MyError(400, 'empty storeId sendUsersNewMaxId');
+    const maxId = await getMaxId(prisma, +storeId);
     const room = `store_${storeId}`;
 
+    const socketUrl = process.env.SOCKET_URL;
+
     axios({
-        url: 'http://localhost:5000/sendMessage',
+        url: `${socketUrl}/sendMessage`,
         method: 'POST',
         data: {
             room,

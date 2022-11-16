@@ -27,7 +27,9 @@ export class SocketIo {
         });
 
     connect = (storeId: number) => {
-        this.socket = io('ws://tdata1.ru:5000/', {
+        const socketUrl = process.env.SOCKET_URL || '/';
+
+        this.socket = io(socketUrl, {
             reconnectionDelayMax: 10000,
             transports: ['websocket'],
             // auth: {
