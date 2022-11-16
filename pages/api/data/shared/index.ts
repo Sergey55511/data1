@@ -22,6 +22,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 res,
                 validation: (prisma: tPrisma) => postMoveInValidation(prisma, req),
                 fetch: (prisma: tPrisma) => postMoveIn(prisma, req.body),
+                isSendUsersNewMaxId: true,
             });
             break;
         }

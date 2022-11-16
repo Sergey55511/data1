@@ -11,5 +11,6 @@ export default async function moveToWork(req: NextApiRequest, res: NextApiRespon
         res,
         validation: (prisma: tPrisma) => validateLeftovers(prisma, req),
         fetch: (prisma: tPrisma) => mixing(prisma, req.body.data as iData[]),
+        isSendUsersNewMaxId: true,
     });
 }

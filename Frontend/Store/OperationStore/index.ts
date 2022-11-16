@@ -12,6 +12,7 @@ export class OperationStore {
     listsStore: ListsStore;
     maxLot = 0;
     maxId = 0;
+    maxIdSocket = 0;
     shared: iShared[] = [];
     leftovers: iData[] = [];
     orders: iData[] = [];
@@ -22,6 +23,14 @@ export class OperationStore {
         this.loginStore = login;
         this.listsStore = listsStore;
     }
+
+    get isSynchronousData() {
+        return this.maxId == this.maxIdSocket;
+    }
+
+    setMaxIdSocket = (maxId: number) => {
+        this.maxIdSocket = maxId;
+    };
 
     fetchInitData = flow(function* (this: OperationStore, storeId: number) {
         if (this.isFetched) return;
@@ -58,6 +67,7 @@ export class OperationStore {
 
     getMaxId = flow(function* (this: OperationStore) {
         this.maxId = yield api.getMaxId(this.loginStore.user.storeId);
+        this.setMaxIdSocket(this.maxId);
     });
 
     postMoveInShared = flow(function* (this: OperationStore, data: iDataTable[]) {

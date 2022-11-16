@@ -8,5 +8,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         req,
         res,
         fetch: (prisma: tPrisma) => postNewItems(prisma, req.body, false),
+        isSendUsersNewMaxId: true,
     });
 }

@@ -1,25 +1,33 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { resError } from '../../../Shared/Helpers';
 import { varifyJWT } from './verifyJWT';
-import { Prisma, PrismaClient } from '@prisma/client';
+import { PrismaClient } from '@prisma/client';
 import { tPrisma } from '../../types';
+import { sendUsersNewMaxId } from './sendUsersNewMaxId';
 
 export const fetchService = async <T>({
     req,
     res,
     fetch,
     validation,
+    isSendUsersNewMaxId,
 }: {
     req: NextApiRequest;
     res: NextApiResponse;
     fetch: (prisma: tPrisma) => Promise<T>;
     validation?: (prisma: tPrisma) => void;
+    isSendUsersNewMaxId?: boolean;
 }) => {
     const prisma = new PrismaClient();
     try {
         await varifyJWT(req, res, prisma);
         if (validation) await validation(prisma);
         const result = await fetch(prisma);
+
+        if (isSendUsersNewMaxId) {
+            await sendUsersNewMaxId(prisma, req);
+        }
+
         prisma.$disconnect();
         if (result) {
             res.status(200).json(result);

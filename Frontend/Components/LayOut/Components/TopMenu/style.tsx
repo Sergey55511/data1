@@ -10,8 +10,8 @@ export const Wrapper = styled.div`
         margin-right: 16px;
     }
     .icon {
-        margin-right: 16px;
         .green {
+            font-size: 18px;
             path {
                 fill: green;
             }
@@ -29,6 +29,7 @@ export const Wrapper = styled.div`
         }
     }
     .user {
+        margin-right: 16px;
         span {
             font-weight: 600;
             a {

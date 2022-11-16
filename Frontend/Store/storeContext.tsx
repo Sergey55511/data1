@@ -4,6 +4,7 @@ import { ErrorStore } from './ErrorStore';
 import { ListsStore } from './Lists';
 import { OperationStore } from './OperationStore';
 import { UIStore } from './UIStore';
+import { SocketIo } from './SocketIo';
 
 class Store {
     ErrorStore = new ErrorStore();
@@ -15,6 +16,7 @@ class Store {
         this.loginStore,
         this.ListsStore,
     );
+    SocketIo=new SocketIo(this.OperationStore)
 }
 const store = new Store();
 

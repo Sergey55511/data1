@@ -9,8 +9,7 @@ import {
     ExportOutlined,
     CarOutlined,
     FullscreenExitOutlined,
-    CheckCircleOutlined,
-    ExclamationCircleOutlined,
+    BulbOutlined,
 } from '@ant-design/icons';
 import Link from 'next/link';
 import { Wrapper } from './style';
@@ -22,6 +21,9 @@ export const TopMenu = observer(({ page }: { page: tPages }) => {
     const { loginStore, OperationStore } = useStores();
     const ordersCount = OperationStore.orders.length;
     const sharedCount = OperationStore.shared.length;
+
+    const isSynchronousData = OperationStore.isSynchronousData;
+    
     return (
         <Wrapper>
             <div className="menu">
@@ -100,18 +102,6 @@ export const TopMenu = observer(({ page }: { page: tPages }) => {
                     ]}
                 />
             </div>
-            <div className="icon">
-                {true && (
-                    <Tooltip placement="bottom" title="Синхронизован">
-                        <CheckCircleOutlined className="green" />
-                    </Tooltip>
-                )}
-                {false && (
-                    <Tooltip placement="bottom" title="Десинхронизован">
-                        <ExclamationCircleOutlined className="red" />
-                    </Tooltip>
-                )}
-            </div>
             <div className="store">
                 Склад: <span>{loginStore.user?.store || ''}</span>
             </div>
@@ -120,6 +110,19 @@ export const TopMenu = observer(({ page }: { page: tPages }) => {
                 <span>
                     <Link href="/login">{loginStore.user?.login || ''}</Link>
                 </span>
+            </div>
+            <div className="icon">
+                <Tooltip
+                    placement="bottom"
+                    title={isSynchronousData ? 'Синхронизован' : 'Десинхронизован'}
+                >
+                    <Avatar
+                        style={{
+                            backgroundColor: isSynchronousData ? 'green' : 'orange',
+                        }}
+                        icon={<BulbOutlined />}
+                    />
+                </Tooltip>
             </div>
         </Wrapper>
     );
