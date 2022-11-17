@@ -14,38 +14,30 @@ export class SocketIo {
     constructor(errorStore: OperationStore) {
         makeAutoObservable(this);
         this.operationStore = errorStore;
-        this.start();
     }
 
     getSocketUrl = flow(function* (this: SocketIo) {
         return yield api.getSocketUrl();
     });
 
-    start = () => {
-        autorun(async () => {
-            const storeId = this.operationStore.loginStore.user.storeId;
-            const socketUrl = this.socketUrl;
-            if (!this.socket) {
-                if (storeId) {
-                    if (!socketUrl) {
-                        this.socketUrl = await this.getSocketUrl();
-                        console.log('this.socketUrl', this.socketUrl);
-
-                        if (this.socketUrl) {
-                            console.log('this.socketUrl', this.socketUrl);
-                            this.connect(storeId);
-                            this.event();
-                        }
+    start = async () => {
+        const storeId = this.operationStore.loginStore.user.storeId;
+        const socketUrl = this.socketUrl;
+        if (!this.socket) {
+            if (storeId) {
+                if (!socketUrl) {
+                    this.socketUrl = await this.getSocketUrl();
+                    if (this.socketUrl) {
+                        this.connect();
+                        this.event();
                     }
                 }
             }
-        });
+        }
     };
 
-    connect = (storeId: number) => {
-        console.log(this.socketUrl);
-        console.log(`store_${storeId}`);
-
+    connect = () => {
+        const storeId = this.operationStore.loginStore.user.storeId;
         this.socket = io('http://tdata1.ru:5000', {
             reconnectionDelayMax: 10000,
             transports: ['websocket'],

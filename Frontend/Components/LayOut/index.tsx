@@ -30,11 +30,11 @@ const GlobalStyle = createGlobalStyle`
 
 export const LayOut = observer(
     ({ children, page }: { children: JSX.Element; page: tPages }) => {
-        const { loginStore, UIStore, OperationStore } = useStores();
+        const { loginStore, UIStore, OperationStore, SocketIo } = useStores();
 
         useEffect(() => {
             UIStore.getVersion();
-            
+
             UIStore.setIsLoading(true);
             const whoami = async () => {
                 await loginStore.whoami();
@@ -51,6 +51,11 @@ export const LayOut = observer(
                 OperationStore.fetchInitData(loginStore.user.storeId);
             }
         }, [loginStore.user.storeId]);
+
+        useEffect(() => {
+            SocketIo.start();
+        }, [OperationStore.loginStore.user.storeId, SocketIo.socketUrl]);
+
         useEffect(() => {
             if (UIStore.version) {
                 console.log('version', UIStore.version);
