@@ -29,7 +29,10 @@ export class SocketIo {
                 if (storeId) {
                     if (!socketUrl) {
                         this.socketUrl = await this.getSocketUrl();
+                        console.log('this.socketUrl', this.socketUrl);
+
                         if (this.socketUrl) {
+                            console.log('this.socketUrl', this.socketUrl);
                             this.connect(storeId);
                             this.event();
                         }
@@ -40,9 +43,9 @@ export class SocketIo {
     };
 
     connect = (storeId: number) => {
-        const socketUrl = this.socketUrl || '/';
+        console.log(this.socketUrl);
 
-        this.socket = io(socketUrl, {
+        this.socket = io(this.socketUrl, {
             reconnectionDelayMax: 10000,
             transports: ['websocket'],
             // auth: {
