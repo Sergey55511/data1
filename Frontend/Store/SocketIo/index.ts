@@ -63,6 +63,9 @@ export class SocketIo {
             this.socket.on('maxId', (maxId) => {
                 this.operationStore.setMaxIdSocket(maxId);
             });
+            this.socket.on('connect_error', (err) => {
+                console.log(`connect_error due to ${err.message}`);
+            });
         }
     };
 }
