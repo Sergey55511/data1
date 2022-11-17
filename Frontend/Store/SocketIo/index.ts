@@ -21,13 +21,18 @@ export class SocketIo {
     });
 
     start = async () => {
+        console.log('start');
         const storeId = this.operationStore.loginStore.user.storeId;
         const socketUrl = this.socketUrl;
         if (!this.socket) {
+            console.log('start1');
             if (storeId) {
+                console.log('start2');
                 if (!socketUrl) {
+                    console.log('start3');
                     this.socketUrl = await this.getSocketUrl();
                     if (this.socketUrl) {
+                        console.log('start4');
                         this.connect();
                         this.event();
                     }
@@ -37,6 +42,8 @@ export class SocketIo {
     };
 
     connect = () => {
+        console.log('connect');
+
         const storeId = this.operationStore.loginStore.user.storeId;
         this.socket = io('http://89.108.99.45:5000', {
             reconnectionDelayMax: 10000,
