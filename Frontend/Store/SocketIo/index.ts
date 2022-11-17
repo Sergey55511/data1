@@ -18,19 +18,21 @@ export class SocketIo {
     }
 
     getSocketUrl = flow(function* (this: SocketIo) {
-        this.socketUrl = yield api.getSocketUrl();
+        return yield api.getSocketUrl();
     });
 
     start = () => {
-        autorun(() => {
+        autorun(async () => {
             const storeId = this.operationStore.loginStore.user.storeId;
             const socketUrl = this.socketUrl;
             if (!this.socket) {
                 if (storeId) {
-                    if (!socketUrl) this.getSocketUrl();
-                    if (socketUrl) {
-                        this.connect(storeId);
-                        this.event();
+                    if (!socketUrl) {
+                        this.socketUrl = await this.getSocketUrl();
+                        if (this.socketUrl) {
+                            this.connect(storeId);
+                            this.event();
+                        }
                     }
                 }
             }
