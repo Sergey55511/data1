@@ -1,4 +1,4 @@
-import { autorun, flow, makeAutoObservable } from 'mobx';
+import { flow, makeAutoObservable } from 'mobx';
 import { OperationStore } from '../OperationStore';
 import { io, Socket } from 'socket.io-client';
 import { DefaultEventsMap } from 'socket.io/dist/typed-events';
