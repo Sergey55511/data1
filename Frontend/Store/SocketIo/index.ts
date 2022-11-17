@@ -38,7 +38,7 @@ export class SocketIo {
 
     connect = () => {
         const storeId = this.operationStore.loginStore.user.storeId;
-        this.socket = io('http://tdata1.ru:5000', {
+        this.socket = io('http://89.108.99.45:5000', {
             reconnectionDelayMax: 10000,
             transports: ['websocket'],
             // auth: {
