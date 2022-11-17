@@ -14,7 +14,6 @@ export class SocketIo {
     constructor(errorStore: OperationStore) {
         makeAutoObservable(this);
         this.operationStore = errorStore;
-        this.getSocketUrl();
         this.start();
     }
 
@@ -23,12 +22,15 @@ export class SocketIo {
     });
 
     start = () =>
-        autorun(() => {
+        autorun(async () => {
             const storeId = this.operationStore.loginStore.user.storeId;
             if (!this.socket) {
-                if (storeId && this.socketUrl) {
-                    this.connect(storeId);
-                    this.event();
+                if (storeId) {
+                    if (!this.socketUrl) await this.getSocketUrl();
+                    if (this.socketUrl) {
+                        this.connect(storeId);
+                        this.event();
+                    }
                 }
             }
         });
