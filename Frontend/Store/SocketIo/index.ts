@@ -21,19 +21,21 @@ export class SocketIo {
         this.socketUrl = yield api.getSocketUrl();
     });
 
-    start = () =>
-        autorun(async () => {
+    start = () => {
+        autorun(() => {
             const storeId = this.operationStore.loginStore.user.storeId;
+            const socketUrl = this.socketUrl;
             if (!this.socket) {
                 if (storeId) {
-                    if (!this.socketUrl) await this.getSocketUrl();
-                    if (this.socketUrl) {
+                    if (!socketUrl) this.getSocketUrl();
+                    if (socketUrl) {
                         this.connect(storeId);
                         this.event();
                     }
                 }
             }
         });
+    };
 
     connect = (storeId: number) => {
         const socketUrl = this.socketUrl || '/';
