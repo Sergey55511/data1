@@ -47,7 +47,7 @@ export class SocketIo {
         const storeId = this.operationStore.loginStore.user.storeId;
         this.socket = io('http://89.108.99.45:5000', {
             reconnectionDelayMax: 10000,
-            // transports: ['websocket'],
+            transports: ["websocket", "polling"],
             // auth: {
             //     token: '123',
             // },
