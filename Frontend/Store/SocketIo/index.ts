@@ -1,25 +1,32 @@
-import { autorun, makeAutoObservable } from 'mobx';
+import { autorun, flow, makeAutoObservable } from 'mobx';
 import { OperationStore } from '../OperationStore';
 import { io, Socket } from 'socket.io-client';
 import { DefaultEventsMap } from 'socket.io/dist/typed-events';
+import * as api from './api';
 
 export class SocketIo {
     version = 0;
     isLoading = false;
     operationStore: OperationStore;
     socket?: Socket<DefaultEventsMap, DefaultEventsMap>;
+    socketUrl = '';
 
     constructor(errorStore: OperationStore) {
         makeAutoObservable(this);
         this.operationStore = errorStore;
+        this.getSocketUrl();
         this.start();
     }
+
+    getSocketUrl = flow(function* (this: SocketIo) {
+        this.socketUrl = yield api.getSocketUrl();
+    });
 
     start = () =>
         autorun(() => {
             const storeId = this.operationStore.loginStore.user.storeId;
             if (!this.socket) {
-                if (storeId) {
+                if (storeId && this.socketUrl) {
                     this.connect(storeId);
                     this.event();
                 }
@@ -27,7 +34,7 @@ export class SocketIo {
         });
 
     connect = (storeId: number) => {
-        const socketUrl = process.env.SOCKET_URL || '/';
+        const socketUrl = this.socketUrl || '/';
 
         this.socket = io(socketUrl, {
             reconnectionDelayMax: 10000,
