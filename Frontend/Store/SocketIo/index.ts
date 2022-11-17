@@ -44,8 +44,9 @@ export class SocketIo {
 
     connect = (storeId: number) => {
         console.log(this.socketUrl);
+        console.log(`store_${storeId}`);
 
-        this.socket = io(this.socketUrl, {
+        this.socket = io('http://tdata1.ru:5000', {
             reconnectionDelayMax: 10000,
             transports: ['websocket'],
             // auth: {
