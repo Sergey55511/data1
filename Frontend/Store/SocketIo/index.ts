@@ -45,7 +45,7 @@ export class SocketIo {
         console.log('connect');
 
         const storeId = this.operationStore.loginStore.user.storeId;
-        this.socket = io('ws://89.108.99.45:5000', {
+        this.socket = io('http://89.108.99.45:5000', {
             reconnectionDelayMax: 10000,
             // transports: ['websocket'],
             // auth: {
