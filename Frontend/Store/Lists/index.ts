@@ -107,9 +107,13 @@ export class ListsStore {
             this.errorStore.setError(err as iError);
         }
     });
-    getSizeRange = flow(function* (this: ListsStore, filters: iQueryFilters) {
+    getSizeRange = flow(function* (
+        this: ListsStore,
+        filters: iQueryFilters,
+        id?: number,
+    ) {
         try {
-            return yield api.getSizeRange(filters);
+            return yield api.getSizeRange(filters,id);
         } catch (err) {
             this.errorStore.setError(err as iError);
         }

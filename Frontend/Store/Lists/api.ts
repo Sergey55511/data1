@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { getQueryParams } from '../../../Shared/Helpers';
-import { iDataTable, iQueryFilters } from '../../../Shared/Types/interfaces';
+import { iQueryFilters } from '../../../Shared/Types/interfaces';
 
 export const getMaterialGroup = () => {
     return axios({
@@ -8,8 +8,15 @@ export const getMaterialGroup = () => {
         method: 'GET',
     }).then((res) => res.data);
 };
-export const getSizeRange = (filters: iQueryFilters) => {
-    const params = getQueryParams(filters);
+export const getSizeRange = (filters: iQueryFilters, id?: number) => {
+    let params = getQueryParams(filters);
+    if (id) {
+        if (params) {
+            params = `${params}&id=${id}`;
+        } else {
+            params = `?id=${id}`;
+        }
+    }
     return axios({
         url: `/api/list/sizeRange${params}`,
         method: 'GET',

@@ -21,6 +21,7 @@ export const OPERATIONS = {
     sortingB: { id: 21 }, //Сортировка заготовок
     glueBlank: { id: 22 }, //Клей заготовок
     sliceIk: { id: 23 }, //Распил ИК
+    sortingLength: { id: 24 }, //Сортировка длин
 };
 export const STATE = {
     washed: { id: 1 },
@@ -42,6 +43,7 @@ export const STATE = {
     gluedBlank: { id: 17 },
     calibratedIk: { id: 18 },
     sortedB: { id: 19 },
+    sortedLength: { id: 20 },
 };
 export const WORKPIECETYPE = {
     stone: { id: 1 },

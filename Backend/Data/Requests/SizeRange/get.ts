@@ -8,9 +8,10 @@ export const getSizeRange = <T>(
     req: NextApiRequest,
 ): PrismaPromise<T> => {
     const params = getFilters(req.query);
+    const id = req.query.id ? +req.query.id : undefined;
     return prisma.sizeRange.findMany({
         select: { id: true, sizeRange: true, size: true },
-        where: { active: true, Bridge: { some: params } },
+        where: { active: true, id, Bridge: { some: params } },
         orderBy: { size: 'desc' },
     }) as any;
 };

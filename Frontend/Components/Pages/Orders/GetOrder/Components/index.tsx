@@ -3,6 +3,7 @@ import { iData } from '../../../../../../Shared/Types/interfaces';
 import { MakeBall } from './Pages/MakeBall';
 import { Slicing } from './Pages/Slicing';
 import { Sorting } from './Pages/Sorting';
+import { SortingLength } from './Pages/SortingLength';
 import { OneToOne } from './Shared/OneToOne';
 
 export const GetOrderSwitcher = ({
@@ -18,9 +19,9 @@ export const GetOrderSwitcher = ({
         case OPERATIONS.sorting.id:
             return <Sorting record={record} stateId={STATE.sorted.id} />;
         case OPERATIONS.sortingN.id:
-            return <Sorting record={record} stateId={STATE.sortedN.id}/>;
+            return <Sorting record={record} stateId={STATE.sortedN.id} />;
         case OPERATIONS.sortingA.id:
-            return <Sorting record={record} stateId={STATE.sortedA.id}/>;
+            return <Sorting record={record} stateId={STATE.sortedA.id} />;
         case OPERATIONS.glue.id:
             return (
                 <OneToOne
@@ -38,9 +39,7 @@ export const GetOrderSwitcher = ({
                 />
             );
         case OPERATIONS.sortingB.id:
-            return (
-                <Sorting record={record} stateId={STATE.sortedA.id}/>
-            );
+            return <Sorting record={record} stateId={STATE.sortedA.id} />;
         case OPERATIONS.improve.id:
             return <OneToOne record={record} stateId={STATE.improved.id} />;
         case OPERATIONS.autoclave.id:
@@ -61,6 +60,8 @@ export const GetOrderSwitcher = ({
             return <OneToOne record={record} stateId={STATE.polished.id} />;
         case OPERATIONS.slice.id:
             return <Slicing record={record} stateId={STATE.sliced.id} />;
+        case OPERATIONS.sortingLength.id:
+            return <SortingLength record={record} stateId={STATE.sortedLength.id} />;
     }
     return <></>;
 };

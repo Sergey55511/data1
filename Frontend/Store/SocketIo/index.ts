@@ -45,12 +45,13 @@ export class SocketIo {
         console.log('connect');
 
         const storeId = this.operationStore.loginStore.user.storeId;
-        this.socket = io('http://89.108.99.45:5000', {
+        this.socket = io('https://localhost:5000', {
             reconnectionDelayMax: 10000,
-            transports: ["websocket", "polling"],
+            transports: ['websocket', 'polling'],
             // auth: {
             //     token: '123',
             // },
+            // secure: true,
             query: {
                 room: `store_${storeId}`,
             },
