@@ -42,10 +42,10 @@ export class SocketIo {
     };
 
     connect = () => {
-        console.log('connect');
+        console.log('connect', this.socketUrl);
 
         const storeId = this.operationStore.loginStore.user.storeId;
-        this.socket = io('https://localhost:5000', {
+        this.socket = io(this.socketUrl, {
             reconnectionDelayMax: 10000,
             transports: ['websocket', 'polling'],
             // auth: {
