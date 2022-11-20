@@ -78,9 +78,10 @@ export const OneToOne = ({
     const onChangeInput = (fieldName: keyof iState, v: any) => {
         const anotherFieldName: keyof iState =
             fieldName == 'moveBack' ? 'widthIn' : 'moveBack';
+        if (v == '') return;
         setState((prev) => ({
             ...prev,
-            [fieldName]: v ? +v : undefined,
+            [fieldName]: v ? +v : '',
             losses: (record?.widthOut || 0) - (+v! || 0) - (prev[anotherFieldName] || 0),
         }));
     };
@@ -89,6 +90,19 @@ export const OneToOne = ({
 
     return (
         <Wrapper>
+            <div className="title">
+                <div className={isShowLosses ? 'red' : ''}>
+                    Потеря: {state.losses?.toFixed(2) ?? record.widthOut}
+                </div>
+                <Button
+                    loading={isLoading}
+                    type="primary"
+                    disabled={!isValid}
+                    onClick={confirmSubbmit}
+                >
+                    Сохранить
+                </Button>
+            </div>
             <Item title="Дата">
                 <DatePicker
                     className="input"
@@ -123,24 +137,6 @@ export const OneToOne = ({
                     />
                 </InputField>
             </Item>
-            <Item title="Потеря гр.">
-                <>
-                    <Input className="input" value={state.losses?.toFixed(2)} disabled />
-                    {isShowLosses && (
-                        <div className="error">
-                            <small>Отрицательный остаток</small>
-                        </div>
-                    )}
-                </>
-            </Item>
-            <Button
-                loading={isLoading}
-                type="primary"
-                disabled={!isValid}
-                onClick={confirmSubbmit}
-            >
-                Сохранить
-            </Button>
         </Wrapper>
     );
 };

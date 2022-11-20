@@ -158,24 +158,6 @@ export const MoveOut = observer(
 
         const selectRow = (i: number) => {
             if (selectedRows.length) {
-                if (type == 'mixing') {
-                    const sizeRangeId = data[i].sizeRangeId;
-                    const lot = data[i].lot;
-                    for (const iSelected of selectedRows) {
-                        if (data[iSelected].lot != lot) {
-                            notification.error({
-                                message: 'Запрещенно добавлять разные партии',
-                            });
-                            return;
-                        }
-                        if (data[iSelected].sizeRangeId != sizeRangeId) {
-                            notification.error({
-                                message: 'Запрещенно добавлять разные размеры',
-                            });
-                            return;
-                        }
-                    }
-                }
                 setSelectedRows([...selectedRows, i]);
             } else {
                 setSelectedRows([i]);

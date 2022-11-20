@@ -29,6 +29,7 @@ export const MakeBall = observer(
         const [moveBack, setMoveBack] = useState<tValue>(undefined);
         const { ListsStore, loginStore, OperationStore } = useStores();
         const [grades, setGrades] = useState<iGrade[]>([]);
+        const [nextType, setNextType] = useState<number | undefined>(undefined);
         const [state, setState] = useState<iState[]>([]);
         const [defect, setDefect] = useState<tValue>(undefined);
         const [losses, setLosses] = useState<number>(0);
@@ -65,6 +66,8 @@ export const MakeBall = observer(
                     const nextType = ListsStore.workpieceType.find(
                         (item) => item.id == record.workpieceTypeId,
                     )?.nextTypeId;
+
+                    setNextType(nextType);
 
                     let sizeRange: iSizeRange[] = await ListsStore.getSizeRange({
                         storeId: loginStore.user.storeId,
@@ -150,6 +153,7 @@ export const MakeBall = observer(
             const data: iData[] = state.map((item) => ({
                 ...record,
                 lengthId: item.length.value ? +item.length.value : undefined,
+                workpieceTypeId: nextType,
                 sizeRangeId: +item.sizeRange.value,
                 gradeId: +item.grade.value,
                 widthOut: undefined,

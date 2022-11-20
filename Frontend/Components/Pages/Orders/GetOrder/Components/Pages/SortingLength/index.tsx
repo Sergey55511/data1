@@ -36,11 +36,7 @@ export const SortingLength = observer(
             const fetch = async () => {
                 if (loginStore.user.storeId) {
                     const oneRowSizeRange = (await ListsStore.getSizeRange(
-                        {
-                            storeId: loginStore.user.storeId,
-                            operationId: OPERATIONS.sortingLength.id,
-                            workpieceTypeId: record.workpieceTypeId,
-                        },
+                        {},
                         record.sizeRangeId,
                     )) as iSizeRange[];
 
