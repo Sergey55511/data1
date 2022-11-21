@@ -3,10 +3,10 @@ version: "3.4"
 services:
 
   tdata1:
-    # build:
-    #   context: .
-    #   dockerfile: Dockerfile
-    image: "kpp2355575/tdata:${APP_VERSION}"
+    build:
+      context: .
+      dockerfile: Dockerfile
+    # image: "kpp2355575/tdata:${APP_VERSION}"
     container_name: tdata1
     ports:
       - "3000:3000"

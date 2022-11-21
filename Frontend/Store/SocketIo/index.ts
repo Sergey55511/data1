@@ -45,13 +45,17 @@ export class SocketIo {
         console.log('connect', this.socketUrl);
 
         const storeId = this.operationStore.loginStore.user.storeId;
-        this.socket = io(this.socketUrl, {
+        this.socket = io('', {
+            // path:'/ws',
             reconnectionDelayMax: 10000,
-            transports: ['websocket', 'polling'],
+            transports: ['websocket'],
+            // rememberUpgrade: true,
+            // timestampRequests: true,
             // auth: {
             //     token: '123',
             // },
             // secure: true,
+            // rejectUnauthorized: false,
             query: {
                 room: `store_${storeId}`,
             },
