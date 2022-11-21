@@ -4,12 +4,13 @@ import { io, Socket } from 'socket.io-client';
 import { DefaultEventsMap } from 'socket.io/dist/typed-events';
 import * as api from './api';
 
+const isDev = process.env.NODE_ENV == 'development';
 export class SocketIo {
     version = 0;
     isLoading = false;
     operationStore: OperationStore;
     socket?: Socket<DefaultEventsMap, DefaultEventsMap>;
-    socketUrl = '';
+    socketUrl = isDev ? 'http://tdata1.ru:5000' : '';
 
     constructor(errorStore: OperationStore) {
         makeAutoObservable(this);
@@ -21,46 +22,24 @@ export class SocketIo {
     });
 
     start = async () => {
-        console.log('start');
         const storeId = this.operationStore.loginStore.user.storeId;
-        const socketUrl = this.socketUrl;
         if (!this.socket) {
-            console.log('start1');
             if (storeId) {
-                console.log('start2');
-                if (!socketUrl) {
-                    console.log('start3');
-                    this.socketUrl = await this.getSocketUrl();
-                    if (this.socketUrl) {
-                        console.log('start4');
-                        this.connect();
-                        this.event();
-                    }
-                }
+                this.connect();
+                this.event();
             }
         }
     };
 
     connect = () => {
-        console.log('connect', this.socketUrl);
-
         const storeId = this.operationStore.loginStore.user.storeId;
-        this.socket = io('', {
-            // path:'/ws',
+        this.socket = io(this.socketUrl, {
             reconnectionDelayMax: 10000,
             transports: ['websocket'],
-            // rememberUpgrade: true,
-            // timestampRequests: true,
-            // auth: {
-            //     token: '123',
-            // },
-            // secure: true,
-            // rejectUnauthorized: false,
             query: {
                 room: `store_${storeId}`,
             },
         });
-        console.log('this.socket', this.socket);
     };
 
     event = () => {
