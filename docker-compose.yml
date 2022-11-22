@@ -2,24 +2,33 @@ version: "3.4"
 
 services:
 
-  tdata1:
+  rootapp:
     # build:
     #   context: .
     #   dockerfile: Dockerfile
     image: "kpp2355575/tdata:${APP_VERSION}"
-    container_name: tdata1
+    container_name: rootapp
     ports:
       - "3000:3000"
     env_file:
       - ./docker/app.global.env
       - ./.env
+    networks:
+      - net
 
   nginx:
     image: nginx
     restart: unless-stopped
+    container_name: nginx
     ports:
       - "80:80"
       - "443:443"
     volumes:
       - ./nginx/certs:/etc/nginx/certs
       - ./nginx/conf.d:/etc/nginx/conf.d
+    networks:
+      - net
+
+networks:
+  net:
+    driver: bridge

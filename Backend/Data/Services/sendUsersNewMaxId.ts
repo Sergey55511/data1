@@ -11,10 +11,10 @@ export const sendUsersNewMaxId = async (
     const maxId = await getMaxId(prisma, +storeId);
     const room = `store_${storeId}`;
 
-    const socketUrl = process.env.SOCKET_URL;
+    const socketUrl = process.env.NODE_ENV=='development'?'tdata1.ru': 'socketservice';
 
     axios({
-        url: `${socketUrl}/sendMessage`,
+        url: `http://${socketUrl}:5000/sendMessage`,
         method: 'POST',
         data: {
             room,
