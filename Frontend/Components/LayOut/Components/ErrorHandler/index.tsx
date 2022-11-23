@@ -2,6 +2,7 @@ import { Button, Result } from 'antd';
 import { observer } from 'mobx-react-lite';
 import { useRouter } from 'next/router';
 import { useStores } from '../../../../Store/useStores';
+import { ROUTES } from '../../../Pages/constants';
 import { Wrapper } from './style';
 
 export const ErrorHandler = observer(({ children }: { children: JSX.Element }) => {
@@ -11,7 +12,7 @@ export const ErrorHandler = observer(({ children }: { children: JSX.Element }) =
     const is401 = ErrorStore.error.status == 401;
 
     if (is401) {
-        router.push('/login');
+        router.push(ROUTES.login);
         return null;
     }
 

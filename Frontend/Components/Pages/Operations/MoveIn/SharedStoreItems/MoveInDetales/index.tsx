@@ -12,6 +12,7 @@ import { TableApp } from '../../../../../Shared/Table';
 import { KEYSLEFTOVERS } from '../../../../../Shared/Table/constants';
 import { getColumnProps } from '../../../../../Shared/Table/Helpers/getColumnProps';
 import { Title } from '../../../../../Shared/Title';
+import { ROUTES } from '../../../../constants';
 import { Wrapper } from './style';
 
 export const MoveInDetales = observer(() => {
@@ -186,7 +187,7 @@ export const MoveInDetales = observer(() => {
         if (!preparedData.length) return;
         setIsLoading(true);
         await OperationStore.postMoveInShared(preparedData);
-        router.push('/operations/movein');
+        router.push(ROUTES.movein);
         setIsLoading(false);
     };
     return (

@@ -8,6 +8,7 @@ import { useState } from 'react';
 import { KEYSLEFTOVERS } from '../../../Shared/Table/constants';
 import { TableApp } from '../../../Shared/Table';
 import { useRouter } from 'next/router';
+import { ROUTES } from '../../constants';
 
 export const OrdersTable = observer(() => {
     const [filters, setFilters] = useState<Record<string, FilterValue | null>>({});
@@ -111,7 +112,7 @@ export const OrdersTable = observer(() => {
             onRow={(record, _rowIndex) => {
                 return {
                     onDoubleClick: (_event) => {
-                        router.push(`/orders/getOrder/${record.pp}`);
+                        router.push(`${ROUTES.getOrder}/${record.pp}`);
                     },
                 };
             }}

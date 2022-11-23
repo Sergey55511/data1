@@ -11,6 +11,7 @@ import { ColumnsType, FilterValue } from 'antd/es/table/interface';
 import { KEYSLEFTOVERS } from '../../../../Shared/Table/constants';
 import moment from 'moment';
 import { useRouter } from 'next/router';
+import { ROUTES } from '../../../constants';
 
 export const MoveIn = observer(() => {
     const [filters, setFilters] = useState<Record<string, FilterValue | null>>({});
@@ -80,7 +81,7 @@ export const MoveIn = observer(() => {
                 onRow={(record, _rowIndex) => {
                     return {
                         onDoubleClick: (_event) => {
-                            router.push(`/operations/movein/${record.numDocument}`);
+                            router.push(`${ROUTES.movein}/${record.numDocument}`);
                         },
                     };
                 }}

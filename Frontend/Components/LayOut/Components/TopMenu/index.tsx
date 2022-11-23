@@ -15,7 +15,8 @@ import Link from 'next/link';
 import { Wrapper } from './style';
 import { observer } from 'mobx-react-lite';
 import { useStores } from '../../../../Store/useStores';
-import { pages, tPages } from '../../../Pages/constants';
+import { pages, ROUTES, tPages } from '../../../Pages/constants';
+import { useRouter } from 'next/router';
 
 export const TopMenu = observer(({ page }: { page: tPages }) => {
     const { loginStore, OperationStore } = useStores();
@@ -23,17 +24,24 @@ export const TopMenu = observer(({ page }: { page: tPages }) => {
     const sharedCount = OperationStore.shared.length;
 
     const isSynchronousData = OperationStore.isSynchronousData;
-    
+
+    const router = useRouter();
+
+    const onSelectHandler = (key: string) => {
+        router.push(key);
+    };
+
     return (
         <Wrapper>
             <div className="menu">
                 <Menu
                     mode="horizontal"
                     selectedKeys={[page]}
+                    onSelect={(e) => onSelectHandler(e.key)}
                     items={[
                         {
-                            label: <Link href="/">Остатки</Link>,
-                            key: pages.leftover,
+                            label: 'Остатки',
+                            key: ROUTES.root,
                             icon: <DatabaseOutlined />,
                         },
                         {
@@ -43,10 +51,10 @@ export const TopMenu = observer(({ page }: { page: tPages }) => {
                                     count={ordersCount}
                                     overflowCount={999}
                                 >
-                                    <Link href="/orders">Задачи</Link>
+                                    <>Задачи</>
                                 </Badge>
                             ),
-                            key: pages.orders,
+                            key: ROUTES.orders,
                             icon: <StarOutlined />,
                         },
                         {
@@ -56,12 +64,10 @@ export const TopMenu = observer(({ page }: { page: tPages }) => {
                                     count={sharedCount}
                                     overflowCount={999}
                                 >
-                                    <Link href="/operations/movein">
-                                        Приход перемещение
-                                    </Link>
+                                    <>Приход перемещение</>
                                 </Badge>
                             ),
-                            key: pages.moveIn,
+                            key: ROUTES.movein,
                             icon: <VerticalAlignBottomOutlined />,
                         },
                         {
@@ -70,31 +76,23 @@ export const TopMenu = observer(({ page }: { page: tPages }) => {
                             icon: <SettingOutlined />,
                             children: [
                                 {
-                                    label: <Link href="/newItem">Приход сырья</Link>,
-                                    key: pages.newItem,
+                                    label: 'Приход сырья',
+                                    key: ROUTES.newItem,
                                     icon: <ImportOutlined />,
                                 },
                                 {
-                                    label: (
-                                        <Link href="/operations/moveout">Отгрузка</Link>
-                                    ),
-                                    key: pages.moveOut,
+                                    label: 'Отгрузка',
+                                    key: ROUTES.moveout,
                                     icon: <ExportOutlined />,
                                 },
                                 {
-                                    label: (
-                                        <Link href="/operations/shareItems">
-                                            Перемещение
-                                        </Link>
-                                    ),
-                                    key: pages.shareItems,
+                                    label: 'Перемещение',
+                                    key: ROUTES.shareItems,
                                     icon: <CarOutlined />,
                                 },
                                 {
-                                    label: (
-                                        <Link href="/operations/mixing">Смешивание</Link>
-                                    ),
-                                    key: pages.mixing,
+                                    label: 'Смешивание',
+                                    key: ROUTES.mixing,
                                     icon: <FullscreenExitOutlined />,
                                 },
                             ],

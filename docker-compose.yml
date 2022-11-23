@@ -31,4 +31,5 @@ services:
 
 networks:
   net:
+    name: app_net
     driver: bridge

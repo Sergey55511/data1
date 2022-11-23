@@ -14,7 +14,7 @@ services:
         ports:
             - 5432:5432
         networks:
-            - data1_net
+            - app_net
 
     pgbackups:
         image: prodrigestivill/postgres-backup-local
@@ -39,5 +39,5 @@ services:
             - BACKUP_KEEP_MONTHS=6
             - HEALTHCHECK_PORT=8080
 networks:
-  data1_net:
+  app_net:
     external: true

@@ -7,6 +7,7 @@ import { useRef, useState } from 'react';
 import { observer } from 'mobx-react-lite';
 import { useStores } from '../../../../../Store/useStores';
 import { useRouter } from 'next/router';
+import { ROUTES } from '../../../constants';
 
 export default observer(() => {
     const submitRef = useRef<HTMLElement>(null);
@@ -19,7 +20,7 @@ export default observer(() => {
     const onClickHandler = async () => {
         setIsLoading(true);
         await loginStore.login({ login: loginV, password }, () => {
-            router.push('/');
+            router.push(ROUTES.root);
         });
         setIsLoading(false);
     };

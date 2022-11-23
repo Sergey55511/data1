@@ -109,25 +109,29 @@ export const MoveOut = observer(
         })();
 
         const submitData = async () => {
+
             const dataSend = data.filter((item) => {
                 return item.widthOut || item.countItemsOut;
             });
 
+            let nDocUniq = `${numDocument}_(${Date.now()})`;
+
+            let operationId = OPERATIONS.sale.id;
+
+            switch (type) {
+                case 'shareItems':
+                    operationId = OPERATIONS.shareItems.id;
+                    break;
+                case 'mixing':
+                    operationId = OPERATIONS.mixing.id;
+                    nDocUniq = '';
+                    break;
+            }
+
             const dataSendPrepared = dataSend.map((item) => {
-                let operationId = OPERATIONS.sale.id;
-
-                switch (type) {
-                    case 'shareItems':
-                        operationId = OPERATIONS.shareItems.id;
-                        break;
-                    case 'mixing':
-                        operationId = OPERATIONS.mixing.id;
-                        break;
-                }
-
                 if (item.widthOut) item.widthOut = +item.widthOut;
                 if (item.countItemsOut) item.countItemsOut = +item.countItemsOut;
-                item.numDocument = numDocument;
+                item.numDocument = nDocUniq;
                 item.recipientId = recipient;
                 item.operationId = operationId;
                 item.userId = loginStore.user.id;
@@ -153,6 +157,7 @@ export const MoveOut = observer(
             setIsSubmitLoading(false);
             setRecipient(undefined);
             setSelectedRows([]);
+            setNumDocument('');
             setButtonState('lefovers');
         };
 

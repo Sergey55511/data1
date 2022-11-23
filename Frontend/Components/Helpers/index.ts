@@ -2,6 +2,7 @@ import { notification } from 'antd';
 import { NextRouter } from 'next/router';
 import { WORKPIECETYPE } from '../../../Shared/constants';
 import { iData, iDataTable, iField } from '../../../Shared/Types/interfaces';
+import { ROUTES } from '../Pages/constants';
 import { tValue } from '../Shared/InputNumber';
 
 export const getLosseObject = (
@@ -94,7 +95,7 @@ export const sendData = async ({
     notification.success({
         message: 'Сохранение прошло успешно',
     });
-    router.push('/orders');
+    router.push(ROUTES.orders);
     setIsLoading(false);
 };
 
