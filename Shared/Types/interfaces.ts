@@ -37,6 +37,7 @@ export interface iDataTable {
     numDocument?: string;
     pp?: number;
     workpieceTypeId?: number;
+    typeId?: number;
     userId?: number;
     managerId?: number;
     recipientId?: number;

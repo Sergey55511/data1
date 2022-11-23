@@ -113,57 +113,6 @@ export const RowWrapper = observer(
                     </InputField>,
                 ]}
             />
-            // <div className="row">
-            //     <Tooltip title="Удалить строку">
-            //         <Button
-            //             shape="circle"
-            //             icon={<MinusOutlined />}
-            //             onClick={() => removeRow(index)}
-            //             loading={isLoading}
-            //         />
-            //     </Tooltip>
-            //     <div className="item">
-            //         <InputField isError={state.workpieceTypeId.isError}>
-            //             <SelectField
-            //                 placeholder={state.workpieceTypeId.placeholder}
-            //                 value={+state.workpieceTypeId.value || undefined}
-            //                 onChange={(v) => onChange(v, index, 'workpieceTypeId')}
-            //                 options={ListsStore.workpieceType?.map((item) => ({
-            //                     value: item.id,
-            //                     caption: item.workpieceType,
-            //                 }))}
-            //             />
-            //         </InputField>
-            //     </div>
-            //     <div className="item">
-            //         <InputField isError={state.length.isError}>
-            //             <SelectField
-            //                 placeholder={state.length.placeholder}
-            //                 value={+state.length.value || undefined}
-            //                 onChange={(v) => onChange(v, index, 'length')}
-            //                 options={lists?.length?.map((item) => ({
-            //                     value: item.id,
-            //                     caption: item.length,
-            //                 }))}
-            //                 selectProps={{
-            //                     disabled: isLoadinglength,
-            //                     loading: isLoadinglength,
-            //                 }}
-            //             />
-            //         </InputField>
-            //     </div>
-            //     <div className="item">
-            //         <InputField isError={state.widthIn.isError}>
-            //             <InputNumber
-            //                 placeholder={state.widthIn.placeholder}
-            //                 onChangeHandler={(v) => {
-            //                     onChange(v!, index, 'widthIn');
-            //                 }}
-            //                 value={state.widthIn.value || ''}
-            //             />
-            //         </InputField>
-            //     </div>
-            // </div>
         );
     },
 );

@@ -18,7 +18,6 @@ export const RowWrapper = ({
     isLoading,
     onChange,
     sizeRange,
-    storeId,
     grades,
     removeRow,
 }: {
@@ -27,28 +26,10 @@ export const RowWrapper = ({
     isLoading: boolean;
     onChange: (v: string | number, index: number, fieldName: keyof iState) => void;
     sizeRange: iSizeRange[];
-    storeId?: number;
     grades: iGrade[];
     removeRow: (index: number) => void;
 }) => {
-    const { ListsStore } = useStores();
-    const [length, setLength] = useState<iLength[]>([]);
-
-    useEffect(() => {
-        const getSizeRange = async () => {
-            if (storeId && state.sizeRange.value) {
-                const length = await ListsStore.getLength({
-                    storeId,
-                    operationId: OPERATIONS.makeBall.id,
-                    sizeRangeId: +state.sizeRange.value,
-                });
-
-                setLength(length);
-            }
-        };
-        getSizeRange();
-    }, [storeId, state.sizeRange.value]);
-
+    
     return (
         <Row
             key={index}
@@ -62,17 +43,6 @@ export const RowWrapper = ({
                         options={sizeRange?.map((item) => ({
                             value: item.id,
                             caption: item.sizeRange,
-                        }))}
-                    />
-                </InputField>,
-                <InputField key="length" isError={state.length.isError}>
-                    <SelectField
-                        placeholder={state.length.placeholder}
-                        value={+state.length.value || undefined}
-                        onChange={(v) => onChange(v, index, 'length')}
-                        options={length?.map((item) => ({
-                            value: item.id,
-                            caption: item.length,
                         }))}
                     />
                 </InputField>,

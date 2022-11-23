@@ -1,12 +1,12 @@
-version: "3.4"
+version: "3.9"
 
 services:
 
   rootapp:
-    # build:
-    #   context: .
-    #   dockerfile: Dockerfile
-    image: "kpp2355575/tdata:${APP_VERSION}"
+    build:
+      context: .
+      dockerfile: Dockerfile
+    # image: "kpp2355575/tdata:${APP_VERSION}"
     container_name: rootapp
     ports:
       - "3000:3000"
@@ -14,7 +14,7 @@ services:
       - ./docker/app.global.env
       - ./.env
     networks:
-      - net
+      - app_net
 
   nginx:
     image: nginx
@@ -27,9 +27,9 @@ services:
       - ./nginx/certs:/etc/nginx/certs
       - ./nginx/conf.d:/etc/nginx/conf.d
     networks:
-      - net
+      - app_net
 
 networks:
-  net:
+  app_net:
     name: app_net
     driver: bridge

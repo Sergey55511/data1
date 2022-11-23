@@ -46,34 +46,6 @@ export const useLists = (
 
         const fetchList = async () => {
             setIsLoadinglength(true);
-            onChange('', index, 'length');
-            const length = await ListsStore.getLength({
-                storeId: storeId,
-                workpieceTypeId: +state.workpieceTypeId.value,
-                sizeRangeId: state.sizeRangeId.value as number,
-            });
-
-            setLists((prev) => {
-                if (prev) {
-                    prev.length = length;
-                    return prev;
-                }
-                return { length } as iLists;
-            });
-
-            setIsLoadinglength(false);
-        };
-        fetchList();
-    }, [storeId, state.workpieceTypeId.value, state.sizeRangeId.value]);
-
-    useEffect(() => {
-        if (!storeId) return;
-        if (!state.workpieceTypeId.value) return;
-        if (!state.sizeRangeId.value) return;
-        if (!state.length.value) return;
-
-        const fetchList = async () => {
-            setIsLoadinglength(true);
             onChange('', index, 'colorId');
             onChange('', index, 'gradeId');
 
@@ -81,7 +53,6 @@ export const useLists = (
                 storeId: storeId,
                 workpieceTypeId: +state.workpieceTypeId.value,
                 sizeRangeId: +state.sizeRangeId.value,
-                lengthId: +state.length.value,
             });
 
             setLists((prev) => {
@@ -94,10 +65,5 @@ export const useLists = (
             setIsLoadinglength(false);
         };
         fetchList();
-    }, [
-        storeId,
-        state.workpieceTypeId.value,
-        state.sizeRangeId.value,
-        state.length.value,
-    ]);
+    }, [storeId, state.workpieceTypeId.value, state.sizeRangeId.value]);
 };

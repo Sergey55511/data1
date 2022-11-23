@@ -19,7 +19,6 @@ import { Wrapper } from './style';
 
 export interface iState {
     sizeRange: iField;
-    length: iField;
     grade: iField;
     widthIn: iField;
 }
@@ -111,7 +110,6 @@ export const MakeBall = observer(
                     ...prev,
                     {
                         sizeRange: new Field('sizeRangeId', 'Размерный ряд'),
-                        length: new Field('length', 'Длинна', false),
                         grade: new Field('gradeId', 'Сорт', false),
                         widthIn: new Field('widthIn', 'Вес гр.'),
                     },
@@ -152,7 +150,6 @@ export const MakeBall = observer(
             const codeOneItem = record.width ? code / totalSum : 0;
             const data: iData[] = state.map((item) => ({
                 ...record,
-                lengthId: item.length.value ? +item.length.value : undefined,
                 workpieceTypeId: nextType,
                 sizeRangeId: +item.sizeRange.value,
                 gradeId: +item.grade.value,
@@ -194,7 +191,6 @@ export const MakeBall = observer(
                             isLoading={isLoading}
                             onChange={onChange}
                             sizeRange={sizeRange}
-                            storeId={loginStore.user.storeId}
                             grades={grades}
                             removeRow={removeRow}
                         />

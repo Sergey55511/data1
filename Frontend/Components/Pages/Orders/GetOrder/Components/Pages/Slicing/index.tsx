@@ -20,7 +20,6 @@ export interface iState {
     workpieceTypeId: iField;
     gradeId: iField;
     colorId: iField;
-    length: iField;
     sizeRangeId: iField;
     widthIn: iField;
 }
@@ -64,7 +63,6 @@ export const Slicing = observer(
                     ...prev,
                     {
                         workpieceTypeId: new Field('workpieceTypeId', 'Тип загатовки'),
-                        length: new Field('length', 'Длинна', false),
                         gradeId: new Field('gradeId', 'Сорт'),
                         colorId: new Field('colorId', 'Цвет'),
                         sizeRangeId: new Field('sizeRangeId', 'Размерный ряд'),
@@ -113,12 +111,12 @@ export const Slicing = observer(
                 workpieceTypeId: +item.workpieceTypeId.value,
                 gradeId: +item.gradeId.value,
                 colorId: +item.colorId.value,
-                lengthId: item.length.value ? +item.length.value : undefined,
                 sizeRangeId: +item.sizeRangeId.value,
                 widthOut: undefined,
                 widthIn: +item.widthIn.value!,
                 fractionId: undefined,
-                grade: undefined,
+                materialGroupId: undefined,
+                typeId: undefined,
                 workpieceType: undefined,
                 productionId: undefined,
                 stateId,

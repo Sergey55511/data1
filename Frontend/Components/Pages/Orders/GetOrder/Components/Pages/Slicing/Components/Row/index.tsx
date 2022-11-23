@@ -89,23 +89,6 @@ export const Row = observer(
                     </InputField>
                 </div>
                 <div className="item">
-                    <InputField isError={state.length.isError}>
-                        <SelectField
-                            placeholder={state.length.placeholder}
-                            value={+state.length.value || undefined}
-                            onChange={(v) => onChange(v, index, 'length')}
-                            options={lists?.length?.map((item) => ({
-                                value: item.id,
-                                caption: item.length,
-                            }))}
-                            selectProps={{
-                                disabled: isLoadinglength,
-                                loading: isLoadinglength,
-                            }}
-                        />
-                    </InputField>
-                </div>
-                <div className="item">
                     <InputField isError={state.colorId.isError}>
                         <SelectField
                             placeholder={state.colorId.placeholder}
