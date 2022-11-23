@@ -31,4 +31,9 @@ export const Wrapper = styled.div`
             }
         }
     }
+    .videoBackground {
+        position: absolute;
+        /* height: 100vh; */
+        width: 100vw;
+    }
 `;

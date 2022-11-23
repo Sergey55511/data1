@@ -44,7 +44,7 @@ export default observer(() => {
                     className="form"
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
-                    transition={{ delay: 1, duration: 0.5 }}
+                    transition={{ delay: 0.5, duration: 1 }}
                 >
                     {isAdmin && (
                         <div className="menu">

@@ -41,7 +41,13 @@ export const GetOrderSwitcher = ({
         case OPERATIONS.sortingB.id:
             return <Sorting record={record} stateId={STATE.sortedA.id} />;
         case OPERATIONS.improve.id:
-            return <OneToOne record={record} stateId={STATE.improved.id} />;
+            return (
+                <OneToOne
+                    record={record}
+                    stateId={STATE.improved.id}
+                    isCheckLosses={false}
+                />
+            );
         case OPERATIONS.autoclave.id:
             return <OneToOne record={record} stateId={STATE.autoclaved.id} />;
         case OPERATIONS.grindingEngraver.id:
