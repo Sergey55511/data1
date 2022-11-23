@@ -3,10 +3,10 @@ version: "3.9"
 services:
 
   rootapp:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    # image: "kpp2355575/tdata:${APP_VERSION}"
+    # build:
+    #   context: .
+    #   dockerfile: Dockerfile
+    image: "kpp2355575/tdata:${APP_VERSION}"
     container_name: rootapp
     ports:
       - "3000:3000"
