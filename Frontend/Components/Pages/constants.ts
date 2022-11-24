@@ -8,7 +8,8 @@ export const pages = {
     moveOut: 'moveOut',
     moveOin: 'moveOin',
     shareItems: 'shareItems',
-    mixing: 'mixing',
+    mixingGrade: 'mixingGrade',
+    mixingSize: 'mixingSize',
     moveIn: 'moveIn',
     moveInDetales: 'moveInDetales',
 };
@@ -21,6 +22,7 @@ export const ROUTES = {
     newItem: '/newItem',
     moveout: '/operations/moveout',
     shareItems: '/operations/shareItems',
-    mixing: '/operations/mixing',
+    mixingGrade: '/operations/mixing/grade',
+    mixingSize: '/operations/mixing/size',
     getOrder: '/orders/getOrder',
 };

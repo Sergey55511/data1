@@ -92,8 +92,20 @@ export const TopMenu = observer(({ page }: { page: tPages }) => {
                                 },
                                 {
                                     label: 'Смешивание',
-                                    key: ROUTES.mixing,
+                                    key: 'mixingGroup',
                                     icon: <FullscreenExitOutlined />,
+                                    children: [
+                                        {
+                                            label: 'Смешивание сорт',
+                                            key: ROUTES.mixingGrade,
+                                            icon: <FullscreenExitOutlined />,
+                                        },
+                                        {
+                                            label: 'Смешивание размеров',
+                                            key: ROUTES.mixingSize,
+                                            icon: <FullscreenExitOutlined />,
+                                        },
+                                    ],
                                 },
                             ],
                         },

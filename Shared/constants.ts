@@ -15,13 +15,14 @@ export const OPERATIONS = {
     slice: { id: 15 }, //Распил
     sale: { id: 16 }, //Отгрузка
     shareItems: { id: 17 }, //Перемещение
-    mixing: { id: 18 }, //Смешивание
+    mixingGrade: { id: 18 }, //Смешивание сорт
     sortingN: { id: 19 }, //сортировка насыщенный
     sortingA: { id: 20 }, //сортировка автоклавированого
     sortingB: { id: 21 }, //Сортировка заготовок
     glueBlank: { id: 22 }, //Клей заготовок
     sliceIk: { id: 23 }, //Распил ИК
     sortingLength: { id: 24 }, //Сортировка длин
+    mixingSize: { id: 25 }, //Смешивание размер
 };
 export const STATE = {
     washed: { id: 1 },

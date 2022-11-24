@@ -20,7 +20,13 @@ export interface iDataIndex extends iData {
 }
 
 export const MoveOut = observer(
-    ({ title, type }: { title: string; type?: 'moveOut' | 'shareItems' | 'mixing' }) => {
+    ({
+        title,
+        type,
+    }: {
+        title: string;
+        type?: 'moveOut' | 'shareItems' | 'mixingGrade' | 'mixingSize';
+    }) => {
         const [isRecipientLoading, setIsRecipientLoading] = useState(false);
         const [numDocument, setNumDocument] = useState('');
         const [isSubmitLoading, setIsSubmitLoading] = useState(false);
@@ -34,10 +40,15 @@ export const MoveOut = observer(
         const { ListsStore, loginStore, OperationStore } = useStores();
         const { leftovers } = OperationStore;
 
+        const isMixing = ['mixingGrade', 'mixingSize'].includes(type || '');
+
         useEffect(() => {
             let data: iDataIndex[] = leftovers;
-            if (type == 'mixing') {
+            if (type == 'mixingGrade') {
                 data = leftovers.filter((item) => item.stateId == STATE.sliced.id);
+            }
+            if (type == 'mixingSize') {
+                data = leftovers.filter((item) => item.stateId == STATE.polished.id);
             }
             data = data.map((item, index) => {
                 return { ...item, index };
@@ -89,7 +100,7 @@ export const MoveOut = observer(
 
         const isDisabled = (() => {
             let res = false;
-            if (type != 'mixing') {
+            if (!isMixing) {
                 if (!recipient) res = true;
                 if (!numDocument) res = true;
             }
@@ -109,7 +120,6 @@ export const MoveOut = observer(
         })();
 
         const submitData = async () => {
-
             const dataSend = data.filter((item) => {
                 return item.widthOut || item.countItemsOut;
             });
@@ -122,8 +132,12 @@ export const MoveOut = observer(
                 case 'shareItems':
                     operationId = OPERATIONS.shareItems.id;
                     break;
-                case 'mixing':
-                    operationId = OPERATIONS.mixing.id;
+                case 'mixingGrade':
+                    operationId = OPERATIONS.mixingGrade.id;
+                    nDocUniq = '';
+                    break;
+                case 'mixingSize':
+                    operationId = OPERATIONS.mixingSize.id;
                     nDocUniq = '';
                     break;
             }
@@ -139,7 +153,7 @@ export const MoveOut = observer(
                 return prepareDataTable(item);
             });
             setIsSubmitLoading(true);
-            if (type == 'mixing') {
+            if (isMixing) {
                 await OperationStore.mixing(dataSendPrepared, () => {
                     notification.success({ message: 'Смешивание прошла успешно' });
                 });
@@ -173,7 +187,7 @@ export const MoveOut = observer(
             <Wrapper>
                 <div className="header">
                     <Title text={title} />
-                    {type != 'mixing' && (
+                    {!isMixing && (
                         <div className="recipientWrapper">
                             <InputField isError={false}>
                                 <SelectField
@@ -205,7 +219,7 @@ export const MoveOut = observer(
                             </a>
                         </div>
                     )}
-                    {type != 'mixing' && (
+                    {!isMixing && (
                         <div className="numShipment">
                             <Input
                                 value={numDocument}
