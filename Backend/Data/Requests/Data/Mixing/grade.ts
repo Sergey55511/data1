@@ -1,9 +1,9 @@
 import moment from 'moment';
-import { GRADE } from '../../../../Shared/constants';
-import { iDataTable } from '../../../../Shared/Types/interfaces';
-import { tPrisma } from '../../../types';
+import { GRADE } from '../../../../../Shared/constants';
+import { iDataTable } from '../../../../../Shared/Types/interfaces';
+import { tPrisma } from '../../../../types';
 
-export const mixing = async <T>(
+export const mixingGrade = async <T>(
     prisma: tPrisma,
     data: iDataTable[],
     isSetNewPP = true,
@@ -21,7 +21,6 @@ export const mixing = async <T>(
     }));
     const dataCom = dataPrepared?.map((item) => ({
         ...item,
-        productionId: undefined,
         gradeId: GRADE.mix.id,
         widthOut: undefined,
         countItemsOut: undefined,

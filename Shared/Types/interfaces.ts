@@ -91,6 +91,7 @@ export interface iMaterialGroup extends iList {
 export interface iSizeRange extends iList {
     sizeRange: string;
     size: number;
+    nextSizeRangeId?: number;
 }
 export interface iFraction extends iList {
     fraction: string;

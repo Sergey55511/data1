@@ -6,6 +6,7 @@ import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { iState } from '../..';
 import { observer } from 'mobx-react-lite';
 import {
+    iData,
     iLength,
     iSizeRange,
 } from '../../../../../../../../../../Shared/Types/interfaces';
@@ -21,20 +22,22 @@ export const RowWrapper = observer(
         removeRow,
         state,
         setState,
-        sizeRange,
-        workpieceTypeId,
+        record,
     }: {
         isLoading?: boolean;
         index: number;
         removeRow: (i: number) => void;
         state: iState;
         setState: Dispatch<SetStateAction<iState[]>>;
-        sizeRange: iSizeRange[];
-        workpieceTypeId?: number;
+        record: iData;
     }) => {
         const { ListsStore, loginStore } = useStores();
         const [lists, setLists] = useState<iLists | undefined>(undefined);
         const [isLoadinglength, setIsLoadinglength] = useState<boolean>(false);
+
+        const workpieceTypeId = record.workpieceTypeId;
+        const sizeRangeId = record.sizeRangeId;
+
         const onChange = (v: string | number, index: number, fieldName: keyof iState) => {
             setState((prev) => {
                 prev[index][fieldName].value = v;
@@ -54,7 +57,7 @@ export const RowWrapper = observer(
                 const length = await ListsStore.getLength({
                     storeId: storeId,
                     workpieceTypeId: +workpieceTypeId,
-                    sizeRangeId: state.sizeRange?.value as number,
+                    sizeRangeId: record.sizeRangeId,
                 });
 
                 setLists((prev) => {
@@ -68,7 +71,7 @@ export const RowWrapper = observer(
                 setIsLoadinglength(false);
             };
             fetchList();
-        }, [storeId, workpieceTypeId, state.sizeRange?.value]);
+        }, [storeId, workpieceTypeId, sizeRangeId]);
 
         return (
             <Row
@@ -76,17 +79,6 @@ export const RowWrapper = observer(
                 isLoading={isLoading}
                 removeRow={() => removeRow(index)}
                 fields={[
-                    <InputField key="sizeRange" isError={state.sizeRange.isError}>
-                        <SelectField
-                            placeholder={state.sizeRange.placeholder}
-                            value={+state.sizeRange.value || undefined}
-                            onChange={(v) => onChange(v, index, 'sizeRange')}
-                            options={sizeRange?.map((item) => ({
-                                value: item.id,
-                                caption: item.sizeRange,
-                            }))}
-                        />
-                    </InputField>,
                     <InputField key="length" isError={state.length.isError}>
                         <SelectField
                             placeholder={state.length.placeholder}

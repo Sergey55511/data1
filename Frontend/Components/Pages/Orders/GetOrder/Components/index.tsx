@@ -58,6 +58,8 @@ export const GetOrderSwitcher = ({
             return <OneToOne record={record} stateId={STATE.turned.id} />;
         case OPERATIONS.makeBall.id:
             return <MakeBall record={record} stateId={STATE.balled.id} />;
+        case OPERATIONS.sliceIk.id:
+            return <MakeBall record={record} stateId={STATE.balled.id} />;
         case OPERATIONS.makeSuperBall.id:
             return <OneToOne record={record} stateId={STATE.makedSuperBall.id} />;
         case OPERATIONS.grindingSuper.id:

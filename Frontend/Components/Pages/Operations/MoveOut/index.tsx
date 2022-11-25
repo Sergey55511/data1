@@ -153,11 +153,18 @@ export const MoveOut = observer(
                 return prepareDataTable(item);
             });
             setIsSubmitLoading(true);
-            if (isMixing) {
-                await OperationStore.mixing(dataSendPrepared, () => {
+
+            if (type == 'mixingGrade')
+                await OperationStore.mixingGrade(dataSendPrepared, () => {
                     notification.success({ message: 'Смешивание прошла успешно' });
                 });
-            } else {
+
+            if (type == 'mixingSize')
+                await OperationStore.mixingSize(dataSendPrepared, () => {
+                    notification.success({ message: 'Смешивание прошла успешно' });
+                });
+
+            if (!isMixing) {
                 await OperationStore.moveToWork(
                     dataSendPrepared,
                     () => {

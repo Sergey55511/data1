@@ -156,13 +156,31 @@ export class OperationStore {
             this.errorStore.setError(err as iError);
         }
     });
-    mixing = flow(function* (
+
+    mixingGrade = flow(function* (
         this: OperationStore,
         data: iDataTable[],
         callBack?: () => void,
     ) {
         try {
-            yield api.mixing({
+            yield api.mixingGrade({
+                data: data,
+                storeId: this.loginStore.user.storeId,
+                maxId: this.maxId,
+            });
+            if (callBack) callBack();
+        } catch (err) {
+            this.errorStore.setError(err as iError);
+        }
+    });
+
+    mixingSize = flow(function* (
+        this: OperationStore,
+        data: iDataTable[],
+        callBack?: () => void,
+    ) {
+        try {
+            yield api.mixingSize({
                 data: data,
                 storeId: this.loginStore.user.storeId,
                 maxId: this.maxId,

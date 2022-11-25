@@ -70,13 +70,22 @@ export const moveToWork = (data: {
         data,
     }).then((res) => res.data);
 };
-export const mixing = (data: { data: iDataTable[]; storeId: number; maxId: number }) => {
+export const mixingGrade = (data: { data: iDataTable[]; storeId: number; maxId: number }) => {
     return axios({
-        url: `/api/data/mixing`,
+        url: `/api/data/mixing/grade`,
         method: 'POST',
         data,
     }).then((res) => res.data);
 };
+
+export const mixingSize = (data: { data: iDataTable[]; storeId: number; maxId: number }) => {
+    return axios({
+        url: `/api/data/mixing/size`,
+        method: 'POST',
+        data,
+    }).then((res) => res.data);
+};
+
 export const postOrderResult = (data: iDataTable[]) => {
     return axios({
         url: `/api/data/orders/order`,

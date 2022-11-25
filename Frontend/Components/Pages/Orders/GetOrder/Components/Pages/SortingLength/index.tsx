@@ -17,7 +17,6 @@ import { Title } from '../../Shared/Title';
 import { Field } from '../../../../../../Helpers/classes';
 
 export interface iState {
-    sizeRange: iField;
     length: iField;
     widthIn: iField;
 }
@@ -66,7 +65,6 @@ export const SortingLength = observer(
                 const res: iState[] = [
                     ...prev,
                     {
-                        sizeRange: new Field('sizeRangeId', 'Размер'),
                         length: new Field('length', 'Длинна', false),
                         widthIn: new Field('widthIn', 'Вес гр.'),
                     },
@@ -110,7 +108,6 @@ export const SortingLength = observer(
             const codeOneItem = record.width ? code / totalSum : 0;
             const data: iData[] = state.map((item) => ({
                 ...record,
-                sizeRangeId: +item.sizeRange.value,
                 lengthId: item.length.value ? +item.length.value : undefined,
                 widthOut: undefined,
                 widthIn: +item.widthIn.value!,
@@ -151,8 +148,7 @@ export const SortingLength = observer(
                             removeRow={removeRow}
                             setState={setState}
                             isLoading={isLoading}
-                            sizeRange={sizeRagne}
-                            workpieceTypeId={record.workpieceTypeId}
+                            record={record}
                             key={index}
                         />
                     ))}
