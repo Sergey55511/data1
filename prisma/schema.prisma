@@ -223,7 +223,7 @@ model ModelsSizes {
 model SizeRange {
   id              Int      @id @default(autoincrement())
   sizeRange       String
-  size            Int      @default(0) @map("range")
+  size            Int      @default(0)
   nextSizeRangeId Int?
   position        Int      @default(autoincrement())
   active          Boolean  @default(true)
