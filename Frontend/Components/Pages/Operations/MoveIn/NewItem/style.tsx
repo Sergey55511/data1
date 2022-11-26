@@ -8,6 +8,11 @@ export const Wrapper = styled.div`
     .primeData {
         display: flex;
         column-gap: 8px;
+        justify-content: space-between;
+        > div {
+            display: flex;
+            column-gap: 8px;
+        }
     }
 
     .addRow {

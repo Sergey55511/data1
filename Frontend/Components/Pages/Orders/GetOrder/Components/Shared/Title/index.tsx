@@ -35,7 +35,7 @@ export const Title = ({
     return (
         <Wrapper>
             <a href="#" onClick={addRowHandler}>
-                Добавить строку!
+                Добавить строку
             </a>
             {setGarbage && (
                 <div>

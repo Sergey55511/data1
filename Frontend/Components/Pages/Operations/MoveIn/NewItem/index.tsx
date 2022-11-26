@@ -150,33 +150,33 @@ export const NewItem = observer(() => {
             <Frame legend="Общие данные">
                 <div className="primeData">
                     <div>
-                        <Tooltip placement="right" title="Сохранить">
-                            <Button
-                                size="small"
-                                shape="circle"
-                                icon={<CheckOutlined />}
-                                onClick={() => subbmitHandler()}
-                                loading={isLoading}
+                        <Tooltip
+                            placement="top"
+                            title={`Макс партия: ${OperationStore.maxLot}`}
+                        >
+                            <PrimeField
+                                {...{ primeData, setPrameValue }}
+                                fieldName={'lot'}
+                                type={primeData.lot.type}
+                                step={primeData.lot.step}
                             />
                         </Tooltip>
-                    </div>
-                    <Tooltip
-                        placement="top"
-                        title={`Макс партия: ${OperationStore.maxLot}`}
-                    >
                         <PrimeField
                             {...{ primeData, setPrameValue }}
-                            fieldName={'lot'}
-                            type={primeData.lot.type}
-                            step={primeData.lot.step}
+                            fieldName={'numDocument'}
+                            type={primeData.numDocument.type}
+                            step={primeData.numDocument.step}
                         />
-                    </Tooltip>
-                    <PrimeField
-                        {...{ primeData, setPrameValue }}
-                        fieldName={'numDocument'}
-                        type={primeData.numDocument.type}
-                        step={primeData.numDocument.step}
-                    />
+                    </div>
+                    <div>
+                        <Button
+                            type="primary"
+                            onClick={() => subbmitHandler()}
+                            loading={isLoading}
+                        >
+                            Сохранить
+                        </Button>
+                    </div>
                 </div>
             </Frame>
             <div className="addRow">
