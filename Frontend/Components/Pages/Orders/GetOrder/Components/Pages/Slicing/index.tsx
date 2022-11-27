@@ -8,11 +8,7 @@ import { useStores } from '../../../../../../../Store/useStores';
 import { tValue } from '../../../../../../Shared/InputNumber';
 import { Row } from './Components/Row';
 import { Wrapper } from './style';
-import {
-    getTotalSum,
-    sendData,
-    validation,
-} from '../../../../../../Helpers';
+import { getTotalSum, sendData, validation } from '../../../../../../Helpers';
 import { Title } from '../../Shared/Title';
 import { Field } from '../../../../../../Helpers/classes';
 
@@ -33,18 +29,6 @@ export const Slicing = observer(
         const [moveBack, setMoveBack] = useState<tValue>(undefined);
         const [isLoading, setIsLoading] = useState(false);
         const router = useRouter();
-
-        useEffect(() => {
-            if (loginStore.user.storeId) {
-                ListsStore.getWorkpieceType({
-                    storeId: loginStore.user.storeId,
-                    operationId: OPERATIONS.slice.id,
-                });
-                ListsStore.getColors({
-                    storeId: loginStore.user.storeId,
-                });
-            }
-        }, [loginStore.user.storeId]);
 
         useEffect(() => {
             const totalSum = getTotalSum(state);
@@ -131,7 +115,7 @@ export const Slicing = observer(
                 router,
                 losses,
                 moveBack,
-                garbage
+                garbage,
             });
         };
 

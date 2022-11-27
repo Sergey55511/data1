@@ -4,15 +4,15 @@ import { InputField } from '../../../../../../../../Shared/InputField';
 import { SelectField } from '../../../../../../../../Shared/SelectField';
 import { InputNumber } from '../../../../../../../../Shared/InputNumber';
 import { useStores } from '../../../../../../../../../Store/useStores';
-import { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import { Dispatch, SetStateAction } from 'react';
 import { iState } from '../..';
 import { observer } from 'mobx-react-lite';
-import { useLists } from '../Hooks/useLists';
 import {
     iGrade,
     iLength,
     iSizeRange,
 } from '../../../../../../../../../../Shared/Types/interfaces';
+import { useData } from '../Hooks/useData';
 
 export interface iLists {
     sizeRange: iSizeRange[];
@@ -33,22 +33,19 @@ export const Row = observer(
         state: iState;
         setState: Dispatch<SetStateAction<iState[]>>;
     }) => {
-        const { ListsStore, loginStore } = useStores();
-        const [lists, setLists] = useState<iLists | undefined>(undefined);
-        const [isLoadinglength, setIsLoadinglength] = useState<boolean>(false);
-        const onChange = (v: string | number, index: number, fieldName: keyof iState) => {
+        const { loginStore } = useStores();
+
+        const onChange = (v: string | number, fieldName: keyof iState) => {
             setState((prev) => {
                 prev[index][fieldName].value = v;
                 return [...prev];
             });
         };
 
-        useLists(
-            setLists,
+        const { workpieceType, color, sizeRange, grade } = useData(
             loginStore.user.storeId,
-            state,
-            index,
-            setIsLoadinglength,
+            +state.workpieceTypeId.value,
+            +state.sizeRangeId.value,
             onChange,
         );
 
@@ -67,8 +64,9 @@ export const Row = observer(
                         <SelectField
                             placeholder={state.workpieceTypeId.placeholder}
                             value={+state.workpieceTypeId.value || undefined}
-                            onChange={(v) => onChange(v, index, 'workpieceTypeId')}
-                            options={ListsStore.workpieceType?.map((item) => ({
+                            onChange={(v) => onChange(v, 'workpieceTypeId')}
+                            selectProps={{ loading: workpieceType.isLoading }}
+                            options={workpieceType.data?.map((item) => ({
                                 value: item.id,
                                 caption: item.workpieceType,
                             }))}
@@ -80,8 +78,9 @@ export const Row = observer(
                         <SelectField
                             placeholder={state.sizeRangeId.placeholder}
                             value={+state.sizeRangeId.value || undefined}
-                            onChange={(v) => onChange(v, index, 'sizeRangeId')}
-                            options={lists?.sizeRange?.map((item) => ({
+                            onChange={(v) => onChange(v, 'sizeRangeId')}
+                            selectProps={{ loading: sizeRange.isLoading }}
+                            options={sizeRange.data?.map((item) => ({
                                 value: item.id,
                                 caption: item.sizeRange,
                             }))}
@@ -93,8 +92,9 @@ export const Row = observer(
                         <SelectField
                             placeholder={state.colorId.placeholder}
                             value={+state.colorId.value || undefined}
-                            onChange={(v) => onChange(v, index, 'colorId')}
-                            options={ListsStore.colors?.map((item) => ({
+                            onChange={(v) => onChange(v, 'colorId')}
+                            selectProps={{ loading: color.isLoading }}
+                            options={color.data?.map((item) => ({
                                 value: item.id,
                                 caption: item.color,
                             }))}
@@ -106,8 +106,9 @@ export const Row = observer(
                         <SelectField
                             placeholder={state.gradeId.placeholder}
                             value={+state.gradeId.value || undefined}
-                            onChange={(v) => onChange(v, index, 'gradeId')}
-                            options={lists?.grade?.map((item) => ({
+                            onChange={(v) => onChange(v, 'gradeId')}
+                            selectProps={{ loading: grade.isLoading }}
+                            options={grade.data?.map((item) => ({
                                 value: item.id,
                                 caption: item.grade,
                             }))}
@@ -119,7 +120,7 @@ export const Row = observer(
                         <InputNumber
                             placeholder={state.widthIn.placeholder}
                             onChangeHandler={(v) => {
-                                onChange(v!, index, 'widthIn');
+                                onChange(v!, 'widthIn');
                             }}
                             value={state.widthIn.value || ''}
                         />

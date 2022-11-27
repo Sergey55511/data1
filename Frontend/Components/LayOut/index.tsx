@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo } from 'react';
 import { createGlobalStyle } from 'styled-components';
 import { useStores } from '../../Store/useStores';
 import { Footer } from './Components/Footer';
@@ -9,7 +9,11 @@ import { ErrorHandler } from './Components/ErrorHandler';
 import { Spin } from 'antd';
 import { ConfigProvider } from 'antd';
 import locale from 'antd/lib/locale/ru_RU';
-import { tPages } from '../Pages/constants';
+import { ROUTES, tPages } from '../Pages/constants';
+import { QueryCache, QueryClient, QueryClientProvider } from 'react-query';
+import { useRouter } from 'next/router';
+import { iError } from '../../../Shared/Types/interfaces';
+import { useQueryClient } from './useQueryClient';
 
 const GlobalStyle = createGlobalStyle`
     body {
@@ -30,7 +34,10 @@ const GlobalStyle = createGlobalStyle`
 
 export const LayOut = observer(
     ({ children, page }: { children: JSX.Element; page: tPages }) => {
-        const { loginStore, UIStore, OperationStore, SocketIo } = useStores();
+        const { loginStore, UIStore, OperationStore, SocketIo, ErrorStore } = useStores();
+        const router = useRouter();
+
+        const queryClient = useQueryClient();
 
         useEffect(() => {
             UIStore.getVersion();
@@ -69,16 +76,18 @@ export const LayOut = observer(
                 style={{ height: '100%' }}
             >
                 <ErrorHandler>
-                    <ConfigProvider locale={locale}>
-                        <Wrapper>
-                            <GlobalStyle />
-                            <TopMenu page={page} />
-                            <div className="body">
-                                <div className="papper">{children}</div>
-                            </div>
-                            <Footer />
-                        </Wrapper>
-                    </ConfigProvider>
+                    <QueryClientProvider client={queryClient}>
+                        <ConfigProvider locale={locale}>
+                            <Wrapper>
+                                <GlobalStyle />
+                                <TopMenu page={page} />
+                                <div className="body">
+                                    <div className="papper">{children}</div>
+                                </div>
+                                <Footer />
+                            </Wrapper>
+                        </ConfigProvider>
+                    </QueryClientProvider>
                 </ErrorHandler>
             </Spin>
         );

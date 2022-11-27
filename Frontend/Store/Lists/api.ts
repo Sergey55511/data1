@@ -1,6 +1,12 @@
 import axios from 'axios';
 import { getQueryParams } from '../../../Shared/Helpers';
-import { iQueryFilters } from '../../../Shared/Types/interfaces';
+import {
+    iColor,
+    iGrade,
+    iQueryFilters,
+    iSizeRange,
+    iWorkpieceType,
+} from '../../../Shared/Types/interfaces';
 
 export const getMaterialGroup = () => {
     return axios({
@@ -20,7 +26,7 @@ export const getSizeRange = (filters: iQueryFilters, id?: number) => {
     return axios({
         url: `/api/list/sizeRange${params}`,
         method: 'GET',
-    }).then((res) => res.data);
+    }).then((res) => res.data as iSizeRange[]);
 };
 export const getFraction = () => {
     return axios({
@@ -40,7 +46,7 @@ export const getGrades = (filters: iQueryFilters) => {
     return axios({
         url: `/api/list/grades${params}`,
         method: 'GET',
-    }).then((res) => res.data);
+    }).then((res) => res.data as iGrade[]);
 };
 export const getTypes = (filters: iQueryFilters) => {
     const params = getQueryParams(filters);
@@ -54,7 +60,7 @@ export const getColors = (filters: iQueryFilters) => {
     return axios({
         url: `/api/list/colors${params}`,
         method: 'GET',
-    }).then((res) => res.data);
+    }).then((res) => res.data as iColor[]);
 };
 
 export const getProductions = (storeId: number) => {
@@ -86,7 +92,7 @@ export const getWorkpieceType = (filters: iQueryFilters) => {
     return axios({
         url: `/api/list/workpieceType${params}`,
         method: 'GET',
-    }).then((res) => res.data);
+    }).then((res) => res.data as iWorkpieceType[]);
 };
 export const getLength = (filters: iQueryFilters) => {
     const params = getQueryParams(filters);
