@@ -11,6 +11,10 @@ export interface iManager {
     id: number;
     name: string;
 }
+export interface iState {
+    id: number;
+    state: string;
+}
 
 export interface iCookies {
     [key: string]: string;

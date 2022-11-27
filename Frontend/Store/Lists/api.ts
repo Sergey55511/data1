@@ -6,6 +6,7 @@ import {
     iQueryFilters,
     iSizeRange,
     iWorkpieceType,
+    iState
 } from '../../../Shared/Types/interfaces';
 
 export const getMaterialGroup = () => {
@@ -39,6 +40,16 @@ export const getOperations = (storeId: number, stateId: number) => {
         url: `/api/list/operations?storeId=${storeId}&stateId=${stateId}`,
         method: 'GET',
     }).then((res) => res.data);
+};
+
+export const getStates = (stateId?: number[]) => {
+    return axios({
+        url: `/api/list/state`,
+        method: 'GET',
+        params: {
+            stateId
+        }
+    }).then((res) => res.data as iState[]);
 };
 
 export const getGrades = (filters: iQueryFilters) => {

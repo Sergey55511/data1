@@ -13,6 +13,7 @@ import { Title } from '../../Shared/Title';
 import { Field } from '../../../../../../Helpers/classes';
 
 export interface iState {
+    stateId: iField;
     workpieceTypeId: iField;
     gradeId: iField;
     colorId: iField;
@@ -21,8 +22,16 @@ export interface iState {
 }
 
 export const Slicing = observer(
-    ({ record, stateId }: { record: iData; stateId: number }) => {
-        const { OperationStore, ListsStore, loginStore } = useStores();
+    ({
+        record,
+        stateId,
+        isShowState,
+    }: {
+        record: iData;
+        stateId: number;
+        isShowState?: boolean;
+    }) => {
+        const { OperationStore } = useStores();
         const [state, setState] = useState<iState[]>([]);
         const [losses, setLosses] = useState<number>(0);
         const [garbage, setGarbage] = useState<number | undefined>(undefined);
@@ -43,16 +52,16 @@ export const Slicing = observer(
         const addRowHandler = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
             e.preventDefault();
             setState((prev) => {
-                const res: iState[] = [
-                    ...prev,
-                    {
-                        workpieceTypeId: new Field('workpieceTypeId', 'Тип загатовки'),
-                        gradeId: new Field('gradeId', 'Сорт'),
-                        colorId: new Field('colorId', 'Цвет'),
-                        sizeRangeId: new Field('sizeRangeId', 'Размерный ряд'),
-                        widthIn: new Field('widthIn', 'Вес гр.'),
-                    },
-                ];
+                const newRow: iState = {
+                    stateId: new Field('stateId', 'Состояние'),
+                    workpieceTypeId: new Field('workpieceTypeId', 'Тип загатовки'),
+                    gradeId: new Field('gradeId', 'Сорт'),
+                    colorId: new Field('colorId', 'Цвет'),
+                    sizeRangeId: new Field('sizeRangeId', 'Размерный ряд'),
+                    widthIn: new Field('widthIn', 'Вес гр.'),
+                };
+                newRow.stateId.value = stateId;
+                const res: iState[] = [...prev, newRow];
                 return res;
             });
         };
@@ -103,7 +112,7 @@ export const Slicing = observer(
                 typeId: undefined,
                 workpieceType: undefined,
                 productionId: undefined,
-                stateId,
+                stateId: +item.stateId,
                 moneyIn: item.widthIn.value ? codeOneItem * +item.widthIn.value : 0,
             }));
 
@@ -140,6 +149,7 @@ export const Slicing = observer(
                             setState={setState}
                             isLoading={isLoading}
                             key={index}
+                            isShowState={isShowState}
                         />
                     ))}
                 </div>

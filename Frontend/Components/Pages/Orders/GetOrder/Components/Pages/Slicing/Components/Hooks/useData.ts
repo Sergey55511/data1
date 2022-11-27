@@ -6,6 +6,7 @@ import {
     getColors,
     getGrades,
     getSizeRange,
+    getStates,
     getWorkpieceType,
 } from '../../../../../../../../../Store/Lists/api';
 
@@ -14,7 +15,18 @@ export const useData = (
     workpieceTypeId: number,
     sizeRangeId: number,
     onChange: (v: string | number, fieldName: keyof iState) => void,
+    stateId?: number[],
 ) => {
+    const stateResult = useQuery(
+        ['state', stateId],
+        () => {
+            return getStates(stateId);
+        },
+        {
+            enabled: !!stateId,
+        },
+    );
+
     const color = useQuery(
         ['colors', storeId],
         () => {
@@ -60,5 +72,5 @@ export const useData = (
         { enabled: !!storeId },
     );
 
-    return { color, grade, sizeRange, workpieceType };
+    return { color, grade, sizeRange, workpieceType, stateResult };
 };

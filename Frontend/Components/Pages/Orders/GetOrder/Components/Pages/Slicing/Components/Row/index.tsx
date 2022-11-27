@@ -13,6 +13,7 @@ import {
     iSizeRange,
 } from '../../../../../../../../../../Shared/Types/interfaces';
 import { useData } from '../Hooks/useData';
+import { STATE } from '../../../../../../../../../../Shared/constants';
 
 export interface iLists {
     sizeRange: iSizeRange[];
@@ -26,12 +27,14 @@ export const Row = observer(
         removeRow,
         state,
         setState,
+        isShowState,
     }: {
         isLoading?: boolean;
         index: number;
         removeRow: (i: number) => void;
         state: iState;
         setState: Dispatch<SetStateAction<iState[]>>;
+        isShowState?: boolean;
     }) => {
         const { loginStore } = useStores();
 
@@ -42,11 +45,12 @@ export const Row = observer(
             });
         };
 
-        const { workpieceType, color, sizeRange, grade } = useData(
+        const { workpieceType, color, sizeRange, grade, stateResult } = useData(
             loginStore.user.storeId,
             +state.workpieceTypeId.value,
             +state.sizeRangeId.value,
             onChange,
+            isShowState ? [STATE.sliced.id, STATE.balled.id] : undefined,
         );
 
         return (
@@ -59,6 +63,26 @@ export const Row = observer(
                         loading={isLoading}
                     />
                 </Tooltip>
+                {isShowState && (
+                    <div className="item">
+                        <InputField isError={state.stateId.isError}>
+                            <SelectField
+                                placeholder={state.stateId.placeholder}
+                                value={
+                                    stateResult.isLoading
+                                        ? undefined
+                                        : +state.stateId.value
+                                }
+                                onChange={(v) => onChange(v, 'stateId')}
+                                selectProps={{ loading: stateResult.isLoading }}
+                                options={stateResult.data?.map((item) => ({
+                                    value: item.id,
+                                    caption: item.state,
+                                }))}
+                            />
+                        </InputField>
+                    </div>
+                )}
                 <div className="item">
                     <InputField isError={state.workpieceTypeId.isError}>
                         <SelectField
