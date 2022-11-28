@@ -17,6 +17,7 @@ export const getMaterialGroup = () => {
 };
 export const getSizeRange = (filters: iQueryFilters, id?: number) => {
     let params = getQueryParams(filters);
+    
     if (id) {
         if (params) {
             params = `${params}&id=${id}`;

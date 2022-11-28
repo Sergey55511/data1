@@ -49,12 +49,13 @@ export const useData = (
     );
 
     const sizeRange = useQuery(
-        ['sizeRange', storeId, workpieceTypeId],
+        ['sizeRange', storeId, workpieceTypeId, operationId],
         () => {
             onChange('', 'sizeRangeId');
             return getSizeRange({
                 storeId,
                 workpieceTypeId,
+                operationId,
             });
         },
         {
