@@ -59,7 +59,7 @@ export const GetOrderSwitcher = ({
         case OPERATIONS.makeBall.id:
             return <MakeBall record={record} stateId={STATE.balled.id} />;
         case OPERATIONS.sliceIk.id:
-            return <Slicing record={record} stateId={STATE.slicedIK.id} isShowState />;
+            return <Slicing record={record} stateId={STATE.sliced.id} operationId={OPERATIONS.sliceIk.id} isShowState />;
         case OPERATIONS.makeSuperBall.id:
             return <OneToOne record={record} stateId={STATE.makedSuperBall.id} />;
         case OPERATIONS.grindingSuper.id:
@@ -67,7 +67,7 @@ export const GetOrderSwitcher = ({
         case OPERATIONS.polishing.id:
             return <OneToOne record={record} stateId={STATE.polished.id} />;
         case OPERATIONS.slice.id:
-            return <Slicing record={record} stateId={STATE.sliced.id} />;
+            return <Slicing record={record} stateId={STATE.sliced.id} operationId={OPERATIONS.slice.id} />;
         case OPERATIONS.sortingLength.id:
             return <SortingLength record={record} stateId={STATE.sortedLength.id} />;
     }

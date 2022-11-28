@@ -22,14 +22,14 @@ export interface iLists {
 }
 export const Row = observer(
     ({
-        isLoading,
+        operationId,
         index,
         removeRow,
         state,
         setState,
         isShowState,
     }: {
-        isLoading?: boolean;
+        operationId: number;
         index: number;
         removeRow: (i: number) => void;
         state: iState;
@@ -46,6 +46,7 @@ export const Row = observer(
         };
 
         const { workpieceType, color, sizeRange, grade, stateResult } = useData(
+            operationId,
             loginStore.user.storeId,
             +state.workpieceTypeId.value,
             +state.sizeRangeId.value,
@@ -60,7 +61,6 @@ export const Row = observer(
                         shape="circle"
                         icon={<MinusOutlined />}
                         onClick={() => removeRow(index)}
-                        loading={isLoading}
                     />
                 </Tooltip>
                 {isShowState && (

@@ -26,18 +26,17 @@ export const Slicing = observer(
         record,
         stateId,
         isShowState,
+        operationId,
     }: {
         record: iData;
         stateId: number;
         isShowState?: boolean;
+        operationId: number;
     }) => {
-        const { OperationStore } = useStores();
         const [state, setState] = useState<iState[]>([]);
         const [losses, setLosses] = useState<number>(0);
         const [garbage, setGarbage] = useState<number | undefined>(undefined);
         const [moveBack, setMoveBack] = useState<tValue>(undefined);
-        const [isLoading, setIsLoading] = useState(false);
-        const router = useRouter();
 
         const postData = usePostData();
 
@@ -102,9 +101,9 @@ export const Slicing = observer(
                             state={item}
                             removeRow={removeRow}
                             setState={setState}
-                            isLoading={isLoading}
                             key={index}
                             isShowState={isShowState}
+                            operationId={operationId}
                         />
                     ))}
                 </div>

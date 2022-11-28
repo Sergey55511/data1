@@ -1,6 +1,5 @@
 import { useQuery } from 'react-query';
 import { iState } from '../..';
-import { OPERATIONS } from '../../../../../../../../../../Shared/constants';
 import {
     getColors,
     getGrades,
@@ -10,6 +9,7 @@ import {
 } from '../../../../../../../../../Store/Lists/api';
 
 export const useData = (
+    operationId: number,
     storeId: number,
     workpieceTypeId: number,
     sizeRangeId: number,
@@ -63,10 +63,10 @@ export const useData = (
     );
 
     const workpieceType = useQuery(
-        ['workpieceType', storeId, OPERATIONS.slice.id],
+        ['workpieceType', storeId, operationId],
         () => {
             onChange('', 'workpieceTypeId');
-            return getWorkpieceType({ storeId, operationId: OPERATIONS.slice.id });
+            return getWorkpieceType({ storeId, operationId });
         },
         { enabled: !!storeId },
     );
