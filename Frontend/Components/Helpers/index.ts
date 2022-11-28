@@ -41,16 +41,13 @@ export const getTotalSum = <T extends { widthIn: { value: string | number } }>(
         return (res += +item.widthIn.value || 0);
     }, 0);
 
-export const sendData = async ({
+export const prepareSubbmitData = ({
     record,
     data,
     losses,
     garbage,
     defect,
     moveBack,
-    setIsLoading,
-    router,
-    postOrderResult,
 }: {
     record: iData;
     data: iData[];
@@ -58,12 +55,6 @@ export const sendData = async ({
     garbage?: tValue;
     defect?: tValue;
     moveBack?: tValue;
-    setIsLoading: (flag: boolean) => void;
-    router: NextRouter;
-    postOrderResult: (
-        data: iDataTable[],
-        callBack?: (() => void) | undefined,
-    ) => Promise<void>;
 }) => {
     if (losses) {
         data.push(getLosseObject(record, WORKPIECETYPE.losses.id, +losses));
@@ -90,6 +81,42 @@ export const sendData = async ({
     }
 
     const dataTable = data.map((item) => prepareDataTable(item));
+
+    return dataTable;
+};
+
+export const sendData = async ({
+    record,
+    data,
+    losses,
+    garbage,
+    defect,
+    moveBack,
+    setIsLoading,
+    router,
+    postOrderResult,
+}: {
+    record: iData;
+    data: iData[];
+    losses?: tValue;
+    garbage?: tValue;
+    defect?: tValue;
+    moveBack?: tValue;
+    setIsLoading: (flag: boolean) => void;
+    router: NextRouter;
+    postOrderResult: (
+        data: iDataTable[],
+        callBack?: (() => void) | undefined,
+    ) => Promise<void>;
+}) => {
+    const dataTable = prepareSubbmitData({
+        record,
+        data,
+        losses,
+        garbage,
+        defect,
+        moveBack,
+    });
     setIsLoading(true);
     await postOrderResult(dataTable);
     notification.success({

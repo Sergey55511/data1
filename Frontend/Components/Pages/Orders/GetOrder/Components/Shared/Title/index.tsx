@@ -16,7 +16,7 @@ export const Title = ({
     losses,
     isLoading,
 }: {
-    subbmitHandler: () => Promise<void>;
+    subbmitHandler: () => void;
     addRowHandler: (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => void;
     setGarbage?: (value: SetStateAction<number | undefined>) => void;
     setMoveBack?: (value: SetStateAction<tValue>) => void;

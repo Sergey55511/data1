@@ -1,4 +1,3 @@
-import { Dispatch, SetStateAction } from 'react';
 import { useQuery } from 'react-query';
 import { iState } from '../..';
 import { OPERATIONS } from '../../../../../../../../../../Shared/constants';
