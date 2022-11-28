@@ -13,7 +13,6 @@ export const useQueryClient = () => {
             new QueryClient({
                 defaultOptions: {
                     queries: {
-                        staleTime: Infinity,
                         refetchOnWindowFocus: false,
                         retry: 0,
                     },
