@@ -4,7 +4,6 @@ import { iState } from '../..';
 import {
     getTotalSum,
     prepareSubbmitData,
-    sendData,
     validation,
 } from '../../../../../../../../Helpers';
 import { Dispatch, SetStateAction } from 'react';
@@ -75,7 +74,7 @@ export const usePostData = () => {
                 typeId: undefined,
                 workpieceType: undefined,
                 productionId: undefined,
-                stateId: +item.stateId,
+                stateId: +item.stateId.value,
                 moneyIn: item.widthIn.value ? codeOneItem * +item.widthIn.value : 0,
             }));
 
@@ -87,6 +86,7 @@ export const usePostData = () => {
                 defect,
                 moveBack,
             });
+            
             return postOrderResult(dataTable);
         },
         {
