@@ -63,12 +63,12 @@ export const TableLeftOvers = observer(
                 title: KEYSLEFTOVERS.color.title,
             },
             {
-                ...getColumnPropsHoc(KEYSLEFTOVERS.length.key),
-                title: KEYSLEFTOVERS.length.title,
-            },
-            {
                 ...getColumnPropsHoc(KEYSLEFTOVERS.sizeRange.key),
                 title: KEYSLEFTOVERS.sizeRange.title,
+            },
+            {
+                ...getColumnPropsHoc(KEYSLEFTOVERS.length.key),
+                title: KEYSLEFTOVERS.length.title,
             },
             {
                 ...getColumnPropsHoc(KEYSLEFTOVERS.grade.key),
