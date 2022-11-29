@@ -68,11 +68,7 @@ export const Row = observer(
                         <InputField isError={state.stateId.isError}>
                             <SelectField
                                 placeholder={state.stateId.placeholder}
-                                value={
-                                    stateResult.isLoading
-                                        ? undefined
-                                        : +state.stateId.value
-                                }
+                                value={+state.stateId.value || undefined}
                                 onChange={(v) => onChange(v, 'stateId')}
                                 selectProps={{ loading: stateResult.isLoading }}
                                 options={stateResult.data?.map((item) => ({

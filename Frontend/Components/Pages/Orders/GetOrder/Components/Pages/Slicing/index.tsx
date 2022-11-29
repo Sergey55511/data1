@@ -11,6 +11,7 @@ import { getTotalSum, sendData, validation } from '../../../../../../Helpers';
 import { Title } from '../../Shared/Title';
 import { Field } from '../../../../../../Helpers/classes';
 import { usePostData } from './Components/Hooks/usePostData';
+import { OPERATIONS, STATE } from '../../../../../../../../Shared/constants';
 
 export interface iState {
     stateId: iField;
@@ -61,7 +62,7 @@ export const Slicing = observer(
                     sizeRangeId: new Field('sizeRangeId', 'Размерный ряд'),
                     widthIn: new Field('widthIn', 'Вес гр.'),
                 };
-                newRow.stateId.value = stateId;
+                if (operationId == OPERATIONS.slice.id) newRow.stateId.value = stateId;
                 const res: iState[] = [...prev, newRow];
                 return res;
             });
