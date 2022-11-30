@@ -103,6 +103,7 @@ model ManagerOperations {
   managerId   Int?
   Operation   Operations? @relation(fields: [operationId], references: [id])
   operationId Int?
+  active      Boolean     @default(true)
 }
 
 model Users {

@@ -1,15 +1,11 @@
-import { Button, Select } from 'antd';
+import { Button } from 'antd';
 import { EyeOutlined, EyeInvisibleOutlined } from '@ant-design/icons';
 import { Wrapper } from './style';
 import { iManager } from '../../../../../../../../../../Shared/Types/interfaces';
-import { useOperations } from '../../../Hooks/useOperations';
-import { observer } from 'mobx-react-lite';
-import { useStores } from '../../../../../../../../../Store/useStores';
 import { useState } from 'react';
 import { Operations } from './Operations';
 
-export const Row = observer(({ manager }: { manager: iManager }) => {
-    const { loginStore } = useStores();
+export const Row = ({ manager }: { manager: iManager }) => {
     const [isOpenOnerations, setIsOpenOperations] = useState(false);
 
     return (
@@ -23,11 +19,8 @@ export const Row = observer(({ manager }: { manager: iManager }) => {
                 icon={manager.active ? <EyeOutlined /> : <EyeInvisibleOutlined />}
             />
             {isOpenOnerations && (
-                <Operations
-                    onClose={() => setIsOpenOperations(false)}
-                    worker={manager}
-                />
+                <Operations onClose={() => setIsOpenOperations(false)} worker={manager} />
             )}
         </Wrapper>
     );
-});
+};

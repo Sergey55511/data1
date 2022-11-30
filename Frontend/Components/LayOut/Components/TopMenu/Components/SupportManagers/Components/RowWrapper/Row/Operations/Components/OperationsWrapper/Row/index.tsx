@@ -1,6 +1,6 @@
 import { Wrapper } from './style';
 import { DeleteOutlined } from '@ant-design/icons';
-import { iOperation } from '../../../../../../../../../../../../../Shared/Types/interfaces';
+import { iOperation } from '../../../../../../../../../../../../../../Shared/Types/interfaces';
 import { Button } from 'antd';
 
 export const Row = ({

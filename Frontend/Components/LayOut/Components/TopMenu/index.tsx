@@ -21,7 +21,7 @@ import { ROUTES, tPages } from '../../../Pages/constants';
 import { useRouter } from 'next/router';
 import { MODALFLAGS } from '../../constants';
 import { useState } from 'react';
-import { Modals } from './Constants/Modals';
+import { Modals } from './Components/Modals';
 
 export class IsShowModals {
     supportManagers = false;

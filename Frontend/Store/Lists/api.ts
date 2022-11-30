@@ -38,6 +38,18 @@ export const getFraction = () => {
         method: 'GET',
     }).then((res) => res.data);
 };
+
+export const postManagerOperations = (data: {
+    managerId: number;
+    operationId: number;
+}) => {
+    return axios({
+        url: '/api/list/manageroperations',
+        method: 'POST',
+        data,
+    }).then((res) => res.data);
+};
+
 export const getOperations = (storeId: number, stateId?: number, managerId?: number) => {
     return axios({
         url: `/api/list/operations`,
