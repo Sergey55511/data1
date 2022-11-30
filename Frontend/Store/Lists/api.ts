@@ -6,7 +6,8 @@ import {
     iQueryFilters,
     iSizeRange,
     iWorkpieceType,
-    iState
+    iState,
+    iManager,
 } from '../../../Shared/Types/interfaces';
 
 export const getMaterialGroup = () => {
@@ -17,7 +18,7 @@ export const getMaterialGroup = () => {
 };
 export const getSizeRange = (filters: iQueryFilters, id?: number) => {
     let params = getQueryParams(filters);
-    
+
     if (id) {
         if (params) {
             params = `${params}&id=${id}`;
@@ -48,8 +49,8 @@ export const getStates = (stateId?: number[]) => {
         url: `/api/list/state`,
         method: 'GET',
         params: {
-            stateId
-        }
+            stateId,
+        },
     }).then((res) => res.data as iState[]);
 };
 
@@ -87,12 +88,20 @@ export const getUsers = (storeId: number) => {
         method: 'GET',
     }).then((res) => res.data);
 };
-export const getManagers = (storeId: number, operationId: number) => {
+
+export const getManagers = (params: {
+    storeId: number;
+    operationId?: number;
+    search?: string;
+    active?: boolean;
+}) => {
     return axios({
-        url: `/api/list/managers?storeId=${storeId}&operationId=${operationId}`,
+        url: `/api/list/managers`,
         method: 'GET',
-    }).then((res) => res.data);
+        params,
+    }).then((res) => res.data as iManager[]);
 };
+
 export const getStores = () => {
     return axios({
         url: '/api/stores',

@@ -35,7 +35,7 @@ const DraverData = ({
     );
 };
 
-export const MyDrawer = ({ onCancel, ...rest }: tProps) => {
+export const contentDrawer = ({ onCancel, ...rest }: tProps) => {
     const div = document.createElement('div');
     document.body.appendChild(div);
     const root = createRoot(div);

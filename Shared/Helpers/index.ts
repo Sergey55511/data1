@@ -1,13 +1,11 @@
 import { NextApiResponse } from 'next';
 import { MyError } from '../Classes/error';
-import { iData, iDataTable, iQueryFilters, iUser } from '../Types/interfaces';
+import { iQueryFilters, iUser } from '../Types/interfaces';
 
 export const resError = (err: any, res: NextApiResponse) => {
     console.log('err', err);
     const error = err as MyError;
-    res.status(error?.status || 500).json({
-        message: error?.message || 'unexoected error',
-    });
+    res.status(error?.status || 500).json(err);
 };
 
 export const createAtkn = (user: iUser) => {

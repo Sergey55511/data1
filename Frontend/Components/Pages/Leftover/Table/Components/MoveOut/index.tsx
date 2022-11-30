@@ -5,7 +5,7 @@ import { SetStateAction, useEffect, useRef, useState } from 'react';
 import { iData } from '../../../../../../../Shared/Types/interfaces';
 import { useStores } from '../../../../../../Store/useStores';
 import { prepareDataTable } from '../../../../../Helpers';
-import { MyDrawer } from '../../../../../Shared/MyDrawer';
+import { contentDrawer } from '../../../../../Shared/contentDrawer';
 import { KEYSLEFTOVERS } from '../../../../../Shared/Table/constants';
 import { NumProduction } from '../NumProduction';
 import { Wrapper } from './style';
@@ -30,14 +30,18 @@ export const MoveOutSolo = observer(
             if (loginStore.user.storeId) {
                 ListsStore.getOperations(loginStore.user.storeId, record.stateId!);
                 if (operation)
-                    ListsStore.getManagers(loginStore.user.storeId, operation!);
+                    ListsStore.getManagers({
+                        storeId: loginStore.user.storeId,
+                        operationId: operation,
+                        active: true,
+                    });
             }
         }, [loginStore.user.storeId, operation]);
 
         const keys = Object.keys(record);
         const setNumProduction = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
             e.preventDefault();
-            MyDrawer({
+            contentDrawer({
                 title: 'Производства',
                 content: (
                     <NumProduction

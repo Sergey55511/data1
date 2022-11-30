@@ -10,6 +10,7 @@ export interface iUser {
 export interface iManager {
     id: number;
     name: string;
+    active: boolean;
 }
 export interface iState {
     id: number;

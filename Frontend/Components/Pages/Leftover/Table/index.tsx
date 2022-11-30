@@ -5,7 +5,7 @@ import { useStores } from '../../../../Store/useStores';
 import { observer } from 'mobx-react-lite';
 import { Dispatch, SetStateAction } from 'react';
 import { FilterValue } from 'antd/es/table/interface';
-import { MyDrawer } from '../../../Shared/MyDrawer';
+import { contentDrawer } from '../../../Shared/contentDrawer';
 import { MoveOutSolo } from './Components/MoveOut';
 import { TableApp } from '../../../Shared/Table';
 import { KEYSLEFTOVERS } from '../../../Shared/Table/constants';
@@ -106,7 +106,7 @@ export const TableLeftOvers = observer(
                 onRow={(record, rowIndex) => {
                     return {
                         onDoubleClick: (event) => {
-                            MyDrawer({
+                            contentDrawer({
                                 title: 'Выдать в работу',
                                 content: <MoveOutSolo record={record} />,
                             });

@@ -1,8 +1,10 @@
 export class MyError {
     status: number = 500;
     message = 'Что-то пошло не так';
-    constructor(status: number, message?: string) {
+    detales = {};
+    constructor(status: number, message?: string, detales?: any) {
         this.status = status;
+        if (detales) this.detales = detales;
         if (message) {
             this.message = message;
             return;

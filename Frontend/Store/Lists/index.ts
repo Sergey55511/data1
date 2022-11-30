@@ -88,11 +88,15 @@ export class ListsStore {
     });
     getManagers = flow(function* (
         this: ListsStore,
-        storeId: number,
-        operationId: number,
+        params: {
+            storeId: number;
+            operationId?: number;
+            search?: string;
+            active?: boolean;
+        },
     ) {
         try {
-            this.managers = yield api.getManagers(storeId, operationId);
+            this.managers = yield api.getManagers(params);
         } catch (err) {
             this.errorStore.setError(err as iError);
         }
@@ -113,7 +117,7 @@ export class ListsStore {
         id?: number,
     ) {
         try {
-            return yield api.getSizeRange(filters,id);
+            return yield api.getSizeRange(filters, id);
         } catch (err) {
             this.errorStore.setError(err as iError);
         }

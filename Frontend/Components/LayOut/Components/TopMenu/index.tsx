@@ -17,11 +17,19 @@ import Link from 'next/link';
 import { Wrapper } from './style';
 import { observer } from 'mobx-react-lite';
 import { useStores } from '../../../../Store/useStores';
-import { pages, ROUTES, tPages } from '../../../Pages/constants';
+import { ROUTES, tPages } from '../../../Pages/constants';
 import { useRouter } from 'next/router';
+import { MODALFLAGS } from '../../constants';
+import { useState } from 'react';
+import { Modals } from './Constants/Modals';
+
+export class IsShowModals {
+    supportManagers = false;
+}
 
 export const TopMenu = observer(({ page }: { page: tPages }) => {
     const { loginStore, OperationStore } = useStores();
+    const [isShowModals, setIsShowModals] = useState<IsShowModals>(new IsShowModals());
     const ordersCount = OperationStore.orders.length;
     const sharedCount = OperationStore.shared.length;
 
@@ -30,11 +38,22 @@ export const TopMenu = observer(({ page }: { page: tPages }) => {
     const router = useRouter();
 
     const onSelectHandler = (key: string) => {
-        router.push(key);
+        switch (key) {
+            case MODALFLAGS.supportManagers:
+                setIsShowModals((prev) => ({
+                    ...prev,
+                    supportManagers: true,
+                }));
+                // contentDrawer({ title: 'Рабочие:', content: <SupportManagers /> });
+                break;
+            default:
+                router.push(key);
+        }
     };
 
     return (
         <Wrapper>
+            <Modals isShowModals={isShowModals} setIsShowModals={setIsShowModals} />
             <div className="menu">
                 <Menu
                     mode="horizontal"
@@ -118,7 +137,7 @@ export const TopMenu = observer(({ page }: { page: tPages }) => {
                             children: [
                                 {
                                     label: 'Рабочие',
-                                    key: ROUTES.newItem + 'asdas',
+                                    key: MODALFLAGS.supportManagers,
                                     icon: <TeamOutlined />,
                                 },
                             ],

@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { getManagers } from '../../../Backend/Data/Requests/Managers/get';
+import { getManagers } from '../../../Backend/Data/Requests/Managers/Get/get';
 import { fetchService } from '../../../Backend/Data/Services/fetch';
 import { tPrisma } from '../../../Backend/types';
 import { iUser } from '../../../Shared/Types/interfaces';
@@ -10,8 +10,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             await fetchService<iUser>({
                 req,
                 res,
-                fetch: (prisma: tPrisma) =>
-                    getManagers(prisma, +req.query.storeId!, +req.query.operationId!),
+                fetch: (prisma: tPrisma) => getManagers(prisma, req.query as any),
             });
             break;
         }
