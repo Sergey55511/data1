@@ -10,16 +10,16 @@ export const Search = ({
     active,
     setSearch,
     setActive,
-    operation,
-    setOperation,
+    operationId,
+    setOperationId,
 }: {
     storeId: number;
-    operation: number;
+    operationId: number;
     search: string;
     active?: boolean;
     setSearch: Dispatch<SetStateAction<string>>;
     setActive: Dispatch<SetStateAction<boolean | undefined>>;
-    setOperation: Dispatch<SetStateAction<number>>;
+    setOperationId: Dispatch<SetStateAction<number>>;
 }) => {
     const operations = useOperations(storeId);
 
@@ -58,7 +58,7 @@ export const Search = ({
                 value={search}
                 onChange={inputHandler}
             />
-            <Select className="select" value={operation} onChange={setOperation}>
+            <Select className="select" value={operationId} onChange={setOperationId}>
                 <Select.Option value={0}>Все</Select.Option>
                 {operations.data?.map((item) => (
                     <Select.Option key={item.id} value={item.id}>

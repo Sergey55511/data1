@@ -14,5 +14,13 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             });
             break;
         }
+        case 'POST': {
+            await fetchService({
+                req,
+                res,
+                fetch: (prisma: tPrisma) => getManagers(prisma, req.query as any),
+            });
+            break;
+        }
     }
 }

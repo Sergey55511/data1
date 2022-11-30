@@ -50,6 +50,14 @@ export const postManagerOperations = (data: {
     }).then((res) => res.data);
 };
 
+export const postManager = (data: { name: string }) => {
+    return axios({
+        url: '/api/list/managers',
+        method: 'POST',
+        data,
+    }).then((res) => res.data);
+};
+
 export const deleteManagerOperations = (data: {
     managerId: number;
     operationId: number;
