@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { getManagers } from '../../../Backend/Data/Requests/Managers/Get/get';
+import { getManagers } from '../../../Backend/Data/Requests/Managers/Get';
 import { fetchService } from '../../../Backend/Data/Services/fetch';
 import { tPrisma } from '../../../Backend/types';
 import { iUser } from '../../../Shared/Types/interfaces';

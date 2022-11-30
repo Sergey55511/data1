@@ -9,15 +9,27 @@ import { Wrapper } from './style';
 
 export const SupportManagers = observer(({ onClose }: { onClose?: () => void }) => {
     const { loginStore } = useStores();
+    const storeId = loginStore.user.storeId;
     const [search, setSearch] = useState('');
-    const managers = useData({ storeId: loginStore.user.storeId, search });
+    const [operation, setOperation] = useState(0);
+    const [active, setActive] = useState<boolean | undefined>(undefined);
 
-    console.log('managers', managers.data);
+    const managers = useData({ storeId: loginStore.user.storeId, search, active });
 
     return (
         <Drawer width={600} open title="Работники:" onClose={onClose}>
             <Wrapper>
-                <Search setSearch={setSearch} />
+                <Search
+                    {...{
+                        search,
+                        setSearch,
+                        active,
+                        setActive,
+                        storeId,
+                        operation,
+                        setOperation,
+                    }}
+                />
                 <RowWrapper managers={managers.data} />
             </Wrapper>
         </Drawer>

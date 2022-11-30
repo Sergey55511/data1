@@ -8,6 +8,7 @@ import {
     iWorkpieceType,
     iState,
     iManager,
+    iOperation,
 } from '../../../Shared/Types/interfaces';
 
 export const getMaterialGroup = () => {
@@ -37,11 +38,16 @@ export const getFraction = () => {
         method: 'GET',
     }).then((res) => res.data);
 };
-export const getOperations = (storeId: number, stateId: number) => {
+export const getOperations = (storeId: number, stateId?: number, managerId?: number) => {
     return axios({
-        url: `/api/list/operations?storeId=${storeId}&stateId=${stateId}`,
+        url: `/api/list/operations`,
         method: 'GET',
-    }).then((res) => res.data);
+        params: {
+            storeId,
+            stateId,
+            managerId,
+        },
+    }).then((res) => res.data as iOperation[]);
 };
 
 export const getStates = (stateId?: number[]) => {
