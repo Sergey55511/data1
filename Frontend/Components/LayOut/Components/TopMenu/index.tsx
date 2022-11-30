@@ -10,6 +10,8 @@ import {
     CarOutlined,
     FullscreenExitOutlined,
     BulbOutlined,
+    MoreOutlined,
+    TeamOutlined,
 } from '@ant-design/icons';
 import Link from 'next/link';
 import { Wrapper } from './style';
@@ -73,7 +75,7 @@ export const TopMenu = observer(({ page }: { page: tPages }) => {
                         {
                             label: 'Операции',
                             key: 'Operations',
-                            icon: <SettingOutlined />,
+                            icon: <MoreOutlined />,
                             children: [
                                 {
                                     label: 'Приход сырья',
@@ -106,6 +108,18 @@ export const TopMenu = observer(({ page }: { page: tPages }) => {
                                             icon: <FullscreenExitOutlined />,
                                         },
                                     ],
+                                },
+                            ],
+                        },
+                        {
+                            label: 'Администрирование',
+                            key: 'Administration',
+                            icon: <SettingOutlined />,
+                            children: [
+                                {
+                                    label: 'Рабочие',
+                                    key: ROUTES.newItem + 'asdas',
+                                    icon: <TeamOutlined />,
                                 },
                             ],
                         },
