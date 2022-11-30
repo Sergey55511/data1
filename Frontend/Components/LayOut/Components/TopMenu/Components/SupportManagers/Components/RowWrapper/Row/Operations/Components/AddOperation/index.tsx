@@ -17,7 +17,6 @@ export const AddOperation = observer(({ managerId }: { managerId: number }) => {
     const subbmitHandler = async () => {
         if (operationId) {
             await addOperation.mutate({ managerId, operationId });
-            managerOperations.refetch();
             setOperationId(undefined);
         }
     };

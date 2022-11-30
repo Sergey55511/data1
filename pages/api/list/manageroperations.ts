@@ -1,4 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
+import { deleteManagerOperations } from '../../../Backend/Data/Requests/ManagerOperationsBridge/Delete';
 import { postManagerOperations } from '../../../Backend/Data/Requests/ManagerOperationsBridge/Post';
 import { fetchService } from '../../../Backend/Data/Services/fetch';
 import { tPrisma } from '../../../Backend/types';
@@ -11,6 +12,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 req,
                 res,
                 fetch: (prisma: tPrisma) => postManagerOperations(prisma, req.body),
+            });
+            break;
+        }
+        case 'DELETE': {
+            await fetchService<iUser>({
+                req,
+                res,
+                fetch: (prisma: tPrisma) => deleteManagerOperations(prisma, req.query),
             });
             break;
         }

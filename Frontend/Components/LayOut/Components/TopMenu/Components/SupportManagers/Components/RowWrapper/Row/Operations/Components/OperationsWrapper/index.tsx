@@ -11,11 +11,16 @@ export const OperationsWrapper = observer(({ worker }: { worker: iManager }) => 
 
     return (
         <Wrapper>
-            {managerOperations.isLoading ? (
+            {managerOperations.isFetching ? (
                 <div>Загрузка ...</div>
             ) : (
                 managerOperations.data?.map((item) => (
-                    <Row managerId={worker.id} key={item.id} operation={item} />
+                    <Row
+                        managerId={worker.id}
+                        key={item.id}
+                        operation={item}
+                        fetch={managerOperations.refetch}
+                    />
                 ))
             )}
         </Wrapper>

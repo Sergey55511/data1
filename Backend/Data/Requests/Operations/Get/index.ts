@@ -11,7 +11,7 @@ export const getOperations = <T>(prisma: tPrisma, params: any): PrismaPromise<T>
             AND: {
                 StateOperationBridge: { some: { stateId: data.stateId } },
                 StoreOperationsBridge: { some: { storeId: data.storeId } },
-                ManagerOperations: { some: { managerId: data.managerId } },
+                ManagerOperations: { some: { managerId: data.managerId, active: true } },
             },
         },
         orderBy: { operation: 'asc' },
