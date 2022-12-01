@@ -152,7 +152,7 @@ export const NewItem = observer(() => {
                     <div>
                         <Tooltip
                             placement="top"
-                            title={`Макс партия: ${OperationStore.maxLot}`}
+                            title={`Макс партия: ${OperationStore.maxLot || 0}`}
                         >
                             <PrimeField
                                 {...{ primeData, setPrameValue }}
