@@ -34,12 +34,14 @@ export const useAddOperation = (refetch: () => void) => {
     );
 };
 
-export const useRemoveOperation = (refetch: () => void) => {
+export const useRemoveOperation = (refetch: () => void, fetchManagers: () => void) => {
     return useMutation(
-        (data: { managerId: number; operationId: number }) => deleteManagerOperations(data),
+        (data: { managerId: number; operationId: number }) =>
+            deleteManagerOperations(data),
         {
             onSuccess: () => {
                 refetch();
+                fetchManagers();
                 notification.success({ message: 'Успешно' });
             },
             onError: () => {

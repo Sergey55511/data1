@@ -37,7 +37,7 @@ export const SupportManagers = observer(({ onClose }: { onClose?: () => void }) 
                         setOperationId,
                     }}
                 />
-                <RowWrapper managers={managers.data} isLoading={managers.isFetching} />
+                <RowWrapper managers={managers.data} isLoading={managers.isFetching} fetchManagers={managers.refetch} />
             </Wrapper>
         </Drawer>
     );

@@ -8,12 +8,14 @@ export const Row = ({
     managerId,
     operation,
     fetch,
+    fetchManagers,
 }: {
     managerId: number;
     operation: iOperation;
     fetch: () => void;
+    fetchManagers: () => void;
 }) => {
-    const removeOperation = useRemoveOperation(fetch);
+    const removeOperation = useRemoveOperation(fetch, fetchManagers);
 
     const removeHandler = () => {
         removeOperation.mutate({ managerId, operationId: operation.id });

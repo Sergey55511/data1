@@ -5,7 +5,13 @@ import { iManager } from '../../../../../../../../../../Shared/Types/interfaces'
 import { useState } from 'react';
 import { Operations } from './Operations';
 
-export const Row = ({ manager }: { manager: iManager }) => {
+export const Row = ({
+    manager,
+    fetchManagers,
+}: {
+    manager: iManager;
+    fetchManagers: () => void;
+}) => {
     const [isOpenOnerations, setIsOpenOperations] = useState(false);
 
     return (
@@ -19,7 +25,11 @@ export const Row = ({ manager }: { manager: iManager }) => {
                 icon={manager.active ? <EyeOutlined /> : <EyeInvisibleOutlined />}
             />
             {isOpenOnerations && (
-                <Operations onClose={() => setIsOpenOperations(false)} worker={manager} />
+                <Operations
+                    onClose={() => setIsOpenOperations(false)}
+                    worker={manager}
+                    fetchManagers={fetchManagers}
+                />
             )}
         </Wrapper>
     );

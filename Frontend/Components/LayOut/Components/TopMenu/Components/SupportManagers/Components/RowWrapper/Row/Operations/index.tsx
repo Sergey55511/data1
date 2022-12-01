@@ -6,13 +6,21 @@ import { AddOperation } from './Components/AddOperation';
 import { OperationsWrapper } from './Components/OperationsWrapper';
 
 export const Operations = observer(
-    ({ onClose, worker }: { onClose: () => void; worker: iManager }) => {
+    ({
+        onClose,
+        worker,
+        fetchManagers,
+    }: {
+        onClose: () => void;
+        worker: iManager;
+        fetchManagers: () => void;
+    }) => {
         return (
             <Drawer open={true} onClose={onClose} title="Операции:">
                 <Wrapper>
                     <div>Работник: {worker.name}</div>
                     <AddOperation managerId={worker.id} />
-                    <OperationsWrapper worker={worker} />
+                    <OperationsWrapper worker={worker} fetchManagers={fetchManagers}/>
                 </Wrapper>
             </Drawer>
         );

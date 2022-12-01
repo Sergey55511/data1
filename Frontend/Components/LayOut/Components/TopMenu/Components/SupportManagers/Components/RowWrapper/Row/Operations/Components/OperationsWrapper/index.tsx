@@ -5,7 +5,7 @@ import { useManagerOperations } from '../../Hooks';
 import { Row } from './Row';
 import { Wrapper } from './style';
 
-export const OperationsWrapper = observer(({ worker }: { worker: iManager }) => {
+export const OperationsWrapper = observer(({ worker,fetchManagers }: { worker: iManager,fetchManagers:()=>void }) => {
     const { loginStore } = useStores();
     const managerOperations = useManagerOperations(loginStore.user.storeId, worker.id);
 
@@ -20,6 +20,7 @@ export const OperationsWrapper = observer(({ worker }: { worker: iManager }) => 
                         key={item.id}
                         operation={item}
                         fetch={managerOperations.refetch}
+                        fetchManagers={fetchManagers}
                     />
                 ))
             )}
