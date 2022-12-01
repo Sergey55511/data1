@@ -103,9 +103,9 @@ export const TableLeftOvers = observer(
 
         return (
             <TableApp
-                onRow={(record, rowIndex) => {
+                onRow={(record) => {
                     return {
-                        onDoubleClick: (event) => {
+                        onDoubleClick: () => {
                             contentDrawer({
                                 title: 'Выдать в работу',
                                 content: <MoveOutSolo record={record} />,
