@@ -3,14 +3,17 @@ import { PlusOutlined } from '@ant-design/icons';
 import { Wrapper } from './style';
 import { useState } from 'react';
 import { useAddManager } from '../../Hooks/useAddManager';
+import { observer } from 'mobx-react-lite';
+import { useStores } from '../../../../../../../../Store/useStores';
 
-export const AddWorker = ({ fetch }: { fetch: () => void }) => {
+export const AddWorker = observer(({ fetch }: { fetch: () => void }) => {
+    const { loginStore } = useStores();
     const [name, setState] = useState('');
 
     const postManager = useAddManager(fetch);
 
     const subbmitHandler = () => {
-        postManager.mutate({ name });
+        postManager.mutate({ name, storeId: loginStore.user.storeId });
         setState('');
     };
 
@@ -25,4 +28,4 @@ export const AddWorker = ({ fetch }: { fetch: () => void }) => {
             <Button onClick={subbmitHandler} icon={<PlusOutlined />} disabled={!name} />
         </Wrapper>
     );
-};
+});

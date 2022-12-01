@@ -14,7 +14,9 @@ export const getManagers = <T>(prisma: tPrisma, params: any): Promise<T> => {
             active: data.active,
             storeId: data.storeId,
             name: { contains: data.search, mode: 'insensitive' },
-            ManagerOperations: { some: { Operation: { id: data.operationId } } },
+            ManagerOperations: data.operationId
+                ? { some: { Operation: { id: data.operationId } } }
+                : undefined,
         },
         orderBy: { name: 'asc' },
     }) as any;

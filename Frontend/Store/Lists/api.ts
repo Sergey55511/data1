@@ -50,7 +50,7 @@ export const postManagerOperations = (data: {
     }).then((res) => res.data);
 };
 
-export const postManager = (data: { name: string }) => {
+export const postManager = (data: { name: string; storeId: number }) => {
     return axios({
         url: '/api/list/managers',
         method: 'POST',

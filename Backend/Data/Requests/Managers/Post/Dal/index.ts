@@ -4,6 +4,7 @@ import { schema } from './scima';
 
 export interface iParams {
     name: string;
+    storeId: number;
 }
 
 export const dal = (params: { [key: string]: any }): iParams => {
