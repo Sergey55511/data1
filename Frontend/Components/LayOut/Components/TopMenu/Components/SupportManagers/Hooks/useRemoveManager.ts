@@ -1,5 +1,5 @@
 import { notification } from 'antd';
-import { useMutation } from 'react-query';
+import { useMutation } from '@tanstack/react-query';
 import { removeManager } from '../../../../../../../Store/Lists/api';
 
 export const useRemoveManager = (refetch: () => void) => {

@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router';
 import { useMemo } from 'react';
-import { QueryCache, QueryClient } from 'react-query';
+import { QueryCache, QueryClient } from '@tanstack/react-query';
 import { iError } from '../../../Shared/Types/interfaces';
 import { useStores } from '../../Store/useStores';
 import { ROUTES } from '../Pages/constants';

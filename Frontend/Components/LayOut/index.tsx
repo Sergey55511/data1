@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from 'react';
+import { useEffect } from 'react';
 import { createGlobalStyle } from 'styled-components';
 import { useStores } from '../../Store/useStores';
 import { Footer } from './Components/Footer';
@@ -9,10 +9,9 @@ import { ErrorHandler } from './Components/ErrorHandler';
 import { Spin } from 'antd';
 import { ConfigProvider } from 'antd';
 import locale from 'antd/lib/locale/ru_RU';
-import { ROUTES, tPages } from '../Pages/constants';
-import { QueryCache, QueryClient, QueryClientProvider } from 'react-query';
+import { tPages } from '../Pages/constants';
+import { QueryClientProvider } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
-import { iError } from '../../../Shared/Types/interfaces';
 import { useQueryClient } from './useQueryClient';
 
 const GlobalStyle = createGlobalStyle`

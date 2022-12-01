@@ -1,5 +1,5 @@
 import { notification } from 'antd';
-import { useMutation } from 'react-query';
+import { useMutation } from '@tanstack/react-query';
 import { patchManager } from '../../../../../../../Store/Lists/api';
 
 type ArgumentTypes<F extends Function> = F extends (...args: infer A) => any ? A : never;

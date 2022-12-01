@@ -1,5 +1,5 @@
 import { notification } from 'antd';
-import { useMutation } from 'react-query';
+import { useMutation } from '@tanstack/react-query';
 import { postManager, postManagerOperations } from '../../../../../../../Store/Lists/api';
 
 export const useAddManager = (refetch: () => void) => {
