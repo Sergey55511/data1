@@ -23,6 +23,7 @@ export const MoveOutSolo = observer(
         const [width, setWidth] = useState<tValue>(undefined);
         const [count, setCount] = useState<tValue>(undefined);
         const [date, setDate] = useState<moment.Moment | null>(moment());
+        const subbmitButton = useRef<HTMLElement>(null);
 
         useEffect(() => {
             setManagerId(undefined);
@@ -37,6 +38,11 @@ export const MoveOutSolo = observer(
                     });
             }
         }, [loginStore.user.storeId, operation]);
+
+        const onPressEnterHandler = (e: React.KeyboardEvent<HTMLInputElement>) => {
+            if (e.key != 'Enter') return;
+            if (subbmitButton.current) subbmitButton.current.click();
+        };
 
         const keys = Object.keys(record);
         const setNumProduction = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
@@ -117,6 +123,105 @@ export const MoveOutSolo = observer(
 
         return (
             <Wrapper>
+                <div className="formWrapper">
+                    <DatePicker
+                        placeholder="Дата операции"
+                        style={{ width: '100%' }}
+                        value={date}
+                        onChange={(v) => setDate(v)}
+                        allowClear
+                        onKeyDown={onPressEnterHandler}
+                    />
+                    <Select
+                        style={{ width: '100%' }}
+                        placeholder="Операция"
+                        value={operation}
+                        onChange={(v) => setOperation(v)}
+                        showSearch
+                        onKeyDown={onPressEnterHandler}
+                    >
+                        {ListsStore.operations?.map((item) => (
+                            <Select.Option key={item.id} value={item.id}>
+                                {item.operation}
+                            </Select.Option>
+                        ))}
+                    </Select>
+                    <Select
+                        style={{ width: '100%' }}
+                        placeholder="Исполнитель"
+                        value={managerId}
+                        onChange={(v) => setManagerId(v)}
+                        showSearch
+                        onKeyDown={onPressEnterHandler}
+                    >
+                        {ListsStore.managers?.map((item) => (
+                            <Select.Option key={item.id} value={item.id}>
+                                {item.name}
+                            </Select.Option>
+                        ))}
+                    </Select>
+                    <div className="flex">
+                        <div className="item">
+                            <h3>{KEYSLEFTOVERS.width.title}</h3>
+                            <p>{record.width}</p>
+                        </div>
+                        <div className="item">
+                            <h3>{KEYSLEFTOVERS.count.title}</h3>
+                            <p>{record.count}</p>
+                        </div>
+                    </div>
+                    <div className="flex">
+                        <div className="item">
+                            <div>
+                                <Input
+                                    placeholder="Выдать"
+                                    disabled={!record.width}
+                                    value={width}
+                                    onChange={(e) => setValue(e.target.value, setWidth)}
+                                    onKeyDown={onPressEnterHandler}
+                                />
+                            </div>
+                        </div>
+                        <div className="item">
+                            <div>
+                                <Input
+                                    placeholder="Выдать"
+                                    disabled={!record.count}
+                                    value={count}
+                                    onChange={(e) => setValue(e.target.value, setCount)}
+                                    onKeyDown={onPressEnterHandler}
+                                />
+                            </div>
+                        </div>
+                    </div>
+                    <div className="flex">
+                        <div className="itemNumProduction">
+                            <div>
+                                {record.productionId ? (
+                                    <div>№ производства {record.productionId}</div>
+                                ) : (
+                                    <a href="#" onClick={setNumProduction}>
+                                        {numProd
+                                            ? `№ производства ${numProd}`
+                                            : 'Выбрать номер производства'}
+                                    </a>
+                                )}
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <Button
+                            type="primary"
+                            disabled={!isValid}
+                            onClick={subbmitHandler}
+                            loading={isLoading}
+                            ref={subbmitButton}
+                        >
+                            Выдать
+                        </Button>
+                    </div>
+                </div>
+                <Divider />
                 <div className="flex">
                     {keys
                         .filter((key) => {
@@ -139,102 +244,6 @@ export const MoveOutSolo = observer(
                                 </div>
                             );
                         })}
-                </div>
-                <Divider />
-                <DatePicker
-                    placeholder="Дата операции"
-                    style={{ width: '100%' }}
-                    value={date}
-                    onChange={(v) => setDate(v)}
-                    allowClear
-                />
-                <Divider />
-                <Select
-                    style={{ width: '100%' }}
-                    placeholder="Операция"
-                    value={operation}
-                    onChange={(v) => setOperation(v)}
-                    showSearch
-                >
-                    {ListsStore.operations?.map((item) => (
-                        <Select.Option key={item.id} value={item.id}>
-                            {item.operation}
-                        </Select.Option>
-                    ))}
-                </Select>
-                <Divider />
-                <Select
-                    style={{ width: '100%' }}
-                    placeholder="Исполнитель"
-                    value={managerId}
-                    onChange={(v) => setManagerId(v)}
-                    showSearch
-                >
-                    {ListsStore.managers?.map((item) => (
-                        <Select.Option key={item.id} value={item.id}>
-                            {item.name}
-                        </Select.Option>
-                    ))}
-                </Select>
-                <Divider />
-                <div className="flex">
-                    <div className="item">
-                        <h3>{KEYSLEFTOVERS.width.title}</h3>
-                        <p>{record.width}</p>
-                    </div>
-                    <div className="item">
-                        <h3>{KEYSLEFTOVERS.count.title}</h3>
-                        <p>{record.count}</p>
-                    </div>
-                </div>
-                <div className="flex">
-                    <div className="item">
-                        <div>
-                            <Input
-                                placeholder="Выдать"
-                                disabled={!record.width}
-                                value={width}
-                                onChange={(e) => setValue(e.target.value, setWidth)}
-                            />
-                        </div>
-                    </div>
-                    <div className="item">
-                        <div>
-                            <Input
-                                placeholder="Выдать"
-                                disabled={!record.count}
-                                value={count}
-                                onChange={(e) => setValue(e.target.value, setCount)}
-                            />
-                        </div>
-                    </div>
-                </div>
-                <Divider />
-                <div className="flex">
-                    <div className="itemNumProduction">
-                        <div>
-                            {record.productionId ? (
-                                <div>№ производства {record.productionId}</div>
-                            ) : (
-                                <a href="#" onClick={setNumProduction}>
-                                    {numProd
-                                        ? `№ производства ${numProd}`
-                                        : 'Выбрать номер производства'}
-                                </a>
-                            )}
-                        </div>
-                    </div>
-                </div>
-                <Divider />
-                <div>
-                    <Button
-                        type="primary"
-                        disabled={!isValid}
-                        onClick={subbmitHandler}
-                        loading={isLoading}
-                    >
-                        Выдать
-                    </Button>
                 </div>
             </Wrapper>
         );
