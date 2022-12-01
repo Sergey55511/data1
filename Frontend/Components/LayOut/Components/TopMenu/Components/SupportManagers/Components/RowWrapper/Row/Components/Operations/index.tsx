@@ -1,7 +1,7 @@
 import { Drawer } from 'antd';
 import { Wrapper } from './style';
 import { observer } from 'mobx-react-lite';
-import { iManager } from '../../../../../../../../../../../Shared/Types/interfaces';
+import { iManager } from '../../../../../../../../../../../../Shared/Types/interfaces';
 import { AddOperation } from './Components/AddOperation';
 import { OperationsWrapper } from './Components/OperationsWrapper';
 

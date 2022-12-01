@@ -1,6 +1,6 @@
 import { observer } from 'mobx-react-lite';
-import { iManager } from '../../../../../../../../../../../../../Shared/Types/interfaces';
-import { useStores } from '../../../../../../../../../../../../Store/useStores';
+import { iManager } from '../../../../../../../../../../../../../../Shared/Types/interfaces';
+import { useStores } from '../../../../../../../../../../../../../Store/useStores';
 import { useManagerOperations } from '../../Hooks';
 import { Row } from './Row';
 import { Wrapper } from './style';

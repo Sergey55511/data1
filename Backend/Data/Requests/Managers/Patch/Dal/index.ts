@@ -3,16 +3,13 @@ import { MyError } from '../../../../../../Shared/Classes/error';
 import { schema } from './scima';
 
 export interface iParams {
-    managerId: number;
-    operationId: number;
+    id: number;
+    params: { [key: string]: number | string | boolean };
 }
 
 export const dal = (params: { [key: string]: any }): iParams => {
-    const data: iParams = {
-        managerId: +params.managerId,
-        operationId: +params.operationId,
-    };
-    
+    const data = params as iParams;
+
     const ajv = new Ajv({ allErrors: true });
     const validate = ajv.compile(schema);
     const valid = validate(data);

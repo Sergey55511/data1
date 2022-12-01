@@ -4,7 +4,7 @@ import {
     deleteManagerOperations,
     getOperations,
     postManagerOperations,
-} from '../../../../../../../../../../../Store/Lists/api';
+} from '../../../../../../../../../../../../Store/Lists/api';
 
 export const useManagerOperations = (storeId: number, managerId: number) => {
     return useQuery(

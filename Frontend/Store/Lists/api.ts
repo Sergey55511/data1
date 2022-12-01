@@ -58,6 +58,22 @@ export const postManager = (data: { name: string; storeId: number }) => {
     }).then((res) => res.data);
 };
 
+export const removeManager = (params: { managerId: number }) => {
+    return axios({
+        url: '/api/list/managers',
+        method: 'DELETE',
+        params,
+    }).then((res) => res.data);
+};
+
+export const patchManager = (data: { id: number; params: { [key: string]: any } }) => {
+    return axios({
+        url: '/api/list/managers',
+        method: 'PATCH',
+        data,
+    }).then((res) => res.data);
+};
+
 export const deleteManagerOperations = (data: {
     managerId: number;
     operationId: number;

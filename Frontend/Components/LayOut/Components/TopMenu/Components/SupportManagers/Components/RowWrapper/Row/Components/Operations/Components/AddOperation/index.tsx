@@ -2,8 +2,8 @@ import { Button, Select } from 'antd';
 import { observer } from 'mobx-react-lite';
 import { PlusOutlined } from '@ant-design/icons';
 import { Wrapper } from './style';
-import { useStores } from '../../../../../../../../../../../../Store/useStores';
-import { useOperations } from '../../../../../../Hooks/useOperations';
+import { useStores } from '../../../../../../../../../../../../../Store/useStores';
+import { useOperations } from '../../../../../../../Hooks/useOperations';
 import { useState } from 'react';
 import { useAddOperation, useManagerOperations } from '../../Hooks';
 

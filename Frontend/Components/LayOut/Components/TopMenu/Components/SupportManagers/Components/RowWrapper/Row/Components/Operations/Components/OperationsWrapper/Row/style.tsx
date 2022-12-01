@@ -5,5 +5,6 @@ export const Wrapper = styled.div`
     column-gap: 8px;
     .operation {
         flex: 1;
+        overflow: hidden;
     }
 `;

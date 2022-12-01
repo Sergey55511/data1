@@ -1,5 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
+import { deleteManager } from '../../../Backend/Data/Requests/Managers/Delete';
 import { getManagers } from '../../../Backend/Data/Requests/Managers/Get';
+import { patchManagers } from '../../../Backend/Data/Requests/Managers/Patch';
 import { postManagers } from '../../../Backend/Data/Requests/Managers/Post';
 import { fetchService } from '../../../Backend/Data/Services/fetch';
 import { tPrisma } from '../../../Backend/types';
@@ -20,6 +22,22 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 req,
                 res,
                 fetch: (prisma: tPrisma) => postManagers(prisma, req.body as any),
+            });
+            break;
+        }
+        case 'DELETE': {
+            await fetchService({
+                req,
+                res,
+                fetch: (prisma: tPrisma) => deleteManager(prisma, req.query as any),
+            });
+            break;
+        }
+        case 'PATCH': {
+            await fetchService({
+                req,
+                res,
+                fetch: (prisma: tPrisma) => patchManagers(prisma, req.body as any),
             });
             break;
         }
