@@ -18,9 +18,9 @@ export const Operations = observer(
         return (
             <Drawer open={true} onClose={onClose} title="Операции:">
                 <Wrapper>
-                    <div>Работник: {worker.name}</div>
+                    <div className="title">Работник: {worker.name}</div>
                     <AddOperation managerId={worker.id} />
-                    <OperationsWrapper worker={worker} fetchManagers={fetchManagers}/>
+                    <OperationsWrapper worker={worker} fetchManagers={fetchManagers} />
                 </Wrapper>
             </Drawer>
         );

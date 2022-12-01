@@ -11,7 +11,11 @@ export const AddOperation = observer(({ managerId }: { managerId: number }) => {
     const [operationId, setOperationId] = useState<number | undefined>();
     const { loginStore } = useStores();
     const operations = useOperations(loginStore.user.storeId);
-    const managerOperations = useManagerOperations(loginStore.user.storeId, managerId);
+    const managerOperations = useManagerOperations(
+        loginStore.user.storeId,
+        managerId,
+        true,
+    );
     const addOperation = useAddOperation(managerOperations.refetch);
 
     const subbmitHandler = async () => {

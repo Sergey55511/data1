@@ -6,6 +6,7 @@ export interface iParams {
     storeId: number;
     stateId?: number;
     managerId?: number;
+    managerOperationsActive?: boolean;
 }
 
 export const dal = (params: { [key: string]: any }): iParams => {
@@ -13,6 +14,8 @@ export const dal = (params: { [key: string]: any }): iParams => {
         storeId: +params.storeId,
         stateId: params.stateId ? +params.stateId : undefined,
         managerId: params.managerId ? +params.managerId : undefined,
+        managerOperationsActive:
+            params.managerOperationsActive == 'true' ? true : undefined,
     };
 
     const ajv = new Ajv({ allErrors: true });

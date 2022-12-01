@@ -6,10 +6,14 @@ import {
     postManagerOperations,
 } from '../../../../../../../../../../../../Store/Lists/api';
 
-export const useManagerOperations = (storeId: number, managerId: number) => {
+export const useManagerOperations = (
+    storeId: number,
+    managerId: number,
+    managerOperationsActive?: boolean,
+) => {
     return useQuery(
-        ['useManagerOperations', managerId],
-        () => getOperations(storeId, undefined, managerId),
+        ['useManagerOperations', managerId, managerOperationsActive],
+        () => getOperations(storeId, undefined, managerId, managerOperationsActive),
         {
             enabled: !!storeId,
         },

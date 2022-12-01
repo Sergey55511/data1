@@ -85,7 +85,12 @@ export const deleteManagerOperations = (data: {
     }).then((res) => res.data);
 };
 
-export const getOperations = (storeId: number, stateId?: number, managerId?: number) => {
+export const getOperations = (
+    storeId: number,
+    stateId?: number,
+    managerId?: number,
+    managerOperationsActive?: boolean,
+) => {
     return axios({
         url: `/api/list/operations`,
         method: 'GET',
@@ -93,6 +98,7 @@ export const getOperations = (storeId: number, stateId?: number, managerId?: num
             storeId,
             stateId,
             managerId,
+            managerOperationsActive,
         },
     }).then((res) => res.data as iOperation[]);
 };
