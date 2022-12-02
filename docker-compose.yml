@@ -6,7 +6,7 @@ services:
     # build:
     #   context: .
     #   dockerfile: Dockerfile
-    image: "kpp2355575/tdata:${APP_VERSION}"
+    image: "kpp2355575/data1:${APP_VERSION}"
     container_name: rootapp
     ports:
       - "3000:3000"

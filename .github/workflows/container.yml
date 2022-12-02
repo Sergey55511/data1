@@ -33,32 +33,32 @@ jobs:
           file: ./Dockerfile
           builder: ${{ steps.buildx.outputs.name }}
           push: true
-          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/tdata:${{ github.ref_name }}
-          cache-from: type=registry,ref=${{ secrets.DOCKER_HUB_USERNAME }}/tdata:buildcache
-          cache-to: type=registry,ref=${{ secrets.DOCKER_HUB_USERNAME }}/tdata:buildcache,mode=max
+          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/data1:${{ github.ref_name }}
+          cache-from: type=registry,ref=${{ secrets.DOCKER_HUB_USERNAME }}/data1:buildcache
+          cache-to: type=registry,ref=${{ secrets.DOCKER_HUB_USERNAME }}/data1:buildcache,mode=max
 
-      - name: copy file via ssh password
-        uses: appleboy/scp-action@master
-        with:
-          host: ${{secrets.TDATA_SERVER_HOST}}
-          username: ${{secrets.TDATA_SERVER_USERNAME}}
-          password: ${{secrets.TDATA_SERVER_PASSWORD}}
-          port: ${{secrets.TDATA_SERVER_PORT}}
-          source: "docker-compose.yml"
-          target: "/app"
+      # - name: copy file via ssh password
+      #   uses: appleboy/scp-action@master
+      #   with:
+      #     host: ${{secrets.TDATA_SERVER_HOST}}
+      #     username: ${{secrets.TDATA_SERVER_USERNAME}}
+      #     password: ${{secrets.TDATA_SERVER_PASSWORD}}
+      #     port: ${{secrets.TDATA_SERVER_PORT}}
+      #     source: "docker-compose.yml"
+      #     target: "/app"
           
-      - name: docker-compose up
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{secrets.TDATA_SERVER_HOST}}
-          username: ${{secrets.TDATA_SERVER_USERNAME}}
-          password: ${{secrets.TDATA_SERVER_PASSWORD}}
-          port: ${{secrets.TDATA_SERVER_PORT}}
-          script: |            
-            cd /app/
-            rm .env 
-            echo APP_VERSION=${{ github.ref_name }} >> .env
-            echo $(cat .env) 
-            docker-compose down --rmi local
-            docker image prune -a -f
-            docker-compose up -d
+      # - name: docker-compose up
+      #   uses: appleboy/ssh-action@master
+      #   with:
+      #     host: ${{secrets.TDATA_SERVER_HOST}}
+      #     username: ${{secrets.TDATA_SERVER_USERNAME}}
+      #     password: ${{secrets.TDATA_SERVER_PASSWORD}}
+      #     port: ${{secrets.TDATA_SERVER_PORT}}
+      #     script: |            
+      #       cd /app/
+      #       rm .env 
+      #       echo APP_VERSION=${{ github.ref_name }} >> .env
+      #       echo $(cat .env) 
+      #       docker-compose down --rmi local
+      #       docker image prune -a -f
+      #       docker-compose up -d
