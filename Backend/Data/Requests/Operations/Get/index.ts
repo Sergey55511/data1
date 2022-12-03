@@ -9,14 +9,18 @@ export const getOperations = <T>(prisma: tPrisma, params: any): PrismaPromise<T>
         select: { id: true, operation: true },
         where: {
             AND: {
-                StateOperationBridge: { some: { stateId: data.stateId } },
+                StateOperationBridge: data.stateId
+                    ? { some: { stateId: data.stateId } }
+                    : undefined,
                 StoreOperationsBridge: { some: { storeId: data.storeId } },
-                ManagerOperations: {
-                    some: {
-                        managerId: data.managerId,
-                        active: data.managerOperationsActive,
-                    },
-                },
+                ManagerOperations: data.managerId
+                    ? {
+                          some: {
+                              managerId: data.managerId,
+                              active: data.managerOperationsActive,
+                          },
+                      }
+                    : undefined,
             },
         },
         orderBy: { operation: 'asc' },
