@@ -24,5 +24,6 @@ export const ROUTES = {
     shareItems: '/operations/shareItems',
     mixingGrade: '/operations/mixing/grade',
     mixingSize: '/operations/mixing/size',
+    mixingLot: '/operations/mixing/lot',
     getOrder: '/orders/getOrder',
 };
