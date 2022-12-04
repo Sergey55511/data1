@@ -37,6 +37,7 @@ export const STATE = {
     makedSuperBall: { id: 10 },
     grindedSuper: { id: 11 },
     polished: { id: 12 },
+    polishedS: { id: 34 },
     sliced: { id: 13 },
     stone: { id: 14 },
     sortedN: { id: 15 },

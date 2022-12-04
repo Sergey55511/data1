@@ -7,6 +7,7 @@ import { Orders } from './Orders';
 import { MoveOut } from './Operations/MoveOut';
 import { MoveIn } from './Operations/MoveIn/SharedStoreItems';
 import { MoveInDetales } from './Operations/MoveIn/SharedStoreItems/MoveInDetales';
+import { STATE } from '../../../Shared/constants';
 
 interface iProps {
     page: tPages;

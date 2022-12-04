@@ -1,5 +1,6 @@
 import moment from 'moment';
 import { MyError } from '../../../../../Shared/Classes/error';
+import { STATE } from '../../../../../Shared/constants';
 import { iDataTable, iSizeRange } from '../../../../../Shared/Types/interfaces';
 import { tPrisma } from '../../../../types';
 
@@ -25,7 +26,7 @@ export const mixingSize = async <T>(
         },
         orderBy: { position: 'asc' },
     })) as iSizeRange[];
-    
+
     const dataPrepared = data?.map((item) => ({
         ...item,
         date: moment()?.toDate(),
@@ -46,6 +47,7 @@ export const mixingSize = async <T>(
             widthOut: undefined,
             countItemsOut: undefined,
             widthIn: item.widthOut,
+            stateId: STATE.polishedS.id,
             countItemsIn: item.countItemsOut,
         };
     });
