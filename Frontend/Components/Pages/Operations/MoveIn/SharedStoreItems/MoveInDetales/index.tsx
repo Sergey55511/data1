@@ -119,10 +119,6 @@ export const MoveInDetales = observer(() => {
             title: KEYSLEFTOVERS.lot.title,
         },
         {
-            ...getColumnPropsHoc(KEYSLEFTOVERS.productionId.key),
-            title: KEYSLEFTOVERS.productionId.title,
-        },
-        {
             ...getColumnPropsHoc(KEYSLEFTOVERS.widthOut.key),
             title: KEYSLEFTOVERS.widthOut.title,
         },
@@ -144,6 +140,7 @@ export const MoveInDetales = observer(() => {
             },
             title: 'Приянть гр.',
             width: 100,
+            fixed: 'right',
         },
         {
             dataIndex: 'countItemsIn',
@@ -163,6 +160,7 @@ export const MoveInDetales = observer(() => {
             },
             title: 'Приянть шт.',
             width: 100,
+            fixed: 'right',
         },
     ];
 
@@ -198,7 +196,12 @@ export const MoveInDetales = observer(() => {
                     Принять
                 </Button>
             </div>
-            <TableApp columns={columns} dataSource={data} onChange={handleChange} />
+            <TableApp
+                columns={columns}
+                dataSource={data}
+                onChange={handleChange}
+                scroll={{ x: 2000 }}
+            />
         </Wrapper>
     );
 });
