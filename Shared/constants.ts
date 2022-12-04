@@ -56,3 +56,6 @@ export const WORKPIECETYPE = {
 export const GRADE = {
     mix: { id: 1 },
 };
+export const STORES = {
+    Moscow: { id: 1 },
+};
