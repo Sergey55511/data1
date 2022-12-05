@@ -7,7 +7,6 @@ import { Orders } from './Orders';
 import { MoveOut } from './Operations/MoveOut';
 import { MoveIn } from './Operations/MoveIn/SharedStoreItems';
 import { MoveInDetales } from './Operations/MoveIn/SharedStoreItems/MoveInDetales';
-import { STATE } from '../../../Shared/constants';
 
 interface iProps {
     page: tPages;
@@ -38,6 +37,8 @@ const PageSwitcher = ({ page }: { page: tPages }) => {
             return <MoveOut title="Смешивание сорт:" type="mixingGrade" />;
         case pages.mixingSize:
             return <MoveOut title="Смешивание размер:" type="mixingSize" />;
+        case pages.mixingLot:
+            return <MoveOut title="Смешивание размер:" type="mixingLot" />;
         case pages.moveIn:
             return <MoveIn />;
         case pages.moveInDetales:

@@ -5,7 +5,7 @@ export const leftovers = (storeId: number) => {
     return axios({
         url: `/api/data/leftovers?storeId=${storeId}`,
         method: 'GET',
-    }).then((res) => res.data);
+    }).then((res) => res.data as iData[]);
 };
 
 export const getOrders = (storeId: number) => {
@@ -70,7 +70,24 @@ export const moveToWork = (data: {
         data,
     }).then((res) => res.data);
 };
-export const mixingGrade = (data: { data: iDataTable[]; storeId: number; maxId: number }) => {
+
+export const mixingLot = (data: {
+    data: iDataTable[];
+    storeId: number;
+    maxId: number;
+}) => {
+    return axios({
+        url: `/api/data/mixing/lot`,
+        method: 'POST',
+        data,
+    }).then((res) => res.data);
+};
+
+export const mixingGrade = (data: {
+    data: iDataTable[];
+    storeId: number;
+    maxId: number;
+}) => {
     return axios({
         url: `/api/data/mixing/grade`,
         method: 'POST',
@@ -78,7 +95,11 @@ export const mixingGrade = (data: { data: iDataTable[]; storeId: number; maxId: 
     }).then((res) => res.data);
 };
 
-export const mixingSize = (data: { data: iDataTable[]; storeId: number; maxId: number }) => {
+export const mixingSize = (data: {
+    data: iDataTable[];
+    storeId: number;
+    maxId: number;
+}) => {
     return axios({
         url: `/api/data/mixing/size`,
         method: 'POST',

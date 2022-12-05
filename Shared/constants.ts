@@ -23,6 +23,7 @@ export const OPERATIONS = {
     sliceIk: { id: 23 }, //Распил ИК
     sortingLength: { id: 24 }, //Сортировка длин
     mixingSize: { id: 25 }, //Смешивание размер
+    mixingLot: { id: 39 }, //Смешивание партия
 };
 export const STATE = {
     washed: { id: 1 },

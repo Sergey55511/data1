@@ -10,6 +10,7 @@ export const pages = {
     shareItems: 'shareItems',
     mixingGrade: 'mixingGrade',
     mixingSize: 'mixingSize',
+    mixingLot: 'mixingLot',
     moveIn: 'moveIn',
     moveInDetales: 'moveInDetales',
 };

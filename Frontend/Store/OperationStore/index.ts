@@ -174,6 +174,23 @@ export class OperationStore {
         }
     });
 
+    mixingLot = flow(function* (
+        this: OperationStore,
+        data: iDataTable[],
+        callBack?: () => void,
+    ) {
+        try {
+            yield api.mixingLot({
+                data: data,
+                storeId: this.loginStore.user.storeId,
+                maxId: this.maxId,
+            });
+            if (callBack) callBack();
+        } catch (err) {
+            this.errorStore.setError(err as iError);
+        }
+    });
+
     mixingSize = flow(function* (
         this: OperationStore,
         data: iDataTable[],
