@@ -1,17 +1,15 @@
-import { notification } from 'antd';
 import { observer } from 'mobx-react-lite';
-import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { iData, iField } from '../../../../../../../../Shared/Types/interfaces';
-import { useStores } from '../../../../../../../Store/useStores';
 import { tValue } from '../../../../../../Shared/InputNumber';
 import { Row } from './Components/Row';
 import { Wrapper } from './style';
-import { getTotalSum, sendData, validation } from '../../../../../../Helpers';
+import { getTotalSum } from '../../../../../../Helpers';
 import { Title } from '../../Shared/Title';
 import { Field } from '../../../../../../Helpers/classes';
 import { usePostData } from './Components/Hooks/usePostData';
-import { OPERATIONS, STATE } from '../../../../../../../../Shared/constants';
+import { OPERATIONS } from '../../../../../../../../Shared/constants';
+import { round } from '../../../../../../../../Shared/Helpers';
 
 export interface iState {
     stateId: iField;
@@ -43,12 +41,14 @@ export const Slicing = observer(
 
         useEffect(() => {
             const totalSum = getTotalSum(state);
-            const res =
+            let res =
                 (record?.widthOut || 0) -
                 totalSum -
                 (garbage || 0) -
                 (moveBack ? +moveBack : 0);
-            setLosses(isNaN(res) ? 0 : res);
+                res = isNaN(res) ? 0 : res;
+                res = round(res);
+                setLosses(res);
         }, [state, garbage, moveBack]);
 
         const addRowHandler = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {

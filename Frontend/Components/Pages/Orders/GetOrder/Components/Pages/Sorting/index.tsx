@@ -2,11 +2,11 @@ import { notification } from 'antd';
 import { observer } from 'mobx-react-lite';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
+import { round } from '../../../../../../../../Shared/Helpers';
 import { iData, iField, iGrade } from '../../../../../../../../Shared/Types/interfaces';
 import { useStores } from '../../../../../../../Store/useStores';
 import { getTotalSum, sendData, validation } from '../../../../../../Helpers';
 import { Field } from '../../../../../../Helpers/classes';
-import { confirmAction } from '../../../../../../Shared/ConfirmSubbmit';
 import { tValue } from '../../../../../../Shared/InputNumber';
 import { Title } from '../../Shared/Title';
 import { getRootLists } from './Components/Hooks';
@@ -37,8 +37,10 @@ export const Sorting = observer(
 
         useEffect(() => {
             const totalSum = getTotalSum(state);
-            const res = (record?.widthOut || 0) - totalSum - (moveBack ? +moveBack : 0);
-            setLosses(isNaN(res) ? 0 : res);
+            let res = (record?.widthOut || 0) - totalSum - (moveBack ? +moveBack : 0);
+            res = isNaN(res) ? 0 : res;
+            res = round(res);
+            setLosses(res);
         }, [state, moveBack]);
 
         const addRowHandler = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
