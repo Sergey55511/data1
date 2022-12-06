@@ -36,7 +36,7 @@ export const Slicing = observer(
         const [losses, setLosses] = useState<number>(0);
         const [garbage, setGarbage] = useState<number | undefined>(undefined);
         const [moveBack, setMoveBack] = useState<tValue>(undefined);
-
+        const [defect, setDefect] = useState<tValue>(undefined);
         const postData = usePostData();
 
         useEffect(() => {
@@ -46,9 +46,9 @@ export const Slicing = observer(
                 totalSum -
                 (garbage || 0) -
                 (moveBack ? +moveBack : 0);
-                res = isNaN(res) ? 0 : res;
-                res = round(res);
-                setLosses(res);
+            res = isNaN(res) ? 0 : res;
+            res = round(res);
+            setLosses(res);
         }, [state, garbage, moveBack]);
 
         const addRowHandler = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
@@ -92,6 +92,8 @@ export const Slicing = observer(
                     setMoveBack={setMoveBack}
                     garbage={garbage}
                     moveBack={moveBack}
+                    setDefect={setDefect}
+                    defect={defect}
                     losses={losses}
                     isLoading={postData?.isLoading}
                 />
