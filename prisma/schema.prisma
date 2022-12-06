@@ -10,7 +10,7 @@ datasource db {
 model Data {
   id               Int            @id @default(autoincrement())
   date             DateTime       @default(now()) @db.Date()
-  lot              Int?
+  lot              Decimal?
   numDocument      String?
   pp               Int?
   sizeRange        SizeRange?     @relation(fields: [sizeRangeId], references: [id])
@@ -188,20 +188,20 @@ model Color {
   Bridge  Bridge[]
 }
 
-model Billets {
-  id          Int           @id @default(autoincrement())
-  name        String        @unique
-  BilletStore BilletStore[]
-  Models      Models[]
-  modelId     Int?          @map("modelsId")
-}
-
 model BilletStore {
   id       Int      @id @default(autoincrement())
   Billet   Billets? @relation(fields: [billetId], references: [id])
   billetId Int?
   Stores   Stores?  @relation(fields: [storeId], references: [id])
   storeId  Int?     @map("storesId")
+}
+
+model Billets {
+  id          Int           @id @default(autoincrement())
+  name        String        @unique
+  BilletStore BilletStore[]
+  Models      Models[]
+  modelId     Int?          @map("modelsId")
 }
 
 model Models {
