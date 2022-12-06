@@ -2,7 +2,7 @@ import { Button } from 'antd';
 import { InputNumber, tValue } from '../../../../../../Shared/InputNumber';
 import { Wrapper } from './style';
 import { confirmAction } from '../../../../../../Shared/ConfirmSubbmit';
-import { SetStateAction, useState } from 'react';
+import { SetStateAction } from 'react';
 
 export const Title = ({
     subbmitHandler,
@@ -44,7 +44,7 @@ export const Title = ({
                         onChangeHandler={(v) => {
                             if (setGarbage) setGarbage(v ? +v : undefined);
                         }}
-                        value={garbage}
+                        value={garbage ?? ''}
                     />
                 </div>
             )}
@@ -53,7 +53,7 @@ export const Title = ({
                     <InputNumber
                         placeholder="Брак"
                         onChangeHandler={(v) => {
-                            if (setDefect) setDefect(v ? +v : undefined);
+                            if (setDefect) setDefect(v);
                         }}
                         value={defect}
                     />
@@ -62,7 +62,7 @@ export const Title = ({
             {setMoveBack && (
                 <div>
                     <InputNumber
-                        placeholder="Возврат"
+                        placeholder="Возврат гр."
                         value={moveBack}
                         onChangeHandler={(v) => {
                             if (setMoveBack) setMoveBack(v);
