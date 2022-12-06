@@ -1,8 +1,9 @@
 import { Input, InputProps, Select } from 'antd';
+import { InputNumber, tValue } from '../../../../../Shared/InputNumber';
 import { iItem, iPrimeData } from '../constants';
 interface iField extends InputProps {
     item: iItem;
-    onChangeHandler: (v: string | number) => void;
+    onChangeHandler: (v: tValue) => void;
 }
 export const Field = ({ item, onChangeHandler, ...rest }: iField) => (
     <InputField {...{ item, onChangeHandler, ...rest }} />
@@ -12,7 +13,7 @@ interface iPrimeField extends InputProps {
     fieldName: keyof iPrimeData;
     setPrameValue: <T extends keyof iPrimeData>(
         key: T,
-        value: iPrimeData[T]['value'],
+        value: tValue,
     ) => void;
 }
 
@@ -23,7 +24,7 @@ export const PrimeField = ({
     ...rest
 }: iPrimeField) => {
     const item = primeData[fieldName];
-    const onChangeHandler = (v: string | number) => setPrameValue(fieldName, v);
+    const onChangeHandler = (v: tValue) => setPrameValue(fieldName, v);
     return <InputField {...{ item, onChangeHandler, ...rest }} />;
 };
 
@@ -33,17 +34,23 @@ const InputField = ({
     ...rest
 }: {
     item: iItem;
-    onChangeHandler: (v: string | number) => void;
+    onChangeHandler: (v: tValue) => void;
 }) => {
     return (
         <div className="item">
-            <Input
+            <InputNumber
+                placeholder={item.placeholder}
+                onChangeHandler={(v) => onChangeHandler(v)}
+                value={item.value}
+                allowClear
+            />
+            {/* <Input
                 placeholder={item.placeholder}
                 onChange={(v) => onChangeHandler(v.target.value)}
                 value={item.value}
                 allowClear
                 {...rest}
-            />
+            /> */}
             {item.isError && <small style={{ color: 'red' }}>{item.errorMessage}</small>}
         </div>
     );
