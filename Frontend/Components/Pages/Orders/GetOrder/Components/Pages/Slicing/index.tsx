@@ -45,11 +45,12 @@ export const Slicing = observer(
                 (record?.widthOut || 0) -
                 totalSum -
                 (garbage ? +garbage : 0) -
+                (defect ? +defect : 0) -
                 (moveBack ? +moveBack : 0);
             res = isNaN(res) ? 0 : res;
             res = round(res);
             setLosses(res);
-        }, [state, garbage, moveBack]);
+        }, [state, garbage, moveBack, defect]);
 
         const addRowHandler = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
             e.preventDefault();
