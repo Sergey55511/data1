@@ -15,6 +15,7 @@ import { Wrapper } from './style';
 import { getTotalSum, sendData, validation } from '../../../../../../Helpers';
 import { Title } from '../../Shared/Title';
 import { Field } from '../../../../../../Helpers/classes';
+import { round } from '../../../../../../../../Shared/Helpers';
 
 export interface iState {
     length: iField;
@@ -55,8 +56,10 @@ export const SortingLength = observer(
 
         useEffect(() => {
             const totalSum = getTotalSum(state);
-            const res = (record?.widthOut || 0) - totalSum - (moveBack ? +moveBack : 0);
-            setLosses(isNaN(res) ? 0 : res);
+            let res = (record?.widthOut || 0) - totalSum - (moveBack ? +moveBack : 0);
+            res = isNaN(res) ? 0 : res;
+            res = round(res);
+            setLosses(res);
         }, [state, moveBack]);
 
         const addRowHandler = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {

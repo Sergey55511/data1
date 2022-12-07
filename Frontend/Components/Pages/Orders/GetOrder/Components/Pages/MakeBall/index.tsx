@@ -3,6 +3,7 @@ import { observer } from 'mobx-react-lite';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { OPERATIONS } from '../../../../../../../../Shared/constants';
+import { round } from '../../../../../../../../Shared/Helpers';
 import {
     iData,
     iField,
@@ -43,12 +44,14 @@ export const MakeBall = observer(
 
         useEffect(() => {
             const totalSum = getTotalSum(state);
-            const res =
+            let res =
                 (record?.widthOut || 0) -
                 totalSum -
                 (defect ? +defect : 0) -
                 (moveBack ? +moveBack : 0);
-            setLosses(isNaN(res) ? 0 : res);
+            res = isNaN(res) ? 0 : res;
+            res = round(res);
+            setLosses(res);
         }, [state, defect, moveBack]);
 
         useEffect(() => {

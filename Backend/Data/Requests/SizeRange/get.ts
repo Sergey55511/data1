@@ -12,6 +12,6 @@ export const getSizeRange = <T>(
     return prisma.sizeRange.findMany({
         select: { id: true, sizeRange: true, size: true },
         where: { active: true, id, Bridge: { some: params } },
-        orderBy: { size: 'desc' },
+        orderBy: { size: 'asc' },
     }) as any;
 };

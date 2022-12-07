@@ -11,6 +11,7 @@ import { useStores } from '../../../../../Store/useStores';
 import { iData } from '../../../../../../Shared/Types/interfaces';
 import { Frame } from '../../../../Shared/Frame';
 import { STATE, WORKPIECETYPE } from '../../../../../../Shared/constants';
+import { tValue } from '../../../../Shared/InputNumber';
 
 export const NewItem = observer(() => {
     const [primeData, setPrimeData] = useState<iPrimeData>(initPrimeData());
@@ -47,16 +48,9 @@ export const NewItem = observer(() => {
         });
     };
 
-    const setPrameValue = <T extends keyof iPrimeData>(
-        key: T,
-        value: iPrimeData[T]['value'],
-    ) => {
-        const isNum = isNumber(+value);
-        if (isNum) {
-            if (+value < 0) return;
-        }
+    const setPrameValue = <T extends keyof iPrimeData>(key: T, value: tValue) => {
         setPrimeData((prev) => {
-            setItemValue(prev[key], key == 'lot' ? +value : value);
+            setItemValue(prev[key], value);
             return { ...prev };
         });
     };
@@ -67,19 +61,21 @@ export const NewItem = observer(() => {
         if (isValid()) {
             setIsLoading(true);
             const preparedData: iData[] = data.map((item) => {
+                item.widthInDocument.value;
                 const res: iData = {
-                    [primeData.lot.field]: primeData.lot.value,
-                    [primeData.numDocument.field]: primeData.numDocument.value,
+                    lot: +primeData.lot.value,
+                    numDocument: `${primeData.numDocument.value}`,
                     operationId: 1,
                     workpieceTypeId: WORKPIECETYPE.stone.id,
                     userId: loginStore.user.id,
                     storeId: loginStore.user.storeId,
                     stateId: STATE.stone.id,
+                    widthInDocument: +item.widthInDocument.value,
+                    widthIn: +item.widthIn.value,
+                    moneyIn: +item.moneyIn.value,
+                    materialGroupId: +item.materialGroup.value,
+                    fractionId: +item.fractionId.value,
                 };
-                for (const key in item) {
-                    const keyField = key as keyof typeof item;
-                    res[item[keyField].field as keyof iData] = item[keyField].value;
-                }
                 return res;
             });
 
@@ -153,13 +149,14 @@ export const NewItem = observer(() => {
                         <Tooltip
                             placement="top"
                             title={`Макс партия: ${OperationStore.maxLot || 0}`}
+                            onOpenChange={() => console.log('onOpenChange')}
                         >
-                            <PrimeField
-                                {...{ primeData, setPrameValue }}
-                                fieldName={'lot'}
-                                type={primeData.lot.type}
-                                step={primeData.lot.step}
-                            />
+                            <div>
+                                <PrimeField
+                                    {...{ primeData, setPrameValue }}
+                                    fieldName={'lot'}
+                                />
+                            </div>
                         </Tooltip>
                         <PrimeField
                             {...{ primeData, setPrameValue }}
@@ -205,24 +202,24 @@ export const NewItem = observer(() => {
                     />
                     <SelectField
                         item={item.materialGroup}
-                        onChangeHandler={(v) => setValue(index, 'materialGroup', +v)}
+                        onChangeHandler={(v) => setValue(index, 'materialGroup', v)}
                         options={materialGroup}
                     />
                     <Field
                         item={item.widthInDocument}
-                        onChangeHandler={(v) => setValue(index, 'widthInDocument', +v)}
+                        onChangeHandler={(v) => setValue(index, 'widthInDocument', v)}
                         type={item.widthInDocument.type}
                         step={item.widthInDocument.step}
                     />
                     <Field
                         item={item.widthIn}
-                        onChangeHandler={(v) => setValue(index, 'widthIn', +v)}
+                        onChangeHandler={(v) => setValue(index, 'widthIn', v)}
                         type={item.widthIn.type}
                         step={item.widthIn.step}
                     />
                     <Field
                         item={item.moneyIn}
-                        onChangeHandler={(v) => setValue(index, 'moneyIn', +v)}
+                        onChangeHandler={(v) => setValue(index, 'moneyIn', v)}
                         type={item.moneyIn.type}
                         step={item.moneyIn.step}
                     />

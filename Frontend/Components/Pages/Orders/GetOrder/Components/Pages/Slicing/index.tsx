@@ -1,17 +1,15 @@
-import { notification } from 'antd';
 import { observer } from 'mobx-react-lite';
-import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { iData, iField } from '../../../../../../../../Shared/Types/interfaces';
-import { useStores } from '../../../../../../../Store/useStores';
 import { tValue } from '../../../../../../Shared/InputNumber';
 import { Row } from './Components/Row';
 import { Wrapper } from './style';
-import { getTotalSum, sendData, validation } from '../../../../../../Helpers';
+import { getTotalSum } from '../../../../../../Helpers';
 import { Title } from '../../Shared/Title';
 import { Field } from '../../../../../../Helpers/classes';
 import { usePostData } from './Components/Hooks/usePostData';
-import { OPERATIONS, STATE } from '../../../../../../../../Shared/constants';
+import { OPERATIONS } from '../../../../../../../../Shared/constants';
+import { round } from '../../../../../../../../Shared/Helpers';
 
 export interface iState {
     stateId: iField;
@@ -36,20 +34,23 @@ export const Slicing = observer(
     }) => {
         const [state, setState] = useState<iState[]>([]);
         const [losses, setLosses] = useState<number>(0);
-        const [garbage, setGarbage] = useState<number | undefined>(undefined);
+        const [garbage, setGarbage] = useState<tValue>(undefined);
         const [moveBack, setMoveBack] = useState<tValue>(undefined);
-
+        const [defect, setDefect] = useState<tValue>(undefined);
         const postData = usePostData();
 
         useEffect(() => {
             const totalSum = getTotalSum(state);
-            const res =
+            let res =
                 (record?.widthOut || 0) -
                 totalSum -
-                (garbage || 0) -
+                (garbage ? +garbage : 0) -
+                (defect ? +defect : 0) -
                 (moveBack ? +moveBack : 0);
-            setLosses(isNaN(res) ? 0 : res);
-        }, [state, garbage, moveBack]);
+            res = isNaN(res) ? 0 : res;
+            res = round(res);
+            setLosses(res);
+        }, [state, garbage, moveBack, defect]);
 
         const addRowHandler = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
             e.preventDefault();
@@ -70,6 +71,14 @@ export const Slicing = observer(
 
         const removeRow = (index: number) => {
             setState((prev) => prev.filter((_, i) => i != index));
+        };
+        const copyRow = (index: number) => {
+            setState((prev) => {
+                const elem: iState = JSON.parse(JSON.stringify(prev[index]));
+                elem.widthIn.value = '';
+                prev.splice(index + 1, 0, elem);
+                return [...prev];
+            });
         };
 
         const subbmitHandler = () => {
@@ -92,6 +101,8 @@ export const Slicing = observer(
                     setMoveBack={setMoveBack}
                     garbage={garbage}
                     moveBack={moveBack}
+                    setDefect={setDefect}
+                    defect={defect}
                     losses={losses}
                     isLoading={postData?.isLoading}
                 />
@@ -101,6 +112,7 @@ export const Slicing = observer(
                             index={index}
                             state={item}
                             removeRow={removeRow}
+                            copyRow={copyRow}
                             setState={setState}
                             key={index}
                             isShowState={isShowState}
