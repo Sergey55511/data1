@@ -1,5 +1,5 @@
 import { Button, Tooltip } from 'antd';
-import { MinusOutlined } from '@ant-design/icons';
+import { MinusOutlined, CopyOutlined } from '@ant-design/icons';
 import { InputField } from '../../../../../../../../Shared/InputField';
 import { SelectField } from '../../../../../../../../Shared/SelectField';
 import { InputNumber } from '../../../../../../../../Shared/InputNumber';
@@ -25,6 +25,7 @@ export const Row = observer(
         operationId,
         index,
         removeRow,
+        copyRow,
         state,
         setState,
         isShowState,
@@ -32,6 +33,7 @@ export const Row = observer(
         operationId: number;
         index: number;
         removeRow: (i: number) => void;
+        copyRow: (i: number) => void;
         state: iState;
         setState: Dispatch<SetStateAction<iState[]>>;
         isShowState?: boolean;
@@ -61,6 +63,13 @@ export const Row = observer(
                         shape="circle"
                         icon={<MinusOutlined />}
                         onClick={() => removeRow(index)}
+                    />
+                </Tooltip>
+                <Tooltip title="Копировать строку">
+                    <Button
+                        shape="circle"
+                        icon={<CopyOutlined />}
+                        onClick={() => copyRow(index)}
                     />
                 </Tooltip>
                 {isShowState && (

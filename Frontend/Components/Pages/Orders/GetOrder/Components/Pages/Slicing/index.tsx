@@ -71,6 +71,14 @@ export const Slicing = observer(
         const removeRow = (index: number) => {
             setState((prev) => prev.filter((_, i) => i != index));
         };
+        const copyRow = (index: number) => {
+            setState((prev) => {
+                const elem: iState = JSON.parse(JSON.stringify(prev[index]));
+                elem.widthIn.value = '';
+                prev.splice(index + 1, 0, elem);
+                return [...prev];
+            });
+        };
 
         const subbmitHandler = () => {
             postData?.mutate({
@@ -103,6 +111,7 @@ export const Slicing = observer(
                             index={index}
                             state={item}
                             removeRow={removeRow}
+                            copyRow={copyRow}
                             setState={setState}
                             key={index}
                             isShowState={isShowState}
