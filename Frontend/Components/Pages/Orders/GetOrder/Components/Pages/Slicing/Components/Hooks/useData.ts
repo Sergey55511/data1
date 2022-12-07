@@ -40,7 +40,7 @@ export const useData = (
         },
     );
 
-    let dependencies = ['grades', storeId, workpieceTypeId, sizeRangeId];
+    let dependencies = ['grades', storeId, workpieceTypeId];
 
     useEffect(() => {
         if (!isFirstRender.current.gradeId) {
@@ -52,7 +52,7 @@ export const useData = (
     const grade = useQuery(
         dependencies,
         () => {
-            return getGrades({ storeId, workpieceTypeId, sizeRangeId });
+            return getGrades({ storeId, workpieceTypeId });
         },
         {
             enabled: !!storeId,

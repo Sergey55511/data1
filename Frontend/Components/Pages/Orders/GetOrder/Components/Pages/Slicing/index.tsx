@@ -34,7 +34,7 @@ export const Slicing = observer(
     }) => {
         const [state, setState] = useState<iState[]>([]);
         const [losses, setLosses] = useState<number>(0);
-        const [garbage, setGarbage] = useState<number | undefined>(undefined);
+        const [garbage, setGarbage] = useState<tValue>(undefined);
         const [moveBack, setMoveBack] = useState<tValue>(undefined);
         const [defect, setDefect] = useState<tValue>(undefined);
         const postData = usePostData();
@@ -44,7 +44,7 @@ export const Slicing = observer(
             let res =
                 (record?.widthOut || 0) -
                 totalSum -
-                (garbage || 0) -
+                (garbage ? +garbage : 0) -
                 (moveBack ? +moveBack : 0);
             res = isNaN(res) ? 0 : res;
             res = round(res);

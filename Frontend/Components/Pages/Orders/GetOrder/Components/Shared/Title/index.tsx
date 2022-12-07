@@ -18,10 +18,10 @@ export const Title = ({
 }: {
     subbmitHandler: () => void;
     addRowHandler: (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => void;
-    setGarbage?: (value: SetStateAction<number | undefined>) => void;
+    setGarbage?: (value: SetStateAction<tValue>) => void;
     setMoveBack?: (value: SetStateAction<tValue>) => void;
     setDefect?: (value: SetStateAction<tValue>) => void;
-    garbage?: number;
+    garbage?: tValue;
     moveBack?: tValue;
     defect?: tValue;
     losses?: number;
@@ -42,7 +42,7 @@ export const Title = ({
                     <InputNumber
                         placeholder="Отход"
                         onChangeHandler={(v) => {
-                            if (setGarbage) setGarbage(v ? +v : undefined);
+                            if (setGarbage) setGarbage(v);
                         }}
                         value={garbage ?? ''}
                     />
