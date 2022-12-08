@@ -37,7 +37,7 @@ export const Slicing = observer(
         const [garbage, setGarbage] = useState<tValue>(undefined);
         const [moveBack, setMoveBack] = useState<tValue>(undefined);
         const [defect, setDefect] = useState<tValue>(undefined);
-        const postData = usePostData();
+        const postData = usePostData();        
 
         useEffect(() => {
             const totalSum = getTotalSum(state);
@@ -88,6 +88,7 @@ export const Slicing = observer(
                 losses,
                 record,
                 garbage,
+                defect,
                 moveBack,
             });
         };
