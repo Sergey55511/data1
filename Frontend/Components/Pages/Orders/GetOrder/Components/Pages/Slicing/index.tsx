@@ -18,6 +18,7 @@ export interface iState {
     colorId: iField;
     sizeRangeId: iField;
     widthIn: iField;
+    duplicate: boolean;
 }
 
 export const Slicing = observer(
@@ -37,7 +38,42 @@ export const Slicing = observer(
         const [garbage, setGarbage] = useState<tValue>(undefined);
         const [moveBack, setMoveBack] = useState<tValue>(undefined);
         const [defect, setDefect] = useState<tValue>(undefined);
-        const postData = usePostData();        
+        const postData = usePostData();
+
+        const checkDuplicate = (state: iState[]): iState[] => {
+            let rows = state.map((item, index) => {
+                const itemString = JSON.stringify({
+                    stateId: item.stateId,
+                    workpieceTypeId: item.workpieceTypeId,
+                    gradeId: item.gradeId,
+                    colorId: item.colorId,
+                    sizeRangeId: item.sizeRangeId,
+                });
+                return { index, itemString, count: 0 };
+            });
+
+            rows.forEach((item) => {
+                const find = rows.filter((itm) => itm.itemString == item.itemString);
+                if (!find[0].count) {
+                    const count = find.length;
+                    find.forEach((itm) => (itm.count = count));
+                }
+            });
+
+            let isNeedRefresh = false;
+
+            return state.map((item, index) => {
+                if (rows[index].count > 1) {
+                    isNeedRefresh = true;
+                    item.duplicate = true;
+                } else {
+                    item.duplicate = false;
+                }
+                return { ...item };
+            });
+
+            // if (isNeedRefresh) setState([...res]);
+        };
 
         useEffect(() => {
             const totalSum = getTotalSum(state);
@@ -62,6 +98,7 @@ export const Slicing = observer(
                     colorId: new Field('colorId', 'Цвет'),
                     sizeRangeId: new Field('sizeRangeId', 'Размерный ряд'),
                     widthIn: new Field('widthIn', 'Вес гр.'),
+                    duplicate: false,
                 };
                 if (operationId == OPERATIONS.slice.id) newRow.stateId.value = stateId;
                 const res: iState[] = [...prev, newRow];
@@ -93,6 +130,8 @@ export const Slicing = observer(
             });
         };
 
+        const data = checkDuplicate(state);
+
         return (
             <Wrapper>
                 <Title
@@ -108,7 +147,7 @@ export const Slicing = observer(
                     isLoading={postData?.isLoading}
                 />
                 <div>
-                    {state.map((item, index) => (
+                    {data.map((item, index) => (
                         <Row
                             index={index}
                             state={item}

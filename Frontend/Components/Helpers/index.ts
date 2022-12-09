@@ -38,7 +38,7 @@ export const getTotalSum = <T extends { widthIn: { value: string | number } }>(
     state: T[],
 ) =>
     state.reduce((res, item) => {
-        return (res += +item.widthIn.value || 0);
+        return (res += +item?.widthIn?.value || 0);
     }, 0);
 
 export const prepareSubbmitData = ({
