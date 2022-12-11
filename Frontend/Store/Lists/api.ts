@@ -9,6 +9,10 @@ import {
     iState,
     iManager,
     iOperation,
+    iModel,
+    iProfile,
+    iSizeRangeModel,
+    iLengthModel,
 } from '../../../Shared/Types/interfaces';
 
 export const getMaterialGroup = () => {
@@ -174,6 +178,39 @@ export const getWorkpieceType = (filters: iQueryFilters) => {
         method: 'GET',
     }).then((res) => res.data as iWorkpieceType[]);
 };
+
+export const getWorkpieceTypeModel = () => {
+    return axios({
+        url: `/api/list/workpieceType/model`,
+        method: 'GET',
+    }).then((res) => res.data as iWorkpieceType[]);
+};
+export const getModels = () => {
+    return axios({
+        url: `/api/list/model`,
+        method: 'GET',
+    }).then((res) => res.data as iModel[]);
+};
+
+export const getProfile = () => {
+    return axios({
+        url: `/api/list/profile`,
+        method: 'GET',
+    }).then((res) => res.data as iProfile[]);
+};
+export const getLengthModel = () => {
+    return axios({
+        url: `/api/list/lengthmodel`,
+        method: 'GET',
+    }).then((res) => res.data as iLengthModel[]);
+};
+export const getSizeRangeModel = () => {
+    return axios({
+        url: `/api/list/sizerangemodel`,
+        method: 'GET',
+    }).then((res) => res.data as iSizeRangeModel[]);
+};
+
 export const getLength = (filters: iQueryFilters) => {
     const params = getQueryParams(filters);
     return axios({

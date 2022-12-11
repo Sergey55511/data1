@@ -136,6 +136,22 @@ export interface iWorkpieceType {
     workpieceType: string;
     nextTypeId?: number;
 }
+export interface iModel {
+    id: number;
+    model: string;
+}
+export interface iProfile {
+    id: number;
+    profile: string;
+}
+export interface iLengthModel {
+    id: number;
+    length: string;
+}
+export interface iSizeRangeModel {
+    id: number;
+    sizeRange: string;
+}
 export interface iLength {
     id: number;
     length: string;

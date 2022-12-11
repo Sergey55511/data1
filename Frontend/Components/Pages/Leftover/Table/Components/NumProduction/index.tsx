@@ -3,7 +3,7 @@ import { observer } from 'mobx-react-lite';
 import { Wrapper } from './style';
 import { SearchOutlined } from '@ant-design/icons';
 import { useStores } from '../../../../../../Store/useStores';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Loading } from '../../../../../Shared/Loading';
 
 export const NumProduction = observer(
@@ -11,7 +11,7 @@ export const NumProduction = observer(
         const [description, setDescription] = useState('');
         const [search, setSearch] = useState('');
         const [isLoading, setIsLoading] = useState(false);
-        const { OperationStore,ListsStore } = useStores();
+        const { OperationStore, ListsStore } = useStores();
 
         const newProductionHandler = async () => {
             setIsLoading(true);

@@ -1,4 +1,4 @@
-import { Button, DatePicker, Divider, Input, Select } from 'antd';
+import { Button, DatePicker, Divider, Drawer, Input, Select } from 'antd';
 import { observer } from 'mobx-react-lite';
 import moment from 'moment';
 import { SetStateAction, useEffect, useRef, useState } from 'react';
@@ -9,6 +9,7 @@ import { contentDrawer } from '../../../../../Shared/contentDrawer';
 import { SelectField } from '../../../../../Shared/SelectField';
 import { KEYSLEFTOVERS } from '../../../../../Shared/Table/constants';
 import { NumProduction } from '../NumProduction';
+import { SetTask } from '../SetTask';
 import { Wrapper } from './style';
 
 type tConstKeys = keyof typeof KEYSLEFTOVERS;
@@ -16,6 +17,7 @@ type tValue = number | string | undefined;
 export const MoveOutSolo = observer(
     ({ record, onClose }: { record: iData; onClose?: () => void }) => {
         const { OperationStore, loginStore, UIStore, ListsStore } = useStores();
+        const [isShowSetTask, setIsShowSetTask] = useState(false);
         const [numProd, setNumProd] = useState(0);
         const isNewProductionId = useRef(false);
         const [operation, setOperation] = useState<number | undefined>(undefined);
@@ -59,6 +61,11 @@ export const MoveOutSolo = observer(
                     />
                 ),
             });
+        };
+
+        const setTask = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
+            e.preventDefault();
+            setIsShowSetTask(true);
         };
 
         const getValue = (v: string) => (isNaN(+v) ? undefined : +v);
@@ -123,120 +130,132 @@ export const MoveOutSolo = observer(
         };
 
         return (
-            <Wrapper>
-                <div className="formWrapper">
-                    <DatePicker
-                        placeholder="Дата операции"
-                        style={{ width: '100%' }}
-                        value={date}
-                        onChange={(v) => setDate(v)}
-                        allowClear
-                        onKeyDown={onPressEnterHandler}
-                    />
-                    <SelectField
-                        placeholder="Операция"
-                        value={operation}
-                        onChange={(v) => setOperation(v)}
-                        options={ListsStore.operations?.map((item) => ({
-                            value: item.id,
-                            caption: item.operation,
-                        }))}
-                    />
-                    <SelectField
-                        placeholder="Исполнитель"
-                        value={managerId}
-                        onChange={(v) => setManagerId(v)}
-                        options={ListsStore.managers?.map((item) => ({
-                            value: item.id,
-                            caption: item.name,
-                        }))}
-                    />
-                    <div className="flex">
-                        <div className="item">
-                            <h3>{KEYSLEFTOVERS.width.title}</h3>
-                            <p>{record.width}</p>
-                        </div>
-                        <div className="item">
-                            <h3>{KEYSLEFTOVERS.count.title}</h3>
-                            <p>{record.count}</p>
-                        </div>
-                    </div>
-                    <div className="flex">
-                        <div className="item">
-                            <div>
-                                <Input
-                                    placeholder="Выдать"
-                                    disabled={!record.width}
-                                    value={width}
-                                    onChange={(e) => setValue(e.target.value, setWidth)}
-                                    onKeyDown={onPressEnterHandler}
-                                />
+            <Drawer open title="Выдать в работу" width={600}>
+                <Wrapper>
+                    {isShowSetTask && <SetTask onClose={() => setIsShowSetTask(false)} />}
+                    <div className="formWrapper">
+                        <DatePicker
+                            placeholder="Дата операции"
+                            style={{ width: '100%' }}
+                            value={date}
+                            onChange={(v) => setDate(v)}
+                            allowClear
+                            onKeyDown={onPressEnterHandler}
+                        />
+                        <SelectField
+                            placeholder="Операция"
+                            value={operation}
+                            onChange={(v) => setOperation(v)}
+                            options={ListsStore.operations?.map((item) => ({
+                                value: item.id,
+                                caption: item.operation,
+                            }))}
+                        />
+                        <SelectField
+                            placeholder="Исполнитель"
+                            value={managerId}
+                            onChange={(v) => setManagerId(v)}
+                            options={ListsStore.managers?.map((item) => ({
+                                value: item.id,
+                                caption: item.name,
+                            }))}
+                        />
+                        <div className="flex">
+                            <div className="item">
+                                <h3>{KEYSLEFTOVERS.width.title}</h3>
+                                <p>{record.width}</p>
+                            </div>
+                            <div className="item">
+                                <h3>{KEYSLEFTOVERS.count.title}</h3>
+                                <p>{record.count}</p>
                             </div>
                         </div>
-                        <div className="item">
-                            <div>
-                                <Input
-                                    placeholder="Выдать"
-                                    disabled={!record.count}
-                                    value={count}
-                                    onChange={(e) => setValue(e.target.value, setCount)}
-                                    onKeyDown={onPressEnterHandler}
-                                />
-                            </div>
-                        </div>
-                    </div>
-                    <div className="flex">
-                        <div className="itemNumProduction">
-                            <div>
-                                {record.productionId ? (
-                                    <div>№ производства {record.productionId}</div>
-                                ) : (
-                                    <a href="#" onClick={setNumProduction}>
-                                        {numProd
-                                            ? `№ производства ${numProd}`
-                                            : 'Выбрать номер производства'}
-                                    </a>
-                                )}
-                            </div>
-                        </div>
-                    </div>
-                    <div>
-                        <Button
-                            type="primary"
-                            disabled={!isValid}
-                            onClick={subbmitHandler}
-                            loading={isLoading}
-                            ref={subbmitButton}
-                        >
-                            Выдать
-                        </Button>
-                    </div>
-                </div>
-                <Divider />
-                <div className="flex">
-                    {keys
-                        .filter((key) => {
-                            const field = KEYSLEFTOVERS[key as tConstKeys]?.key;
-                            if (
-                                [
-                                    KEYSLEFTOVERS.width.key,
-                                    KEYSLEFTOVERS.count.key,
-                                    KEYSLEFTOVERS.numProduction.key,
-                                ].includes(field)
-                            )
-                                return false;
-                            return KEYSLEFTOVERS[key as tConstKeys]?.title;
-                        })
-                        .map((key) => {
-                            return (
-                                <div key={key} className="item">
-                                    <h3>{KEYSLEFTOVERS[key as tConstKeys].title}</h3>
-                                    <p>{record[key as keyof iData] as string}</p>
+                        <div className="flex">
+                            <div className="item">
+                                <div>
+                                    <Input
+                                        placeholder="Выдать"
+                                        disabled={!record.width}
+                                        value={width}
+                                        onChange={(e) =>
+                                            setValue(e.target.value, setWidth)
+                                        }
+                                        onKeyDown={onPressEnterHandler}
+                                    />
                                 </div>
-                            );
-                        })}
-                </div>
-            </Wrapper>
+                            </div>
+                            <div className="item">
+                                <div>
+                                    <Input
+                                        placeholder="Выдать"
+                                        disabled={!record.count}
+                                        value={count}
+                                        onChange={(e) =>
+                                            setValue(e.target.value, setCount)
+                                        }
+                                        onKeyDown={onPressEnterHandler}
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                        <div className="flex">
+                            <div className="itemNumProduction">
+                                <div>
+                                    {record.productionId ? (
+                                        <div>№ производства {record.productionId}</div>
+                                    ) : (
+                                        <a href="#" onClick={setNumProduction}>
+                                            {numProd
+                                                ? `№ производства ${numProd}`
+                                                : 'Выбрать номер производства'}
+                                        </a>
+                                    )}
+                                </div>
+                                <div>
+                                    <a href="#" onClick={setTask}>
+                                        Назначить задание
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <Button
+                                type="primary"
+                                disabled={!isValid}
+                                onClick={subbmitHandler}
+                                loading={isLoading}
+                                ref={subbmitButton}
+                            >
+                                Выдать
+                            </Button>
+                        </div>
+                    </div>
+                    <Divider />
+                    <div className="flex">
+                        {keys
+                            .filter((key) => {
+                                const field = KEYSLEFTOVERS[key as tConstKeys]?.key;
+                                if (
+                                    [
+                                        KEYSLEFTOVERS.width.key,
+                                        KEYSLEFTOVERS.count.key,
+                                        KEYSLEFTOVERS.numProduction.key,
+                                    ].includes(field)
+                                )
+                                    return false;
+                                return KEYSLEFTOVERS[key as tConstKeys]?.title;
+                            })
+                            .map((key) => {
+                                return (
+                                    <div key={key} className="item">
+                                        <h3>{KEYSLEFTOVERS[key as tConstKeys].title}</h3>
+                                        <p>{record[key as keyof iData] as string}</p>
+                                    </div>
+                                );
+                            })}
+                    </div>
+                </Wrapper>
+            </Drawer>
         );
     },
 );

@@ -47,7 +47,6 @@ model Data {
   active           Boolean        @default(true)
   Productions      Productions?   @relation(fields: [productionId], references: [id])
   productionId     Int?
-  Models           Models?        @relation(fields: [modelId], references: [id])
   modelId          Int?
   Color            Color?         @relation(fields: [colorId], references: [id])
   colorId          Int?
@@ -65,6 +64,8 @@ model Data {
   typeId           Int?
   Recipient        Recipients?    @relation(fields: [recipientId], references: [id])
   recipientId      Int?
+  FullModels       FullModels?    @relation(fields: [fullModelId], references: [id])
+  fullModelId      Int?
 }
 
 model Bridge {
@@ -124,7 +125,6 @@ model Stores {
   Data                  Data[]
   Users                 Users[]
   StoreOperationsBridge StoreOperationsBridge[]
-  BilletStore           BilletStore[]
   Productions           Productions[]
   Managers              Managers[]
   Recipients            Recipients[]
@@ -188,37 +188,48 @@ model Color {
   Bridge  Bridge[]
 }
 
-model BilletStore {
-  id       Int      @id @default(autoincrement())
-  Billet   Billets? @relation(fields: [billetId], references: [id])
-  billetId Int?
-  Stores   Stores?  @relation(fields: [storeId], references: [id])
-  storeId  Int?     @map("storesId")
+model FullModels {
+  id               Int             @id @default(autoincrement())
+  WorkpieceType    WorkpieceType?  @relation(fields: [workpieceTypeId], references: [id])
+  workpieceTypeId  Int?
+  Models           Models?         @relation(fields: [modelId], references: [id])
+  modelId          Int?
+  Profile          Profile?        @relation(fields: [profileId], references: [id])
+  profileId        Int?
+  SizeRangeModel   SizeRangeModel? @relation(fields: [sizeRangeModelId], references: [id])
+  sizeRangeModelId Int?
+  LengthModel      LengthModel?    @relation(fields: [lengthModelId], references: [id])
+  lengthModelId    Int?
+  Data             Data[]
+  active           Boolean         @default(true)
 }
 
-model Billets {
-  id          Int           @id @default(autoincrement())
-  name        String        @unique
-  BilletStore BilletStore[]
-  Models      Models[]
-  modelId     Int?          @map("modelsId")
+model LengthModel {
+  id         Int          @id @default(autoincrement())
+  length     Decimal      @db.Decimal(3, 2)
+  active     Boolean      @default(true)
+  FullModels FullModels[]
+}
+
+model SizeRangeModel {
+  id         Int          @id @default(autoincrement())
+  sizeRange  Int
+  active     Boolean
+  FullModels FullModels[]
+}
+
+model Profile {
+  id         Int          @id @default(autoincrement())
+  profile    String
+  active     Boolean
+  FullModels FullModels[]
 }
 
 model Models {
-  id          Int           @id @default(autoincrement())
-  model       String        @unique
-  Billets     Billets?      @relation(fields: [billetsId], references: [id])
-  billetsId   Int?
-  ModelsSizes ModelsSizes[]
-  Date        Data[]
-}
-
-model ModelsSizes {
-  id      Int     @id @default(autoincrement())
-  size    String?
-  length  String?
-  Models  Models  @relation(fields: [modelId], references: [id])
-  modelId Int     @map("modelsId")
+  id         Int          @id @default(autoincrement())
+  model      String
+  active     Boolean
+  FullModels FullModels[]
 }
 
 model SizeRange {
@@ -257,14 +268,15 @@ model MaterialGroup {
 }
 
 model WorkpieceType {
-  id            Int      @id @default(autoincrement())
+  id            Int          @id @default(autoincrement())
   workpieceType String
   nextTypeId    Int?
-  position      Int      @default(autoincrement())
-  active        Boolean  @default(true)
-  isShow        Boolean  @default(true)
+  position      Int          @default(autoincrement())
+  active        Boolean      @default(true)
+  isShow        Boolean      @default(true)
   Data          Data[]
   Brige         Bridge[]
+  FullModels    FullModels[]
 }
 
 model Productions {

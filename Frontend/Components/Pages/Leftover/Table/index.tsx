@@ -1,12 +1,13 @@
 import { iData } from '../../../../../Shared/Types/interfaces';
 import type { TableProps } from 'antd/es/table';
 import { observer } from 'mobx-react-lite';
-import { Dispatch, SetStateAction } from 'react';
+import { Dispatch, SetStateAction, useRef, useState } from 'react';
 import { FilterValue } from 'antd/es/table/interface';
 import { contentDrawer } from '../../../Shared/contentDrawer';
 import { MoveOutSolo } from './Components/MoveOut';
 import { TableApp } from '../../../Shared/Table';
 import { useColumns } from './useСolumns';
+import { Drawer } from 'antd';
 
 export const TableLeftOvers = observer(
     ({
@@ -17,6 +18,8 @@ export const TableLeftOvers = observer(
         setFilters: Dispatch<SetStateAction<Record<string, FilterValue | null>>>;
     }) => {
         const { columns, data } = useColumns(filters);
+        const recordRef = useRef<iData | undefined>();
+        const [isShowMoveOutSolo, setIsShowMoveOutSolo] = useState(false);
 
         const handleChange: TableProps<iData>['onChange'] = (
             _pagination,
@@ -28,21 +31,27 @@ export const TableLeftOvers = observer(
         };
 
         return (
-            <TableApp
-                onRow={(record) => {
-                    return {
-                        onDoubleClick: () => {
-                            contentDrawer({
-                                title: 'Выдать в работу',
-                                content: <MoveOutSolo record={record} />,
-                            });
-                        },
-                    };
-                }}
-                columns={columns}
-                dataSource={data}
-                onChange={handleChange}
-            />
+            <>
+                {isShowMoveOutSolo && (
+                    <MoveOutSolo
+                        record={recordRef.current!}
+                        onClose={() => setIsShowMoveOutSolo(false)}
+                    />
+                )}
+                <TableApp
+                    onRow={(record) => {
+                        recordRef.current = record;
+                        return {
+                            onDoubleClick: () => {
+                                setIsShowMoveOutSolo(true);
+                            },
+                        };
+                    }}
+                    columns={columns}
+                    dataSource={data}
+                    onChange={handleChange}
+                />
+            </>
         );
     },
 );
