@@ -210,6 +210,12 @@ export const getSizeRangeModel = () => {
         method: 'GET',
     }).then((res) => res.data as iSizeRangeModel[]);
 };
+export const getFullModels = () => {
+    return axios({
+        url: `/api/list/fullmodels`,
+        method: 'GET',
+    }).then((res) => res.data as iSizeRangeModel[]);
+};
 
 export const getLength = (filters: iQueryFilters) => {
     const params = getQueryParams(filters);

@@ -132,16 +132,17 @@ model Stores {
 }
 
 model Operations {
-  id                    Int                     @id @default(autoincrement())
-  operation             String                  @unique
-  result                String?
-  sborka                Int?
-  activ                 Boolean                 @default(true)
-  StoreOperationsBridge StoreOperationsBridge[]
-  Data                  Data[]
-  ManagerOperations     ManagerOperations[]
-  StateOperationBridge  StateOperationBridge[]
-  Brige                 Bridge[]
+  id                           Int                            @id @default(autoincrement())
+  operation                    String                         @unique
+  result                       String?
+  sborka                       Int?
+  activ                        Boolean                        @default(true)
+  StoreOperationsBridge        StoreOperationsBridge[]
+  Data                         Data[]
+  ManagerOperations            ManagerOperations[]
+  StateOperationBridge         StateOperationBridge[]
+  Brige                        Bridge[]
+  OperationWorkPieceTypeBridge OperationWorkPieceTypeBridge[]
 }
 
 model StoreOperationsBridge {
@@ -161,13 +162,12 @@ model Types {
 }
 
 model Grade {
-  id      Int      @id @default(autoincrement())
-  grade   String   @unique
-  for     String?
-  variant Int
-  activ   Boolean  @default(true)
-  Data    Data[]
-  Bridge  Bridge[]
+  id                       Int                        @id @default(autoincrement())
+  grade                    String                     @unique
+  activ                    Boolean                    @default(true)
+  Data                     Data[]
+  Bridge                   Bridge[]
+  WorkPieceTypeGradeBridge WorkPieceTypeGradeBridge[]
 }
 
 model Fraction {
@@ -206,29 +206,46 @@ model FullModels {
 
 model LengthModel {
   id         Int          @id @default(autoincrement())
-  length     Decimal      @db.Decimal(3, 2)
+  length     Decimal      @db.Decimal(10, 2)
   active     Boolean      @default(true)
   FullModels FullModels[]
+}
+
+model OperationWorkPieceTypeBridge {
+  id              Int            @id @default(autoincrement())
+  WorkpieceType   WorkpieceType? @relation(fields: [workpieceTypeId], references: [id])
+  Operation       Operations?    @relation(fields: [operationsId], references: [id])
+  active          Boolean        @default(true)
+  workpieceTypeId Int?
+  operationsId    Int?
+}
+
+model WorkPieceTypeGradeBridge {
+  id              Int            @id @default(autoincrement())
+  WorkpieceType   WorkpieceType? @relation(fields: [workpieceTypeId], references: [id])
+  Grade           Grade?         @relation(fields: [gradeId], references: [id])
+  workpieceTypeId Int?
+  gradeId         Int?
 }
 
 model SizeRangeModel {
   id         Int          @id @default(autoincrement())
   sizeRange  Int
-  active     Boolean
+  active     Boolean      @default(true)
   FullModels FullModels[]
 }
 
 model Profile {
   id         Int          @id @default(autoincrement())
   profile    String
-  active     Boolean
+  active     Boolean      @default(true)
   FullModels FullModels[]
 }
 
 model Models {
   id         Int          @id @default(autoincrement())
   model      String
-  active     Boolean
+  active     Boolean      @default(true)
   FullModels FullModels[]
 }
 
@@ -268,15 +285,17 @@ model MaterialGroup {
 }
 
 model WorkpieceType {
-  id            Int          @id @default(autoincrement())
-  workpieceType String
-  nextTypeId    Int?
-  position      Int          @default(autoincrement())
-  active        Boolean      @default(true)
-  isShow        Boolean      @default(true)
-  Data          Data[]
-  Brige         Bridge[]
-  FullModels    FullModels[]
+  id                           Int                            @id @default(autoincrement())
+  workpieceType                String
+  nextTypeId                   Int?
+  position                     Int                            @default(autoincrement())
+  active                       Boolean                        @default(true)
+  isShow                       Boolean                        @default(true)
+  Data                         Data[]
+  Brige                        Bridge[]
+  FullModels                   FullModels[]
+  OperationWorkPieceTypeBridge OperationWorkPieceTypeBridge[]
+  WorkPieceTypeGradeBridge     WorkPieceTypeGradeBridge[]
 }
 
 model Productions {

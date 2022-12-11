@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import {
+    getFullModels,
     getLengthModel,
     getModels,
     getProfile,
@@ -45,6 +46,10 @@ export const useProps = () => {
         enabled: !!storeId,
     });
     const sizeRangeModel = useQuery(['sizeRangeModel', 'model'], getSizeRangeModel, {
+        enabled: !!storeId,
+    });
+
+    const fullModels = useQuery(['fullModels', 'model'], getFullModels, {
         enabled: !!storeId,
     });
 
