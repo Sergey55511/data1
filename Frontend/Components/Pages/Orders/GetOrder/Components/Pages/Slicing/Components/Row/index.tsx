@@ -1,5 +1,5 @@
 import { Button, Tooltip } from 'antd';
-import { MinusOutlined } from '@ant-design/icons';
+import { MinusOutlined, CopyOutlined } from '@ant-design/icons';
 import { InputField } from '../../../../../../../../Shared/InputField';
 import { SelectField } from '../../../../../../../../Shared/SelectField';
 import { InputNumber } from '../../../../../../../../Shared/InputNumber';
@@ -8,6 +8,7 @@ import { Dispatch, SetStateAction } from 'react';
 import { iState } from '../..';
 import { observer } from 'mobx-react-lite';
 import {
+    iField,
     iGrade,
     iLength,
     iSizeRange,
@@ -25,6 +26,7 @@ export const Row = observer(
         operationId,
         index,
         removeRow,
+        copyRow,
         state,
         setState,
         isShowState,
@@ -32,6 +34,7 @@ export const Row = observer(
         operationId: number;
         index: number;
         removeRow: (i: number) => void;
+        copyRow: (i: number) => void;
         state: iState;
         setState: Dispatch<SetStateAction<iState[]>>;
         isShowState?: boolean;
@@ -40,7 +43,8 @@ export const Row = observer(
 
         const onChange = (v: string | number, fieldName: keyof iState) => {
             setState((prev) => {
-                prev[index][fieldName].value = v;
+                const field = prev[index][fieldName] as iField;
+                field.value = v;
                 return [...prev];
             });
         };
@@ -55,12 +59,19 @@ export const Row = observer(
         );
 
         return (
-            <div className="row">
+            <div className={`row ${state.duplicate ? 'duplicate' : ''}`}>
                 <Tooltip title="Удалить строку">
                     <Button
                         shape="circle"
                         icon={<MinusOutlined />}
                         onClick={() => removeRow(index)}
+                    />
+                </Tooltip>
+                <Tooltip title="Копировать строку">
+                    <Button
+                        shape="circle"
+                        icon={<CopyOutlined />}
+                        onClick={() => copyRow(index)}
                     />
                 </Tooltip>
                 {isShowState && (

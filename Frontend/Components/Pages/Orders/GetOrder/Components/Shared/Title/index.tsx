@@ -2,7 +2,7 @@ import { Button } from 'antd';
 import { InputNumber, tValue } from '../../../../../../Shared/InputNumber';
 import { Wrapper } from './style';
 import { confirmAction } from '../../../../../../Shared/ConfirmSubbmit';
-import { SetStateAction, useState } from 'react';
+import { SetStateAction } from 'react';
 
 export const Title = ({
     subbmitHandler,
@@ -18,10 +18,10 @@ export const Title = ({
 }: {
     subbmitHandler: () => void;
     addRowHandler: (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => void;
-    setGarbage?: (value: SetStateAction<number | undefined>) => void;
+    setGarbage?: (value: SetStateAction<tValue>) => void;
     setMoveBack?: (value: SetStateAction<tValue>) => void;
     setDefect?: (value: SetStateAction<tValue>) => void;
-    garbage?: number;
+    garbage?: tValue;
     moveBack?: tValue;
     defect?: tValue;
     losses?: number;
@@ -42,9 +42,9 @@ export const Title = ({
                     <InputNumber
                         placeholder="Отход"
                         onChangeHandler={(v) => {
-                            if (setGarbage) setGarbage(v ? +v : undefined);
+                            if (setGarbage) setGarbage(v);
                         }}
-                        value={garbage}
+                        value={garbage ?? ''}
                     />
                 </div>
             )}
@@ -53,7 +53,7 @@ export const Title = ({
                     <InputNumber
                         placeholder="Брак"
                         onChangeHandler={(v) => {
-                            if (setDefect) setDefect(v ? +v : undefined);
+                            if (setDefect) setDefect(v);
                         }}
                         value={defect}
                     />
@@ -62,7 +62,7 @@ export const Title = ({
             {setMoveBack && (
                 <div>
                     <InputNumber
-                        placeholder="Возврат"
+                        placeholder="Возврат гр."
                         value={moveBack}
                         onChangeHandler={(v) => {
                             if (setMoveBack) setMoveBack(v);

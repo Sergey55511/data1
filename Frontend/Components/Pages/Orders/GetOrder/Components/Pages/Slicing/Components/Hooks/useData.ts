@@ -1,4 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
+import { useEffect, useLayoutEffect, useRef } from 'react';
 import { iState } from '../..';
 import {
     getColors,
@@ -16,6 +17,7 @@ export const useData = (
     onChange: (v: string | number, fieldName: keyof iState) => void,
     stateId?: number[],
 ) => {
+    const isFirstRender = useRef({ gradeId: true, sizeRangeId: true });
     const stateResult = useQuery(
         ['state', stateId],
         () => {
@@ -23,35 +25,52 @@ export const useData = (
         },
         {
             enabled: !!stateId,
+            staleTime: Infinity,
         },
     );
 
     const color = useQuery(
         ['colors', storeId],
         () => {
-            onChange('', 'colorId');
             return getColors({ storeId });
         },
         {
             enabled: !!storeId,
+            staleTime: Infinity,
         },
     );
 
-    const grade = useQuery(
-        ['grades', storeId, workpieceTypeId, sizeRangeId],
-        () => {
+    let dependencies = ['grades', storeId, workpieceTypeId];
+
+    useEffect(() => {
+        if (!isFirstRender.current.gradeId) {
             onChange('', 'gradeId');
-            return getGrades({ storeId, workpieceTypeId, sizeRangeId });
+        }
+        isFirstRender.current.gradeId = false;
+    }, dependencies);
+
+    const grade = useQuery(
+        dependencies,
+        () => {
+            return getGrades({ storeId, workpieceTypeId });
         },
         {
             enabled: !!storeId,
+            staleTime: Infinity,
         },
     );
 
-    const sizeRange = useQuery(
-        ['sizeRange', storeId, workpieceTypeId, operationId],
-        () => {
+    dependencies = ['sizeRange', storeId, workpieceTypeId, operationId];
+    useEffect(() => {
+        if (!isFirstRender.current.sizeRangeId) {
             onChange('', 'sizeRangeId');
+        }
+        isFirstRender.current.sizeRangeId = false;
+    }, dependencies);
+
+    const sizeRange = useQuery(
+        dependencies,
+        () => {
             return getSizeRange({
                 storeId,
                 workpieceTypeId,
@@ -60,16 +79,16 @@ export const useData = (
         },
         {
             enabled: !!storeId,
+            staleTime: Infinity,
         },
     );
 
     const workpieceType = useQuery(
         ['workpieceType', storeId, operationId],
         () => {
-            onChange('', 'workpieceTypeId');
             return getWorkpieceType({ storeId, operationId });
         },
-        { enabled: !!storeId },
+        { enabled: !!storeId, staleTime: Infinity },
     );
 
     return { color, grade, sizeRange, workpieceType, stateResult };

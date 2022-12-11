@@ -61,6 +61,7 @@ export interface iDataTable {
     countItemsOut?: number;
     countItemsIn?: number;
     widthOut?: number;
+    widthInDocument?: number;
     widthIn?: number;
     moneyIn?: number;
     moneyOut?: number;

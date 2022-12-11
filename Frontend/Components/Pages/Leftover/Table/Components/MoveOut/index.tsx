@@ -6,6 +6,7 @@ import { iData } from '../../../../../../../Shared/Types/interfaces';
 import { useStores } from '../../../../../../Store/useStores';
 import { prepareDataTable } from '../../../../../Helpers';
 import { contentDrawer } from '../../../../../Shared/contentDrawer';
+import { SelectField } from '../../../../../Shared/SelectField';
 import { KEYSLEFTOVERS } from '../../../../../Shared/Table/constants';
 import { NumProduction } from '../NumProduction';
 import { Wrapper } from './style';
@@ -132,34 +133,24 @@ export const MoveOutSolo = observer(
                         allowClear
                         onKeyDown={onPressEnterHandler}
                     />
-                    <Select
-                        style={{ width: '100%' }}
+                    <SelectField
                         placeholder="Операция"
                         value={operation}
                         onChange={(v) => setOperation(v)}
-                        showSearch
-                        onKeyDown={onPressEnterHandler}
-                    >
-                        {ListsStore.operations?.map((item) => (
-                            <Select.Option key={item.id} value={item.id}>
-                                {item.operation}
-                            </Select.Option>
-                        ))}
-                    </Select>
-                    <Select
-                        style={{ width: '100%' }}
+                        options={ListsStore.operations?.map((item) => ({
+                            value: item.id,
+                            caption: item.operation,
+                        }))}
+                    />
+                    <SelectField
                         placeholder="Исполнитель"
                         value={managerId}
                         onChange={(v) => setManagerId(v)}
-                        showSearch
-                        onKeyDown={onPressEnterHandler}
-                    >
-                        {ListsStore.managers?.map((item) => (
-                            <Select.Option key={item.id} value={item.id}>
-                                {item.name}
-                            </Select.Option>
-                        ))}
-                    </Select>
+                        options={ListsStore.managers?.map((item) => ({
+                            value: item.id,
+                            caption: item.name,
+                        }))}
+                    />
                     <div className="flex">
                         <div className="item">
                             <h3>{KEYSLEFTOVERS.width.title}</h3>

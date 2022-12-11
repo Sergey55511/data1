@@ -1,5 +1,6 @@
 import { NextApiRequest } from 'next';
 import { MyError } from '../../../../Shared/Classes/error';
+import { round } from '../../../../Shared/Helpers';
 import { iData } from '../../../../Shared/Types/interfaces';
 import { tPrisma } from '../../../types';
 
@@ -7,12 +8,13 @@ export const validateLeftovers = async (prisma: tPrisma, req: NextApiRequest) =>
     const data = req.body.data as iData[];
     const storeId = req.body.storeId as number;
     const maxId = req.body.maxId as number;
-    const maxIdDB = await prisma.data.aggregate({
-        _max: { id: true },
-        where: { active: true, stateId: storeId },
+    const maxIdDB = await prisma.data.findFirst({
+        select: { id: true },
+        where: { active: true, storeId: storeId },
+        orderBy: { id: 'desc' },
     });
 
-    if (maxIdDB._max.id == maxId) {
+    if (maxIdDB?.id == maxId) {
         return true;
     }
 
@@ -38,14 +40,22 @@ export const validateLeftovers = async (prisma: tPrisma, req: NextApiRequest) =>
             },
             where,
         });
-        const leftoversWidth =
+        let leftoversWidth =
             (leftovers._sum.widthIn || 0) - (leftovers._sum.widthOut || 0);
-        const leftoversCount =
+        let leftoversCount =
             (leftovers._sum.countItemsIn || 0) - (leftovers._sum.countItemsOut || 0);
-        if (leftoversWidth - (item.widthOut || 0) < 0) {
+
+        leftoversWidth = round(leftoversWidth);
+        const widthOut = round(item.widthOut || 0);
+
+        if (leftoversWidth - widthOut < 0) {
             throw new MyError(400, 'Отрицательный остаток гр.');
         }
-        if (leftoversCount - (item.countItemsOut || 0) < 0) {
+
+        leftoversCount = round(leftoversCount);
+        const countItemsOut = round(item.countItemsOut || 0);
+
+        if (leftoversCount - countItemsOut < 0) {
             throw new MyError(400, 'Отрицательный остаток шт.');
         }
     }
