@@ -2,36 +2,29 @@ import { SelectField } from '../../../../../../Shared/SelectField';
 import { useProps } from '../useProps';
 import { Wrapper } from './style';
 
-export const Search = () => {
-    const { data, state } = useProps();
+export const Search = ({ operationId }: { operationId?: number }) => {
+    const { data, state, setValue } = useProps(operationId);
     return (
         <Wrapper>
             <h4>Поиск</h4>
             <SelectField
                 placeholder="Тип заготовки"
                 value={state.workpieceTypeId.value}
-                onChange={(v) => console.log(v)}
+                onChange={(v) => setValue('workpieceTypeId', v)}
                 selectProps={{ loading: data.workpieceType.isLoading }}
                 options={data.workpieceType.data?.map((item) => ({
                     value: item.id,
                     caption: item.workpieceType,
                 }))}
             />
-            {/* <SelectField
-                placeholder="Модель"
-                value={state.modelId.value}
-                onChange={(v) => console.log(v)}
-                selectProps={{ loading: data.model.isLoading }}
-                options={data.model.data?.map((item) => ({
-                    value: item.id,
-                    caption: item.model,
-                }))}
-            /> */}
             <SelectField
                 placeholder="Профиль"
                 value={state.profileId.value}
-                onChange={(v) => console.log(v)}
-                selectProps={{ loading: data.profile.isLoading }}
+                onChange={(v) => setValue('profileId', v)}
+                selectProps={{
+                    loading: data.profile.isLoading,
+                    disabled: !state.workpieceTypeId.value,
+                }}
                 options={data.profile.data?.map((item) => ({
                     value: item.id,
                     caption: item.profile,
@@ -40,23 +33,16 @@ export const Search = () => {
             <SelectField
                 placeholder="Размер"
                 value={state.sizeRangeModelId.value}
-                onChange={(v) => console.log(v)}
-                selectProps={{ loading: data.sizeRangeModel.isLoading }}
+                onChange={(v) => setValue('sizeRangeModelId', v)}
+                selectProps={{
+                    loading: data.sizeRangeModel.isLoading,
+                    disabled: !state.profileId.value,
+                }}
                 options={data.sizeRangeModel.data?.map((item) => ({
                     value: item.id,
                     caption: item.sizeRange,
                 }))}
             />
-            {/* <SelectField
-                placeholder="Длинна"
-                value={state.lengthModelId.value}
-                onChange={(v) => console.log(v)}
-                selectProps={{ loading: data.lengthModel.isLoading }}
-                options={data.lengthModel.data?.map((item) => ({
-                    value: item.id,
-                    caption: item.length,
-                }))}
-            /> */}
         </Wrapper>
     );
 };

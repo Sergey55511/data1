@@ -1,9 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
     getFullModels,
-    getLengthModel,
-    getModels,
     getProfile,
     getSizeRangeModel,
     getWorkpieceTypeModel,
@@ -26,25 +24,37 @@ const initState = {
     sizeRangeModelId: new Field('sizeRangeModelId'),
 };
 
-export const useProps = () => {
+export const useProps = (operationId?: number) => {
     const { loginStore } = useStores();
     const storeId = loginStore.user.storeId;
     const [state, setState] = useState(initState);
 
-    const workpieceType = useQuery(['workpieceType', 'model'], getWorkpieceTypeModel, {
-        enabled: !!storeId,
-    });
+    const setValue = <KEY extends keyof typeof initState>(
+        key: KEY,
+        value: typeof initState[KEY]['value'],
+    ) => {
+        setState((prev) => {
+            const res = { ...prev };
+            res[key].value = value;
+            return res;
+        });
+    };
 
-    const model = useQuery(['models', 'model'], getModels, {
-        enabled: !!storeId,
-    });
+    const workpieceType = useQuery(
+        ['workpieceType', 'model', operationId],
+        () => getWorkpieceTypeModel(operationId),
+        {
+            enabled: !!(storeId && operationId),
+        },
+    );
 
-    const profile = useQuery(['profile', 'model'], getProfile, {
-        enabled: !!storeId,
-    });
-    const lengthModel = useQuery(['lengthModel', 'model'], getLengthModel, {
-        enabled: !!storeId,
-    });
+    const profile = useQuery(
+        ['profile', 'model'],
+        () => getProfile(state.workpieceTypeId.value),
+        {
+            enabled: !!(storeId && state.workpieceTypeId.value),
+        },
+    );
     const sizeRangeModel = useQuery(['sizeRangeModel', 'model'], getSizeRangeModel, {
         enabled: !!storeId,
     });
@@ -53,8 +63,26 @@ export const useProps = () => {
         enabled: !!storeId,
     });
 
+    useEffect(() => {
+        if (workpieceType.data?.length == 1) {
+            setValue('workpieceTypeId', workpieceType.data[0].id);
+        }
+    }, [workpieceType.data]);
+
+    useEffect(() => {
+        setValue('workpieceTypeId', undefined);
+    }, [operationId]);
+    useEffect(() => {
+        return () => {
+            setValue('workpieceTypeId', undefined);
+            setValue('profileId', undefined);
+            setValue('sizeRangeModelId', undefined);
+        };
+    }, []);
+
     return {
-        data: { workpieceType, model, profile, lengthModel, sizeRangeModel },
+        data: { workpieceType, profile, sizeRangeModel },
         state,
+        setValue,
     };
 };

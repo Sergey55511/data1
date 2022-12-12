@@ -22,7 +22,7 @@ export const useItems = () => {
     const ordersCount = OperationStore.orders.length;
     const sharedCount = OperationStore.shared.length;
 
-    const isMSC = (loginStore.user.storeId = STORES.Moscow.id);
+    const isMSC = (loginStore.user.storeId == STORES.Moscow.id);
 
     const mixingChildrens = isMSC
         ? [{

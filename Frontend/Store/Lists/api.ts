@@ -179,10 +179,11 @@ export const getWorkpieceType = (filters: iQueryFilters) => {
     }).then((res) => res.data as iWorkpieceType[]);
 };
 
-export const getWorkpieceTypeModel = () => {
+export const getWorkpieceTypeModel = (operationId?: number) => {
     return axios({
         url: `/api/list/workpieceType/model`,
         method: 'GET',
+        params: { operationId },
     }).then((res) => res.data as iWorkpieceType[]);
 };
 export const getModels = () => {
@@ -192,10 +193,11 @@ export const getModels = () => {
     }).then((res) => res.data as iModel[]);
 };
 
-export const getProfile = () => {
+export const getProfile = (workpieceTypeId?: number) => {
     return axios({
         url: `/api/list/profile`,
         method: 'GET',
+        params: { workpieceTypeId },
     }).then((res) => res.data as iProfile[]);
 };
 export const getLengthModel = () => {
