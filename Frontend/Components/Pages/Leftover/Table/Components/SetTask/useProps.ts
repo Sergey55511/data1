@@ -1,8 +1,10 @@
 import { useQuery } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
+import { iData } from '../../../../../../../Shared/Types/interfaces';
 import {
     getFullModels,
     getProfile,
+    getSizeRange,
     getSizeRangeModel,
     getWorkpieceTypeModel,
 } from '../../../../../../Store/Lists/api';
@@ -24,7 +26,7 @@ const initState = {
     sizeRangeModelId: new Field('sizeRangeModelId'),
 };
 
-export const useProps = (operationId?: number) => {
+export const useProps = (operationId?: number, record?: iData) => {
     const { loginStore } = useStores();
     const storeId = loginStore.user.storeId;
     const [state, setState] = useState(initState);
@@ -55,9 +57,41 @@ export const useProps = (operationId?: number) => {
             enabled: !!(storeId && state.workpieceTypeId.value),
         },
     );
-    const sizeRangeModel = useQuery(['sizeRangeModel', 'model'], getSizeRangeModel, {
-        enabled: !!storeId,
-    });
+    const sizeRecord = useQuery(
+        ['sizeRecord', record?.sizeRangeId],
+        () =>
+            getSizeRange(
+                {
+                    storeId,
+                },
+                record?.sizeRangeId,
+            ),
+        {
+            enabled: !!(storeId && record?.sizeRangeId),
+        },
+    );
+
+    console.log('record?.sizeRangeId', record?.sizeRangeId);
+
+    const size = sizeRecord.data ? sizeRecord.data[0].size : 0;
+
+    const sizeRangeModel = useQuery(
+        ['sizeRangeModel', 'model', state.workpieceTypeId.value],
+        () =>
+            getSizeRangeModel({
+                workpieceTypeId: state.workpieceTypeId.value,
+                profileId: state.profileId.value,
+                size,
+            }),
+        {
+            enabled: !!(
+                storeId &&
+                state.workpieceTypeId.value &&
+                state.profileId.value &&
+                size
+            ),
+        },
+    );
 
     const fullModels = useQuery(['fullModels', 'model'], getFullModels, {
         enabled: !!storeId,
@@ -72,13 +106,13 @@ export const useProps = (operationId?: number) => {
     useEffect(() => {
         setValue('workpieceTypeId', undefined);
     }, [operationId]);
+
     useEffect(() => {
-        return () => {
-            setValue('workpieceTypeId', undefined);
-            setValue('profileId', undefined);
-            setValue('sizeRangeModelId', undefined);
-        };
-    }, []);
+        setValue('profileId', undefined);
+    }, [state.workpieceTypeId.value]);
+    useEffect(() => {
+        setValue('sizeRangeModelId', undefined);
+    }, [state.profileId.value]);
 
     return {
         data: { workpieceType, profile, sizeRangeModel },

@@ -1,13 +1,29 @@
 import { PrismaPromise } from '@prisma/client';
+import { NextApiRequest } from 'next';
 import { tPrisma } from '../../../types';
+import { dal } from './Dal';
 
-export const getSizeRangeModel = <T>(prisma: tPrisma): PrismaPromise<T> => {
+export const getSizeRangeModel = <T>(
+    prisma: tPrisma,
+    req: NextApiRequest,
+): PrismaPromise<T> => {
+    const data = dal(req.query);
     return prisma.sizeRangeModel.findMany({
         select: {
             id: true,
             sizeRange: true,
         },
-        where: { active: true, FullModels: { some: { active: true } } },
+        where: {
+            active: true,
+            sizeRange: { lte: data.size },
+            FullModels: {
+                some: {
+                    workpieceTypeId: data.workpieceTypeId,
+                    profileId: data.profileId,
+                    active: true,
+                },
+            },
+        },
         orderBy: { sizeRange: 'asc' },
     }) as any;
 };

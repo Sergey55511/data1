@@ -18,7 +18,7 @@ export const SetTask = observer(
         return (
             <Drawer open title="Назначить задание" onClose={onClose}>
                 <Wrapper>
-                    <Search operationId={operationId} />
+                    <Search operationId={operationId} record={record} />
                     <Models />
                 </Wrapper>
             </Drawer>

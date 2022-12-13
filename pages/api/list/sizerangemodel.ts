@@ -10,7 +10,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             await fetchService<iMaterialGroup>({
                 req,
                 res,
-                fetch: (prisma: tPrisma) => getSizeRangeModel(prisma),
+                fetch: (prisma: tPrisma) => getSizeRangeModel(prisma, req),
             });
             break;
         }
