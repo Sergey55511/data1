@@ -217,10 +217,15 @@ export const getSizeRangeModel = (params: {
         params,
     }).then((res) => res.data as iSizeRangeModel[]);
 };
-export const getFullModels = () => {
+export const getFullModels = (params: {
+    workpieceTypeId?: number;
+    profileId?: number;
+    sizeRangeModelId?: number;
+}) => {
     return axios({
         url: `/api/list/fullmodels`,
         method: 'GET',
+        params,
     }).then((res) => res.data as iSizeRangeModel[]);
 };
 

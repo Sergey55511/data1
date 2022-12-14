@@ -65,12 +65,16 @@ export const useProps = (operationId?: number, record?: iData) => {
         },
     );
 
-    console.log('record?.sizeRangeId', record?.sizeRangeId);
-
     const size = sizeRecord.data ? sizeRecord.data[0]?.size : 0;
 
     const sizeRangeModel = useQuery(
-        ['sizeRangeModel', 'model', state.workpieceTypeId.value],
+        [
+            'sizeRangeModel',
+            'model',
+            state.workpieceTypeId.value,
+            state.profileId.value,
+            size,
+        ],
         () =>
             getSizeRangeModel({
                 workpieceTypeId: state.workpieceTypeId.value,
@@ -87,9 +91,30 @@ export const useProps = (operationId?: number, record?: iData) => {
         },
     );
 
-    const fullModels = useQuery(['fullModels', 'model'], getFullModels, {
-        enabled: !!storeId,
-    });
+    const fullModels = useQuery(
+        [
+            'fullModels',
+            'model',
+            storeId,
+            state.workpieceTypeId.value,
+            state.profileId.value,
+            state.sizeRangeModelId.value,
+        ],
+        () =>
+            getFullModels({
+                workpieceTypeId: state.workpieceTypeId.value,
+                profileId: state.profileId.value,
+                sizeRangeModelId: state.sizeRangeModelId.value,
+            }),
+        {
+            enabled: !!(
+                storeId &&
+                state.workpieceTypeId.value &&
+                state.profileId.value &&
+                state.sizeRangeModelId.value
+            ),
+        },
+    );
 
     useEffect(() => {
         if (workpieceType.data?.length == 1) {
