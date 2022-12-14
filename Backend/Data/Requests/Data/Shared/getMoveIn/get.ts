@@ -19,6 +19,8 @@ export const getMoveIn = <T>(prisma: tPrisma,storeId: number, numDocument: strin
             "fraction",
             "colorId",
             "color",
+            "sizeRangeId",
+            "sizeRange",
             "lengthId",
             length,
             "channelId",
@@ -43,6 +45,7 @@ export const getMoveIn = <T>(prisma: tPrisma,storeId: number, numDocument: strin
             LEFT JOIN "Models" on "Data"."modelId"="Models".id
             LEFT JOIN "Color" on "Data"."colorId"="Color".id
             LEFT JOIN "Length" on "Data"."lengthId"="Length".id
+            LEFT JOIN "SizeRange" on "Data"."sizeRangeId"="SizeRange".id
             LEFT JOIN "Channel" on "Data"."channelId"="Channel".id
             LEFT JOIN "Productions" on "Data"."productionId"="Productions".id
             LEFT JOIN "State" on "Data"."stateId"="State".id

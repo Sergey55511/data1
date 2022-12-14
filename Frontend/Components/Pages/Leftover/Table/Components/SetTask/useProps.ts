@@ -59,13 +59,7 @@ export const useProps = (operationId?: number, record?: iData) => {
     );
     const sizeRecord = useQuery(
         ['sizeRecord', record?.sizeRangeId],
-        () =>
-            getSizeRange(
-                {
-                    storeId,
-                },
-                record?.sizeRangeId,
-            ),
+        () => getSizeRange({}, record?.sizeRangeId),
         {
             enabled: !!(storeId && record?.sizeRangeId),
         },
@@ -73,7 +67,7 @@ export const useProps = (operationId?: number, record?: iData) => {
 
     console.log('record?.sizeRangeId', record?.sizeRangeId);
 
-    const size = sizeRecord.data ? sizeRecord.data[0].size : 0;
+    const size = sizeRecord.data ? sizeRecord.data[0]?.size : 0;
 
     const sizeRangeModel = useQuery(
         ['sizeRangeModel', 'model', state.workpieceTypeId.value],
