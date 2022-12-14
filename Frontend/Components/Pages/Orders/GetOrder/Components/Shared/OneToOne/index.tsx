@@ -81,7 +81,7 @@ export const OneToOne = ({
         if (v == '') return;
         setState((prev) => ({
             ...prev,
-            [fieldName]: v ? +v : '',
+            [fieldName]: v,
             losses: (record?.widthOut || 0) - (+v! || 0) - (prev[anotherFieldName] || 0),
         }));
     };
