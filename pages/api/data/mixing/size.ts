@@ -5,7 +5,7 @@ import { validateLeftovers } from '../../../../Backend/Data/Validation/Data/Vali
 import { tPrisma } from '../../../../Backend/types';
 import { iData } from '../../../../Shared/Types/interfaces';
 
-export default async function (req: NextApiRequest, res: NextApiResponse) {
+export default async function mixingGradeSize (req: NextApiRequest, res: NextApiResponse) {
     await fetchService<iData>({
         req,
         res,
