@@ -1,16 +1,17 @@
 import { iData } from '../../../../../../../../Shared/Types/interfaces';
 import { SelectField } from '../../../../../../Shared/SelectField';
-import { useProps } from '../useProps';
+import { iDataProps, State, tSetValue, useProps } from '../useProps';
 import { Wrapper } from './style';
 
 export const Search = ({
-    operationId,
-    record,
+    data,
+    state,
+    setValue,
 }: {
-    operationId?: number;
-    record: iData;
+    data: iDataProps;
+    state: State;
+    setValue: tSetValue;
 }) => {
-    const { data, state, setValue } = useProps(operationId, record);
     return (
         <Wrapper>
             <h4>Поиск</h4>

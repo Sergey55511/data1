@@ -3,11 +3,9 @@ import type { TableProps } from 'antd/es/table';
 import { observer } from 'mobx-react-lite';
 import { Dispatch, SetStateAction, useRef, useState } from 'react';
 import { FilterValue } from 'antd/es/table/interface';
-import { contentDrawer } from '../../../Shared/contentDrawer';
 import { MoveOutSolo } from './Components/MoveOut';
 import { TableApp } from '../../../Shared/Table';
 import { useColumns } from './useСolumns';
-import { Drawer } from 'antd';
 
 export const TableLeftOvers = observer(
     ({
@@ -36,6 +34,7 @@ export const TableLeftOvers = observer(
                     <MoveOutSolo
                         record={recordRef.current!}
                         onClose={() => setIsShowMoveOutSolo(false)}
+                        isShowTask
                     />
                 )}
                 <TableApp

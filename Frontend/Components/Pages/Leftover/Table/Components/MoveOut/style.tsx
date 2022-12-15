@@ -24,6 +24,12 @@ export const Wrapper = styled.div`
         }
     }
 
+    .selectButtons {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
     .ant-divider {
         margin: 8px 0px;
     }

@@ -1,46 +1,50 @@
 import { Button, Input } from 'antd';
 import { SearchOutlined } from '@ant-design/icons';
 import { Wrapper } from './style';
-import { useState } from 'react';
+import { iDataProps } from '../useProps';
+import { iProps, useProps } from './useProps';
+import { Task } from '../../MoveOut/useProps';
 
-interface iStateModel {
-    id: number;
-    model: string;
-}
-
-export const Models = () => {
-    const [state, setState] = useState<iStateModel>({ id: 0, model: '' });
+export const Models = (props: iProps) => {
+    const params = useProps(props);
 
     return (
         <Wrapper>
             <h4>Модели</h4>
-            <Input placeholder="Поиск" suffix={<SearchOutlined />} />
+            <Input
+                value={params.search}
+                onChange={(e) => {
+                    params.setSearch(e.target.value);
+                }}
+                placeholder="Поиск"
+                suffix={<SearchOutlined />}
+                allowClear
+            />
             <div className="modelsList">
-                <div className="row" onClick={() => setState({ id: 0, model: 'hello' })}>
-                    hello
-                </div>
-                <div className="row" onClick={() => setState({ id: 0, model: 'hello1' })}>
-                    hello
-                </div>
-                <div className="row" onClick={() => setState({ id: 0, model: 'hello2' })}>
-                    hello
-                </div>
-                <div className="row" onClick={() => setState({ id: 0, model: 'hello3' })}>
-                    hello
-                </div>
-                <div className="row" onClick={() => setState({ id: 0, model: 'hello4' })}>
-                    hello
-                </div>
-                <div className="row" onClick={() => setState({ id: 0, model: 'hello5' })}>
-                    hello
-                </div>
-                <div className="row" onClick={() => setState({ id: 0, model: 'hello6' })}>
-                    hello
-                </div>
+                {params.dataFiltred?.map((item) => {
+                    const className = item.id == params.state.id ? 'row selected' : 'row';
+                    return (
+                        <div
+                            key={item.id}
+                            className={className}
+                            onClick={() =>
+                                params.setState({ id: item.id, model: item.fullModel })
+                            }
+                        >
+                            {item.fullModel}
+                        </div>
+                    );
+                })}
             </div>
-            <div className="selectedModel">выбрана модель: {state.model}</div>
+            <div className="selectedModel">выбрана модель: {params.state.model}</div>
             <div>
-                <Button type="primary">Сохранить</Button>
+                <Button
+                    type="primary"
+                    disabled={!params.state.id}
+                    onClick={params.SubmitHandler}
+                >
+                    Сохранить
+                </Button>
             </div>
         </Wrapper>
     );

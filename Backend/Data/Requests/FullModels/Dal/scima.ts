@@ -5,6 +5,5 @@ export const schema = {
         profileId: { type: 'integer' },
         sizeRangeModelId: { type: 'integer' },
     },
-    required: ['workpieceTypeId', 'profileId', 'sizeRangeModelId'],
     additionalProperties: false,
 };

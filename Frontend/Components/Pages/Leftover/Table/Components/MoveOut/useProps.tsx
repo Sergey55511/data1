@@ -10,10 +10,16 @@ import { NumProduction } from '../NumProduction';
 export type tConstKeys = keyof typeof KEYSLEFTOVERS;
 type tValue = number | string | undefined;
 
+export class Task {
+    id = 0;
+    task = '';
+}
+
 export const useProps = (record: iData, onClose?: () => void) => {
     const { OperationStore, loginStore, UIStore, ListsStore } = useStores();
     const [isShowSetTask, setIsShowSetTask] = useState(false);
     const [numProd, setNumProd] = useState(0);
+    const [task, setTask] = useState<Task>(new Task());
     const isNewProductionId = useRef(false);
     const [operation, setOperation] = useState<number | undefined>(undefined);
     const [managerId, setManagerId] = useState<number | undefined>(undefined);
@@ -58,7 +64,7 @@ export const useProps = (record: iData, onClose?: () => void) => {
         });
     };
 
-    const setTask = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
+    const setTaskIsShowTask = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
         e.preventDefault();
         setIsShowSetTask(true);
     };
@@ -140,7 +146,7 @@ export const useProps = (record: iData, onClose?: () => void) => {
         setCount,
         setNumProduction,
         numProd,
-        setTask,
+        setTaskIsShowTask,
         isValid,
         subbmitHandler,
         isLoading,
@@ -148,5 +154,7 @@ export const useProps = (record: iData, onClose?: () => void) => {
         keys,
         operations: ListsStore.operations,
         managers: ListsStore.managers,
+        task,
+        setTask,
     };
 };

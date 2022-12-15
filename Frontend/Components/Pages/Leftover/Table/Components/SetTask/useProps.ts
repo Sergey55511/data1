@@ -1,6 +1,12 @@
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, UseQueryResult } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
-import { iData } from '../../../../../../../Shared/Types/interfaces';
+import {
+    iData,
+    iFullModel,
+    iProfile,
+    iSizeRangeModel,
+    iWorkpieceType,
+} from '../../../../../../../Shared/Types/interfaces';
 import {
     getFullModels,
     getProfile,
@@ -9,6 +15,19 @@ import {
     getWorkpieceTypeModel,
 } from '../../../../../../Store/Lists/api';
 import { useStores } from '../../../../../../Store/useStores';
+import { Task } from '../MoveOut/useProps';
+
+export interface iDataProps {
+    workpieceType: UseQueryResult<iWorkpieceType[], unknown>;
+    profile: UseQueryResult<iProfile[], unknown>;
+    sizeRangeModel: UseQueryResult<iSizeRangeModel[], unknown>;
+    fullModels: UseQueryResult<iFullModel[], unknown>;
+}
+
+export type tSetValue = <KEY extends keyof State>(
+    key: KEY,
+    value: State[KEY]['value'],
+) => void;
 
 class Field {
     key: string;
@@ -18,23 +37,31 @@ class Field {
     }
 }
 
-const initState = {
-    workpieceTypeId: new Field('workpieceTypeId'),
-    modelId: new Field('modelId'),
-    profileId: new Field('profileId'),
-    lengthModelId: new Field('lengthModelId'),
-    sizeRangeModelId: new Field('sizeRangeModelId'),
-};
+export class State {
+    workpieceTypeId = new Field('workpieceTypeId');
+    modelId = new Field('modelId');
+    profileId = new Field('profileId');
+    lengthModelId = new Field('lengthModelId');
+    sizeRangeModelId = new Field('sizeRangeModelId');
+}
 
-export const useProps = (operationId?: number, record?: iData) => {
+export interface iProps {
+    onClose: () => void;
+    record: iData;
+    operationId?: number;
+    setTask: (data: Task) => void;
+}
+export const useProps = ({ onClose, record, operationId, setTask }: iProps) => {
     const { loginStore } = useStores();
     const storeId = loginStore.user.storeId;
-    const [state, setState] = useState(initState);
+    const [state, setState] = useState(new State());
 
-    const setValue = <KEY extends keyof typeof initState>(
-        key: KEY,
-        value: typeof initState[KEY]['value'],
-    ) => {
+    const submitButton = (data: Task) => {
+        setTask(data);
+        onClose();
+    };
+
+    const setValue: tSetValue = (key, value) => {
         setState((prev) => {
             const res = { ...prev };
             res[key].value = value;
@@ -107,12 +134,7 @@ export const useProps = (operationId?: number, record?: iData) => {
                 sizeRangeModelId: state.sizeRangeModelId.value,
             }),
         {
-            enabled: !!(
-                storeId &&
-                state.workpieceTypeId.value &&
-                state.profileId.value &&
-                state.sizeRangeModelId.value
-            ),
+            enabled: !!storeId,
         },
     );
 
@@ -134,8 +156,9 @@ export const useProps = (operationId?: number, record?: iData) => {
     }, [state.profileId.value]);
 
     return {
-        data: { workpieceType, profile, sizeRangeModel },
+        data: { workpieceType, profile, sizeRangeModel, fullModels },
         state,
         setValue,
+        submitButton,
     };
 };

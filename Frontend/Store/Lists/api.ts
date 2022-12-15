@@ -13,6 +13,7 @@ import {
     iProfile,
     iSizeRangeModel,
     iLengthModel,
+    iFullModel,
 } from '../../../Shared/Types/interfaces';
 
 export const getMaterialGroup = () => {
@@ -226,7 +227,7 @@ export const getFullModels = (params: {
         url: `/api/list/fullmodels`,
         method: 'GET',
         params,
-    }).then((res) => res.data as iSizeRangeModel[]);
+    }).then((res) => res.data as iFullModel[]);
 };
 
 export const getLength = (filters: iQueryFilters) => {

@@ -8,7 +8,17 @@ import { Wrapper } from './style';
 import { tConstKeys, useProps } from './useProps';
 
 export const MoveOutSolo = observer(
-    ({ record, onClose }: { record: iData; onClose?: () => void }) => {
+    ({
+        record,
+        onClose,
+        isShowCount,
+        isShowTask,
+    }: {
+        record: iData;
+        onClose?: () => void;
+        isShowCount?: boolean;
+        isShowTask?: boolean;
+    }) => {
         const props = useProps(record, onClose);
 
         return (
@@ -19,6 +29,7 @@ export const MoveOutSolo = observer(
                             onClose={() => props.setIsShowSetTask(false)}
                             record={record}
                             operationId={props.operation}
+                            setTask={props.setTask}
                         />
                     )}
                     <div className="formWrapper">
@@ -53,10 +64,12 @@ export const MoveOutSolo = observer(
                                 <h3>{KEYSLEFTOVERS.width.title}</h3>
                                 <p>{record.width}</p>
                             </div>
-                            <div className="item">
-                                <h3>{KEYSLEFTOVERS.count.title}</h3>
-                                <p>{record.count}</p>
-                            </div>
+                            {isShowCount && (
+                                <div className="item">
+                                    <h3>{KEYSLEFTOVERS.count.title}</h3>
+                                    <p>{record.count}</p>
+                                </div>
+                            )}
                         </div>
                         <div className="flex">
                             <div className="item">
@@ -72,39 +85,50 @@ export const MoveOutSolo = observer(
                                     />
                                 </div>
                             </div>
-                            <div className="item">
-                                <div>
-                                    <Input
-                                        placeholder="Выдать"
-                                        disabled={!record.count}
-                                        value={props.count}
-                                        onChange={(e) =>
-                                            props.setValue(e.target.value, props.setCount)
-                                        }
-                                        onKeyDown={props.onPressEnterHandler}
-                                    />
+                            {isShowCount && (
+                                <div className="item">
+                                    <div>
+                                        <Input
+                                            placeholder="Выдать"
+                                            disabled={!record.count}
+                                            value={props.count}
+                                            onChange={(e) =>
+                                                props.setValue(
+                                                    e.target.value,
+                                                    props.setCount,
+                                                )
+                                            }
+                                            onKeyDown={props.onPressEnterHandler}
+                                        />
+                                    </div>
                                 </div>
-                            </div>
+                            )}
                         </div>
-                        <div className="flex">
-                            <div className="itemNumProduction">
-                                <div>
-                                    {record.productionId ? (
-                                        <div>№ производства {record.productionId}</div>
-                                    ) : (
-                                        <a href="#" onClick={props.setNumProduction}>
-                                            {props.numProd
-                                                ? `№ производства ${props.numProd}`
-                                                : 'Выбрать номер производства'}
-                                        </a>
-                                    )}
-                                </div>
-                                <div>
-                                    <a href="#" onClick={props.setTask}>
-                                        Назначить задание
-                                    </a>
-                                </div>
+                        <div>
+                            <div className="selectButtons">
+                                <div>№ производства {record.productionId}</div>
+                                <Button
+                                    type="link"
+                                    onClick={props.setNumProduction}
+                                    disabled={!!record.productionId}
+                                >
+                                    {props.numProd
+                                        ? `№ производства ${props.numProd}`
+                                        : 'Выбрать номер производства'}
+                                </Button>
                             </div>
+                            {isShowTask && (
+                                <div className="selectButtons">
+                                    <div>Задание {props.task.task}</div>
+                                    <Button
+                                        type="link"
+                                        onClick={props.setTaskIsShowTask}
+                                        disabled={!props.operation}
+                                    >
+                                        Назначить задание
+                                    </Button>
+                                </div>
+                            )}
                         </div>
                         <div>
                             <Button

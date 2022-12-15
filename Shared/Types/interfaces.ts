@@ -152,9 +152,18 @@ export interface iSizeRangeModel {
     id: number;
     sizeRange: string;
 }
+export interface iFullModel {
+    id: number;
+    fullModel: string;
+    LengthModel: iLengthModel;
+    Models: iModel;
+    Profile: iProfile;
+    SizeRangeModel: iSizeRangeModel;
+    WorkpieceType: iWorkpieceType;
+}
 export interface iLength {
     id: number;
-    length: string;
+    length: string;    
 }
 export interface iRecipient {
     id: number;

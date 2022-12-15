@@ -18,6 +18,9 @@ export const Wrapper = styled.div`
         .row {
             padding: 4px 12px;
             cursor: pointer;
+            &.selected {
+                background-color: #f5f5f5;
+            }
             &:hover {
                 background-color: #f5f5f5;
             }
