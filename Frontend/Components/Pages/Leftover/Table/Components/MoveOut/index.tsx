@@ -7,15 +7,25 @@ export interface iProps {
     onClose?: () => void;
     isShowCount?: boolean;
     isShowTask?: boolean;
+    validationFields?: {
+        count?: boolean;
+        numProduction?: boolean;
+        task?: boolean;
+    };
 }
 
 export const MoveOutSoloHoc = (props: iProps) => {
-    let isShowTask = false;
-    let isShowCount = false;
-
     if ([STATE.sortedLength.id].includes(props.record?.stateId || 0)) {
-        isShowTask = true;
+        return (
+            <MoveOutSolo
+                {...{
+                    ...props,
+                    isShowTask: true,
+                    validationFields: { numProduction: true, task: true },
+                }}
+            />
+        );
     }
 
-    return <MoveOutSolo {...{ ...props, isShowTask, isShowCount }} />;
+    return <MoveOutSolo {...props} />;
 };

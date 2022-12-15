@@ -6,16 +6,16 @@ import {
     iProfile,
     iSizeRangeModel,
     iWorkpieceType,
-} from '../../../../../../../Shared/Types/interfaces';
+} from '../../../../../../../../../Shared/Types/interfaces';
 import {
     getFullModels,
     getProfile,
     getSizeRange,
     getSizeRangeModel,
     getWorkpieceTypeModel,
-} from '../../../../../../Store/Lists/api';
-import { useStores } from '../../../../../../Store/useStores';
-import { Task } from '../MoveOut/useProps';
+} from '../../../../../../../../Store/Lists/api';
+import { useStores } from '../../../../../../../../Store/useStores';
+import { Task } from '../../useProps';
 
 export interface iDataProps {
     workpieceType: UseQueryResult<iWorkpieceType[], unknown>;

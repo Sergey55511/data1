@@ -1,5 +1,5 @@
-import { iData } from '../../../../../../../../Shared/Types/interfaces';
-import { SelectField } from '../../../../../../Shared/SelectField';
+import { iData } from '../../../../../../../../../../Shared/Types/interfaces';
+import { SelectField } from '../../../../../../../../Shared/SelectField';
 import { iDataProps, State, tSetValue, useProps } from '../useProps';
 import { Wrapper } from './style';
 

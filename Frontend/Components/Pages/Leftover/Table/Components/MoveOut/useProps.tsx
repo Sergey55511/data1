@@ -5,7 +5,8 @@ import { useStores } from '../../../../../../Store/useStores';
 import { prepareDataTable } from '../../../../../Helpers';
 import { contentDrawer } from '../../../../../Shared/contentDrawer';
 import { KEYSLEFTOVERS } from '../../../../../Shared/Table/constants';
-import { NumProduction } from '../NumProduction';
+import { NumProduction } from './Drawers/NumProduction';
+import { iProps } from '.';
 
 export type tConstKeys = keyof typeof KEYSLEFTOVERS;
 type tValue = number | string | undefined;
@@ -15,9 +16,10 @@ export class Task {
     task = '';
 }
 
-export const useProps = (record: iData, onClose?: () => void) => {
+export const useProps = ({ record, onClose, validationFields }: iProps) => {
     const { OperationStore, loginStore, UIStore, ListsStore } = useStores();
     const [isShowSetTask, setIsShowSetTask] = useState(false);
+    const [isNumProduction, setIsNumProduction] = useState(false);
     const [numProd, setNumProd] = useState(0);
     const [task, setTask] = useState<Task>(new Task());
     const isNewProductionId = useRef(false);
@@ -51,17 +53,7 @@ export const useProps = (record: iData, onClose?: () => void) => {
     const keys = Object.keys(record);
     const setNumProduction = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
         e.preventDefault();
-        contentDrawer({
-            title: 'Производства',
-            content: (
-                <NumProduction
-                    setValue={(v: number) => {
-                        isNewProductionId.current = true;
-                        setNumProd(v);
-                    }}
-                />
-            ),
-        });
+        setIsNumProduction(true);
     };
 
     const setTaskIsShowTask = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
@@ -93,6 +85,14 @@ export const useProps = (record: iData, onClose?: () => void) => {
         if (test(count)) return false;
         if (isMinus(record.width!, width)) return false;
         if (count) if ((record.count ?? 0 - +count) < 0) return false;
+        if (validationFields?.numProduction) {
+            if (!numProd) return false;
+        }
+        if (validationFields?.task) {
+            if (!task.id) {
+                return false;
+            }
+        }
         return operation && date && managerId && (width || count) ? true : false;
     })();
 
@@ -156,5 +156,9 @@ export const useProps = (record: iData, onClose?: () => void) => {
         managers: ListsStore.managers,
         task,
         setTask,
+        isNewProductionId,
+        setNumProd,
+        isNumProduction,
+        setIsNumProduction,
     };
 };

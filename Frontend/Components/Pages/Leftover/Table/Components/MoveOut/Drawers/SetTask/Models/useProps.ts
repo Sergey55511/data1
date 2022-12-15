@@ -3,7 +3,7 @@ import { SearchOutlined } from '@ant-design/icons';
 import { Wrapper } from './style';
 import { useEffect, useState } from 'react';
 import { iDataProps } from '../useProps';
-import { Task } from '../../MoveOut/useProps';
+import { Task } from '../../../useProps';
 
 class StateModel {
     id = 0;
