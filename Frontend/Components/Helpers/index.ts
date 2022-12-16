@@ -157,7 +157,7 @@ export const prepareDataTable = (data: iData): iDataTable => {
         'numDocument',
         'userId',
         'managerId',
-        'modelId',
+        'fullModelId',
         'recipientId',
         'sizeRangeId',
         'fractionId',

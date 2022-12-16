@@ -46,7 +46,7 @@ export interface iDataTable {
     userId?: number;
     managerId?: number;
     recipientId?: number;
-    modelId?: number;
+    fullModelId?: number;
     sizeRangeId?: number;
     fractionId?: number;
     materialGroupId?: number;
