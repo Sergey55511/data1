@@ -69,7 +69,7 @@ export const OneToOne = ({
             data,
             record,
             setIsLoading,
-            postOrderResult: OperationStore.postOrderResult,
+            postOrderResult: OperationStore.postOrderResult.bind(OperationStore),
             router,
             losses: state.losses,
         });

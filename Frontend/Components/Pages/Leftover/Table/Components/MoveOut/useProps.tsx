@@ -107,7 +107,7 @@ export const useProps = ({ record, onClose, validationFields }: iProps) => {
         data.widthOut = width ? +width : undefined;
         data.operationId = operation;
         data.productionId = numProd || +record.productionId! || undefined;
-        data.fullModelId = task.id;
+        data.task = task.id;
 
         const code = record.code || 0;
         const moneyOut = (code / (record.width || code)) * (data.widthOut || 0);

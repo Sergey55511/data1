@@ -23,6 +23,7 @@ export const OPERATIONS = {
     sliceIk: { id: 23 }, //Распил ИК
     sortingLength: { id: 24 }, //Сортировка длин
     mixingSize: { id: 25 }, //Смешивание размер
+    slicingBillets: { id: 26 }, //Распил заготовки
     mixingLot: { id: 39 }, //Смешивание партия
 };
 export const STATE = {
@@ -47,6 +48,7 @@ export const STATE = {
     calibratedIk: { id: 18 },
     sortedB: { id: 19 },
     sortedLength: { id: 20 },
+    slicedBillets: { id: 21 },
 };
 export const WORKPIECETYPE = {
     stone: { id: 1 },

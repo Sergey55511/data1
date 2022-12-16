@@ -2,7 +2,7 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 import { fetchService } from '../../../../../Backend/Data/Services/fetch';
 import { iData } from '../../../../../Shared/Types/interfaces';
 import { getOrder } from '../../../../../Backend/Data/Requests/Data/Orders/Order/getOrder';
-import { postOrderResult } from '../../../../../Backend/Data/Requests/Data/Orders/Order/postOrder';
+import { postOrderResult } from '../../../../../Backend/Data/Requests/Data/Orders/Order/Post';
 import { validOrderResult } from '../../../../../Backend/Data/Validation/Data/Order/validOrderResult';
 import { tPrisma } from '../../../../../Backend/types';
 
