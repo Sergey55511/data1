@@ -66,6 +66,7 @@ model Data {
   recipientId      Int?
   FullModels       FullModels?    @relation(fields: [fullModelId], references: [id])
   fullModelId      Int?
+  task             Int?
 }
 
 model Bridge {
