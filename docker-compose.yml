@@ -8,6 +8,7 @@ services:
     #   dockerfile: Dockerfile
     image: "kpp2355575/data1:${APP_VERSION}"
     container_name: rootapp
+    restart: always
     ports:
       - "3000:3000"
     env_file:
@@ -18,7 +19,7 @@ services:
 
   nginx:
     image: nginx
-    restart: unless-stopped
+    restart: always
     container_name: nginx
     ports:
       - "80:80"
