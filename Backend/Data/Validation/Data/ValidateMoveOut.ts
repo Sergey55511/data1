@@ -20,7 +20,6 @@ export const validateLeftovers = async (req: NextApiRequest) => {
     for (const item of data) {
         const where = {
             workpieceTypeId: item.workpieceTypeId,
-            modelId: item.modelId,
             sizeRangeId: item.sizeRangeId,
             colorId: item.colorId,
             lengthId: item.lengthId,
