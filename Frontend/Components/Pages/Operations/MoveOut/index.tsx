@@ -2,7 +2,7 @@ import { Badge, Button, Input, notification, Radio } from 'antd';
 import { FilterValue } from 'antd/lib/table/interface';
 import { observer } from 'mobx-react-lite';
 import { useEffect, useState } from 'react';
-import { OPERATIONS, STATE } from '../../../../../Shared/constants';
+import { GRADE, OPERATIONS, STATE } from '../../../../../Shared/constants';
 import { iData } from '../../../../../Shared/Types/interfaces';
 import { useStores } from '../../../../Store/useStores';
 import { prepareDataTable } from '../../../Helpers';
@@ -45,14 +45,22 @@ export const MoveOut = observer(
         useEffect(() => {
             let data: iDataIndex[] = leftovers;
             if (type == 'mixingGrade') {
-                data = leftovers.filter((item) => item.stateId == STATE.sliced.id);
+                data = leftovers.filter((item) => {
+                    if (item.gradeId == GRADE.mix.id) return;
+                    if (item.stateId == STATE.sliced.id) return true;
+                    if (item.stateId == STATE.balled.id) return true;
+                });
             }
             if (type == 'mixingSize') {
-                data = leftovers.filter((item) => item.stateId == STATE.polished.id);
+                data = leftovers.filter((item) => {
+                    if (item.stateId == STATE.polished.id) return true;
+                    if (item.stateId == STATE.gluedBlank.id) return true;
+                });
             }
             data = data.map((item, index) => {
                 return { ...item, index };
             });
+
             setData(data);
         }, [leftovers]);
 
