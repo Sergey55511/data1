@@ -31,7 +31,7 @@ export const leftovers = <T>(prisma: tPrisma, storeId: number): PrismaPromise<T>
             lot,
             COALESCE(round(sum("widthIn")::numeric,2),0)-COALESCE(round(coalesce(sum("widthOut"),0)::numeric,2),0) as "width",
             COALESCE(round(sum("countItemsIn")::numeric,2),0)-COALESCE(round(sum("countItemsOut")::numeric,2),0) as "count",
-            COALESCE(sum("moneyIn")::numeric,2)-COALESCE(sum("moneyOut")::numeric,2) as "code"
+            COALESCE(sum("moneyIn")::numeric,0)-COALESCE(sum("moneyOut")::numeric,0) as "code"
         FROM 
             public."Data" left join "WorkpieceType" on "Data"."workpieceTypeId"="WorkpieceType".id
             left join "Fraction" on "Data"."fractionId"="Fraction".id

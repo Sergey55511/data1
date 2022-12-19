@@ -34,7 +34,6 @@ export const TableLeftOvers = observer(
                     <MoveOutSoloHoc
                         record={recordRef.current!}
                         onClose={() => setIsShowMoveOutSolo(false)}
-                        isShowTask
                     />
                 )}
                 <TableApp
