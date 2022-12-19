@@ -39,9 +39,9 @@ export const TableLeftOvers = observer(
                 )}
                 <TableApp
                     onRow={(record) => {
-                        recordRef.current = record;
                         return {
                             onDoubleClick: () => {
+                                recordRef.current = record;
                                 setIsShowMoveOutSolo(true);
                             },
                         };
