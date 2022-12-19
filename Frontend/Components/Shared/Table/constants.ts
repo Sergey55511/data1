@@ -6,6 +6,7 @@ export const KEYSLEFTOVERS = {
     manager: { key: 'managerLogin', title: 'Исполнитель' },
     operation: { key: 'operation', title: 'Операция' },
     workpieceType: { key: 'workpieceType', title: 'Тип заготовки' },
+    fullModel: { key: 'fullModel', title: 'Модель' },
     numDocument: { key: 'numDocument', title: 'Номер документа' },
     model: { key: 'model', title: 'Модель' },
     type: { key: 'type', title: 'Тип' },

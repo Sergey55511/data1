@@ -1,7 +1,7 @@
 import { PrismaPromise } from '@prisma/client';
 import { tPrisma } from '../../../../types';
 
-export const orders = <T>(prisma: tPrisma,storeId: number): PrismaPromise<T> => {
+export const orders = <T>(prisma: tPrisma, storeId: number): PrismaPromise<T> => {
     return prisma.$queryRaw`
         SELECT 
             pp,
@@ -34,6 +34,7 @@ export const orders = <T>(prisma: tPrisma,storeId: number): PrismaPromise<T> => 
             "stateId",
             state,
             lot,
+            task,
             "widthOut",
             COALESCE(round(sum("widthIn")::numeric,2),0)-COALESCE(round(coalesce(sum("widthOut"),0)::numeric,2),0) as "width",
             COALESCE(round(sum("countItemsIn")::numeric,2),0)-COALESCE(round(sum("countItemsOut")::numeric,2),0) as "count",
@@ -94,6 +95,7 @@ export const orders = <T>(prisma: tPrisma,storeId: number): PrismaPromise<T> => 
             "stateId",
             state,
             lot,
+            task,
             "widthOut"
         HAVING pp is not null and 
 		COALESCE(round(sum("widthIn")::numeric,2),0)-COALESCE(round(coalesce(sum("widthOut"),0)::numeric,2),0)<>0 or

@@ -55,6 +55,7 @@ export const WORKPIECETYPE = {
     losses: { id: 2 },
     garbage: { id: 3 },
     defect: { id: 4 },
+    prunes: { id: 23 }, //обрезки
 };
 export const GRADE = {
     mix: { id: 1 },

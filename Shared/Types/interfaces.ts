@@ -72,6 +72,7 @@ export interface iDataTable {
 export interface iData extends iDataTable {
     userLogin?: string;
     recipient?: string;
+    fullModel?: string;
     managerLogin?: string;
     model?: string;
     sizeRange?: string;

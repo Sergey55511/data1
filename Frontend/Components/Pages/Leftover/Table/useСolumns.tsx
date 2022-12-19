@@ -34,8 +34,8 @@ export const useColumns = (filters: Record<string, FilterValue | null>) => {
         title: KEYSLEFTOVERS.workpieceType.title,
     });
     columns.push({
-        ...getColumnPropsHoc(KEYSLEFTOVERS.workpieceType.key),
-        title: KEYSLEFTOVERS.workpieceType.title,
+        ...getColumnPropsHoc(KEYSLEFTOVERS.fullModel.key),
+        title: KEYSLEFTOVERS.fullModel.title,
     });
     columns.push({
         ...getColumnPropsHoc(KEYSLEFTOVERS.state.key),

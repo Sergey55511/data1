@@ -8,9 +8,14 @@ import { checkSchema } from '../../../../../../../Helpers/checkSchema';
 import { schema } from './scima';
 import jwt from 'jsonwebtoken';
 import { KEY } from '../../../../../../Services/createJWT';
+import { tPrisma } from '../../../../../../../types';
+import { WORKPIECETYPE } from '../../../../../../../../Shared/constants';
 
-export const dal = (req: NextApiRequest): iDataTable[] => {
-    const prepareNumber = (value?: number | string, isTask?: boolean) => {
+export const dal = async (
+    prisma: tPrisma,
+    req: NextApiRequest,
+): Promise<iDataTable[]> => {
+    const prepareNumber = (value?: number | string | null, isTask?: boolean) => {
         if (isTask) return;
         return value ? +value : undefined;
     };
@@ -21,10 +26,23 @@ export const dal = (req: NextApiRequest): iDataTable[] => {
     const atkn = jwt.verify(cookies?.atkn, KEY) as iUser;
     const storeId = atkn.storeId;
 
-    const data: iDataTable[] = params.map((item) => {
-        const isTask = !!item.task;
+    const taskItem = params.find((item) => item.task);
+    const isTask = !!taskItem;
 
-        return {
+    let workpieceTypeId: number | null | undefined = 0;
+
+    if (isTask) {
+        const workpieceTypeIdModel = await prisma.fullModels.findFirst({
+            select: { workpieceTypeId: true },
+            where: { id: taskItem.task },
+        });
+        workpieceTypeId = workpieceTypeIdModel?.workpieceTypeId;
+    }
+
+    const data: iDataTable[] = params.map((item) => {
+        const isMoveBack = (item.widthOut || 0) < 0;
+
+        const res = {
             id: prepareNumber(item.id),
             lot: prepareNumber(item.lot),
             numDocument: prepareStaring(item.numDocument),
@@ -34,14 +52,12 @@ export const dal = (req: NextApiRequest): iDataTable[] => {
             userId: prepareNumber(item.userId),
             managerId: prepareNumber(item.managerId),
             recipientId: prepareNumber(item.recipientId),
-            fullModelId: isTask
-                ? prepareNumber(item.task)
-                : prepareNumber(item.fullModelId),
-            sizeRangeId: prepareNumber(item.sizeRangeId, isTask),
+            fullModelId: prepareNumber(item.fullModelId),
+            sizeRangeId: prepareNumber(item.sizeRangeId),
             fractionId: prepareNumber(item.fractionId),
             materialGroupId: prepareNumber(item.materialGroupId),
             colorId: prepareNumber(item.colorId),
-            lengthId: prepareNumber(item.lengthId, isTask),
+            lengthId: prepareNumber(item.lengthId),
             channelId: prepareNumber(item.channelId),
             gradeId: prepareNumber(item.gradeId),
             stateId: prepareNumber(item.stateId),
@@ -57,6 +73,26 @@ export const dal = (req: NextApiRequest): iDataTable[] => {
             moneyOut: prepareNumber(item.moneyOut),
             date: prepareStaring(item.date),
         };
+
+        if (!isMoveBack) {
+            if (isTask) {
+                if (
+                    ![
+                        WORKPIECETYPE.defect.id,
+                        WORKPIECETYPE.garbage.id,
+                        WORKPIECETYPE.losses.id,
+                        WORKPIECETYPE.prunes.id,
+                    ].includes(item.workpieceTypeId || 0)
+                ) {
+                    res.workpieceTypeId = prepareNumber(workpieceTypeId);
+                }
+                res.fullModelId = prepareNumber(item.task);
+                res.sizeRangeId = undefined;
+                res.lengthId = undefined;
+            }
+        }
+        
+        return res;
     });
 
     return checkSchema(data, schema);

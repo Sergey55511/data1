@@ -3,8 +3,8 @@ import { tPrisma } from '../../../types';
 
 export const leftovers = <T>(prisma: tPrisma, storeId: number): PrismaPromise<T> => {
     return prisma.$queryRaw`
-        SELECT 
-            "workpieceTypeId",
+      SELECT 
+            "Data"."workpieceTypeId",
             "workpieceType",
             "typeId",
             type,
@@ -12,8 +12,18 @@ export const leftovers = <T>(prisma: tPrisma, storeId: number): PrismaPromise<T>
             "sizeRange",
 			"productionId",
 			"Productions".description as "production",
-            "modelId",
-			"model",
+            "fullModelId",
+			(
+				SELECT  
+					concat("workpieceType",'_',"model",'_',"profile",'_',"sizeRange",'_',"length") as "fullModel"
+				FROM public."FullModels"
+					LEFT JOIN "WorkpieceType" ON "WorkpieceType".id = "FullModels"."workpieceTypeId"
+					LEFT JOIN "Models" ON "Models".id = "FullModels"."modelId"
+					LEFT JOIN "Profile" ON "Profile".id = "FullModels"."profileId"
+					LEFT JOIN "SizeRangeModel" ON "SizeRangeModel".id = "FullModels"."sizeRangeModelId"
+					LEFT JOIN "LengthModel" ON "LengthModel".id = "FullModels"."lengthModelId"
+				WHERE "FullModels".id="fullModelId"
+			),
             "fractionId",
             "fraction",
 			"colorId",
@@ -37,7 +47,7 @@ export const leftovers = <T>(prisma: tPrisma, storeId: number): PrismaPromise<T>
             left join "Fraction" on "Data"."fractionId"="Fraction".id
             left join "MaterialGroup" on "Data"."materialGroupId"="MaterialGroup".id
 			left join "Grade" on "Data"."gradeId"="Grade".id
-			left join "Models" on "Data"."modelId"="Models".id
+			left join "FullModels" on "Data"."fullModelId"="FullModels".id
 			left join "Color" on "Data"."colorId"="Color".id
 			left join "Length" on "Data"."lengthId"="Length".id
 			left join "Channel" on "Data"."channelId"="Channel".id
@@ -47,7 +57,7 @@ export const leftovers = <T>(prisma: tPrisma, storeId: number): PrismaPromise<T>
             left join "SizeRange" on "Data"."sizeRangeId"="SizeRange".id
 		WHERE "Data"."storeId"=${+storeId} AND "WorkpieceType"."isShow"=true
         GROUP BY 
-            "workpieceTypeId",
+            "Data"."workpieceTypeId",
             "workpieceType",
             "typeId",
             type,
@@ -55,8 +65,18 @@ export const leftovers = <T>(prisma: tPrisma, storeId: number): PrismaPromise<T>
             "sizeRange",
 			"productionId",
 			"Productions".description,
-			"modelId",
-            "model",
+			"fullModelId",
+			(
+				SELECT  
+					concat("workpieceType",'_',"model",'_',"profile",'_',"sizeRange",'_',"length") as "fullModel"
+				FROM public."FullModels"
+					LEFT JOIN "WorkpieceType" ON "WorkpieceType".id = "FullModels"."workpieceTypeId"
+					LEFT JOIN "Models" ON "Models".id = "FullModels"."modelId"
+					LEFT JOIN "Profile" ON "Profile".id = "FullModels"."profileId"
+					LEFT JOIN "SizeRangeModel" ON "SizeRangeModel".id = "FullModels"."sizeRangeModelId"
+					LEFT JOIN "LengthModel" ON "LengthModel".id = "FullModels"."lengthModelId"
+				WHERE "FullModels".id="fullModelId"
+			),
             "fractionId",
             "fraction",
             "colorId",

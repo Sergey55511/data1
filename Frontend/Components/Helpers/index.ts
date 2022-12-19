@@ -73,7 +73,7 @@ export const prepareSubbmitData = ({
     if (pruning) {
         let codePrun = record.widthOut ? (record.code || 0) / record.widthOut : 0;
         codePrun = codePrun * +pruning;
-        data.push(getLosseObject(record, WORKPIECETYPE.garbage.id, +pruning, codePrun));
+        data.push(getLosseObject(record, WORKPIECETYPE.prunes.id, +pruning, codePrun));
     }
 
     if (moveBack) {
@@ -169,6 +169,7 @@ export const prepareDataTable = (data: iData): iDataTable => {
         'userId',
         'managerId',
         'fullModelId',
+        'task',
         'recipientId',
         'sizeRangeId',
         'fractionId',
