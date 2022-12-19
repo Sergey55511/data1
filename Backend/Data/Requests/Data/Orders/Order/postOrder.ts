@@ -14,7 +14,12 @@ export const postOrderResult = <T>(
     const atkn = jwt.verify(cookies?.atkn, KEY) as iUser;
     const storeId = atkn.storeId;
 
-    if (storeId) data = data.map((item) => ({ ...item, storeId: +storeId }));
+    if (storeId)
+        data = data.map((item) => ({
+            ...item,
+            storeId: +storeId,
+            widthIn: item.widthIn ? +item.widthIn : undefined,
+        }));
 
     return prisma.data.createMany({ data: data }) as any;
 };
