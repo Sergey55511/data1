@@ -1,104 +1,24 @@
-import { Button, DatePicker, Input } from 'antd';
-import moment from 'moment';
-import { useRouter } from 'next/router';
-import { useState } from 'react';
-import { iData } from '../../../../../../../../Shared/Types/interfaces';
-import { useStores } from '../../../../../../../Store/useStores';
-import { sendData } from '../../../../../../Helpers';
-import { confirmAction } from '../../../../../../Shared/ConfirmSubbmit';
+import { Button, DatePicker } from 'antd';
 import { InputField } from '../../../../../../Shared/InputField';
 import { InputNumber } from '../../../../../../Shared/InputNumber';
+import { Item } from './item';
 import { Wrapper } from './style';
+import { iProps, useProps } from './useProps';
 
-export interface iProps {
-    record: iData;
-    stateId: number;
-    isCheckLosses?: boolean;
-}
-
-interface iState {
-    date?: moment.Moment;
-    widthIn?: number;
-    moveBack?: number;
-    losses?: number;
-}
-
-export const OneToOne = ({
-    record,
-    stateId,
-    isCheckLosses = true,
-}: {
-    record: iData;
-    stateId: number;
-    isCheckLosses?: boolean;
-}) => {
-    const router = useRouter();
-    const [isLoading, setIsLoading] = useState(false);
-    const { OperationStore } = useStores();
-    const [state, setState] = useState<iState>({
-        date: moment(),
-        widthIn: undefined,
-        losses: undefined,
-    });
-
-    const isValid = (() => {
-        if (!state.date || !state.widthIn) return false;
-        if (state.widthIn! < 0) return false;
-        if (isCheckLosses) {
-            if (state.losses! < 0) return false;
-        }
-        return true;
-    })();
-
-    const confirmSubbmit = () => {
-        confirmAction({ subbmitHandler });
-    };
-
-    const subbmitHandler = async () => {
-        const code = record.code ? record.code * -1 : 0;
-        const data: iData[] = [
-            {
-                ...record,
-                widthOut: undefined,
-                widthIn: state.widthIn,
-                stateId: stateId,
-                moneyIn: code,
-            },
-        ];
-        sendData({
-            data,
-            record,
-            setIsLoading,
-            postOrderResult: OperationStore.postOrderResult.bind(OperationStore),
-            router,
-            losses: state.losses,
-        });
-    };
-
-    const onChangeInput = (fieldName: keyof iState, v: any) => {
-        const anotherFieldName: keyof iState =
-            fieldName == 'moveBack' ? 'widthIn' : 'moveBack';
-        if (v == '') return;
-        setState((prev) => ({
-            ...prev,
-            [fieldName]: v,
-            losses: (record?.widthOut || 0) - (+v! || 0) - (prev[anotherFieldName] || 0),
-        }));
-    };
-
-    const isShowLosses = (state.losses || 0) < 0 && isCheckLosses;
+export const OneToOne = (props: iProps) => {
+    const params = useProps(props);
 
     return (
         <Wrapper>
             <div className="title">
-                <div className={isShowLosses ? 'red' : ''}>
-                    Потеря: {state.losses?.toFixed(2) ?? record.widthOut}
+                <div className={params.isShowLosses ? 'red' : ''}>
+                    Потеря: {params.state.losses?.toFixed(2) ?? props.record.widthOut}
                 </div>
                 <Button
-                    loading={isLoading}
+                    loading={params.isLoading}
                     type="primary"
-                    disabled={!isValid}
-                    onClick={confirmSubbmit}
+                    disabled={!params.isValid}
+                    onClick={params.confirmSubbmit}
                 >
                     Сохранить
                 </Button>
@@ -106,22 +26,22 @@ export const OneToOne = ({
             <Item title="Дата">
                 <DatePicker
                     className="input"
-                    value={state.date}
+                    value={params.state.date}
                     onChange={(v) =>
-                        setState((prev) => ({ ...prev, date: v ?? undefined }))
+                        params.setState((prev) => ({ ...prev, date: v ?? undefined }))
                     }
                 />
             </Item>
             <Item title="Результат гр.">
                 <InputField
-                    isError={(state.widthIn || 0) < 0}
+                    isError={(params.state.widthIn || 0) < 0}
                     errorMsg="Отрицательное значение"
                 >
                     <InputNumber
                         placeholder="Введите данные"
-                        value={state.widthIn}
+                        value={params.state.widthIn}
                         onChangeHandler={(v) => {
-                            onChangeInput('widthIn', v);
+                            params.onChangeInput('widthIn', v);
                         }}
                     />
                 </InputField>
@@ -130,22 +50,39 @@ export const OneToOne = ({
                 <InputField>
                     <InputNumber
                         placeholder="Не обязательное поле"
-                        value={state.moveBack}
+                        value={params.state.moveBack}
                         onChangeHandler={(v) => {
-                            onChangeInput('moveBack', v);
+                            params.onChangeInput('moveBack', v);
                         }}
                     />
                 </InputField>
             </Item>
+            {props.defect && (
+                <Item title="Брак гр.">
+                    <InputField>
+                        <InputNumber
+                            placeholder="Не обязательное поле"
+                            value={params.state.defect}
+                            onChangeHandler={(v) => {
+                                params.onChangeInput('defect', v);
+                            }}
+                        />
+                    </InputField>
+                </Item>
+            )}
+            {props.pruning && (
+                <Item title="Обрезки гр.">
+                    <InputField>
+                        <InputNumber
+                            placeholder="Не обязательное поле"
+                            value={params.state.pruning}
+                            onChangeHandler={(v) => {
+                                params.onChangeInput('pruning', v);
+                            }}
+                        />
+                    </InputField>
+                </Item>
+            )}
         </Wrapper>
-    );
-};
-
-const Item = ({ title, children }: { title: string; children: JSX.Element }) => {
-    return (
-        <div className="item">
-            <h4>{title}</h4>
-            {children}
-        </div>
     );
 };

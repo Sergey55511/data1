@@ -9,11 +9,11 @@ export const getLosseObject = (
     record: iData,
     workpieceTypeId: number,
     losses: number,
-) => ({
+    code?: number,
+): iData => ({
     ...record,
     workpieceTypeId,
     stateId: undefined,
-    modelId: undefined,
     fractionId: undefined,
     materialGroupId: undefined,
     colorId: undefined,
@@ -22,6 +22,7 @@ export const getLosseObject = (
     gradeId: undefined,
     widthOut: undefined,
     widthIn: +losses.toFixed(2),
+    moneyIn: code ? code : undefined,
 });
 
 export const getMoveBackMoney = (
@@ -47,6 +48,7 @@ export const prepareSubbmitData = ({
     data,
     losses,
     garbage,
+    pruning,
     defect,
     moveBack,
 }: {
@@ -54,6 +56,7 @@ export const prepareSubbmitData = ({
     data: iData[];
     losses?: tValue;
     garbage?: tValue;
+    pruning?: tValue;
     defect?: tValue;
     moveBack?: tValue;
 }) => {
@@ -66,6 +69,11 @@ export const prepareSubbmitData = ({
     }
     if (garbage) {
         data.push(getLosseObject(record, WORKPIECETYPE.garbage.id, +garbage));
+    }
+    if (pruning) {
+        let codePrun = record.widthOut ? (record.code || 0) / record.widthOut : 0;
+        codePrun = codePrun * +pruning;
+        data.push(getLosseObject(record, WORKPIECETYPE.garbage.id, +pruning, codePrun));
     }
 
     if (moveBack) {
@@ -91,6 +99,7 @@ export const sendData = async ({
     data,
     losses,
     garbage,
+    pruning,
     defect,
     moveBack,
     setIsLoading,
@@ -101,6 +110,7 @@ export const sendData = async ({
     data: iData[];
     losses?: tValue;
     garbage?: tValue;
+    pruning?: tValue;
     defect?: tValue;
     moveBack?: tValue;
     setIsLoading: (flag: boolean) => void;
@@ -117,6 +127,7 @@ export const sendData = async ({
         garbage,
         defect,
         moveBack,
+        pruning,
     });
     setIsLoading(true);
     await postOrderResult(dataTable);

@@ -89,5 +89,10 @@ export const useColumns = (filters: Record<string, FilterValue | null>) => {
         ...getColumnPropsHoc(KEYSLEFTOVERS.count.key),
         title: KEYSLEFTOVERS.count.title,
     });
+    columns.push({
+        dataIndex: 'code',
+        title: 'code',
+    });
+
     return { columns, data };
 };

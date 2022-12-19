@@ -1,0 +1,118 @@
+import moment from 'moment';
+import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
+import { round } from '../../../../../../../../Shared/Helpers';
+import { iData } from '../../../../../../../../Shared/Types/interfaces';
+import { useStores } from '../../../../../../../Store/useStores';
+import { sendData } from '../../../../../../Helpers';
+import { confirmAction } from '../../../../../../Shared/ConfirmSubbmit';
+
+export interface iProps {
+    record: iData;
+    stateId: number;
+    isCheckLosses?: boolean;
+    defect?: boolean;
+    pruning?: boolean;
+}
+
+interface iState {
+    date?: moment.Moment;
+    widthIn?: number;
+    moveBack?: number;
+    losses?: number;
+    defect?: number;
+    pruning?: number;
+}
+
+export const useProps = ({ isCheckLosses, record, stateId }: iProps) => {
+    const router = useRouter();
+    const [isLoading, setIsLoading] = useState(false);
+    const { OperationStore } = useStores();
+    const [state, setState] = useState<iState>({
+        date: moment(),
+        widthIn: undefined,
+        losses: undefined,
+        defect: undefined,
+        pruning: undefined,
+    });
+
+    const isValid = (() => {
+        if (!state.date || !state.widthIn) return false;
+        if (state.widthIn! < 0) return false;
+        if (isCheckLosses) {
+            if (state.losses! < 0) return false;
+        }
+        return true;
+    })();
+
+    const confirmSubbmit = () => {
+        confirmAction({ subbmitHandler });
+    };
+
+    const subbmitHandler = async () => {
+        const code = record.code ? record.code * -1 : 0;
+        const data: iData[] = [
+            {
+                ...record,
+                widthOut: undefined,
+                widthIn: state.widthIn,
+                stateId: stateId,
+                moneyIn: code,
+            },
+        ];
+
+        sendData({
+            data,
+            defect: state.defect,
+            pruning: state.pruning,
+            moveBack: state.moveBack,
+            record,
+            setIsLoading,
+            postOrderResult: OperationStore.postOrderResult.bind(OperationStore),
+            router,
+            losses: state.losses,
+        });
+    };
+
+    const onChangeInput = (fieldName: keyof iState, v: any) => {
+        const keys = Object.keys(state).filter((item) => item != fieldName);
+
+        if (v == '') return;
+        setState((prev) => {
+            return {
+                ...prev,
+                [fieldName]: v,
+            };
+        });
+    };
+
+    useEffect(() => {
+        const getValue = (v?: number) => v || 0;
+        setState((prev) => {
+            let losses =
+                getValue(record.widthOut) -
+                getValue(prev.defect) -
+                getValue(prev.moveBack) -
+                getValue(prev.pruning) -
+                getValue(prev.widthIn);
+
+            losses = round(losses);
+            if (losses == prev.losses) return prev;
+            return {
+                ...prev,
+                losses,
+            };
+        });
+    }, [state]);
+
+    const isShowLosses = (state.losses || 0) < 0 && isCheckLosses;
+    return {
+        isShowLosses,
+        state,
+        isLoading,
+        isValid,
+        confirmSubbmit,
+        setState,
+        onChangeInput,
+    };
+};
