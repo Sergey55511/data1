@@ -4,8 +4,6 @@ import { WORKPIECETYPE } from '../../../../../../../Shared/constants';
 import { prepareNumber } from './Dal';
 
 export const prepareData = async (prisma: tPrisma, data: iDataTable[]) => {
-    console.log('data', data);
-
     const taskItem = data.find((item) => item.task);
     const isTask = !!taskItem;
 
