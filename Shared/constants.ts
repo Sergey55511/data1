@@ -24,6 +24,14 @@ export const OPERATIONS = {
     sortingLength: { id: 24 }, //Сортировка длин
     mixingSize: { id: 25 }, //Смешивание размер
     slicingBillets: { id: 26 }, //Распил заготовки
+    drillingPill: { id: 27 }, //Сверление таблетки
+    drilling: { id: 28 }, //Сверление
+    grindingMsc: { id: 29 }, //Шифование МСК
+    waterDrilling: { id: 30 }, //Сверление водой
+    roughTumbling: { id: 31 }, //Грубая голтовка
+    thermoLamp: { id: 32 }, //Термо (лампа)
+    thermoOven: { id: 33 }, //Термо (печь)
+    polishingMsc: { id: 34 }, //Полировка заготовки
     mixingLot: { id: 39 }, //Смешивание партия
 };
 export const STATE = {
@@ -49,6 +57,14 @@ export const STATE = {
     sortedB: { id: 19 },
     sortedLength: { id: 20 },
     slicedBillets: { id: 21 },
+    drilledPill: { id: 22 },
+    drilled: { id: 23 },
+    grindedMsc: { id: 24 },
+    waterDrilled: { id: 25 },
+    roughTumbled: { id: 26 },
+    thermedLamp: { id: 27 },
+    thermedOven: { id: 28 },
+    polishedMsc: { id: 29 },
 };
 export const WORKPIECETYPE = {
     stone: { id: 1 },

@@ -27,8 +27,7 @@ export const getOrder = <T>(prisma: tPrisma,req: NextApiRequest): PrismaPromise<
 			"operation",
 			"workpieceTypeId",
             "workpieceType",
-            "modelId",
-			"model",
+            "fullModelId",
             "fractionId",
             "fraction",
 			"colorId",
@@ -54,7 +53,6 @@ export const getOrder = <T>(prisma: tPrisma,req: NextApiRequest): PrismaPromise<
             left join "Fraction" on "Data"."fractionId"="Fraction".id
             left join "MaterialGroup" on "Data"."materialGroupId"="MaterialGroup".id
 			left join "Grade" on "Data"."gradeId"="Grade".id
-			left join "Models" on "Data"."modelId"="Models".id
 			left join "Color" on "Data"."colorId"="Color".id
 			left join "Length" on "Data"."lengthId"="Length".id
 			left join "Channel" on "Data"."channelId"="Channel".id
@@ -80,8 +78,7 @@ export const getOrder = <T>(prisma: tPrisma,req: NextApiRequest): PrismaPromise<
 			"operation",
             "workpieceTypeId",
             "workpieceType",
-			"modelId",
-            "model",
+			"fullModelId",
             "fractionId",
             "fraction",
             "colorId",

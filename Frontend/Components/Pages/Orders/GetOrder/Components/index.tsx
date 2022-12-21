@@ -17,7 +17,31 @@ export const GetOrderSwitcher = ({
         case OPERATIONS.wash.id:
             return <OneToOne record={record} stateId={STATE.washed.id} />;
         case OPERATIONS.slicingBillets.id:
-            return <OneToOne record={record} stateId={STATE.slicedBillets.id} defect pruning />;
+            return (
+                <OneToOne
+                    record={record}
+                    stateId={STATE.slicedBillets.id}
+                    defect
+                    pruning
+                />
+            );
+        case OPERATIONS.drillingPill.id:
+            return <OneToOne record={record} stateId={STATE.drilledPill.id} defect />;
+        case OPERATIONS.drilling.id:
+            return <OneToOne record={record} stateId={STATE.drilled.id} defect />;
+        case OPERATIONS.waterDrilling.id:
+            return <OneToOne record={record} stateId={STATE.waterDrilled.id} defect />;
+        case OPERATIONS.grindingMsc.id:
+            return <OneToOne record={record} stateId={STATE.grindedMsc.id} defect />;
+        case OPERATIONS.roughTumbling.id:
+            return <OneToOne record={record} stateId={STATE.roughTumbled.id} defect />;
+        case OPERATIONS.polishingMsc.id:
+            return <OneToOne record={record} stateId={STATE.polishedMsc.id} defect />;
+        case OPERATIONS.thermoOven.id:
+            return <OneToOne record={record} stateId={STATE.thermedOven.id} defect />;
+        case OPERATIONS.thermoLamp.id:
+            return <OneToOne record={record} stateId={STATE.thermedLamp.id} defect />;
+
         case OPERATIONS.sorting.id:
             return <Sorting record={record} stateId={STATE.sorted.id} />;
         case OPERATIONS.sortingN.id:
@@ -61,7 +85,14 @@ export const GetOrderSwitcher = ({
         case OPERATIONS.makeBall.id:
             return <MakeBall record={record} stateId={STATE.balled.id} />;
         case OPERATIONS.sliceIk.id:
-            return <Slicing record={record} stateId={STATE.sliced.id} operationId={OPERATIONS.sliceIk.id} isShowState />;
+            return (
+                <Slicing
+                    record={record}
+                    stateId={STATE.sliced.id}
+                    operationId={OPERATIONS.sliceIk.id}
+                    isShowState
+                />
+            );
         case OPERATIONS.makeSuperBall.id:
             return <OneToOne record={record} stateId={STATE.makedSuperBall.id} />;
         case OPERATIONS.grindingSuper.id:
@@ -69,7 +100,13 @@ export const GetOrderSwitcher = ({
         case OPERATIONS.polishing.id:
             return <OneToOne record={record} stateId={STATE.polished.id} />;
         case OPERATIONS.slice.id:
-            return <Slicing record={record} stateId={STATE.sliced.id} operationId={OPERATIONS.slice.id} />;
+            return (
+                <Slicing
+                    record={record}
+                    stateId={STATE.sliced.id}
+                    operationId={OPERATIONS.slice.id}
+                />
+            );
         case OPERATIONS.sortingLength.id:
             return <SortingLength record={record} stateId={STATE.sortedLength.id} />;
     }
