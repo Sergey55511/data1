@@ -45,6 +45,7 @@ export const STATE = {
     calibratedIk: { id: 18 },
     sortedB: { id: 19 },
     sortedLength: { id: 20 },
+    mixed: { id: 34 },
 };
 export const WORKPIECETYPE = {
     stone: { id: 1 },
