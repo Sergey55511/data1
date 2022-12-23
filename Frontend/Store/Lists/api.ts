@@ -14,6 +14,7 @@ import {
     iSizeRangeModel,
     iLengthModel,
     iFullModel,
+    iChannel,
 } from '../../../Shared/Types/interfaces';
 
 export const getMaterialGroup = () => {
@@ -22,6 +23,14 @@ export const getMaterialGroup = () => {
         method: 'GET',
     }).then((res) => res.data);
 };
+
+export const getChannel = () => {
+    return axios({
+        url: '/api/list/channel',
+        method: 'GET',
+    }).then((res) => res.data as iChannel[]);
+};
+
 export const getSizeRange = (filters: iQueryFilters, id?: number) => {
     let params = getQueryParams(filters);
 

@@ -117,6 +117,10 @@ export interface iOperation {
     id: number;
     operation: string;
 }
+export interface iChannel {
+    id: number;
+    channel: string;
+}
 export interface iProductions {
     id: number;
     description: string;
@@ -165,7 +169,7 @@ export interface iFullModel {
 }
 export interface iLength {
     id: number;
-    length: string;    
+    length: string;
 }
 export interface iRecipient {
     id: number;

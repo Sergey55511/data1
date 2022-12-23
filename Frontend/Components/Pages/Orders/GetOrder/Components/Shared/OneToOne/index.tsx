@@ -1,6 +1,7 @@
 import { Button, DatePicker } from 'antd';
 import { InputField } from '../../../../../../Shared/InputField';
 import { InputNumber } from '../../../../../../Shared/InputNumber';
+import { SelectField } from '../../../../../../Shared/SelectField';
 import { Item } from './item';
 import { Wrapper } from './style';
 import { iProps, useProps } from './useProps';
@@ -32,6 +33,26 @@ export const OneToOne = (props: iProps) => {
                     }
                 />
             </Item>
+            {props.isShowChannel && (
+                <Item title="Канал">
+                    <InputField
+                        isError={!params.state.channel}
+                        errorMsg="Обязательное значене"
+                    >
+                        <SelectField
+                            placeholder="Канал"
+                            value={params.state.channel}
+                            onChange={(v) =>
+                                params.setState((prev) => ({
+                                    ...prev,
+                                    channel: v ?? undefined,
+                                }))
+                            }
+                            options={params.channelOptions}
+                        />
+                    </InputField>
+                </Item>
+            )}
             <Item title="Результат гр.">
                 <InputField
                     isError={(params.state.widthIn || 0) < 0}

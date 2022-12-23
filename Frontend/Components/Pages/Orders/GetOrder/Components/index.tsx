@@ -26,11 +26,11 @@ export const GetOrderSwitcher = ({
                 />
             );
         case OPERATIONS.drillingPill.id:
-            return <OneToOne record={record} stateId={STATE.drilledPill.id} defect />;
+            return <OneToOne record={record} stateId={STATE.drilledPill.id} defect isShowChannel/>;
         case OPERATIONS.drilling.id:
-            return <OneToOne record={record} stateId={STATE.drilled.id} defect />;
+            return <OneToOne record={record} stateId={STATE.drilled.id} defect isShowChannel />;
         case OPERATIONS.waterDrilling.id:
-            return <OneToOne record={record} stateId={STATE.waterDrilled.id} defect />;
+            return <OneToOne record={record} stateId={STATE.waterDrilled.id} defect isShowChannel/>;
         case OPERATIONS.grindingMsc.id:
             return <OneToOne record={record} stateId={STATE.grindedMsc.id} defect />;
         case OPERATIONS.roughTumbling.id:

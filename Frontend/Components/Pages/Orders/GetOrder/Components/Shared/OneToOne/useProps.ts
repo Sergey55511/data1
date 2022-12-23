@@ -6,10 +6,12 @@ import { iData } from '../../../../../../../../Shared/Types/interfaces';
 import { useStores } from '../../../../../../../Store/useStores';
 import { sendData } from '../../../../../../Helpers';
 import { confirmAction } from '../../../../../../Shared/ConfirmSubbmit';
+import { useData } from './useData';
 
 export interface iProps {
     record: iData;
     stateId: number;
+    isShowChannel?: boolean;
     isCheckLosses?: boolean;
     defect?: boolean;
     pruning?: boolean;
@@ -22,9 +24,10 @@ interface iState {
     losses?: number;
     defect?: number;
     pruning?: number;
+    channel?: number;
 }
 
-export const useProps = ({ isCheckLosses, record, stateId }: iProps) => {
+export const useProps = ({ isCheckLosses, isShowChannel, record, stateId }: iProps) => {
     const router = useRouter();
     const [isLoading, setIsLoading] = useState(false);
     const { OperationStore } = useStores();
@@ -34,6 +37,7 @@ export const useProps = ({ isCheckLosses, record, stateId }: iProps) => {
         losses: undefined,
         defect: undefined,
         pruning: undefined,
+        channel: undefined,
     });
 
     const isValid = (() => {
@@ -41,6 +45,9 @@ export const useProps = ({ isCheckLosses, record, stateId }: iProps) => {
         if (state.widthIn! < 0) return false;
         if (isCheckLosses) {
             if (state.losses! < 0) return false;
+        }
+        if (isShowChannel) {
+            if (!state.channel) return false;
         }
         return true;
     })();
@@ -58,6 +65,7 @@ export const useProps = ({ isCheckLosses, record, stateId }: iProps) => {
                 widthIn: state.widthIn,
                 stateId: stateId,
                 moneyIn: code,
+                channelId: state.channel,
             },
         ];
 
@@ -106,6 +114,14 @@ export const useProps = ({ isCheckLosses, record, stateId }: iProps) => {
     }, [state]);
 
     const isShowLosses = (state.losses || 0) < 0 && isCheckLosses;
+
+    const data = useData();
+
+    const channelOptions = data.channel.data?.map((item) => ({
+        value: item.id,
+        caption: item.channel,
+    }));
+
     return {
         isShowLosses,
         state,
@@ -114,5 +130,7 @@ export const useProps = ({ isCheckLosses, record, stateId }: iProps) => {
         confirmSubbmit,
         setState,
         onChangeInput,
+        data,
+        channelOptions,
     };
 };
