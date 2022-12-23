@@ -32,6 +32,7 @@ export const OPERATIONS = {
     thermoLamp: { id: 32 }, //Термо (лампа)
     thermoOven: { id: 33 }, //Термо (печь)
     polishingMsc: { id: 34 }, //Полировка заготовки
+    sortingElements: { id: 35 }, //Сортировка элементов
     mixingLot: { id: 39 }, //Смешивание партия
 };
 export const STATE = {
@@ -65,6 +66,7 @@ export const STATE = {
     thermedLamp: { id: 27 },
     thermedOven: { id: 28 },
     polishedMsc: { id: 29 },
+    sertedElements: { id: 30 },
 };
 export const WORKPIECETYPE = {
     stone: { id: 1 },

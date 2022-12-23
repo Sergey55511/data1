@@ -3,6 +3,7 @@ import { iData } from '../../../../../../Shared/Types/interfaces';
 import { MakeBall } from './Pages/MakeBall';
 import { Slicing } from './Pages/Slicing';
 import { Sorting } from './Pages/Sorting';
+import { SortingElements } from './Pages/SortingElements';
 import { SortingLength } from './Pages/SortingLength';
 import { OneToOne } from './Shared/OneToOne';
 
@@ -109,6 +110,8 @@ export const GetOrderSwitcher = ({
             );
         case OPERATIONS.sortingLength.id:
             return <SortingLength record={record} stateId={STATE.sortedLength.id} />;
+        case OPERATIONS.sortingElements.id:
+            return <SortingElements record={record} stateId={STATE.sertedElements.id} />;
     }
     return <></>;
 };
