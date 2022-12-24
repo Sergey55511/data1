@@ -291,6 +291,7 @@ model WorkpieceType {
   position                     Int                            @default(autoincrement())
   active                       Boolean                        @default(true)
   isShow                       Boolean                        @default(true)
+  isMinaletGroup               Boolean?
   Data                         Data[]
   Brige                        Bridge[]
   FullModels                   FullModels[]

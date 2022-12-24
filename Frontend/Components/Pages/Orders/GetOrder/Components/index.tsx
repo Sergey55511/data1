@@ -1,6 +1,7 @@
 import { OPERATIONS, STATE } from '../../../../../../Shared/constants';
 import { iData } from '../../../../../../Shared/Types/interfaces';
 import { MakeBall } from './Pages/MakeBall';
+import { MakeMinalets } from './Pages/makeMinalets';
 import { Slicing } from './Pages/Slicing';
 import { Sorting } from './Pages/Sorting';
 import { SortingElements } from './Pages/SortingElements';
@@ -112,6 +113,8 @@ export const GetOrderSwitcher = ({
             return <SortingLength record={record} stateId={STATE.sortedLength.id} />;
         case OPERATIONS.sortingElements.id:
             return <SortingElements record={record} stateId={STATE.sertedElements.id} />;
+        case OPERATIONS.makingMinalets.id:
+            return <MakeMinalets record={record} stateId={STATE.sertedElements.id} />;
     }
     return <></>;
 };

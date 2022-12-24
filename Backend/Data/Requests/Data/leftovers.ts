@@ -1,8 +1,9 @@
 import { PrismaPromise } from '@prisma/client';
 import { tPrisma } from '../../../types';
+import { fullModelSQL } from './constants';
 
 export const leftovers = <T>(prisma: tPrisma, storeId: number): PrismaPromise<T> => {
-    return prisma.$queryRaw`
+    return prisma.$queryRawUnsafe(`
       SELECT 
             "Data"."workpieceTypeId",
             "workpieceType",
@@ -13,17 +14,7 @@ export const leftovers = <T>(prisma: tPrisma, storeId: number): PrismaPromise<T>
 			"productionId",
 			"Productions".description as "production",
             "fullModelId",
-			(
-				SELECT  
-					concat("workpieceType",'_',"model",'_',"profile",'_',"sizeRange",'_',"length") as "fullModel"
-				FROM public."FullModels"
-					LEFT JOIN "WorkpieceType" ON "WorkpieceType".id = "FullModels"."workpieceTypeId"
-					LEFT JOIN "Models" ON "Models".id = "FullModels"."modelId"
-					LEFT JOIN "Profile" ON "Profile".id = "FullModels"."profileId"
-					LEFT JOIN "SizeRangeModel" ON "SizeRangeModel".id = "FullModels"."sizeRangeModelId"
-					LEFT JOIN "LengthModel" ON "LengthModel".id = "FullModels"."lengthModelId"
-				WHERE "FullModels".id="fullModelId"
-			),
+			${fullModelSQL},
             "fractionId",
             "fraction",
 			"colorId",
@@ -66,17 +57,7 @@ export const leftovers = <T>(prisma: tPrisma, storeId: number): PrismaPromise<T>
 			"productionId",
 			"Productions".description,
 			"fullModelId",
-			(
-				SELECT  
-					concat("workpieceType",'_',"model",'_',"profile",'_',"sizeRange",'_',"length") as "fullModel"
-				FROM public."FullModels"
-					LEFT JOIN "WorkpieceType" ON "WorkpieceType".id = "FullModels"."workpieceTypeId"
-					LEFT JOIN "Models" ON "Models".id = "FullModels"."modelId"
-					LEFT JOIN "Profile" ON "Profile".id = "FullModels"."profileId"
-					LEFT JOIN "SizeRangeModel" ON "SizeRangeModel".id = "FullModels"."sizeRangeModelId"
-					LEFT JOIN "LengthModel" ON "LengthModel".id = "FullModels"."lengthModelId"
-				WHERE "FullModels".id="fullModelId"
-			),
+			${fullModelSQL},
             "fractionId",
             "fraction",
             "colorId",
@@ -93,5 +74,5 @@ export const leftovers = <T>(prisma: tPrisma, storeId: number): PrismaPromise<T>
             state,
             lot
         HAVING COALESCE(round(sum("widthIn")::numeric,2),0)-COALESCE(round(coalesce(sum("widthOut"),0)::numeric,2),0)>0;
-    `;
+    `);
 };

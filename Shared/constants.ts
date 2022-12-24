@@ -33,6 +33,7 @@ export const OPERATIONS = {
     thermoOven: { id: 33 }, //Термо (печь)
     polishingMsc: { id: 34 }, //Полировка заготовки
     sortingElements: { id: 35 }, //Сортировка элементов
+    makingMinalets: { id: 37 }, //Пр-во мин группы
     mixingLot: { id: 39 }, //Смешивание партия
 };
 export const STATE = {

@@ -1,5 +1,6 @@
 import { PrismaPromise } from '@prisma/client';
 import { tPrisma } from '../../../../../types';
+import { fullModelSQL } from '../../constants';
 
 export const getMoveIn = <T>(prisma: tPrisma,storeId: number, numDocument: string): PrismaPromise<T> => {
 
@@ -13,8 +14,6 @@ export const getMoveIn = <T>(prisma: tPrisma,storeId: number, numDocument: strin
             "workpieceType",
             "productionId",
             "Productions".description as "production",
-            "modelId",
-            "model",
             "fractionId",
             "fraction",
             "colorId",
@@ -42,7 +41,6 @@ export const getMoveIn = <T>(prisma: tPrisma,storeId: number, numDocument: strin
             LEFT JOIN "Fraction" on "Data"."fractionId"="Fraction".id
             LEFT JOIN "MaterialGroup" on "Data"."materialGroupId"="MaterialGroup".id
             LEFT JOIN "Grade" on "Data"."gradeId"="Grade".id
-            LEFT JOIN "Models" on "Data"."modelId"="Models".id
             LEFT JOIN "Color" on "Data"."colorId"="Color".id
             LEFT JOIN "Length" on "Data"."lengthId"="Length".id
             LEFT JOIN "SizeRange" on "Data"."sizeRangeId"="SizeRange".id

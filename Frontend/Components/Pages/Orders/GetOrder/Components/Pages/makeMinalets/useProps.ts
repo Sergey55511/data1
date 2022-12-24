@@ -1,32 +1,27 @@
 import { notification } from 'antd';
-import { observer } from 'mobx-react-lite';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import { OPERATIONS } from '../../../../../../../../Shared/constants';
-import {
-    iData,
-    iField,
-    iSizeRange,
-} from '../../../../../../../../Shared/Types/interfaces';
+import { iData, iField } from '../../../../../../../../Shared/Types/interfaces';
 import { useStores } from '../../../../../../../Store/useStores';
 import { tValue } from '../../../../../../Shared/InputNumber';
-import { RowWrapper } from './RowWrapper';
-import { Wrapper } from './style';
 import { getTotalSum, sendData, validation } from '../../../../../../Helpers';
-import { Title } from '../../Shared/Title';
 import { Field } from '../../../../../../Helpers/classes';
 import { round } from '../../../../../../../../Shared/Helpers';
 
 export interface iState {
-    color: iField;
+    workpieceType: iField;
+    fullModel: iField;
+    profile: iField;
+    model: iField;
+    sizeRangeModel: iField;
     grade: iField;
+    color: iField;
     widthIn: iField;
 }
 
 export const useProps = ({ record, stateId }: { record: iData; stateId: number }) => {
-    const { OperationStore, ListsStore, loginStore } = useStores();
+    const { OperationStore, loginStore } = useStores();
     const [state, setState] = useState<iState[]>([]);
-    const [sizeRagne, setSizeRagne] = useState<iSizeRange[]>([]);
     const [losses, setLosses] = useState<number>(0);
     const [moveBack, setMoveBack] = useState<tValue>(undefined);
     const [isLoading, setIsLoading] = useState(false);
@@ -48,8 +43,13 @@ export const useProps = ({ record, stateId }: { record: iData; stateId: number }
             const res: iState[] = [
                 ...prev,
                 {
-                    color: new Field('color', 'Цвет', false),
-                    grade: new Field('grade', 'Сорт'),
+                    workpieceType: new Field('workpieceTypeId', 'Тип заготовки'),
+                    fullModel: new Field('fullModelId', 'Модель заготовки'),
+                    profile: new Field('profileId', 'Профиль'),
+                    model: new Field('modelId', 'Модель'),
+                    sizeRangeModel: new Field('sizeRangeModelId', 'Размер'),
+                    grade: new Field('gradeId', 'Сорт'),
+                    color: new Field('colorId', 'Цвет'),
                     widthIn: new Field('widthIn', 'Вес гр.'),
                 },
             ];

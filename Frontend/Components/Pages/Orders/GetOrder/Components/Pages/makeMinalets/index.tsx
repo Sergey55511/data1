@@ -5,7 +5,7 @@ import { Wrapper } from './style';
 import { Title } from '../../Shared/Title';
 import { useProps } from './useProps';
 
-export const SortingElements = observer((props: { record: iData; stateId: number }) => {
+export const MakeMinalets = observer((props: { record: iData; stateId: number }) => {
     const params = useProps(props);
 
     return (

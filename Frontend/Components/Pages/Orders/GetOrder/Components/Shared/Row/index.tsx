@@ -1,14 +1,16 @@
 import { Button, Tooltip } from 'antd';
-import { MinusOutlined } from '@ant-design/icons';
+import { MinusOutlined, CopyOutlined } from '@ant-design/icons';
 import { Wrapper } from './style';
 
 export const Row = ({
     isLoading,
     removeRow,
+    copyRow,
     fields,
 }: {
     isLoading?: boolean;
     removeRow: () => void;
+    copyRow: () => void;
     fields: JSX.Element[];
 }) => {
     return (
@@ -18,6 +20,14 @@ export const Row = ({
                     shape="circle"
                     icon={<MinusOutlined />}
                     onClick={removeRow}
+                    loading={isLoading}
+                />
+            </Tooltip>
+            <Tooltip title="Копировать строку">
+                <Button
+                    shape="circle"
+                    icon={<CopyOutlined />}
+                    onClick={copyRow}
                     loading={isLoading}
                 />
             </Tooltip>

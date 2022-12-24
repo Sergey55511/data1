@@ -1,8 +1,9 @@
 import { PrismaPromise } from '@prisma/client';
 import { tPrisma } from '../../../../types';
+import { fullModelSQL } from '../constants';
 
 export const orders = <T>(prisma: tPrisma, storeId: number): PrismaPromise<T> => {
-    return prisma.$queryRaw`
+    return prisma.$queryRawUnsafe(`
         SELECT 
             pp,
 			"userId",
@@ -17,8 +18,7 @@ export const orders = <T>(prisma: tPrisma, storeId: number): PrismaPromise<T> =>
 			"operation",
 			"workpieceTypeId",
             "workpieceType",
-            "modelId",
-			"model",
+            ${fullModelSQL},
             "fractionId",
             "fraction",
 			"colorId",
@@ -44,7 +44,7 @@ export const orders = <T>(prisma: tPrisma, storeId: number): PrismaPromise<T> =>
             left join "Fraction" on "Data"."fractionId"="Fraction".id
             left join "MaterialGroup" on "Data"."materialGroupId"="MaterialGroup".id
 			left join "Grade" on "Data"."gradeId"="Grade".id
-			left join "Models" on "Data"."modelId"="Models".id
+		
 			left join "Color" on "Data"."colorId"="Color".id
 			left join "Length" on "Data"."lengthId"="Length".id
 			left join "Channel" on "Data"."channelId"="Channel".id
@@ -78,8 +78,7 @@ export const orders = <T>(prisma: tPrisma, storeId: number): PrismaPromise<T> =>
 			"operation",
             "workpieceTypeId",
             "workpieceType",
-			"modelId",
-            "model",
+            ${fullModelSQL},
             "fractionId",
             "fraction",
             "colorId",
@@ -100,5 +99,5 @@ export const orders = <T>(prisma: tPrisma, storeId: number): PrismaPromise<T> =>
         HAVING pp is not null and 
 		COALESCE(round(sum("widthIn")::numeric,2),0)-COALESCE(round(coalesce(sum("widthOut"),0)::numeric,2),0)<>0 or
         COALESCE(round(sum("countItemsIn")::numeric,2),0)-COALESCE(round(sum("countItemsOut")::numeric,2),0)<>0;
-    `;
+    `);
 };
