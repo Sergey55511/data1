@@ -1,4 +1,5 @@
 import { Select, SelectProps } from 'antd';
+import { DefaultOptionType } from 'antd/lib/select';
 
 export const SelectField = ({
     placeholder,
@@ -8,7 +9,7 @@ export const SelectField = ({
     selectProps,
 }: {
     placeholder: string;
-    onChange: (v: number) => void;
+    onChange: (value: any, option: DefaultOptionType | DefaultOptionType[]) => void;
     options?: { value: number; caption: string }[];
     value?: number;
     selectProps?: SelectProps;

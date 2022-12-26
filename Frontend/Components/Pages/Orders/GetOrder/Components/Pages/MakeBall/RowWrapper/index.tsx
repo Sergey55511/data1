@@ -1,16 +1,16 @@
 import { useEffect, useState } from 'react';
-import { iState } from '../..';
-import { OPERATIONS } from '../../../../../../../../../../Shared/constants';
+import { OPERATIONS } from '../../../../../../../../../Shared/constants';
 import {
     iGrade,
     iLength,
     iSizeRange,
-} from '../../../../../../../../../../Shared/Types/interfaces';
-import { useStores } from '../../../../../../../../../Store/useStores';
-import { InputField } from '../../../../../../../../Shared/InputField';
-import { InputNumber } from '../../../../../../../../Shared/InputNumber';
-import { SelectField } from '../../../../../../../../Shared/SelectField';
-import { Row } from '../../../../Shared/Row';
+} from '../../../../../../../../../Shared/Types/interfaces';
+import { useStores } from '../../../../../../../../Store/useStores';
+import { InputField } from '../../../../../../../Shared/InputField';
+import { InputNumber } from '../../../../../../../Shared/InputNumber';
+import { SelectField } from '../../../../../../../Shared/SelectField';
+import { Row } from '../../../Shared/Row';
+import { iState } from '../useProps';
 
 export const RowWrapper = ({
     state,
@@ -20,20 +20,22 @@ export const RowWrapper = ({
     sizeRange,
     grades,
     removeRow,
+    copyRow,
 }: {
     state: iState;
     index: number;
     isLoading: boolean;
     onChange: (v: string | number, index: number, fieldName: keyof iState) => void;
+    copyRow: (index: number) => void;
     sizeRange: iSizeRange[];
     grades: iGrade[];
     removeRow: (index: number) => void;
 }) => {
-    
     return (
         <Row
             key={index}
             isLoading={isLoading}
+            copyRow={() => copyRow(index)}
             fields={[
                 <InputField key="sizeRange" isError={state.sizeRange.isError}>
                     <SelectField

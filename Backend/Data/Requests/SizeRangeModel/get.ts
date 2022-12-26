@@ -8,6 +8,7 @@ export const getSizeRangeModel = <T>(
     req: NextApiRequest,
 ): PrismaPromise<T> => {
     const data = dal(req.query);
+
     return prisma.sizeRangeModel.findMany({
         select: {
             id: true,
@@ -20,6 +21,7 @@ export const getSizeRangeModel = <T>(
                 some: {
                     workpieceTypeId: data.workpieceTypeId,
                     profileId: data.profileId,
+                    modelId: data.modelId,
                     active: true,
                 },
             },

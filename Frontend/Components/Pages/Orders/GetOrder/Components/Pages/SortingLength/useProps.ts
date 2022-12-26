@@ -1,37 +1,61 @@
 import { notification } from 'antd';
+import { observer } from 'mobx-react-lite';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import { iData, iField } from '../../../../../../../../Shared/Types/interfaces';
+import { OPERATIONS } from '../../../../../../../../Shared/constants';
+import {
+    iData,
+    iField,
+    iSizeRange,
+} from '../../../../../../../../Shared/Types/interfaces';
 import { useStores } from '../../../../../../../Store/useStores';
 import { tValue } from '../../../../../../Shared/InputNumber';
+import { RowWrapper } from './RowWrapper';
+import { Wrapper } from './style';
 import { getTotalSum, sendData, validation } from '../../../../../../Helpers';
+import { Title } from '../../Shared/Title';
 import { Field } from '../../../../../../Helpers/classes';
 import { round } from '../../../../../../../../Shared/Helpers';
 
 export interface iState {
-    workpieceType: iField;
-    fullModelId: iField;
-    fullModelName?: string;
-    profile: iField;
-    model: iField;
-    sizeRangeModel: iField;
-    grade: iField;
-    color: iField;
+    length: iField;
     widthIn: iField;
-    countIn: iField;
+}
+export interface iProps {
+    record: iData;
+    stateId: number;
 }
 
-export const useProps = ({ record, stateId }: { record: iData; stateId: number }) => {
-    const { OperationStore, loginStore } = useStores();
+export const useProps = ({ record, stateId }: iProps) => {
+    const { OperationStore, ListsStore, loginStore } = useStores();
     const [state, setState] = useState<iState[]>([]);
+    const [sizeRagne, setSizeRagne] = useState<iSizeRange[]>([]);
     const [losses, setLosses] = useState<number>(0);
     const [moveBack, setMoveBack] = useState<tValue>(undefined);
     const [isLoading, setIsLoading] = useState(false);
     const router = useRouter();
 
-    const getIdValue = (value: any) => (value ? +value : undefined);
+    useEffect(() => {
+        const fetch = async () => {
+            if (loginStore.user.storeId) {
+                const oneRowSizeRange = (await ListsStore.getSizeRange(
+                    {},
+                    record.sizeRangeId,
+                )) as iSizeRange[];
 
-    useEffect(() => {}, [loginStore.user.storeId]);
+                let sizeRange = (await ListsStore.getSizeRange({
+                    storeId: loginStore.user.storeId,
+                    operationId: OPERATIONS.sortingLength.id,
+                    workpieceTypeId: record.workpieceTypeId,
+                })) as iSizeRange[];
+                sizeRange = sizeRange.filter(
+                    (item) => item.size == oneRowSizeRange[0].size,
+                );
+                setSizeRagne(sizeRange);
+            }
+        };
+        fetch();
+    }, [loginStore.user.storeId]);
 
     useEffect(() => {
         const totalSum = getTotalSum(state);
@@ -47,15 +71,8 @@ export const useProps = ({ record, stateId }: { record: iData; stateId: number }
             const res: iState[] = [
                 ...prev,
                 {
-                    workpieceType: new Field('workpieceTypeId', 'Тип заготовки'),
-                    fullModelId: new Field('fullModelId', 'Модель заготовки'),
-                    profile: new Field('profileId', 'Профиль'),
-                    model: new Field('modelId', 'Модель'),
-                    sizeRangeModel: new Field('sizeRangeModelId', 'Размер'),
-                    grade: new Field('gradeId', 'Сорт'),
-                    color: new Field('colorId', 'Цвет'),
+                    length: new Field('length', 'Длинна', false),
                     widthIn: new Field('widthIn', 'Вес гр.'),
-                    countIn: new Field('countIn', 'Штук'),
                 },
             ];
             return res;
@@ -64,15 +81,6 @@ export const useProps = ({ record, stateId }: { record: iData; stateId: number }
 
     const removeRow = (index: number) => {
         setState((prev) => prev.filter((_, i) => i != index));
-    };
-
-    const copyRow = (index: number) => {
-        setState((prev) => {
-            const elem: iState = JSON.parse(JSON.stringify(prev[index]));
-            elem.widthIn.value = '';
-            prev.splice(index + 1, 0, elem);
-            return [...prev];
-        });
     };
 
     const subbmitHandler = async () => {
@@ -106,17 +114,14 @@ export const useProps = ({ record, stateId }: { record: iData; stateId: number }
         const codeOneItem = record.width ? code / totalSum : 0;
         const data: iData[] = state.map((item) => ({
             ...record,
+            lengthId: item.length.value ? +item.length.value : undefined,
             widthOut: undefined,
+            widthIn: +item.widthIn.value!,
             fractionId: undefined,
+            grade: undefined,
+            workpieceType: undefined,
             productionId: undefined,
             stateId,
-            workpieceTypeId: getIdValue(item.workpieceType.value),
-            sizeRangeId: getIdValue(item.sizeRangeModel.value),
-            fullModelId: getIdValue(item.fullModelId.value),
-            colorId: getIdValue(item.color.value),
-            gradeId: getIdValue(item.grade.value),
-            widthIn: getIdValue(item.widthIn.value),
-            countIn: getIdValue(item.countIn.value),
             moneyIn: item.widthIn.value ? codeOneItem * +item.widthIn.value : 0,
         }));
 
@@ -130,16 +135,27 @@ export const useProps = ({ record, stateId }: { record: iData; stateId: number }
             moveBack,
         });
     };
+
+    const copyRow = (index: number) => {
+        setState((prev) => {
+            const elem: iState = JSON.parse(JSON.stringify(prev[index]));
+            elem.widthIn.value = '';
+            prev.splice(index + 1, 0, elem);
+            return [...prev];
+        });
+    };
+
     return {
-        addRowHandler,
-        removeRow,
-        copyRow,
         subbmitHandler,
+        addRowHandler,
         setMoveBack,
+        moveBack,
         losses,
         isLoading,
-        moveBack,
         state,
+        removeRow,
+        copyRow,
         setState,
+        record,
     };
 };

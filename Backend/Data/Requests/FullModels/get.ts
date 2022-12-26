@@ -9,6 +9,7 @@ export const getFullModels = async <T>(
     req: NextApiRequest,
 ): Promise<T> => {
     const data = dal(req.query);
+
     let res = await prisma.fullModels.findMany({
         select: {
             id: true,
@@ -22,6 +23,7 @@ export const getFullModels = async <T>(
             workpieceTypeId: data.workpieceTypeId,
             profileId: data.profileId,
             sizeRangeModelId: data.sizeRangeModelId,
+            modelId: data.modelId,
             active: true,
         },
     });

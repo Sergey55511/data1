@@ -1,16 +1,12 @@
-import { InputField } from '../../../../../../../../Shared/InputField';
-import { SelectField } from '../../../../../../../../Shared/SelectField';
-import { InputNumber } from '../../../../../../../../Shared/InputNumber';
-import { useStores } from '../../../../../../../../../Store/useStores';
+import { InputField } from '../../../../../../../Shared/InputField';
+import { SelectField } from '../../../../../../../Shared/SelectField';
+import { InputNumber } from '../../../../../../../Shared/InputNumber';
+import { useStores } from '../../../../../../../../Store/useStores';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
-import { iState } from '../..';
 import { observer } from 'mobx-react-lite';
-import {
-    iData,
-    iLength,
-    iSizeRange,
-} from '../../../../../../../../../../Shared/Types/interfaces';
-import { Row } from '../../../../Shared/Row';
+import { iData, iLength } from '../../../../../../../../../Shared/Types/interfaces';
+import { Row } from '../../../Shared/Row';
+import { iState } from '../useProps';
 
 export interface iLists {
     length: iLength[];
@@ -20,6 +16,7 @@ export const RowWrapper = observer(
         isLoading,
         index,
         removeRow,
+        copyRow,
         state,
         setState,
         record,
@@ -27,6 +24,7 @@ export const RowWrapper = observer(
         isLoading?: boolean;
         index: number;
         removeRow: (i: number) => void;
+        copyRow: (index: number) => void;
         state: iState;
         setState: Dispatch<SetStateAction<iState[]>>;
         record: iData;
@@ -78,6 +76,7 @@ export const RowWrapper = observer(
                 key={index}
                 isLoading={isLoading}
                 removeRow={() => removeRow(index)}
+                copyRow={() => copyRow(index)}
                 fields={[
                     <InputField key="length" isError={state.length.isError}>
                         <SelectField

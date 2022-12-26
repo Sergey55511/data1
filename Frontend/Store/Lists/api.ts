@@ -181,6 +181,7 @@ export const getStores = () => {
         method: 'GET',
     }).then((res) => res.data);
 };
+
 export const getWorkpieceType = (filters: iQueryFilters) => {
     const params = getQueryParams(filters);
     return axios({
@@ -189,17 +190,19 @@ export const getWorkpieceType = (filters: iQueryFilters) => {
     }).then((res) => res.data as iWorkpieceType[]);
 };
 
-export const getWorkpieceTypeModel = (operationId?: number) => {
+export const getWorkpieceTypeModel = (operationId?: number, isMinaletGroup?: boolean) => {
     return axios({
         url: `/api/list/workpieceType/model`,
         method: 'GET',
-        params: { operationId },
+        params: { operationId, isMinaletGroup },
     }).then((res) => res.data as iWorkpieceType[]);
 };
-export const getModels = () => {
+
+export const getModels = (workpieceTypeId?: number, profileId?: number) => {
     return axios({
         url: `/api/list/model`,
         method: 'GET',
+        params: { workpieceTypeId, profileId },
     }).then((res) => res.data as iModel[]);
 };
 
@@ -220,6 +223,7 @@ export const getSizeRangeModel = (params: {
     workpieceTypeId?: number;
     profileId?: number;
     size?: number;
+    modelId?: number;
 }) => {
     return axios({
         url: `/api/list/sizerangemodel`,
@@ -231,6 +235,7 @@ export const getFullModels = (params: {
     workpieceTypeId?: number;
     profileId?: number;
     sizeRangeModelId?: number;
+    modelId?: number;
 }) => {
     return axios({
         url: `/api/list/fullmodels`,

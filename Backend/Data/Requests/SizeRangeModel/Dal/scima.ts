@@ -4,7 +4,8 @@ export const schema = {
         workpieceTypeId: { type: 'integer' },
         profileId: { type: 'integer' },
         size: { type: 'integer' },
+        modelId: { type: 'integer' },
     },
-    required: ['workpieceTypeId', 'profileId', 'size'],
+    required: ['workpieceTypeId'],
     additionalProperties: false,
 };

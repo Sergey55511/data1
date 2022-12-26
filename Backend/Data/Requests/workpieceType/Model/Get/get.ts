@@ -16,6 +16,7 @@ export const getWorkpieceTypeModel = <T>(
         },
         where: {
             active: true,
+            isMinaletGroup: data.isminaletgroup,
             isShow: true,
             OperationWorkPieceTypeBridge: {
                 some: { active: true, operationsId: data.operationId },
