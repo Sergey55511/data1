@@ -19,6 +19,7 @@ import { round } from '../../../../../../../../Shared/Helpers';
 
 export interface iState {
     length: iField;
+    grade: iField;
     widthIn: iField;
 }
 
@@ -69,6 +70,7 @@ export const SortingLength = observer(
                     ...prev,
                     {
                         length: new Field('length', 'Длинна', false),
+                        grade: new Field('grade', 'Сорт', false),
                         widthIn: new Field('widthIn', 'Вес гр.'),
                     },
                 ];
@@ -112,6 +114,7 @@ export const SortingLength = observer(
             const data: iData[] = state.map((item) => ({
                 ...record,
                 lengthId: item.length.value ? +item.length.value : undefined,
+                gradeId: item.grade.value ? +item.grade.value : undefined,
                 widthOut: undefined,
                 widthIn: +item.widthIn.value!,
                 fractionId: undefined,

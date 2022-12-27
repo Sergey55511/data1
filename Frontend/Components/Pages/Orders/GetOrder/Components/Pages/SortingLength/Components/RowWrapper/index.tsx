@@ -7,13 +7,14 @@ import { iState } from '../..';
 import { observer } from 'mobx-react-lite';
 import {
     iData,
+    iGrade,
     iLength,
-    iSizeRange,
 } from '../../../../../../../../../../Shared/Types/interfaces';
 import { Row } from '../../../../Shared/Row';
 
 export interface iLists {
     length: iLength[];
+    grade: iGrade[];
 }
 export const RowWrapper = observer(
     ({
@@ -34,6 +35,7 @@ export const RowWrapper = observer(
         const { ListsStore, loginStore } = useStores();
         const [lists, setLists] = useState<iLists | undefined>(undefined);
         const [isLoadinglength, setIsLoadinglength] = useState<boolean>(false);
+        const [isLoadingGrade, setIsLoadingGrade] = useState<boolean>(false);
 
         const workpieceTypeId = record.workpieceTypeId;
         const sizeRangeId = record.sizeRangeId;
@@ -53,6 +55,7 @@ export const RowWrapper = observer(
 
             const fetchList = async () => {
                 setIsLoadinglength(true);
+                setIsLoadingGrade(true);
                 onChange('', index, 'length');
                 const length = await ListsStore.getLength({
                     storeId: storeId,
@@ -60,15 +63,23 @@ export const RowWrapper = observer(
                     sizeRangeId: record.sizeRangeId,
                 });
 
+                setIsLoadinglength(false);
+
+                const grade = await ListsStore.getGrades({
+                    storeId: storeId,
+                    workpieceTypeId: +workpieceTypeId,
+                });
+
+                setIsLoadingGrade(false);
+
                 setLists((prev) => {
                     if (prev) {
                         prev.length = length;
+                        prev.grade = grade;
                         return prev;
                     }
-                    return { length } as iLists;
+                    return { length, grade } as iLists;
                 });
-
-                setIsLoadinglength(false);
             };
             fetchList();
         }, [storeId, workpieceTypeId, sizeRangeId]);
@@ -91,6 +102,21 @@ export const RowWrapper = observer(
                             selectProps={{
                                 disabled: isLoadinglength,
                                 loading: isLoadinglength,
+                            }}
+                        />
+                    </InputField>,
+                    <InputField key="grade" isError={state.grade.isError}>
+                        <SelectField
+                            placeholder={state.grade.placeholder}
+                            value={+state.grade.value || undefined}
+                            onChange={(v) => onChange(v, index, 'grade')}
+                            options={lists?.grade?.map((item) => ({
+                                value: item.id,
+                                caption: item.grade,
+                            }))}
+                            selectProps={{
+                                disabled: isLoadingGrade,
+                                loading: isLoadingGrade,
                             }}
                         />
                     </InputField>,
