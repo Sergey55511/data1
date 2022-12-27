@@ -189,19 +189,19 @@ model Color {
 }
 
 model FullModels {
-  id               Int             @id @default(autoincrement())
-  WorkpieceType    WorkpieceType?  @relation(fields: [workpieceTypeId], references: [id])
+  id               Int            @id @default(autoincrement())
+  WorkpieceType    WorkpieceType? @relation(fields: [workpieceTypeId], references: [id])
   workpieceTypeId  Int?
-  Models           Models?         @relation(fields: [modelId], references: [id])
+  Models           Models?        @relation(fields: [modelId], references: [id])
   modelId          Int?
-  Profile          Profile?        @relation(fields: [profileId], references: [id])
+  Profile          Profile?       @relation(fields: [profileId], references: [id])
   profileId        Int?
-  SizeRangeModel   SizeRangeModel? @relation(fields: [sizeRangeModelId], references: [id])
+  SizeRangeModel   SizeRange?     @relation(fields: [sizeRangeModelId], references: [id])
   sizeRangeModelId Int?
-  LengthModel      LengthModel?    @relation(fields: [lengthModelId], references: [id])
+  LengthModel      LengthModel?   @relation(fields: [lengthModelId], references: [id])
   lengthModelId    Int?
   Data             Data[]
-  active           Boolean         @default(true)
+  active           Boolean        @default(true)
 }
 
 model LengthModel {
@@ -229,10 +229,9 @@ model WorkPieceTypeGradeBridge {
 }
 
 model SizeRangeModel {
-  id         Int          @id @default(autoincrement())
-  sizeRange  Int
-  active     Boolean      @default(true)
-  FullModels FullModels[]
+  id        Int     @id @default(autoincrement())
+  sizeRange Int
+  active    Boolean @default(true)
 }
 
 model Profile {
@@ -250,14 +249,15 @@ model Models {
 }
 
 model SizeRange {
-  id              Int      @id @default(autoincrement())
+  id              Int          @id @default(autoincrement())
   sizeRange       String
-  size            Int      @default(0)
+  size            Int          @default(0)
   nextSizeRangeId Int?
-  position        Int      @default(autoincrement())
-  active          Boolean  @default(true)
+  position        Int          @default(autoincrement())
+  active          Boolean      @default(true)
   Data            Data[]
   Bridge          Bridge[]
+  FullModels      FullModels[]
 }
 
 model Length {

@@ -15,6 +15,7 @@ import {
     iLengthModel,
     iFullModel,
     iChannel,
+    iLength,
 } from '../../../Shared/Types/interfaces';
 
 export const getMaterialGroup = () => {
@@ -249,7 +250,7 @@ export const getLength = (filters: iQueryFilters) => {
     return axios({
         url: `/api/list/length${params}`,
         method: 'GET',
-    }).then((res) => res.data);
+    }).then((res) => res.data as iLength[]);
 };
 export const getRecipient = (storeId?: number) => {
     const patams = storeId ? `?storeId=${storeId}` : '';

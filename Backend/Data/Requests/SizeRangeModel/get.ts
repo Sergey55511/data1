@@ -9,14 +9,14 @@ export const getSizeRangeModel = <T>(
 ): PrismaPromise<T> => {
     const data = dal(req.query);
 
-    return prisma.sizeRangeModel.findMany({
+    return prisma.sizeRange.findMany({
         select: {
             id: true,
             sizeRange: true,
         },
         where: {
             active: true,
-            sizeRange: { lte: data.size },
+            size: { lte: data.size },
             FullModels: {
                 some: {
                     workpieceTypeId: data.workpieceTypeId,

@@ -19,6 +19,7 @@ import { round } from '../../../../../../../../Shared/Helpers';
 
 export interface iState {
     length: iField;
+    grade: iField;
     widthIn: iField;
 }
 export interface iProps {
@@ -71,7 +72,8 @@ export const useProps = ({ record, stateId }: iProps) => {
             const res: iState[] = [
                 ...prev,
                 {
-                    length: new Field('length', 'Длинна', false),
+                    length: new Field('length', 'Длинна'),
+                    grade: new Field('grade', 'сорт'),
                     widthIn: new Field('widthIn', 'Вес гр.'),
                 },
             ];
@@ -118,7 +120,7 @@ export const useProps = ({ record, stateId }: iProps) => {
             widthOut: undefined,
             widthIn: +item.widthIn.value!,
             fractionId: undefined,
-            grade: undefined,
+            gradeId: item.grade.value ? +item.grade.value : undefined,
             workpieceType: undefined,
             productionId: undefined,
             stateId,
