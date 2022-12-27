@@ -17,6 +17,12 @@ export const MakeMinalets = observer((props: { record: iData; stateId: number })
                 moveBack={params.moveBack}
                 losses={params.losses}
                 isLoading={params.isLoading}
+                garbage={params.garbage}
+                setGarbage={params.setGarbage}
+                defect={params.defect}
+                setDefect={params.setDefect}
+                pruning={params.pruning}
+                setPruning={params.setPruning}
             />
             <div>
                 {params.state.map((item, index) => (

@@ -7,11 +7,13 @@ export const Row = ({
     removeRow,
     copyRow,
     fields,
+    width,
 }: {
     isLoading?: boolean;
     removeRow: () => void;
     copyRow: () => void;
     fields: JSX.Element[];
+    width?: Array<string | undefined>;
 }) => {
     return (
         <Wrapper>
@@ -31,11 +33,14 @@ export const Row = ({
                     loading={isLoading}
                 />
             </Tooltip>
-            {fields.map((field, index) => (
-                <div key={index} className="item">
-                    {field}
-                </div>
-            ))}
+            {fields.map((field, index) => {
+                const wdth = width ? width[index] : '';
+                return (
+                    <div key={index} className="item" style={{ width: wdth }}>
+                        {field}
+                    </div>
+                );
+            })}
         </Wrapper>
     );
 };

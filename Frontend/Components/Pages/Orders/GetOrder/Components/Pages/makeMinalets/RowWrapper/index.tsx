@@ -17,6 +17,7 @@ export const RowWrapper = observer((props: iProps) => {
                 isLoading={props.isLoading}
                 removeRow={() => props.removeRow(props.index)}
                 copyRow={() => props.copyRow(props.index)}
+                width={[undefined, undefined, undefined, '100px', '100px', '100px']}
                 fields={[
                     <InputField
                         key="workpieceType"

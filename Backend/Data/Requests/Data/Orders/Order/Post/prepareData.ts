@@ -7,14 +7,16 @@ export const prepareData = async (prisma: tPrisma, data: iDataTable[]) => {
     const taskItem = data.find((item) => item.task);
     const isTask = !!taskItem;
 
-    let workpieceTypeId: number | null | undefined = 0;
+    let workpieceTypeId: number | undefined = undefined;
+    let sizeRangeId: number | undefined = undefined;
 
     if (isTask) {
-        const workpieceTypeIdModel = await prisma.fullModels.findFirst({
-            select: { workpieceTypeId: true },
+        const fullModel = await prisma.fullModels.findFirst({
+            select: { workpieceTypeId: true, sizeRangeModelId: true, modelId: true },
             where: { id: taskItem.task },
         });
-        workpieceTypeId = workpieceTypeIdModel?.workpieceTypeId;
+        workpieceTypeId = fullModel?.workpieceTypeId as typeof workpieceTypeId;
+        sizeRangeId = fullModel?.sizeRangeModelId as typeof sizeRangeId;
     }
 
     return data.map((item) => {
@@ -33,7 +35,7 @@ export const prepareData = async (prisma: tPrisma, data: iDataTable[]) => {
                     item.workpieceTypeId = prepareNumber(workpieceTypeId);
                 }
                 item.fullModelId = prepareNumber(item.task);
-                item.sizeRangeId = undefined;
+                item.sizeRangeId = sizeRangeId;
                 item.lengthId = undefined;
             }
         }

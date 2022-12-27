@@ -15,13 +15,17 @@ export const Title = ({
     defect,
     losses,
     isLoading,
+    pruning,
+    setPruning,
 }: {
     subbmitHandler: () => void;
     addRowHandler: (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => void;
     setGarbage?: (value: SetStateAction<tValue>) => void;
     setMoveBack?: (value: SetStateAction<tValue>) => void;
     setDefect?: (value: SetStateAction<tValue>) => void;
+    setPruning?: (value: SetStateAction<tValue>) => void;
     garbage?: tValue;
+    pruning?: tValue;
     moveBack?: tValue;
     defect?: tValue;
     losses?: number;
@@ -37,6 +41,17 @@ export const Title = ({
             <a href="#" onClick={addRowHandler}>
                 Добавить строку
             </a>
+            {setPruning && (
+                <div>
+                    <InputNumber
+                        placeholder="Обрезки"
+                        onChangeHandler={(v) => {
+                            if (setPruning) setPruning(v);
+                        }}
+                        value={pruning ?? ''}
+                    />
+                </div>
+            )}
             {setGarbage && (
                 <div>
                     <InputNumber

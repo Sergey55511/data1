@@ -19,7 +19,7 @@ export const MoveOutSolo = observer((props: iProps) => {
                         props: params,
                         record: props.record,
                         isShowCount: props.isShowCount,
-                        isShowTask: props.isShowTask,
+                        isShowTask: params.isShowTask,
                     }}
                 />
                 <Divider />

@@ -7,6 +7,7 @@ import { contentDrawer } from '../../../../../Shared/contentDrawer';
 import { KEYSLEFTOVERS } from '../../../../../Shared/Table/constants';
 import { NumProduction } from './Drawers/NumProduction';
 import { iProps } from '.';
+import { OPERATIONS } from '../../../../../../../Shared/constants';
 
 export type tConstKeys = keyof typeof KEYSLEFTOVERS;
 type tValue = number | string | undefined;
@@ -16,9 +17,10 @@ export class Task {
     task = '';
 }
 
-export const useProps = ({ record, onClose, validationFields }: iProps) => {
+export const useProps = (props: iProps) => {
     const { OperationStore, loginStore, UIStore, ListsStore } = useStores();
     const [isShowSetTask, setIsShowSetTask] = useState(false);
+    const [isShowTask, setIsShowTask] = useState(false);
     const [isNumProduction, setIsNumProduction] = useState(false);
     const [numProd, setNumProd] = useState(0);
     const [task, setTask] = useState<Task>(new Task());
@@ -32,10 +34,15 @@ export const useProps = ({ record, onClose, validationFields }: iProps) => {
     const subbmitButton = useRef<HTMLElement>(null);
 
     useEffect(() => {
+        const isOperation = operation != OPERATIONS.makingMinalets.id;
+        setIsShowTask(!!(props.isShowTask && isOperation));
+    }, [props.isShowTask, operation]);
+
+    useEffect(() => {
         setManagerId(undefined);
         ListsStore.resetManagers();
         if (loginStore.user.storeId) {
-            ListsStore.getOperations(loginStore.user.storeId, record.stateId!);
+            ListsStore.getOperations(loginStore.user.storeId, props.record.stateId!);
             if (operation)
                 ListsStore.getManagers({
                     storeId: loginStore.user.storeId,
@@ -50,7 +57,7 @@ export const useProps = ({ record, onClose, validationFields }: iProps) => {
         if (subbmitButton.current) subbmitButton.current.click();
     };
 
-    const keys = Object.keys(record);
+    const keys = Object.keys(props.record);
     const setNumProduction = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
         e.preventDefault();
         setIsNumProduction(true);
@@ -83,14 +90,16 @@ export const useProps = ({ record, onClose, validationFields }: iProps) => {
 
         if (test(width)) return false;
         if (test(count)) return false;
-        if (isMinus(record.width!, width)) return false;
-        if (count) if ((record.count ?? 0 - +count) < 0) return false;
-        if (validationFields?.numProduction) {
+        if (isMinus(props.record.width!, width)) return false;
+        if (count) if ((props.record.count ?? 0 - +count) < 0) return false;
+        if (props.validationFields?.numProduction) {
             if (!numProd) return false;
         }
-        if (validationFields?.task) {
-            if (!task.id) {
-                return false;
+        if (props.validationFields?.task) {
+            if (isShowTask) {
+                if (!task.id) {
+                    return false;
+                }
             }
         }
         return operation && date && managerId && (width || count) ? true : false;
@@ -98,7 +107,7 @@ export const useProps = ({ record, onClose, validationFields }: iProps) => {
 
     const subbmitHandler = async () => {
         setIsLoading(true);
-        const data = prepareDataTable(record);
+        const data = prepareDataTable(props.record);
         data.userId = loginStore.user.id;
         data.storeId = loginStore.user.storeId;
         data.managerId = managerId;
@@ -106,11 +115,11 @@ export const useProps = ({ record, onClose, validationFields }: iProps) => {
         data.countItemsOut = count ? +count : undefined;
         data.widthOut = width ? +width : undefined;
         data.operationId = operation;
-        data.productionId = numProd || +record.productionId! || undefined;
+        data.productionId = numProd || +props.record.productionId! || undefined;
         data.task = task.id;
 
-        const code = record.code || 0;
-        const moneyOut = (code / (record.width || code)) * (data.widthOut || 0);
+        const code = props.record.code || 0;
+        const moneyOut = (code / (props.record.width || code)) * (data.widthOut || 0);
 
         data.moneyOut = moneyOut;
 
@@ -126,7 +135,7 @@ export const useProps = ({ record, onClose, validationFields }: iProps) => {
         setIsLoading(false);
 
         UIStore.setIsLoading(true);
-        if (onClose) onClose();
+        if (props.onClose) props.onClose();
         await OperationStore.getLeftovers(loginStore.user.storeId);
         UIStore.setIsLoading(false);
     };
@@ -161,5 +170,6 @@ export const useProps = ({ record, onClose, validationFields }: iProps) => {
         setNumProd,
         isNumProduction,
         setIsNumProduction,
+        isShowTask,
     };
 };

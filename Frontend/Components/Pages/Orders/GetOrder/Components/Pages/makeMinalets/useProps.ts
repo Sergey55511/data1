@@ -25,6 +25,9 @@ export const useProps = ({ record, stateId }: { record: iData; stateId: number }
     const { OperationStore, loginStore } = useStores();
     const [state, setState] = useState<iState[]>([]);
     const [losses, setLosses] = useState<number>(0);
+    const [garbage, setGarbage] = useState<tValue>(undefined);
+    const [defect, setDefect] = useState<tValue>(undefined);
+    const [pruning, setPruning] = useState<tValue>(undefined);
     const [moveBack, setMoveBack] = useState<tValue>(undefined);
     const [isLoading, setIsLoading] = useState(false);
     const router = useRouter();
@@ -70,6 +73,7 @@ export const useProps = ({ record, stateId }: { record: iData; stateId: number }
         setState((prev) => {
             const elem: iState = JSON.parse(JSON.stringify(prev[index]));
             elem.widthIn.value = '';
+            elem.countIn.value = '';
             prev.splice(index + 1, 0, elem);
             return [...prev];
         });
@@ -127,7 +131,10 @@ export const useProps = ({ record, stateId }: { record: iData; stateId: number }
             postOrderResult: OperationStore.postOrderResult,
             router,
             losses,
+            pruning,
             moveBack,
+            garbage,
+            defect,
         });
     };
     return {
@@ -141,5 +148,11 @@ export const useProps = ({ record, stateId }: { record: iData; stateId: number }
         moveBack,
         state,
         setState,
+        garbage,
+        setGarbage,
+        pruning,
+        setPruning,
+        defect,
+        setDefect,
     };
 };

@@ -36,8 +36,8 @@ export const Slicing = observer(
         const [state, setState] = useState<iState[]>([]);
         const [losses, setLosses] = useState<number>(0);
         const [garbage, setGarbage] = useState<tValue>(undefined);
-        const [moveBack, setMoveBack] = useState<tValue>(undefined);
         const [defect, setDefect] = useState<tValue>(undefined);
+        const [moveBack, setMoveBack] = useState<tValue>(undefined);
         const postData = usePostData();
 
         const checkDuplicate = (state: iState[]): iState[] => {
@@ -137,12 +137,12 @@ export const Slicing = observer(
                 <Title
                     subbmitHandler={subbmitHandler}
                     addRowHandler={addRowHandler}
-                    setGarbage={setGarbage}
                     setMoveBack={setMoveBack}
                     garbage={garbage}
-                    moveBack={moveBack}
-                    setDefect={setDefect}
+                    setGarbage={setGarbage}
                     defect={defect}
+                    setDefect={setDefect}
+                    moveBack={moveBack}
                     losses={losses}
                     isLoading={postData?.isLoading}
                 />
