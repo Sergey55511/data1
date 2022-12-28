@@ -14,6 +14,8 @@ export const getMoveIn = <T>(prisma: tPrisma,storeId: number, numDocument: strin
             "workpieceType",
             "productionId",
             "Productions".description as "production",
+            "sizeRangeId",
+            "operationId",
             "fractionId",
             "fraction",
             "colorId",
