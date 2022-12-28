@@ -1,8 +1,11 @@
 import { PrismaPromise } from '@prisma/client';
-import { tPrisma } from '../../../types';
-import { fullModelSQL } from './constants';
+import { NextApiRequest } from 'next';
+import { tPrisma } from '../../../../types';
+import { fullModelSQL } from '../constants';
 
-export const leftovers = <T>(prisma: tPrisma, storeId: number): PrismaPromise<T> => {
+export const leftovers = <T>(prisma: tPrisma, req: NextApiRequest): PrismaPromise<T> => {
+    const storeId: any = req.query.storeId;
+    
     return prisma.$queryRawUnsafe(`
       SELECT 
             "Data"."workpieceTypeId",

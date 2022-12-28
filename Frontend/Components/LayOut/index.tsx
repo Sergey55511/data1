@@ -11,7 +11,6 @@ import { ConfigProvider } from 'antd';
 import locale from 'antd/lib/locale/ru_RU';
 import { tPages } from '../Pages/constants';
 import { QueryClientProvider } from '@tanstack/react-query';
-import { useRouter } from 'next/router';
 import { useQueryClient } from './useQueryClient';
 
 const GlobalStyle = createGlobalStyle`
@@ -34,7 +33,6 @@ const GlobalStyle = createGlobalStyle`
 export const LayOut = observer(
     ({ children, page }: { children: JSX.Element; page: tPages }) => {
         const { loginStore, UIStore, OperationStore, SocketIo, ErrorStore } = useStores();
-        const router = useRouter();
 
         const queryClient = useQueryClient();
 

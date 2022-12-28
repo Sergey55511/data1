@@ -5,6 +5,7 @@ import { getColumnProps } from '../../../Shared/Table/Helpers/getColumnProps';
 import { FilterValue } from 'antd/es/table/interface';
 import type { ColumnsType } from 'antd/es/table';
 import { iData } from '../../../../../Shared/Types/interfaces';
+import { getFilteredleftovers } from '../../../Shared/Table/Helpers/getFilteredleftovers';
 
 export const useColumns = (filters: Record<string, FilterValue | null>) => {
     const { OperationStore, loginStore } = useStores();
@@ -14,17 +15,8 @@ export const useColumns = (filters: Record<string, FilterValue | null>) => {
 
     const data = leftovers.map((item, index) => ({ ...item, key: index }));
 
-    const filteredleftovers = leftovers.filter((item) => {
-        for (const key in item) {
-            const value: any = item[key as keyof typeof item];
-            if (filters[key]?.length) {
-                if (!filters[key]?.includes(value)) {
-                    return false;
-                }
-            }
-        }
-        return true;
-    });
+    const filteredleftovers = getFilteredleftovers({ data, filters });
+
     const getColumnPropsHoc = (dataIndex: string) =>
         getColumnProps(dataIndex, filteredleftovers, filters);
 

@@ -13,6 +13,7 @@ export const pages = {
     mixingLot: 'mixingLot',
     moveIn: 'moveIn',
     moveInDetales: 'moveInDetales',
+    assembleCreate: 'assembleCreate',
 };
 
 export const ROUTES = {
@@ -27,4 +28,6 @@ export const ROUTES = {
     mixingSize: '/operations/mixing/size',
     mixingLot: '/operations/mixing/lot',
     getOrder: '/orders/getOrder',
+    assembleCreate: '/assemble/create',
+    assembleGet: '/assemble/get',
 };

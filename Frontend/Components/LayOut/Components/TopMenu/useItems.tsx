@@ -10,6 +10,7 @@ import {
     FullscreenExitOutlined,
     MoreOutlined,
     TeamOutlined,
+    DeploymentUnitOutlined,
 } from '@ant-design/icons';
 import { useStores } from '../../../../Store/useStores';
 import { ROUTES } from '../../../Pages/constants';
@@ -21,15 +22,18 @@ export const useItems = () => {
     const { loginStore, OperationStore } = useStores();
     const ordersCount = OperationStore.orders.length;
     const sharedCount = OperationStore.shared.length;
+    const assembleCount=0
 
-    const isMSC = (loginStore.user.storeId == STORES.Moscow.id);
+    const isMSC = loginStore.user.storeId == STORES.Moscow.id;
 
     const mixingChildrens = isMSC
-        ? [{
-            label: 'Смешивание партия',
-            key: ROUTES.mixingLot,
-            icon: <FullscreenExitOutlined />,
-        }]
+        ? [
+              {
+                  label: 'Смешивание партия',
+                  key: ROUTES.mixingLot,
+                  icon: <FullscreenExitOutlined />,
+              },
+          ]
         : [
               {
                   label: 'Смешивание сорт',
@@ -56,6 +60,15 @@ export const useItems = () => {
             ),
             key: ROUTES.orders,
             icon: <StarOutlined />,
+        },
+        {
+            label: (
+                <Badge size="small" count={assembleCount} overflowCount={999}>
+                    <>Сборка</>
+                </Badge>
+            ),
+            key: ROUTES.assembleCreate,
+            icon: <DeploymentUnitOutlined />,
         },
         {
             label: (
