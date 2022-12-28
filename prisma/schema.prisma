@@ -10,7 +10,7 @@ datasource db {
 model Data {
   id               Int            @id @default(autoincrement())
   date             DateTime       @default(now()) @db.Date()
-  lot              Decimal?
+  lot              Float?
   numDocument      String?
   pp               Int?
   sizeRange        SizeRange?     @relation(fields: [sizeRangeId], references: [id])
@@ -26,9 +26,9 @@ model Data {
   exercise         String?
   numProducts      Int?
   numMoving        Int?
-  moneyIn          Decimal?
-  moneyOut         Decimal?
-  moneyDefect      Decimal?
+  moneyIn          Float?
+  moneyOut         Float?
+  moneyDefect      Float?
   typeOfProcessing String?
   stock            String?
   shade            String?
