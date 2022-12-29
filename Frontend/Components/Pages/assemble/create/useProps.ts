@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { TableProps } from 'antd';
 import { FilterValue } from 'antd/es/table/interface';
-import { Dispatch, SetStateAction } from 'react';
+import { Dispatch, SetStateAction, useState } from 'react';
 import { iData } from '../../../../../Shared/Types/interfaces';
 import { leftoversAssemble } from '../../../../Store/OperationStore/Api';
 import { useStores } from '../../../../Store/useStores';
@@ -34,5 +34,7 @@ export const useProps = ({
         // setSortedInfo(sorter as SorterResult<DataType>);
     };
 
-    return { columns, data: assembleLeftovers.data, handleChange };
+    const data = assembleLeftovers.data?.map((item, index) => ({ ...item, key: index }));
+
+    return { columns, data, handleChange };
 };

@@ -14,10 +14,12 @@ export const useColumns = ({
 }) => {
     const filteredleftovers = getFilteredleftovers({ data, filters });
 
-    const getColumnPropsHoc = (dataIndex: typeof KEYSLEFTOVERS.workpieceType) => ({
-        ...getColumnProps(dataIndex.key, filteredleftovers, filters),
-        title: dataIndex.title,
-    });
+    const getColumnPropsHoc = (dataIndex: typeof KEYSLEFTOVERS.workpieceType) => {
+        return {
+            ...getColumnProps(dataIndex.key, filteredleftovers, filters),
+            title: dataIndex.title,
+        };
+    };
 
     const columns: ColumnsType<iData> = [
         getColumnPropsHoc(KEYSLEFTOVERS.workpieceType),

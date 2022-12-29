@@ -120,7 +120,7 @@ export const useProps = ({ record, stateId }: { record: iData; stateId: number }
             colorId: getIdValue(item.color.value),
             gradeId: getIdValue(item.grade.value),
             widthIn: getIdValue(item.widthIn.value),
-            countIn: getIdValue(item.countIn.value),
+            countItemsIn: getIdValue(item.countIn.value),
             moneyIn: item.widthIn.value ? codeOneItem * +item.widthIn.value : 0,
         }));
 

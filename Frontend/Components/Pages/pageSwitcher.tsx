@@ -6,7 +6,6 @@ import { Orders } from './Orders';
 import { MoveOut } from './Operations/MoveOut';
 import { MoveIn } from './Operations/MoveIn/SharedStoreItems';
 import { MoveInDetales } from './Operations/MoveIn/SharedStoreItems/MoveInDetales';
-import { AssembleCreate } from './Assemble/Create';
 import { Assemble } from './Assemble';
 
 export const PageSwitcher = ({ page }: { page: tPages }) => {
@@ -33,8 +32,8 @@ export const PageSwitcher = ({ page }: { page: tPages }) => {
             return <MoveIn />;
         case pages.moveInDetales:
             return <MoveInDetales />;
-        case pages.assembleCreate:
-            return <Assemble state="assembleCreate" />;
+        case pages.assemble:
+            return <Assemble />;
     }
     return <></>;
 };
