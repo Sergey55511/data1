@@ -6,7 +6,7 @@ import { Wrapper } from './style';
 import { useProps } from './useProps';
 
 export const Form = () => {
-    const { model, state, setStateHandler, getValue, getSelectProps } = useProps();
+    const { model, state, setStateHandler, getSelectProps, data } = useProps();
 
     return (
         <Wrapper>
@@ -24,8 +24,11 @@ export const Form = () => {
                                 value={state.variantAssemble.value}
                             >
                                 <Space direction="horizontal">
-                                    <Radio value={1}>I</Radio>
-                                    <Radio value={2}>F</Radio>
+                                    {data.variants.data?.map((item) => (
+                                        <Radio key={item.id} value={item.id}>
+                                            {item.variantAssemble}
+                                        </Radio>
+                                    ))}
                                 </Space>
                             </Radio.Group>
                         </div>
@@ -33,76 +36,61 @@ export const Form = () => {
                     <Row label={'Тип заготовки'}>
                         <SelectField
                             {...getSelectProps('typeBillet')}
-                            options={[
-                                {
-                                    caption: 'Четки',
-                                    value: 1,
-                                },
-                                {
-                                    caption: 'Бусы',
-                                    value: 2,
-                                },
-                            ]}
+                            selectProps={{
+                                loading: data.results.isLoading,
+                            }}
+                            options={data.results.data?.map((item) => ({
+                                caption: item.resultAssemble,
+                                value: item.id,
+                            }))}
                         />
                     </Row>
                     <Row label={'Тип сборки'}>
                         <SelectField
                             {...getSelectProps('typeAssemble')}
-                            options={[
-                                {
-                                    caption: '30+1',
-                                    value: 1,
-                                },
-                                {
-                                    caption: '30+1+2',
-                                    value: 2,
-                                },
-                            ]}
+                            selectProps={{
+                                loading: data.results.isLoading,
+                            }}
+                            options={data.types.data?.map((item) => ({
+                                caption: item.typeAssemble,
+                                value: item.id,
+                            }))}
                         />
                     </Row>
                     <Row label={'Цвет'}>
                         <SelectField
                             {...getSelectProps('color')}
-                            options={[
-                                {
-                                    caption: 'A1T1',
-                                    value: 1,
-                                },
-                                {
-                                    caption: 'A1T2',
-                                    value: 2,
-                                },
-                            ]}
+                            selectProps={{
+                                loading: data.results.isLoading,
+                            }}
+                            options={data.colors.data?.map((item) => ({
+                                caption: item.colorAssemble,
+                                value: item.id,
+                            }))}
                         />
                     </Row>
                     <Row label={'Нить'}>
                         <SelectField
                             {...getSelectProps('yarn')}
-                            options={[
-                                {
-                                    caption: 'GRN',
-                                    value: 1,
-                                },
-                                {
-                                    caption: 'N',
-                                    value: 2,
-                                },
-                            ]}
+                            selectProps={{
+                                loading: data.results.isLoading,
+                            }}
+                            options={data.yarns.data?.map((item) => ({
+                                caption: item.yarnAssemble,
+                                value: item.id,
+                            }))}
                         />
                     </Row>
                     <Row label={'Сорт'}>
                         <SelectField
                             {...getSelectProps('grade')}
-                            options={[
-                                {
-                                    caption: 'CA',
-                                    value: 1,
-                                },
-                                {
-                                    caption: 'CB',
-                                    value: 2,
-                                },
-                            ]}
+                            selectProps={{
+                                loading: data.results.isLoading,
+                            }}
+                            options={data.grades.data?.map((item) => ({
+                                caption: item.gradeAssemble,
+                                value: item.id,
+                            }))}
                         />
                     </Row>
                 </div>

@@ -137,6 +137,30 @@ export interface iColor {
     id: number;
     color: string;
 }
+export interface iColorAssemble {
+    id: number;
+    colorAssemble: string;
+}
+export interface iGradeAssemble {
+    id: number;
+    gradeAssemble: string;
+}
+export interface iResultAssemble {
+    id: number;
+    resultAssemble: string;
+}
+export interface iTypeAssemble {
+    id: number;
+    typeAssemble: string;
+}
+export interface iVariantAssemble {
+    id: number;
+    variantAssemble: string;
+}
+export interface iYarnAssemble {
+    id: number;
+    yarnAssemble: string;
+}
 export interface iWorkpieceType {
     id: number;
     workpieceType: string;

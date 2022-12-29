@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Field } from '../../../../Helpers/classes';
 import { tValue } from '../../../../Shared/InputNumber';
+import { useData } from './useData';
 
 class State {
     variantAssemble = new Field('variantAssemble', 'Обязательное поле');
@@ -37,5 +38,7 @@ export const useProps = () => {
         value: getValue(state[field].value),
     });
 
-    return { model, state, setStateHandler, getValue, getSelectProps };
+    const data = useData();
+
+    return { model, state, setStateHandler, getValue, getSelectProps, data };
 };

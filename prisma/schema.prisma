@@ -331,3 +331,39 @@ model Recipients {
   Stores    Stores? @relation(fields: [storeId], references: [id])
   storeId   Int?
 }
+
+model VariantsAssemble {
+  id              Int     @id @default(autoincrement())
+  variantAssemble String
+  active          Boolean @default(true)
+}
+
+model typeAssemble {
+  id           Int     @id @default(autoincrement())
+  typeAssemble String
+  active       Boolean @default(true)
+}
+
+model ColorsAssemble {
+  id            Int     @id @default(autoincrement())
+  colorAssemble String
+  active        Boolean @default(true)
+}
+
+model YarnsAssemble {
+  id           Int     @id @default(autoincrement())
+  yarnAssemble String
+  active       Boolean @default(true)
+}
+
+model GradesAssemble {
+  id            Int     @id @default(autoincrement())
+  gradeAssemble String
+  active        Boolean @default(true)
+}
+
+model ResultsAssemble {
+  id             Int     @id @default(autoincrement())
+  resultAssemble String
+  active         Boolean @default(true)
+}

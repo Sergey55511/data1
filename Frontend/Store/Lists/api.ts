@@ -16,6 +16,12 @@ import {
     iFullModel,
     iChannel,
     iLength,
+    iColorAssemble,
+    iGradeAssemble,
+    iResultAssemble,
+    iTypeAssemble,
+    iVariantAssemble,
+    iYarnAssemble,
 } from '../../../Shared/Types/interfaces';
 
 export const getMaterialGroup = () => {
@@ -148,6 +154,42 @@ export const getColors = (filters: iQueryFilters) => {
         url: `/api/list/colors${params}`,
         method: 'GET',
     }).then((res) => res.data as iColor[]);
+};
+export const getColorsAssemble = () => {
+    return axios({
+        url: `/api/list/assemble/color`,
+        method: 'GET',
+    }).then((res) => res.data as iColorAssemble[]);
+};
+export const getGradesAssemble = () => {
+    return axios({
+        url: `/api/list/assemble/grade`,
+        method: 'GET',
+    }).then((res) => res.data as iGradeAssemble[]);
+};
+export const getResultsAssemble = () => {
+    return axios({
+        url: `/api/list/assemble/result`,
+        method: 'GET',
+    }).then((res) => res.data as iResultAssemble[]);
+};
+export const getTypesAssemble = () => {
+    return axios({
+        url: `/api/list/assemble/type`,
+        method: 'GET',
+    }).then((res) => res.data as iTypeAssemble[]);
+};
+export const getVariantsAssemble = () => {
+    return axios({
+        url: `/api/list/assemble/variant`,
+        method: 'GET',
+    }).then((res) => res.data as iVariantAssemble[]);
+};
+export const getYarnsAssemble = () => {
+    return axios({
+        url: `/api/list/assemble/yarn`,
+        method: 'GET',
+    }).then((res) => res.data as iYarnAssemble[]);
 };
 
 export const getProductions = (storeId: number) => {
