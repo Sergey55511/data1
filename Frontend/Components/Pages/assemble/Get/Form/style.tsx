@@ -17,6 +17,7 @@ export const Wrapper = styled.div`
             flex-direction: column;
             row-gap: 8px;
             .row {
+                height: 32px;
                 display: flex;
                 column-gap: 8px;
                 .label {
