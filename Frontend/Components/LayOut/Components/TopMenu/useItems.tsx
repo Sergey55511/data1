@@ -22,7 +22,7 @@ export const useItems = () => {
     const { loginStore, OperationStore } = useStores();
     const ordersCount = OperationStore.orders.length;
     const sharedCount = OperationStore.shared.length;
-    const assembleCount=0
+    const assembleCount = 0;
 
     const isMSC = loginStore.user.storeId == STORES.Moscow.id;
 
@@ -61,65 +61,68 @@ export const useItems = () => {
             key: ROUTES.orders,
             icon: <StarOutlined />,
         },
-        {
+    ];
+
+    if (isMSC)
+        items.push({
             label: (
                 <Badge size="small" count={assembleCount} overflowCount={999}>
                     <>Сборка</>
                 </Badge>
             ),
-            key: ROUTES.assembleCreate,
+            key: ROUTES.assemble,
             icon: <DeploymentUnitOutlined />,
-        },
-        {
-            label: (
-                <Badge size="small" count={sharedCount} overflowCount={999}>
-                    <>Приход перемещение</>
-                </Badge>
-            ),
-            key: ROUTES.movein,
-            icon: <VerticalAlignBottomOutlined />,
-        },
-        {
-            label: 'Операции',
-            key: 'Operations',
-            icon: <MoreOutlined />,
-            children: [
-                {
-                    label: 'Приход сырья',
-                    key: ROUTES.newItem,
-                    icon: <ImportOutlined />,
-                },
-                {
-                    label: 'Отгрузка',
-                    key: ROUTES.moveout,
-                    icon: <ExportOutlined />,
-                },
-                {
-                    label: 'Перемещение',
-                    key: ROUTES.shareItems,
-                    icon: <CarOutlined />,
-                },
-                {
-                    label: 'Смешивание',
-                    key: 'mixingGroup',
-                    icon: <FullscreenExitOutlined />,
-                    children: mixingChildrens,
-                },
-            ],
-        },
-        {
-            label: 'Администрирование',
-            key: 'Administration',
-            icon: <SettingOutlined />,
-            children: [
-                {
-                    label: 'Рабочие',
-                    key: MODALFLAGS.supportManagers,
-                    icon: <TeamOutlined />,
-                },
-            ],
-        },
-    ];
+        });
+        
+    items.push({
+        label: (
+            <Badge size="small" count={sharedCount} overflowCount={999}>
+                <>Приход перемещение</>
+            </Badge>
+        ),
+        key: ROUTES.movein,
+        icon: <VerticalAlignBottomOutlined />,
+    });
+    items.push({
+        label: 'Операции',
+        key: 'Operations',
+        icon: <MoreOutlined />,
+        children: [
+            {
+                label: 'Приход сырья',
+                key: ROUTES.newItem,
+                icon: <ImportOutlined />,
+            },
+            {
+                label: 'Отгрузка',
+                key: ROUTES.moveout,
+                icon: <ExportOutlined />,
+            },
+            {
+                label: 'Перемещение',
+                key: ROUTES.shareItems,
+                icon: <CarOutlined />,
+            },
+            {
+                label: 'Смешивание',
+                key: 'mixingGroup',
+                icon: <FullscreenExitOutlined />,
+                children: mixingChildrens,
+            },
+        ],
+    });
+    items.push({
+        label: 'Администрирование',
+        key: 'Administration',
+        icon: <SettingOutlined />,
+        children: [
+            {
+                label: 'Рабочие',
+                key: MODALFLAGS.supportManagers,
+                icon: <TeamOutlined />,
+            },
+        ],
+    });
 
     return { items };
 };
