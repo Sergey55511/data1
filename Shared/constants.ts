@@ -74,6 +74,8 @@ export const WORKPIECETYPE = {
     losses: { id: 2 },
     garbage: { id: 3 },
     defect: { id: 4 },
+    bead: { id: 15 }, //бусина
+    minaret: { id: 17 },
     prunes: { id: 23 }, //обрезки
 };
 export const GRADE = {

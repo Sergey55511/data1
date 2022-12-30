@@ -10,10 +10,12 @@ export const AssembleCreate = observer(
     ({
         filters,
         setFilters,
+        selectedRows,
         setSelectedRows,
     }: {
         filters: Record<string, FilterValue | null>;
         setFilters: Dispatch<SetStateAction<Record<string, FilterValue | null>>>;
+        selectedRows: iData[];
         setSelectedRows: Dispatch<SetStateAction<iData[]>>;
     }) => {
         const { data, columns, handleChange } = useProps({
@@ -22,13 +24,10 @@ export const AssembleCreate = observer(
         });
 
         const rowSelection = {
-            onChange: (selectedRowKeys: React.Key[], selectedRows: iData[]) => {
+            onChange: (_selectedRowKeys: React.Key[], selectedRows: iData[]) => {
                 setSelectedRows(selectedRows);
             },
-            // getCheckboxProps: (record: iData) => ({
-            //   disabled: record.name === 'Disabled User', // Column configuration not to be checked
-            //   name: record.name,
-            // }),
+            selectedRowKeys: selectedRows?.map((item) => item.key!),
         };
 
         return (

@@ -1,39 +1,53 @@
-import { Badge, Radio } from 'antd';
-import { FilterValue } from 'antd/es/table/interface';
-import { useState } from 'react';
-import { iData } from '../../../../Shared/Types/interfaces';
+import { Badge, Button, Radio } from 'antd';
 import { Title } from '../../Shared/Title';
 import { AssembleCreate } from './Create';
 import { AssembleGet } from './Get';
 import { Wrapper } from './style';
+import { useProps } from './useProps';
 
 export const Assemble = () => {
-    const [filters, setFilters] = useState<Record<string, FilterValue | null>>({});
-    const [state, setState] = useState<'assembleCreate' | 'assembleGet'>(
-        'assembleCreate',
-    );
-    const [selectedRows, setSelectedRows] = useState<iData[]>([]);
+    const params = useProps();
 
-    const countTasks = selectedRows.length;
     return (
         <Wrapper>
             <Title text="Сборка" />
             <div className="buttonWrapper">
-                <Radio.Group value={state} onChange={(e) => setState(e.target.value)}>
+                <Radio.Group
+                    value={params.stateButton}
+                    onChange={(e) => params.setStateButton(e.target.value)}
+                >
                     <Radio.Button value="assembleCreate">Остаток</Radio.Button>
-                    <Badge count={countTasks} size="small">
+                    <Badge count={params.countTasks} size="small">
                         <Radio.Button value="assembleGet">
                             Принять результат работы
                         </Radio.Button>
                     </Badge>
                 </Radio.Group>
+
+                <Button
+                    type="primary"
+                    disabled={params.isDisabled}
+                    onClick={params.submitHandler}
+                >
+                    Сохранить
+                </Button>
             </div>
             <div>
-                {state == 'assembleCreate' && (
-                    <AssembleCreate {...{ filters, setFilters, setSelectedRows }} />
+                {params.stateButton == 'assembleCreate' && (
+                    <AssembleCreate
+                        filters={params.filters}
+                        setFilters={params.setFilters}
+                        setSelectedRows={params.setSelectedRows}
+                        selectedRows={params.selectedRows}
+                    />
                 )}
-                {state == 'assembleGet' && (
-                    <AssembleGet {...{ selectedRows, setSelectedRows }} />
+                {params.stateButton == 'assembleGet' && (
+                    <AssembleGet
+                        selectedRows={params.selectedRows}
+                        setSelectedRows={params.setSelectedRows}
+                        state={params.state}
+                        setState={params.setState}
+                    />
                 )}
             </div>
         </Wrapper>

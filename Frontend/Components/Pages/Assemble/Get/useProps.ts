@@ -1,13 +1,16 @@
 import { TableProps } from 'antd';
 import { FilterValue } from 'antd/es/table/interface';
-import { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import { Dispatch, SetStateAction, useState } from 'react';
 import { iData } from '../../../../../Shared/Types/interfaces';
 import { tValue } from '../../../Shared/InputNumber';
+import { State } from '../useProps';
 import { useColumns } from './useColumns';
 
 export interface iProps {
     selectedRows: iData[];
     setSelectedRows: Dispatch<SetStateAction<iData[]>>;
+    state: State;
+    setState: Dispatch<SetStateAction<State>>;
 }
 
 export const useProps = ({ selectedRows, setSelectedRows }: iProps) => {
@@ -32,15 +35,5 @@ export const useProps = ({ selectedRows, setSelectedRows }: iProps) => {
 
     const { columns } = useColumns({ data: selectedRows, filters, setValue });
 
-    useEffect(() => {
-        setSelectedRows((prev) => {
-            const res = prev.map((item) => ({
-                ...item,
-                widthOut: item.width,
-                countItemsOut: item.count,
-            }));
-            return [...res];
-        });
-    }, []);
     return { columns, handleChange };
 };

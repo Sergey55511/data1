@@ -7,7 +7,7 @@ export const AssembleGet = (props: iProps) => {
     const params = useProps(props);
     return (
         <Wrapper>
-            <Form selectedRows={props.selectedRows}/>
+            <Form {...props} />
             <div>
                 <div className="title">Детализация</div>
                 <TableApp

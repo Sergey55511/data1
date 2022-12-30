@@ -70,6 +70,7 @@ export interface iDataTable {
 }
 
 export interface iData extends iDataTable {
+    key?: number;
     userLogin?: string;
     recipient?: string;
     fullModel?: string;

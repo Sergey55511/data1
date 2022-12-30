@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import {
     getColorsAssemble,
+    getFullModels,
     getGradesAssemble,
     getResultsAssemble,
     getTypesAssemble,
@@ -15,6 +16,7 @@ export const useData = () => {
     const types = useQuery(['typesAssemble'], getTypesAssemble);
     const variants = useQuery(['variantsAssemble'], getVariantsAssemble);
     const yarns = useQuery(['yarnsAssemble'], getYarnsAssemble);
+    const fullModel = useQuery(['fullModel'], () => getFullModels({}));
 
-    return { colors, grades, results, types, variants, yarns };
+    return { colors, grades, results, types, variants, yarns, fullModel };
 };

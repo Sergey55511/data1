@@ -1,25 +1,15 @@
-import { useEffect, useState } from 'react';
-import { RESULTASSEMBLE } from '../../../../../../Shared/constants';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import { RESULTASSEMBLE, WORKPIECETYPE } from '../../../../../../Shared/constants';
 import { iData } from '../../../../../../Shared/Types/interfaces';
-import { Field } from '../../../../Helpers/classes';
-import { tValue } from '../../../../Shared/InputNumber';
+import { State } from '../../useProps';
 import { useData } from './useData';
 
-class State {
-    variantAssemble = new Field('variantAssemble', 'Обязательное поле');
-    typeBillet = new Field('typeBillet', 'Обязательное поле');
-    typeAssemble = new Field('typeAssemble', 'Обязательное поле');
-    color = new Field('color', 'Обязательное поле');
-    yarn = new Field('yarn', 'Обязательное поле');
-    grade = new Field('yarn', 'Обязательное поле');
-    length = new Field('length', 'Обязательное поле');
-    widthIn = new Field('widthIn', 'Обязательное поле');
-    countItemIn = new Field('countItemIn', 'Обязательное поле');
-}
-
-export const useProps = (selectedRows: iData[]) => {
+export const useProps = (
+    selectedRows: iData[],
+    state: State,
+    setState: Dispatch<SetStateAction<State>>,
+) => {
     const [model, setModel] = useState('');
-    const [state, setState] = useState(new State());
 
     const setStateHandler = (key: keyof State, value: any) => {
         setState((prev) => {
@@ -41,10 +31,27 @@ export const useProps = (selectedRows: iData[]) => {
     useEffect(() => {
         let res = '';
         if (state.typeBillet.value == `${RESULTASSEMBLE.chaplet.id || ''}`) {
+            const minaretItem = selectedRows.find(
+                (item) => item.workpieceTypeId == WORKPIECETYPE.minaret.id,
+            );
+
+            const beadItem = selectedRows.find(
+                (item) => item.workpieceTypeId == WORKPIECETYPE.bead.id,
+            );
+
+            const beadId = beadItem?.fullModelId;
+
+            const minaretId = minaretItem?.fullModelId;
+
+            const minaret = data.fullModel.data?.find((item) => item.id == minaretId);
+            const bead = data.fullModel.data?.find((item) => item.id == beadId);
+
+            const model = (minaret?.Models.model ?? '').replace('I', '');
+
             res = 'TM';
-            res += '62'; //взять из модели миналета
-            res += 'BA'; //взять из профиля бусины
-            res += '16.50'; //взять из размера бусины
+            res += model; //взять из модели миналета
+            res += bead?.Profile.profile ?? ''; //взять из профиля бусины
+            res += bead?.SizeRangeModel.sizeRange ?? ''; //взять из размера бусины
             if (state.typeAssemble.value) {
                 const typeAssemble = data.types.data?.find(
                     (item) => `${item.id}` == state.typeAssemble.value,
