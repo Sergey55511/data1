@@ -97,7 +97,6 @@ export const getOrder = <T>(prisma: tPrisma,req: NextApiRequest): PrismaPromise<
             task,
             "widthOut"
         HAVING pp is not null and 
-		COALESCE(round(sum("widthIn")::numeric,2),0)-COALESCE(round(coalesce(sum("widthOut"),0)::numeric,2),0)<>0 or
-        COALESCE(round(sum("countItemsIn")::numeric,2),0)-COALESCE(round(sum("countItemsOut")::numeric,2),0)<>0;
+		COALESCE(round(sum("widthIn")::numeric,2),0)-COALESCE(round(coalesce(sum("widthOut"),0)::numeric,2),0)<>0
     `;
 };
