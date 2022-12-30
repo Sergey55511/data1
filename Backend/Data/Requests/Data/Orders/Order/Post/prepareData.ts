@@ -40,6 +40,8 @@ export const prepareData = async (prisma: tPrisma, data: iDataTable[]) => {
             }
         }
 
+        item.task=undefined
+        
         return item;
     });
 };

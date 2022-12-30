@@ -61,8 +61,7 @@ export const orders = <T>(prisma: tPrisma, storeId: number): PrismaPromise<T> =>
 				where "Data"."storeId"=${+storeId} and pp is not null
 				group by pp
 				having 
-					COALESCE(round(sum("widthIn")::numeric,2),0)-COALESCE(round(coalesce(sum("widthOut"),0)::numeric,2),0)<>0 or
-        			COALESCE(round(sum("countItemsIn")::numeric,2),0)-COALESCE(round(sum("countItemsOut")::numeric,2),0)<>0
+					COALESCE(round(sum("widthIn")::numeric,2),0)-COALESCE(round(coalesce(sum("widthOut"),0)::numeric,2),0)<>0
 			)
         GROUP BY 
 			pp,
@@ -96,8 +95,9 @@ export const orders = <T>(prisma: tPrisma, storeId: number): PrismaPromise<T> =>
             lot,
             task,
             "widthOut"
-        HAVING pp is not null and 
-		COALESCE(round(sum("widthIn")::numeric,2),0)-COALESCE(round(coalesce(sum("widthOut"),0)::numeric,2),0)<>0 or
-        COALESCE(round(sum("countItemsIn")::numeric,2),0)-COALESCE(round(sum("countItemsOut")::numeric,2),0)<>0;
+        HAVING 
+            pp is not null 
+                and 
+		    COALESCE(round(sum("widthIn")::numeric,2),0)-COALESCE(round(coalesce(sum("widthOut"),0)::numeric,2),0)<>0;
     `);
 };

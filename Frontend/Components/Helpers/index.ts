@@ -182,6 +182,7 @@ export const prepareDataTable = (data: iData): iDataTable => {
         'storeId',
         'productionId',
         'operationId',
+        'countItemsIn',
         'countItemsOut',
         'widthOut',
         'widthIn',

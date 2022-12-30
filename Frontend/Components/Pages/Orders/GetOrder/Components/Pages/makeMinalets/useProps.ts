@@ -108,6 +108,9 @@ export const useProps = ({ record, stateId }: { record: iData; stateId: number }
         }
         const code = record.code ? record.code * -1 : 0;
         const codeOneItem = record.width ? code / totalSum : 0;
+
+        console.log('state', JSON.parse(JSON.stringify(state)));
+
         const data: iData[] = state.map((item) => ({
             ...record,
             widthOut: undefined,
@@ -123,6 +126,8 @@ export const useProps = ({ record, stateId }: { record: iData; stateId: number }
             countItemsIn: getIdValue(item.countIn.value),
             moneyIn: item.widthIn.value ? codeOneItem * +item.widthIn.value : 0,
         }));
+
+        console.log('data', JSON.parse(JSON.stringify(data)));
 
         sendData({
             data,
