@@ -82,3 +82,8 @@ export const GRADE = {
 export const STORES = {
     Moscow: { id: 1 },
 };
+
+export const RESULTASSEMBLE = {
+    chaplet: { id: 1 }, //четки
+    beads: { id: 2 }, //бусы
+};
