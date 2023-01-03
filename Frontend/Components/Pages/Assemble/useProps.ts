@@ -2,6 +2,7 @@ import { FilterValue } from 'antd/es/table/interface';
 import { useState } from 'react';
 import { iData } from '../../../../Shared/Types/interfaces';
 import { Field } from '../../Helpers/classes';
+import { useData } from './useData';
 
 export class State {
     variantAssemble = new Field('variantAssemble', 'Обязательное поле');
@@ -16,6 +17,7 @@ export class State {
 }
 
 export const useProps = () => {
+    const [model, setModel] = useState('');
     const [filters, setFilters] = useState<Record<string, FilterValue | null>>({});
     const [state, setState] = useState(new State());
     const [stateButton, setStateButton] = useState<'assembleCreate' | 'assembleGet'>(
@@ -27,9 +29,17 @@ export const useProps = () => {
 
     const isDisabled = (() => false)();
 
+    const resetState = () => {
+        setStateButton('assembleCreate');
+        setState(new State());
+        setModel('');
+        setSelectedRows([]);
+    };
+
+    const data = useData(state, model, resetState);
+
     const submitHandler = () => {
-        console.log('state', state);
-        console.log('selectedRows', selectedRows);
+        data.submitHandler.mutate(selectedRows);
     };
 
     return {
@@ -44,5 +54,8 @@ export const useProps = () => {
         submitHandler,
         state,
         setState,
+        model,
+        setModel,
+        data,
     };
 };

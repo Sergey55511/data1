@@ -28,6 +28,10 @@ export const Assemble = () => {
                     type="primary"
                     disabled={params.isDisabled}
                     onClick={params.submitHandler}
+                    loading={
+                        params.data.submitHandler.isLoading ||
+                        params.data.getResult.isLoading
+                    }
                 >
                     Сохранить
                 </Button>
@@ -47,6 +51,8 @@ export const Assemble = () => {
                         setSelectedRows={params.setSelectedRows}
                         state={params.state}
                         setState={params.setState}
+                        model={params.model}
+                        setModel={params.setModel}
                     />
                 )}
             </div>

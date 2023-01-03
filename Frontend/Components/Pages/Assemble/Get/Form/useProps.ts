@@ -8,9 +8,8 @@ export const useProps = (
     selectedRows: iData[],
     state: State,
     setState: Dispatch<SetStateAction<State>>,
+    setModel: Dispatch<SetStateAction<string>>,
 ) => {
-    const [model, setModel] = useState('');
-
     const setStateHandler = (key: keyof State, value: any) => {
         setState((prev) => {
             prev[key].value = value;
@@ -87,5 +86,5 @@ export const useProps = (
         setModel(res);
     }, [state]);
 
-    return { model, state, setStateHandler, getValue, getSelectProps, data };
+    return { state, setStateHandler, getValue, getSelectProps, data };
 };

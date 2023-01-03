@@ -9,6 +9,7 @@ datasource db {
 
 model Data {
   id               Int            @id @default(autoincrement())
+  dateSystem       DateTime       @default(now()) @db.Date()
   date             DateTime       @default(now()) @db.Date()
   lot              Float?
   numDocument      String?
@@ -29,6 +30,7 @@ model Data {
   moneyIn          Float?
   moneyOut         Float?
   moneyDefect      Float?
+  defect           Float?
   typeOfProcessing String?
   stock            String?
   shade            String?
@@ -65,6 +67,7 @@ model Data {
   recipientId      Int?
   FullModels       FullModels?    @relation(fields: [fullModelId], references: [id])
   fullModelId      Int?
+  model            String?
   task             Int?
 }
 

@@ -35,6 +35,7 @@ export const OPERATIONS = {
     sortingElements: { id: 35 }, //Сортировка элементов
     makingMinalets: { id: 37 }, //Пр-во мин группы
     mixingLot: { id: 39 }, //Смешивание партия
+    assemble: { id: 40 }, //Сборка
 };
 export const STATE = {
     washed: { id: 1 },
@@ -68,6 +69,7 @@ export const STATE = {
     thermedOven: { id: 28 },
     polishedMsc: { id: 29 },
     sertedElements: { id: 30 },
+    createdProduct: { id: 35 },
 };
 export const WORKPIECETYPE = {
     stone: { id: 1 },

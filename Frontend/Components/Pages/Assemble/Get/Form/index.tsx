@@ -7,11 +7,12 @@ import { Row } from './row';
 import { Wrapper } from './style';
 import { useProps } from './useProps';
 
-export const Form = ({ selectedRows, state, setState }: iProps) => {
-    const { model, setStateHandler, getSelectProps, data } = useProps(
+export const Form = ({ selectedRows, state, setState, model, setModel }: iProps) => {
+    const { setStateHandler, getSelectProps, data } = useProps(
         selectedRows,
         state,
         setState,
+        setModel,
     );
 
     return (

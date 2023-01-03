@@ -11,6 +11,8 @@ export interface iProps {
     setSelectedRows: Dispatch<SetStateAction<iData[]>>;
     state: State;
     setState: Dispatch<SetStateAction<State>>;
+    model: string;
+    setModel: Dispatch<SetStateAction<string>>;
 }
 
 export const useProps = ({ selectedRows, setSelectedRows }: iProps) => {
