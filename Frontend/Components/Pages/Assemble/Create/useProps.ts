@@ -14,14 +14,14 @@ export const useProps = ({
     filters: Record<string, FilterValue | null>;
     setFilters: Dispatch<SetStateAction<Record<string, FilterValue | null>>>;
 }) => {
-    const { loginStore } = useStores();
+    const { loginStore, OperationStore } = useStores();
 
     const storeId = loginStore.user.storeId;
 
     const assembleLeftovers = useQuery(
         ['assembleLeftovers', storeId],
         () => leftoversAssemble(storeId),
-        { enabled: !!storeId },
+        { enabled: !!storeId, onSuccess: () => OperationStore.getMaxId() },
     );
     const { columns } = useColumns({ data: assembleLeftovers.data, filters });
 

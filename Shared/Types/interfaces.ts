@@ -64,6 +64,7 @@ export interface iDataTable {
     widthOut?: number;
     widthInDocument?: number;
     widthIn?: number;
+    defect?: number;
     moneyIn?: number;
     moneyOut?: number;
     date?: moment.Moment | null | any;

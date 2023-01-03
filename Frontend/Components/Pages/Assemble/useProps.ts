@@ -14,6 +14,10 @@ export class State {
     length = new Field('length', 'Обязательное поле');
     widthIn = new Field('widthIn', 'Обязательное поле');
     countItemIn = new Field('countItemIn', 'Обязательное поле');
+    constructor() {
+        this.countItemIn.value = '1';
+        this.typeBillet.value = '1';
+    }
 }
 
 export const useProps = () => {
@@ -23,11 +27,35 @@ export const useProps = () => {
     const [stateButton, setStateButton] = useState<'assembleCreate' | 'assembleGet'>(
         'assembleCreate',
     );
+
     const [selectedRows, setSelectedRows] = useState<iData[]>([]);
 
     const countTasks = selectedRows.length;
 
-    const isDisabled = (() => false)();
+    const isDisabled = (() => {
+        const getNumber = (v: any) => (v ? +v : 0);
+        if (!selectedRows.length) return true;
+        const ttlSum = selectedRows.reduce(
+            (res, item) => (res += getNumber(item.widthOut)),
+            0,
+        );
+
+        if (getNumber(state.widthIn.value) < ttlSum) return true;
+
+        const someEmpyt = selectedRows.some((item) => !item.widthOut);
+        if (someEmpyt) return true;
+
+        if (!state.color.value) return true;
+        if (!state.countItemIn.value) return true;
+        if (!state.grade.value) return true;
+        if (!state.length.value) return true;
+        if (!state.typeAssemble.value) return true;
+        if (!state.typeBillet.value) return true;
+        if (!state.variantAssemble.value) return true;
+        if (!state.widthIn.value) return true;
+        if (!state.yarn.value) return true;
+        return false;
+    })();
 
     const resetState = () => {
         setStateButton('assembleCreate');

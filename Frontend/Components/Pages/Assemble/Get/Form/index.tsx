@@ -76,6 +76,8 @@ export const Form = ({ selectedRows, state, setState, model, setModel }: iProps)
                             }))}
                         />
                     </Row>
+                </div>
+                <div className="column">
                     <Row label={'Нить'}>
                         <SelectField
                             {...getSelectProps('yarn')}
@@ -100,14 +102,13 @@ export const Form = ({ selectedRows, state, setState, model, setModel }: iProps)
                             }))}
                         />
                     </Row>
-                </div>
-                <div className="column">
                     <Row label={'Длина'}>
                         <InputNumber
                             placeholder={state.length.placeholder}
                             onChangeHandler={(v) => {
                                 setStateHandler('length', v);
                             }}
+                            value={state.length.value}
                         />
                     </Row>
                     <Row label={'Принято гр'}>
@@ -116,14 +117,7 @@ export const Form = ({ selectedRows, state, setState, model, setModel }: iProps)
                             onChangeHandler={(v) => {
                                 setStateHandler('widthIn', v);
                             }}
-                        />
-                    </Row>
-                    <Row label={'Принято шт'}>
-                        <InputNumber
-                            placeholder={state.countItemIn.placeholder}
-                            onChangeHandler={(v) => {
-                                setStateHandler('countItemIn', v);
-                            }}
+                            value={state.widthIn.value}
                         />
                     </Row>
                 </div>

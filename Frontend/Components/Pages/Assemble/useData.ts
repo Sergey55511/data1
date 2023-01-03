@@ -16,13 +16,20 @@ export const useData = (state: State, model: string, resetState: () => void) => 
 
     const getNumber = (v: any) => (v ? +v : undefined);
 
+    const getCode = (item: iData) => {
+        const code = item.code || 0;
+        return (
+            (code / (item.width || code)) * ((item.widthOut || 0) + (item.defect || 0))
+        );
+    };
+
     const moveOutHandler = async (rows: iData[]) => {
         const data = rows.map((item) => {
             const res = prepareDataTable(item);
-            const code = item.code || 0;
-            const moneyOut = (code / (item.width || code)) * (res.widthOut || 0);
+            const moneyOut = getCode(item);
             res.moneyOut = moneyOut;
             res.widthOut = getNumber(res.widthOut);
+            res.defect = getNumber(res.defect);
             res.countItemsOut = getNumber(res.countItemsOut);
             res.operationId = OPERATIONS.assemble.id;
             return res;
@@ -31,9 +38,9 @@ export const useData = (state: State, model: string, resetState: () => void) => 
         return await moveToWork({ data, maxId, storeId, isSetNewPP: true });
     };
 
-    const getResultHandler = async (pp?: number) => {
-        const code = 100;
-        // const code = record.code ? record.code * -1 : 0;
+    const getResultHandler = async ({ rows, pp }: { rows: iData[]; pp?: number }) => {
+        const code = rows.reduce((res, item) => (res += getCode(item)), 0);
+
         const data: iData[] = [
             {
                 model,
@@ -47,14 +54,9 @@ export const useData = (state: State, model: string, resetState: () => void) => 
         return await postOrderResult(data);
     };
 
-    const onSuccessHandler = async () => {
-        await getMaxId(storeId);
-        resetState();
-    };
-
     const getResult = useMutation(getResultHandler, {
         onSuccess: () => {
-            onSuccessHandler();
+            resetState();
             notification.success({ message: 'Успешно' });
         },
         onError: () => {
@@ -66,8 +68,8 @@ export const useData = (state: State, model: string, resetState: () => void) => 
     });
 
     const submitHandler = useMutation(moveOutHandler, {
-        onSuccess: (res) => {
-            getResult.mutate(res.pp);
+        onSuccess: (res, rows) => {
+            getResult.mutate({ rows, pp: res.pp });
         },
         onError: () => {
             notification.error({
