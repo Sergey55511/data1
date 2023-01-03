@@ -41,6 +41,7 @@ export interface iDataTable {
     numProduction?: string;
     numDocument?: string;
     pp?: number;
+    articleId?: number;
     workpieceTypeId?: number;
     typeId?: number;
     userId?: number;
@@ -68,6 +69,7 @@ export interface iDataTable {
     moneyIn?: number;
     moneyOut?: number;
     date?: moment.Moment | null | any;
+    model?: string;
 }
 
 export interface iData extends iDataTable {
@@ -76,7 +78,6 @@ export interface iData extends iDataTable {
     recipient?: string;
     fullModel?: string;
     managerLogin?: string;
-    model?: string;
     sizeRange?: string;
     materialGroup?: string;
     color?: string;

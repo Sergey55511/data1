@@ -53,6 +53,8 @@ export const dal = (req: NextApiRequest): iDataTable[] => {
         moneyOut: prepareNumber(item.moneyOut),
         date: prepareStaring(item.date),
         task: prepareNumber(item.task),
+        articleId: prepareNumber(item.articleId),
+        model: item.model,
     }));
 
     return checkSchema(data, schema);

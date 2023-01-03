@@ -41,6 +41,8 @@ const dataSchema = {
         recipientId: { type: 'integer' },
         fullModelId: { type: 'integer' },
         task: { type: 'integer' },
+        articleId: { type: 'integer' },
+        model: { type: 'string' },
     },
     additionalProperties: false,
 };

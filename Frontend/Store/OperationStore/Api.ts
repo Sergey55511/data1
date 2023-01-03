@@ -70,6 +70,7 @@ export const moveToWork = (data: {
     storeId: number;
     maxId: number;
     isSetNewPP?: boolean;
+    isSetArticleId?: boolean;
 }) => {
     return axios({
         url: `/api/data/moveToWork`,

@@ -49,6 +49,7 @@ model Data {
   active           Boolean        @default(true)
   Productions      Productions?   @relation(fields: [productionId], references: [id])
   productionId     Int?
+  articleId        Int?
   Color            Color?         @relation(fields: [colorId], references: [id])
   colorId          Int?
   Length           Length?        @relation(fields: [lengthId], references: [id])

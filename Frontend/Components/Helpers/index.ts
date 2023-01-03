@@ -163,6 +163,7 @@ export const prepareDataTable = (data: iData): iDataTable => {
         'lot',
         'numProduction',
         'pp',
+        'articleId',
         'typeId',
         'workpieceTypeId',
         'numDocument',
@@ -190,6 +191,7 @@ export const prepareDataTable = (data: iData): iDataTable => {
         'date',
         'moneyIn',
         'moneyOut',
+        'model',
     ];
     const result: iDataTable = {};
     Object.keys(data).forEach((key) => {

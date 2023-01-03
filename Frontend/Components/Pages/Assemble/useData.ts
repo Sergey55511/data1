@@ -35,16 +35,31 @@ export const useData = (state: State, model: string, resetState: () => void) => 
             return res;
         });
 
-        return await moveToWork({ data, maxId, storeId, isSetNewPP: true });
+        return await moveToWork({
+            data,
+            maxId,
+            storeId,
+            isSetNewPP: true,
+            isSetArticleId: true,
+        });
     };
 
-    const getResultHandler = async ({ rows, pp }: { rows: iData[]; pp?: number }) => {
+    const getResultHandler = async ({
+        rows,
+        pp,
+        articleId,
+    }: {
+        rows: iData[];
+        pp?: number;
+        articleId?: number;
+    }) => {
         const code = rows.reduce((res, item) => (res += getCode(item)), 0);
 
         const data: iData[] = [
             {
                 model,
                 pp,
+                articleId,
                 widthIn: getNumber(state.widthIn.value),
                 countItemsIn: getNumber(state.countItemIn.value),
                 stateId: STATE.createdProduct.id,
@@ -69,7 +84,7 @@ export const useData = (state: State, model: string, resetState: () => void) => 
 
     const submitHandler = useMutation(moveOutHandler, {
         onSuccess: (res, rows) => {
-            getResult.mutate({ rows, pp: res.pp });
+            getResult.mutate({ rows, pp: res.pp, articleId: res.articleId });
         },
         onError: () => {
             notification.error({
