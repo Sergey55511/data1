@@ -2,8 +2,11 @@ import { PrismaPromise } from '@prisma/client';
 import { tPrisma } from '../../../../../types';
 import { fullModelSQL } from '../../constants';
 
-export const getMoveIn = <T>(prisma: tPrisma,storeId: number, numDocument: string): PrismaPromise<T> => {
-
+export const getMoveIn = <T>(
+    prisma: tPrisma,
+    storeId: number,
+    numDocument: string,
+): PrismaPromise<T> => {
     return prisma.$queryRaw`
         SELECT 
             "Data".id,
@@ -34,7 +37,8 @@ export const getMoveIn = <T>(prisma: tPrisma,storeId: number, numDocument: strin
             state,
             lot,
             "widthOut",
-            "countItemsOut"
+            "countItemsOut",
+            "moneyOut"
         FROM "Data" 
             LEFT JOIN "Recipients" ON "Data"."recipientId" = "Recipients".id
             LEFT JOIN "Stores" ON "Data"."storeId" = "Stores".id

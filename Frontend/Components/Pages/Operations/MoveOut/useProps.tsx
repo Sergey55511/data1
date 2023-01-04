@@ -135,6 +135,11 @@ export const useProps = ({
                 break;
         }
 
+        const getMoney = (data: iData) => {
+            const getNum = (v: any) => (v ? +v : 0);
+            return (getNum(data.code) / getNum(data.width)) * getNum(data.widthOut);
+        };
+
         const dataSendPrepared = dataSend.map((item) => {
             if (item.widthOut) item.widthOut = +item.widthOut;
             if (item.countItemsOut) item.countItemsOut = +item.countItemsOut;
@@ -143,6 +148,7 @@ export const useProps = ({
             item.operationId = operationId;
             item.userId = loginStore.user.id;
             item.storeId = loginStore.user.storeId;
+            item.moneyOut = getMoney(item);
             return prepareDataTable(item);
         });
         setIsSubmitLoading(true);
