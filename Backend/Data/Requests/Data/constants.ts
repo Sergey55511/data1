@@ -1,8 +1,14 @@
 export const fullModelSQL = `(
     SELECT  
-        concat("workpieceType",'_',"model",'_',"profile",'_',"sizeRange",'_',"length") as "fullModel"
+        concat(
+            "model",
+            CASE WHEN "model" IS NOT NULL THEN '_' END,
+            "profile",
+            CASE WHEN "profile" IS NOT NULL THEN '_' END,
+            "sizeRange",
+            CASE WHEN "sizeRange" IS NOT NULL THEN '_' END,
+            "length") as "fullModel"
     FROM public."FullModels"
-        LEFT JOIN "WorkpieceType" ON "WorkpieceType".id = "FullModels"."workpieceTypeId"
         LEFT JOIN "Models" ON "Models".id = "FullModels"."modelId"
         LEFT JOIN "Profile" ON "Profile".id = "FullModels"."profileId"
         LEFT JOIN "SizeRangeModel" ON "SizeRangeModel".id = "FullModels"."sizeRangeModelId"
