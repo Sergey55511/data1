@@ -18,6 +18,7 @@ export const useProps = (
     };
 
     const getValue = (value?: string) => (value ? +value : undefined);
+    const getNum = (value?: any) => (value ? +value : 0);
 
     const getSelectProps = (field: keyof State) => ({
         placeholder: state[field].placeholder,
@@ -29,6 +30,19 @@ export const useProps = (
 
     useEffect(() => {
         let res = '';
+        const ttlSum = selectedRows.reduce(
+            (res, item) => (res += getNum(item.widthOut)),
+            0,
+        );
+        setState((state) => {
+            const widthIn = getNum(state.widthIn.value);
+            const losses = ttlSum - widthIn;
+            const newValue = losses ? `${losses}` : '';
+
+            if (state.losses.value == newValue) return state;
+            state.losses.value = newValue;
+            return { ...state };
+        });
         if (state.typeBillet.value == `${RESULTASSEMBLE.chaplet.id || ''}`) {
             const minaretItem = selectedRows.find(
                 (item) => item.workpieceTypeId == WORKPIECETYPE.minaret.id,

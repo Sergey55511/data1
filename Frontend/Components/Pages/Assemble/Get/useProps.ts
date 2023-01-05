@@ -30,7 +30,6 @@ export const useProps = ({ selectedRows, setSelectedRows }: iProps) => {
         const key = field as keyof iData;
         setSelectedRows((prev) => {
             prev[index][key] = value;
-
             return [...prev];
         });
     };

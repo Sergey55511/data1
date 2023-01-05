@@ -1,12 +1,12 @@
 import { useMutation } from '@tanstack/react-query';
 import { notification } from 'antd';
 import { Dispatch, SetStateAction } from 'react';
-import { OPERATIONS, STATE } from '../../../../Shared/constants';
+import { OPERATIONS, STATE, WORKPIECETYPE } from '../../../../Shared/constants';
 import { iData } from '../../../../Shared/Types/interfaces';
 import { postManagerOperations } from '../../../Store/Lists/api';
 import { getMaxId, moveToWork, postOrderResult } from '../../../Store/OperationStore/Api';
 import { useStores } from '../../../Store/useStores';
-import { prepareDataTable, sendData } from '../../Helpers';
+import { getLosseObject, prepareDataTable, sendData } from '../../Helpers';
 import { State } from './useProps';
 
 export const useData = (state: State, model: string, resetState: () => void) => {
@@ -66,6 +66,13 @@ export const useData = (state: State, model: string, resetState: () => void) => 
                 moneyIn: code,
             },
         ];
+
+        if (state.losses.value) {
+            data.push(
+                getLosseObject(data[0], WORKPIECETYPE.losses.id, +state.losses.value),
+            );
+        }
+
         return await postOrderResult(data);
     };
 

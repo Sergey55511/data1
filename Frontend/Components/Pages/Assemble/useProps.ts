@@ -14,6 +14,7 @@ export class State {
     length = new Field('length', 'Обязательное поле');
     widthIn = new Field('widthIn', 'Обязательное поле');
     countItemIn = new Field('countItemIn', 'Обязательное поле');
+    losses = new Field('losses', 'Обязательное поле');
     constructor() {
         this.countItemIn.value = '1';
         this.typeBillet.value = '1';
@@ -40,6 +41,14 @@ export const useProps = () => {
             0,
         );
 
+        // check count items
+        for (const item of selectedRows) {
+            if (getNumber(item.count)) {
+                if (!getNumber(item.countItemsOut)) return true;
+            }
+        }
+
+        // check width out is less then total width
         if (getNumber(state.widthIn.value) < ttlSum) return true;
 
         const someEmpyt = selectedRows.some((item) => !item.widthOut);
