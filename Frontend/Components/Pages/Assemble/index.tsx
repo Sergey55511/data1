@@ -24,25 +24,29 @@ export const Assemble = () => {
                             </Radio.Button>
                         </Badge>
                     </Radio.Group>
-                    <div>Потери: {params.state.losses.value}</div>
+                    {params.stateButton == 'assembleGet' && (
+                        <div>Потери: {params.state.losses.value}</div>
+                    )}
                 </div>
-                <Badge count={params.errorText ? '!' : ''}>
-                    <Popover
-                        open={params.errorText ? undefined : false}
-                        title={'Ошибка'}
-                        content={params.errorText}
-                        placement="bottomLeft"
-                    >
-                        <Button
-                            type="primary"
-                            disabled={params.isDisabled}
-                            onClick={params.submitHandler}
-                            loading={params.data.submitHandler.isLoading}
+                {params.stateButton == 'assembleGet' && (
+                    <Badge count={params.errorText ? '!' : ''}>
+                        <Popover
+                            open={params.errorText ? undefined : false}
+                            title={'Ошибка'}
+                            content={params.errorText}
+                            placement="bottomLeft"
                         >
-                            Сохранить
-                        </Button>
-                    </Popover>
-                </Badge>
+                            <Button
+                                type="primary"
+                                disabled={params.isDisabled}
+                                onClick={params.submitHandler}
+                                loading={params.data.submitHandler.isLoading}
+                            >
+                                Сохранить
+                            </Button>
+                        </Popover>
+                    </Badge>
+                )}
             </div>
             <div>
                 {params.stateButton == 'assembleCreate' && (
