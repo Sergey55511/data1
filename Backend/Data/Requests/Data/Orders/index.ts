@@ -1,4 +1,5 @@
 import { PrismaPromise } from '@prisma/client';
+import { OPERATIONS } from '../../../../../Shared/constants';
 import { tPrisma } from '../../../../types';
 import { fullModelSQL } from '../constants';
 
@@ -44,7 +45,6 @@ export const orders = <T>(prisma: tPrisma, storeId: number): PrismaPromise<T> =>
             left join "Fraction" on "Data"."fractionId"="Fraction".id
             left join "MaterialGroup" on "Data"."materialGroupId"="MaterialGroup".id
 			left join "Grade" on "Data"."gradeId"="Grade".id
-		
 			left join "Color" on "Data"."colorId"="Color".id
 			left join "Length" on "Data"."lengthId"="Length".id
 			left join "Channel" on "Data"."channelId"="Channel".id
@@ -62,7 +62,7 @@ export const orders = <T>(prisma: tPrisma, storeId: number): PrismaPromise<T> =>
 				group by pp
 				having 
 					COALESCE(round(sum("widthIn")::numeric,2),0)-COALESCE(round(coalesce(sum("widthOut"),0)::numeric,2),0)<>0
-			)
+			) and "operationId" <> ${+OPERATIONS.assemble.id}
         GROUP BY 
 			pp,
 			"userId",

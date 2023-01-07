@@ -40,6 +40,7 @@ export interface iDataProductTable {
     storeId?: number;
     model?: string;
     userId?: number;
+    pp?: number;
     managerId?: number;
     workpieceTypeId?: number;
     colorId?: number;

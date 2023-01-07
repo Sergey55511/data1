@@ -67,8 +67,9 @@ model Data {
 
 model DataProduct {
   id              Int             @id @default(autoincrement())
-  dateSystem      DateTime?        @default(now()) @db.Date()
-  date            DateTime?        @default(now()) @db.Date()
+  dateSystem      DateTime?       @default(now()) @db.Date()
+  date            DateTime?       @default(now()) @db.Date()
+  pp              Int?
   storeId         Int?
   Stores          Stores?         @relation(fields: [storeId], references: [id])
   model           String

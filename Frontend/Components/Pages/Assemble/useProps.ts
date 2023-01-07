@@ -127,6 +127,7 @@ export const useProps = () => {
         setState(new State());
         setModel('');
         setSelectedRows([]);
+        setErrorText('');
     };
 
     const data = useData(state, model, resetState);

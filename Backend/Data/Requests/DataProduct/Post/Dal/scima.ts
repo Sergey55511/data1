@@ -2,6 +2,7 @@ export const schema = {
     type: 'object',
     properties: {
         storeId: { type: 'integer' },
+        pp: { type: 'integer' },
         model: { type: 'string' },
         userId: { type: 'integer' },
         managerId: { type: 'integer' },

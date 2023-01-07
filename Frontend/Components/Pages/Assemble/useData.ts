@@ -108,6 +108,7 @@ export const useData = (state: State, model: string, resetState: () => void) => 
         const data: iDataProductTable[] = [
             {
                 storeId: loginStore.user.storeId,
+                pp,
                 model,
                 articleId,
                 operationId: OPERATIONS.assemble.id,

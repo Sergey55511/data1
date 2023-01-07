@@ -8,6 +8,7 @@ export const dal = (params: { [key: string]: any }): iParams => {
     const getNumber = (v: any) => (v ? +v : undefined);
     const data: iParams = {
         storeId: getNumber(params.storeId),
+        pp: getNumber(params.pp),
         model: params.model,
         userId: getNumber(params.userId),
         managerId: getNumber(params.managerId),
