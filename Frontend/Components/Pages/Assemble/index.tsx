@@ -37,10 +37,7 @@ export const Assemble = () => {
                             type="primary"
                             disabled={params.isDisabled}
                             onClick={params.submitHandler}
-                            loading={
-                                params.data.submitHandler.isLoading ||
-                                params.data.getResult.isLoading
-                            }
+                            loading={params.data.submitHandler.isLoading}
                         >
                             Сохранить
                         </Button>

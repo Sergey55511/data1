@@ -2,11 +2,7 @@ import { useMutation } from '@tanstack/react-query';
 import { notification } from 'antd';
 import { OPERATIONS, STATE, WORKPIECETYPE } from '../../../../Shared/constants';
 import { iData, iDataProductTable } from '../../../../Shared/Types/interfaces';
-import {
-    moveToWork,
-    postDataProduct,
-    postOrderResult,
-} from '../../../Store/OperationStore/Api';
+import { moveToWork, postDataProduct } from '../../../Store/OperationStore/Api';
 import { useStores } from '../../../Store/useStores';
 import { getLosseObject, prepareDataTable } from '../../Helpers';
 import { State } from './useProps';
@@ -25,7 +21,7 @@ export const useData = (state: State, model: string, resetState: () => void) => 
         );
     };
 
-    const moveOutProfitHandler = async (rows: iData[]) => {
+    const submitHandlerFoo = async (rows: iData[]) => {
         const dataProfit = rows.map((item) => {
             const res = prepareDataTable(item);
             const moneyOut = getCode(item);
@@ -48,16 +44,17 @@ export const useData = (state: State, model: string, resetState: () => void) => 
             isSetArticleId: true,
         });
 
-        await moveOutDefectHandler({
+        const props = {
             rows,
             pp: moveToWorkRes.pp,
             articleId: moveToWorkRes.articleId,
-        });
-        await getResultHandler({
-            rows,
-            pp: moveToWorkRes.pp,
-            articleId: moveToWorkRes.articleId,
-        });
+        };
+
+        await moveOutDefectHandler(props);
+        await getResultHandler(props);
+        await getResultDefects(props);
+
+        return props;
     };
 
     const moveOutDefectHandler = async ({
@@ -180,10 +177,13 @@ export const useData = (state: State, model: string, resetState: () => void) => 
         });
     };
 
-    const getResult = useMutation(getResultHandler, {
-        onSuccess: () => {
+    const submitHandler = useMutation(submitHandlerFoo, {
+        onSuccess: (res) => {
             resetState();
-            notification.success({ message: 'Успешно' });
+            notification.success({
+                message: 'Успешно',
+                description: `Принято изделие № ${res.articleId}`,
+            });
         },
         onError: () => {
             notification.error({
@@ -193,29 +193,5 @@ export const useData = (state: State, model: string, resetState: () => void) => 
         },
     });
 
-    const submitHandler = useMutation(moveOutProfitHandler, {
-        onSuccess: (res, rows) => {
-            moveOutDefect.mutate({ rows, pp: res.pp, articleId: res.articleId });
-        },
-        onError: () => {
-            notification.error({
-                message: 'Ошибка',
-                description: 'Свяжитель с администратором',
-            });
-        },
-    });
-
-    const moveOutDefect = useMutation(moveOutDefectHandler, {
-        onSuccess: (_, res) => {
-            getResult.mutate({ rows: res.rows, pp: res.pp, articleId: res.articleId });
-        },
-        onError: () => {
-            notification.error({
-                message: 'Ошибка',
-                description: 'Свяжитель с администратором',
-            });
-        },
-    });
-
-    return { submitHandler, getResult };
+    return { submitHandler };
 };
