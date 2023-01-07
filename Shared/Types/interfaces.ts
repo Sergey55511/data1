@@ -35,6 +35,28 @@ export interface iShared {
     numDocument: string;
     countRows: number;
 }
+
+export interface iDataProductTable {
+    storeId?: number;
+    model?: string;
+    userId?: number;
+    managerId?: number;
+    workpieceTypeId?: number;
+    colorId?: number;
+    length?: number;
+    gradeId?: number;
+    stateId?: number;
+    articleId?: number;
+    recipientId?: number;
+    operationId?: number;
+    numDocument?: String;
+    widthIn?: number;
+    widthOut?: number;
+    moneyIn?: number;
+    moneyOut?: number;
+    countItemsIn?: number;
+    countItemsOut?: number;
+}
 export interface iDataTable {
     id?: number;
     lot?: number;

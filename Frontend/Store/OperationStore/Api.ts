@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { iData, iDataTable } from '../../../Shared/Types/interfaces';
+import { iData, iDataProductTable, iDataTable } from '../../../Shared/Types/interfaces';
 
 export const leftovers = (storeId: number) => {
     return axios({
@@ -76,7 +76,7 @@ export const moveToWork = (data: {
         url: `/api/data/moveToWork`,
         method: 'POST',
         data,
-    }).then((res) => res.data);
+    }).then((res) => res.data as { count?: number; pp?: number; articleId?: number });
 };
 
 export const mixingLot = (data: {
@@ -118,6 +118,13 @@ export const mixingSize = (data: {
 export const postOrderResult = (data: iDataTable[]) => {
     return axios({
         url: `/api/data/orders/order`,
+        method: 'POST',
+        data,
+    }).then((res) => res.data);
+};
+export const postDataProduct = (data: iDataProductTable[]) => {
+    return axios({
+        url: `/api/dataproduct`,
         method: 'POST',
         data,
     }).then((res) => res.data);

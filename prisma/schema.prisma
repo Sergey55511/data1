@@ -65,6 +65,41 @@ model Data {
   task             Int?
 }
 
+model DataProduct {
+  id              Int             @id @default(autoincrement())
+  dateSystem      DateTime?        @default(now()) @db.Date()
+  date            DateTime?        @default(now()) @db.Date()
+  storeId         Int?
+  Stores          Stores?         @relation(fields: [storeId], references: [id])
+  model           String
+  userId          Int
+  Users           Users           @relation(fields: [userId], references: [id])
+  managerId       Int?
+  Managers        Managers?       @relation(fields: [managerId], references: [id])
+  workpieceTypeId Int
+  workpieceType   ResultsAssemble @relation(fields: [workpieceTypeId], references: [id])
+  colorId         Int
+  color           ColorsAssemble  @relation(fields: [colorId], references: [id])
+  length          Int
+  gradeId         Int
+  grade           GradesAssemble  @relation(fields: [gradeId], references: [id])
+  stateId         Int
+  State           State           @relation(fields: [stateId], references: [id])
+  articleId       Int
+  recipientId     Int?
+  Recipient       Recipients?     @relation(fields: [recipientId], references: [id])
+  operationId     Int?
+  Operations      Operations?     @relation(fields: [operationId], references: [id])
+  numDocument     String?
+  widthIn         Float?
+  widthOut        Float?
+  moneyIn         Float?
+  moneyOut        Float?
+  countItemsIn    Int?
+  countItemsOut   Int?
+  active          Boolean         @default(true)
+}
+
 model Bridge {
   id              Int            @id @default(autoincrement())
   Store           Stores?        @relation(fields: [storeId], references: [id])
@@ -93,6 +128,7 @@ model Managers {
   active            Boolean             @default(true)
   Data              Data[]
   ManagerOperations ManagerOperations[]
+  DataProduct       DataProduct[]
 }
 
 model ManagerOperations {
@@ -105,15 +141,16 @@ model ManagerOperations {
 }
 
 model Users {
-  id       Int     @id @default(autoincrement())
-  login    String  @unique
-  password String
-  key      String?
-  status   String?
-  store    Stores? @relation(fields: [storeId], references: [id])
-  activ    Boolean @default(true)
-  storeId  Int?    @map("storesId")
-  Data     Data[]
+  id          Int           @id @default(autoincrement())
+  login       String        @unique
+  password    String
+  key         String?
+  status      String?
+  store       Stores?       @relation(fields: [storeId], references: [id])
+  activ       Boolean       @default(true)
+  storeId     Int?          @map("storesId")
+  Data        Data[]
+  DataProduct DataProduct[]
 }
 
 model Stores {
@@ -126,6 +163,7 @@ model Stores {
   Managers              Managers[]
   Recipients            Recipients[]
   Brige                 Bridge[]
+  DataProduct           DataProduct[]
 }
 
 model Operations {
@@ -140,6 +178,7 @@ model Operations {
   StateOperationBridge         StateOperationBridge[]
   Brige                        Bridge[]
   OperationWorkPieceTypeBridge OperationWorkPieceTypeBridge[]
+  DataProduct                  DataProduct[]
 }
 
 model StoreOperationsBridge {
@@ -311,6 +350,7 @@ model State {
   active               Boolean                @default(true)
   Data                 Data[]
   StateOperationBridge StateOperationBridge[]
+  DataProduct          DataProduct[]
 }
 
 model Channel {
@@ -321,12 +361,13 @@ model Channel {
 }
 
 model Recipients {
-  id        Int     @id @default(autoincrement())
-  recipient String
-  active    Boolean @default(true)
-  Data      Data[]
-  Stores    Stores? @relation(fields: [storeId], references: [id])
-  storeId   Int?
+  id          Int           @id @default(autoincrement())
+  recipient   String
+  active      Boolean       @default(true)
+  Data        Data[]
+  Stores      Stores?       @relation(fields: [storeId], references: [id])
+  storeId     Int?
+  DataProduct DataProduct[]
 }
 
 model VariantsAssemble {
@@ -342,9 +383,10 @@ model typeAssemble {
 }
 
 model ColorsAssemble {
-  id            Int     @id @default(autoincrement())
+  id            Int           @id @default(autoincrement())
   colorAssemble String
-  active        Boolean @default(true)
+  active        Boolean       @default(true)
+  DataProduct   DataProduct[]
 }
 
 model YarnsAssemble {
@@ -354,13 +396,15 @@ model YarnsAssemble {
 }
 
 model GradesAssemble {
-  id            Int     @id @default(autoincrement())
+  id            Int           @id @default(autoincrement())
   gradeAssemble String
-  active        Boolean @default(true)
+  active        Boolean       @default(true)
+  DataProduct   DataProduct[]
 }
 
 model ResultsAssemble {
-  id             Int     @id @default(autoincrement())
+  id             Int           @id @default(autoincrement())
   resultAssemble String
-  active         Boolean @default(true)
+  active         Boolean       @default(true)
+  DataProduct    DataProduct[]
 }

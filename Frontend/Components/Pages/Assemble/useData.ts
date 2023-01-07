@@ -1,8 +1,12 @@
 import { useMutation } from '@tanstack/react-query';
 import { notification } from 'antd';
 import { OPERATIONS, STATE, WORKPIECETYPE } from '../../../../Shared/constants';
-import { iData } from '../../../../Shared/Types/interfaces';
-import { moveToWork, postOrderResult } from '../../../Store/OperationStore/Api';
+import { iData, iDataProductTable } from '../../../../Shared/Types/interfaces';
+import {
+    moveToWork,
+    postDataProduct,
+    postOrderResult,
+} from '../../../Store/OperationStore/Api';
 import { useStores } from '../../../Store/useStores';
 import { getLosseObject, prepareDataTable } from '../../Helpers';
 import { State } from './useProps';
@@ -36,12 +40,23 @@ export const useData = (state: State, model: string, resetState: () => void) => 
             return res;
         });
 
-        return await moveToWork({
+        const moveToWorkRes = await moveToWork({
             data: dataProfit,
             maxId,
             storeId,
             isSetNewPP: true,
             isSetArticleId: true,
+        });
+
+        await moveOutDefectHandler({
+            rows,
+            pp: moveToWorkRes.pp,
+            articleId: moveToWorkRes.articleId,
+        });
+        await getResultHandler({
+            rows,
+            pp: moveToWorkRes.pp,
+            articleId: moveToWorkRes.articleId,
         });
     };
 
@@ -54,7 +69,6 @@ export const useData = (state: State, model: string, resetState: () => void) => 
         pp?: number;
         articleId?: number;
     }) => {
-
         const dataDefect = rows
             .filter((item) => item.defect)
             .map((item) => {
@@ -94,10 +108,10 @@ export const useData = (state: State, model: string, resetState: () => void) => 
     }) => {
         const code = rows.reduce((res, item) => (res += getCode(item)), 0);
 
-        const data: iData[] = [
+        const data: iDataProductTable[] = [
             {
+                storeId: loginStore.user.storeId,
                 model,
-                pp,
                 articleId,
                 operationId: OPERATIONS.assemble.id,
                 userId: loginStore.user.id,
@@ -106,32 +120,64 @@ export const useData = (state: State, model: string, resetState: () => void) => 
                 countItemsIn: getNumber(state.countItemIn.value),
                 stateId: STATE.createdProduct.id,
                 moneyIn: code,
+                workpieceTypeId: getNumber(state.typeBillet.value),
+                colorId: getNumber(state.color.value),
+                length: getNumber(state.length.value),
+                gradeId: getNumber(state.grade.value),
             },
         ];
 
+        return await postDataProduct(data);
+    };
+
+    const getResultDefects = async ({
+        rows,
+        pp,
+        articleId,
+    }: {
+        rows: iData[];
+        pp?: number;
+        articleId?: number;
+    }) => {
         const defectValue = rows.reduce(
             (res, item) => (res += getNumber(item.defect) ?? 0),
             0,
         );
 
-        const dataLosses = {
-            ...data[0],
-            model: undefined,
-            countItemsIn: undefined,
-            articleId: undefined,
+        const data: iData = {
+            storeId: loginStore.user.storeId,
+            operationId: OPERATIONS.assemble.id,
+            userId: loginStore.user.id,
+            managerId: getNumber(state.manager.value),
+            widthIn: getNumber(state.widthIn.value),
+            stateId: STATE.createdProduct.id,
+            moneyIn: undefined,
+            workpieceTypeId: getNumber(state.typeBillet.value),
+            colorId: getNumber(state.color.value),
+            gradeId: getNumber(state.grade.value),
+            pp,
+            articleId,
         };
 
+        let res: iData[] = [];
+
         if (defectValue) {
-            data.push(getLosseObject(dataLosses, WORKPIECETYPE.defect.id, defectValue));
+            res = [...res, getLosseObject(data, WORKPIECETYPE.defect.id, defectValue)];
         }
 
         if (state.losses.value) {
-            data.push(
-                getLosseObject(dataLosses, WORKPIECETYPE.losses.id, +state.losses.value),
-            );
+            res = [
+                ...res,
+                getLosseObject(data, WORKPIECETYPE.losses.id, +state.losses.value),
+            ];
         }
-
-        return await postOrderResult(data);
+        return await moveToWork({
+            data: res,
+            maxId,
+            storeId,
+            isSetNewPP: false,
+            isSetArticleId: false,
+        });
     };
 
     const getResult = useMutation(getResultHandler, {

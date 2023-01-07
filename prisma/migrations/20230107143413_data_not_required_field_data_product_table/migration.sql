@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE "DataProduct" ALTER COLUMN "dateSystem" DROP NOT NULL,
+ALTER COLUMN "date" DROP NOT NULL;
