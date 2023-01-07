@@ -40,6 +40,18 @@ export const Form = ({ selectedRows, state, setState, model, setModel }: iProps)
                             </Radio.Group>
                         </div>
                     </Row>
+                    <Row label={'Сборщик'}>
+                        <SelectField
+                            {...getSelectProps('manager')}
+                            selectProps={{
+                                loading: data.managers.isLoading,
+                            }}
+                            options={data.managers.data?.map((item) => ({
+                                caption: item.name,
+                                value: item.id,
+                            }))}
+                        />
+                    </Row>
                     <Row label={'Тип заготовки'}>
                         <SelectField
                             {...getSelectProps('typeBillet')}

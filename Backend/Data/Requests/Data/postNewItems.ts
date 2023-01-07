@@ -27,7 +27,7 @@ export const postNewItems = async <T>(
     const dataPrepared = data?.map((item) => ({
         ...item,
         date: moment(item.date)?.toDate(),
-        pp,
+        pp: pp ? pp : item.pp,
         articleId,
     }));
 

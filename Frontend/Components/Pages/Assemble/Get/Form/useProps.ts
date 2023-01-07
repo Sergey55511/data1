@@ -1,5 +1,6 @@
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { RESULTASSEMBLE, WORKPIECETYPE } from '../../../../../../Shared/constants';
+import { round } from '../../../../../../Shared/Helpers';
 import { iData } from '../../../../../../Shared/Types/interfaces';
 import { State } from '../../useProps';
 import { useData } from './useData';
@@ -29,20 +30,25 @@ export const useProps = (
     const data = useData();
 
     useEffect(() => {
-        let res = '';
         const ttlSum = selectedRows.reduce(
             (res, item) => (res += getNum(item.widthOut)),
             0,
         );
         setState((state) => {
             const widthIn = getNum(state.widthIn.value);
-            const losses = ttlSum - widthIn;
+            let losses = ttlSum - widthIn;
+            losses = round(losses);
             const newValue = losses ? `${losses}` : '';
 
             if (state.losses.value == newValue) return state;
             state.losses.value = newValue;
             return { ...state };
         });
+    }, [state, selectedRows]);
+
+    useEffect(() => {
+        let res = '';
+
         if (state.typeBillet.value == `${RESULTASSEMBLE.chaplet.id || ''}`) {
             const minaretItem = selectedRows.find(
                 (item) => item.workpieceTypeId == WORKPIECETYPE.minaret.id,

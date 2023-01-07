@@ -24,16 +24,9 @@ model Data {
   countItemsIn     Int?
   countItemsOut    Int?
   workingHours     Int?
-  exercise         String?
-  numProducts      Int?
-  numMoving        Int?
   moneyIn          Float?
   moneyOut         Float?
-  moneyDefect      Float?
-  defect           Float?
   typeOfProcessing String?
-  stock            String?
-  shade            String?
   materialGroup    MaterialGroup? @relation(fields: [materialGroupId], references: [id])
   materialGroupId  Int?
   WorkpieceType    WorkpieceType? @relation(fields: [workpieceTypeId], references: [id])

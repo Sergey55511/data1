@@ -5,7 +5,6 @@ import { getColumnProps } from '../../../Shared/Table/Helpers/getColumnProps';
 import { KEYSLEFTOVERS } from '../../../Shared/Table/constants';
 import { getFilteredleftovers } from '../../../Shared/Table/Helpers/getFilteredleftovers';
 import { InputNumber, tValue } from '../../../Shared/InputNumber';
-import { SetStateAction } from 'react';
 
 export const useColumns = ({
     data,

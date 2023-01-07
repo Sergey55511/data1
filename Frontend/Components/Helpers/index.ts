@@ -187,7 +187,6 @@ export const prepareDataTable = (data: iData): iDataTable => {
         'countItemsOut',
         'widthOut',
         'widthIn',
-        'defect',
         'date',
         'moneyIn',
         'moneyOut',

@@ -5,5 +5,10 @@ export const Wrapper = styled.div`
         display: flex;
         justify-content: space-between;
         margin-bottom: 16px;
+        .leftButtons {
+            display: flex;
+            align-items: center;
+            column-gap: 16px;
+        }
     }
 `;

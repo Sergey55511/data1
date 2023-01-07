@@ -1,12 +1,10 @@
 import { useMutation } from '@tanstack/react-query';
 import { notification } from 'antd';
-import { Dispatch, SetStateAction } from 'react';
 import { OPERATIONS, STATE, WORKPIECETYPE } from '../../../../Shared/constants';
 import { iData } from '../../../../Shared/Types/interfaces';
-import { postManagerOperations } from '../../../Store/Lists/api';
-import { getMaxId, moveToWork, postOrderResult } from '../../../Store/OperationStore/Api';
+import { moveToWork, postOrderResult } from '../../../Store/OperationStore/Api';
 import { useStores } from '../../../Store/useStores';
-import { getLosseObject, prepareDataTable, sendData } from '../../Helpers';
+import { getLosseObject, prepareDataTable } from '../../Helpers';
 import { State } from './useProps';
 
 export const useData = (state: State, model: string, resetState: () => void) => {
@@ -23,25 +21,66 @@ export const useData = (state: State, model: string, resetState: () => void) => 
         );
     };
 
-    const moveOutHandler = async (rows: iData[]) => {
-        const data = rows.map((item) => {
+    const moveOutProfitHandler = async (rows: iData[]) => {
+        const dataProfit = rows.map((item) => {
             const res = prepareDataTable(item);
             const moneyOut = getCode(item);
+            res.userId = loginStore.user.id;
+            res.managerId = getNumber(state.manager.value);
+            res.storeId = loginStore.user.storeId;
             res.moneyOut = moneyOut;
             res.widthOut = getNumber(res.widthOut);
-            res.defect = getNumber(res.defect);
+            res.defect = undefined;
             res.countItemsOut = getNumber(res.countItemsOut);
             res.operationId = OPERATIONS.assemble.id;
             return res;
         });
 
         return await moveToWork({
-            data,
+            data: dataProfit,
             maxId,
             storeId,
             isSetNewPP: true,
             isSetArticleId: true,
         });
+    };
+
+    const moveOutDefectHandler = async ({
+        rows,
+        pp,
+        articleId,
+    }: {
+        rows: iData[];
+        pp?: number;
+        articleId?: number;
+    }) => {
+
+        const dataDefect = rows
+            .filter((item) => item.defect)
+            .map((item) => {
+                const res = prepareDataTable(item);
+                res.userId = loginStore.user.id;
+                res.managerId = getNumber(state.manager.value);
+                res.pp = pp;
+                res.storeId = loginStore.user.storeId;
+                res.moneyOut = undefined;
+                res.widthOut = getNumber(item.defect);
+                res.countItemsOut = getNumber(res.countItemsOut);
+                res.operationId = OPERATIONS.assemble.id;
+                return res;
+            });
+
+        const res = await moveToWork({
+            data: dataDefect,
+            maxId,
+            storeId,
+            isSetNewPP: false,
+            isSetArticleId: false,
+        });
+
+        res.pp = pp;
+        res.articleId = articleId;
+        return res;
     };
 
     const getResultHandler = async ({
@@ -60,6 +99,9 @@ export const useData = (state: State, model: string, resetState: () => void) => 
                 model,
                 pp,
                 articleId,
+                operationId: OPERATIONS.assemble.id,
+                userId: loginStore.user.id,
+                managerId: getNumber(state.manager.value),
                 widthIn: getNumber(state.widthIn.value),
                 countItemsIn: getNumber(state.countItemIn.value),
                 stateId: STATE.createdProduct.id,
@@ -67,9 +109,25 @@ export const useData = (state: State, model: string, resetState: () => void) => 
             },
         ];
 
+        const defectValue = rows.reduce(
+            (res, item) => (res += getNumber(item.defect) ?? 0),
+            0,
+        );
+
+        const dataLosses = {
+            ...data[0],
+            model: undefined,
+            countItemsIn: undefined,
+            articleId: undefined,
+        };
+
+        if (defectValue) {
+            data.push(getLosseObject(dataLosses, WORKPIECETYPE.defect.id, defectValue));
+        }
+
         if (state.losses.value) {
             data.push(
-                getLosseObject(data[0], WORKPIECETYPE.losses.id, +state.losses.value),
+                getLosseObject(dataLosses, WORKPIECETYPE.losses.id, +state.losses.value),
             );
         }
 
@@ -89,9 +147,9 @@ export const useData = (state: State, model: string, resetState: () => void) => 
         },
     });
 
-    const submitHandler = useMutation(moveOutHandler, {
+    const submitHandler = useMutation(moveOutProfitHandler, {
         onSuccess: (res, rows) => {
-            getResult.mutate({ rows, pp: res.pp, articleId: res.articleId });
+            moveOutDefect.mutate({ rows, pp: res.pp, articleId: res.articleId });
         },
         onError: () => {
             notification.error({
@@ -100,5 +158,18 @@ export const useData = (state: State, model: string, resetState: () => void) => 
             });
         },
     });
+
+    const moveOutDefect = useMutation(moveOutDefectHandler, {
+        onSuccess: (_, res) => {
+            getResult.mutate({ rows: res.rows, pp: res.pp, articleId: res.articleId });
+        },
+        onError: () => {
+            notification.error({
+                message: 'Ошибка',
+                description: 'Свяжитель с администратором',
+            });
+        },
+    });
+
     return { submitHandler, getResult };
 };

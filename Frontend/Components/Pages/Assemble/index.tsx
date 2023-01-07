@@ -1,4 +1,4 @@
-import { Badge, Button, Radio } from 'antd';
+import { Badge, Button, Popover, Radio } from 'antd';
 import { Title } from '../../Shared/Title';
 import { AssembleCreate } from './Create';
 import { AssembleGet } from './Get';
@@ -12,29 +12,40 @@ export const Assemble = () => {
         <Wrapper>
             <Title text="Сборка" />
             <div className="buttonWrapper">
-                <Radio.Group
-                    value={params.stateButton}
-                    onChange={(e) => params.setStateButton(e.target.value)}
-                >
-                    <Radio.Button value="assembleCreate">Остаток</Radio.Button>
-                    <Badge count={params.countTasks} size="small">
-                        <Radio.Button value="assembleGet">
-                            Принять результат работы
-                        </Radio.Button>
-                    </Badge>
-                </Radio.Group>
-
-                <Button
-                    type="primary"
-                    disabled={params.isDisabled}
-                    onClick={params.submitHandler}
-                    loading={
-                        params.data.submitHandler.isLoading ||
-                        params.data.getResult.isLoading
-                    }
-                >
-                    Сохранить
-                </Button>
+                <div className="leftButtons">
+                    <Radio.Group
+                        value={params.stateButton}
+                        onChange={(e) => params.setStateButton(e.target.value)}
+                    >
+                        <Radio.Button value="assembleCreate">Остаток</Radio.Button>
+                        <Badge count={params.countTasks} size="small">
+                            <Radio.Button value="assembleGet">
+                                Принять результат работы
+                            </Radio.Button>
+                        </Badge>
+                    </Radio.Group>
+                    <div>Потери: {params.state.losses.value}</div>
+                </div>
+                <Badge count={params.errorText ? '!' : ''}>
+                    <Popover
+                        open={params.errorText ? undefined : false}
+                        title={'Ошибка'}
+                        content={params.errorText}
+                        placement="bottomLeft"
+                    >
+                        <Button
+                            type="primary"
+                            disabled={params.isDisabled}
+                            onClick={params.submitHandler}
+                            loading={
+                                params.data.submitHandler.isLoading ||
+                                params.data.getResult.isLoading
+                            }
+                        >
+                            Сохранить
+                        </Button>
+                    </Popover>
+                </Badge>
             </div>
             <div>
                 {params.stateButton == 'assembleCreate' && (
