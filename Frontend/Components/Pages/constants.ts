@@ -14,10 +14,12 @@ export const pages = {
     moveIn: 'moveIn',
     moveInDetales: 'moveInDetales',
     assemble: 'assemble',
+    products: 'products',
 };
 
 export const ROUTES = {
     root: '/',
+    products: '/products',
     login: '/login',
     orders: '/orders',
     movein: '/operations/movein',

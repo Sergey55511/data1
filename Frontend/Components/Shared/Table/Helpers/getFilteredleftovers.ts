@@ -1,11 +1,11 @@
 import { iData } from '../../../../../Shared/Types/interfaces';
 import { FilterValue } from 'antd/es/table/interface';
 
-export const getFilteredleftovers = ({
+export const getFilteredleftovers = <T>({
     data,
     filters,
 }: {
-    data?: iData[];
+    data?: T[];
     filters: Record<string, FilterValue | null>;
 }) => {
     return (

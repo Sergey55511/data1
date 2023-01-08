@@ -18,7 +18,7 @@ export const useColumns = (filters: Record<string, FilterValue | null>) => {
     const filteredleftovers = getFilteredleftovers({ data, filters });
 
     const getColumnPropsHoc = (dataIndex: string) =>
-        getColumnProps(dataIndex, filteredleftovers, filters);
+        getColumnProps<iData>(dataIndex, filteredleftovers, filters);
 
     const columns: ColumnsType<iData> = [];
     columns.push({

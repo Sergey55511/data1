@@ -1,6 +1,7 @@
 import { pages, tPages } from './constants';
 import { GetOrder } from './Orders/GetOrder';
 import Leftover from './Leftover';
+import Products from './Products';
 import { NewItem } from './Operations/MoveIn/NewItem';
 import { Orders } from './Orders';
 import { MoveOut } from './Operations/MoveOut';
@@ -10,6 +11,8 @@ import { Assemble } from './Assemble';
 
 export const PageSwitcher = ({ page }: { page: tPages }) => {
     switch (page) {
+        case pages.products:
+            return <Products />;
         case pages.leftover:
             return <Leftover />;
         case pages.newItem:

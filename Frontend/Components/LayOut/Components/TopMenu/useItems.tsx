@@ -22,7 +22,6 @@ export const useItems = () => {
     const { loginStore, OperationStore } = useStores();
     const ordersCount = OperationStore.orders.length;
     const sharedCount = OperationStore.shared.length;
-    const assembleCount = 0;
 
     const isMSC = loginStore.user.storeId == STORES.Moscow.id;
 
@@ -52,28 +51,34 @@ export const useItems = () => {
             key: ROUTES.root,
             icon: <DatabaseOutlined />,
         },
-        {
-            label: (
-                <Badge size="small" count={ordersCount} overflowCount={999}>
-                    <>Задачи</>
-                </Badge>
-            ),
-            key: ROUTES.orders,
-            icon: <StarOutlined />,
-        },
     ];
 
-    if (isMSC)
+    if (isMSC) {
         items.push({
-            label: (
-                <Badge size="small" count={assembleCount} overflowCount={999}>
-                    <>Сборка</>
-                </Badge>
-            ),
+            label: 'Остатки изделия',
+            key: ROUTES.products,
+            icon: <DatabaseOutlined />,
+        });
+    }
+
+    items.push({
+        label: (
+            <Badge size="small" count={ordersCount} overflowCount={999}>
+                <>Задачи</>
+            </Badge>
+        ),
+        key: ROUTES.orders,
+        icon: <StarOutlined />,
+    });
+
+    if (isMSC) {
+        items.push({
+            label: 'Сборка',
             key: ROUTES.assemble,
             icon: <DeploymentUnitOutlined />,
         });
-        
+    }
+
     items.push({
         label: (
             <Badge size="small" count={sharedCount} overflowCount={999}>

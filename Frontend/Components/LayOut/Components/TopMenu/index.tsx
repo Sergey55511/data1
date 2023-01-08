@@ -1,8 +1,5 @@
 import { Avatar, Menu, Tooltip } from 'antd';
-import {
-    UserOutlined,
-    BulbOutlined,
-} from '@ant-design/icons';
+import { UserOutlined, BulbOutlined } from '@ant-design/icons';
 import Link from 'next/link';
 import { Wrapper } from './style';
 import { observer } from 'mobx-react-lite';

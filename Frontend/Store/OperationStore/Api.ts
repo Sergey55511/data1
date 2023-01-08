@@ -1,5 +1,10 @@
 import axios from 'axios';
-import { iData, iDataProductTable, iDataTable } from '../../../Shared/Types/interfaces';
+import {
+    iData,
+    iDataProduct,
+    iDataProductTable,
+    iDataTable,
+} from '../../../Shared/Types/interfaces';
 
 export const leftovers = (storeId: number) => {
     return axios({
@@ -122,6 +127,15 @@ export const postOrderResult = (data: iDataTable[]) => {
         data,
     }).then((res) => res.data);
 };
+
+export const getDataProduct = (storeId: number) => {
+    return axios({
+        url: `/api/dataproduct`,
+        method: 'GET',
+        params: { storeId },
+    }).then((res) => res.data as iDataProduct[]);
+};
+
 export const postDataProduct = (data: iDataProductTable[]) => {
     return axios({
         url: `/api/dataproduct`,

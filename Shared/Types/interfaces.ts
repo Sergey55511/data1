@@ -58,6 +58,16 @@ export interface iDataProductTable {
     countItemsIn?: number;
     countItemsOut?: number;
 }
+
+export interface iDataProduct extends iDataProductTable {
+    workpieceType?: string;
+    color?: string;
+    grade?: string;
+    state?: string;
+    width: number;
+    count: number;
+    code: number;
+}
 export interface iDataTable {
     id?: number;
     lot?: number;
