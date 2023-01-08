@@ -1,7 +1,7 @@
 import { TableProps } from 'antd';
 import { observer } from 'mobx-react-lite';
 import { useEffect, useState } from 'react';
-import { iShared } from '../../../../../../Shared/Types/interfaces';
+import { iData, iShared } from '../../../../../../Shared/Types/interfaces';
 import { useStores } from '../../../../../Store/useStores';
 import { TableApp } from '../../../../Shared/Table';
 import { getColumnProps } from '../../../../Shared/Table/Helpers/getColumnProps';
@@ -49,7 +49,7 @@ export const MoveIn = observer(() => {
         return true;
     });
     const getColumnPropsHoc = (dataIndex: string) =>
-        getColumnProps(dataIndex, filteredData, filters);
+        getColumnProps<iData>(dataIndex, filteredData, filters);
 
     const columns: ColumnsType<iShared> = [
         {

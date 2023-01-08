@@ -1,9 +1,8 @@
-import { iData } from '../../../../../Shared/Types/interfaces';
+import { iDataProduct } from '../../../../../Shared/Types/interfaces';
 import type { TableProps } from 'antd/es/table';
 import { observer } from 'mobx-react-lite';
-import { Dispatch, SetStateAction, useRef, useState } from 'react';
+import { Dispatch, SetStateAction } from 'react';
 import { FilterValue } from 'antd/es/table/interface';
-import { MoveOutSoloHoc } from './Components/MoveOut';
 import { TableApp } from '../../../Shared/Table';
 import { useColumns } from './useСolumns';
 
@@ -16,10 +15,8 @@ export const TableLeftOvers = observer(
         setFilters: Dispatch<SetStateAction<Record<string, FilterValue | null>>>;
     }) => {
         const { columns, data } = useColumns(filters);
-        const recordRef = useRef<iData | undefined>();
-        const [isShowMoveOutSolo, setIsShowMoveOutSolo] = useState(false);
 
-        const handleChange: TableProps<iData>['onChange'] = (
+        const handleChange: TableProps<iDataProduct>['onChange'] = (
             _pagination,
             filters,
             _sorter,
@@ -30,21 +27,7 @@ export const TableLeftOvers = observer(
 
         return (
             <>
-                {isShowMoveOutSolo && (
-                    <MoveOutSoloHoc
-                        record={recordRef.current!}
-                        onClose={() => setIsShowMoveOutSolo(false)}
-                    />
-                )}
                 <TableApp
-                    onRow={(record) => {
-                        return {
-                            onDoubleClick: () => {
-                                recordRef.current = record;
-                                setIsShowMoveOutSolo(true);
-                            },
-                        };
-                    }}
                     columns={columns}
                     dataSource={data}
                     onChange={handleChange}
