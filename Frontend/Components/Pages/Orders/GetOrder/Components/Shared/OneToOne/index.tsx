@@ -34,7 +34,7 @@ export const OneToOne = (props: iProps) => {
                 />
             </Item>
             {props.isShowWorkingHours && (
-                <Item title="Время работы">
+                <Item title="Время работы мин.">
                     <InputNumber
                         placeholder="Введите данные"
                         value={params.state.workingHours}

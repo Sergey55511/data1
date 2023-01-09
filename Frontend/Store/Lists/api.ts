@@ -249,11 +249,11 @@ export const getModels = (workpieceTypeId?: number, profileId?: number) => {
     }).then((res) => res.data as iModel[]);
 };
 
-export const getProfile = (workpieceTypeId?: number) => {
+export const getProfile = (workpieceTypeId?: number, sizeRangeId?: number) => {
     return axios({
         url: `/api/list/profile`,
         method: 'GET',
-        params: { workpieceTypeId },
+        params: { workpieceTypeId, sizeRangeId },
     }).then((res) => res.data as iProfile[]);
 };
 export const getLengthModel = () => {

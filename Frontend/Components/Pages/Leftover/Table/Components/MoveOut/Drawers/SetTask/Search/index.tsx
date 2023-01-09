@@ -26,29 +26,28 @@ export const Search = ({
                 }))}
             />
             <SelectField
-                placeholder="Профиль"
-                value={state.profileId.value}
-                onChange={(v) => setValue('profileId', v)}
-                selectProps={{
-                    loading: data.profile.isLoading,
-                    disabled: !state.workpieceTypeId.value,
-                }}
-                options={data.profile.data?.map((item) => ({
-                    value: item.id,
-                    caption: item.profile,
-                }))}
-            />
-            <SelectField
                 placeholder="Размер"
                 value={state.sizeRangeModelId.value}
                 onChange={(v) => setValue('sizeRangeModelId', v)}
                 selectProps={{
                     loading: data.sizeRangeModel.isLoading,
-                    disabled: !state.profileId.value,
                 }}
                 options={data.sizeRangeModel.data?.map((item) => ({
                     value: item.id,
                     caption: item.sizeRange,
+                }))}
+            />
+            <SelectField
+                placeholder="Профиль"
+                value={state.profileId.value}
+                onChange={(v) => setValue('profileId', v)}
+                selectProps={{
+                    loading: data.profile.isFetching,
+                    disabled: !state.sizeRangeModelId.value,
+                }}
+                options={data.profile.data?.map((item) => ({
+                    value: item.id,
+                    caption: item.profile,
                 }))}
             />
         </Wrapper>

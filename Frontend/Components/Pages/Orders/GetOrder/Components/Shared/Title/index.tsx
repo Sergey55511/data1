@@ -63,7 +63,7 @@ export const Title = ({
                     <InputNumber
                         className="input"
                         value={workingHours ?? ''}
-                        placeholder="Рабочее время"
+                        placeholder="Время работы мин."
                         onChangeHandler={(v) => {
                             if (setWorkingHours) setWorkingHours(v ? `${v}` : '');
                         }}

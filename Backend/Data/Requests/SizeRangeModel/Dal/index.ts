@@ -2,18 +2,19 @@ import { checkSchema } from '../../../../Helpers/checkSchema';
 import { schema } from './scima';
 
 export interface iParams {
-    workpieceTypeId: number;
+    workpieceTypeId?: number;
     profileId?: number;
     size?: number;
     modelId?: number;
 }
 
 export const dal = (params: { [key: string]: any }): iParams => {
+    const getValue = (v: any) => (v ? +v : undefined);
     const data: iParams = {
-        workpieceTypeId: +params.workpieceTypeId,
-        profileId: params.profileId ? +params.profileId : undefined,
-        size: params.size ? +params.size : undefined,
-        modelId: params.modelId ? +params.modelId : undefined,
+        workpieceTypeId: getValue(params.workpieceTypeId),
+        profileId: getValue(params.profileId),
+        size: getValue(params.size),
+        modelId: getValue(params.modelId),
     };
 
     return checkSchema(data, schema);

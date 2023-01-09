@@ -6,6 +6,5 @@ export const schema = {
         size: { type: 'integer' },
         modelId: { type: 'integer' },
     },
-    required: ['workpieceTypeId'],
     additionalProperties: false,
 };

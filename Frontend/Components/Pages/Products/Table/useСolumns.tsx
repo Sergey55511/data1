@@ -21,19 +21,19 @@ export const useColumns = (filters: Record<string, FilterValue | null>) => {
     const columns: ColumnsType<iDataProduct> = [];
 
     columns.push({
-        ...getColumnPropsHoc('articleId'),
-        title: 'Код изделия',
+        ...getColumnPropsHoc('workpieceType'),
+        title: 'Тип изделия',
     });
     columns.push({
         ...getColumnPropsHoc('model'),
         title: 'Модель',
     });
     columns.push({
-        ...getColumnPropsHoc('workpieceType'),
-        title: 'Тип изделия',
-    });
+        ...getColumnPropsHoc('articleId'),
+        title: 'Номер изделия',
+    });  
     columns.push({
-        ...getColumnPropsHoc('stateId'),
+        ...getColumnPropsHoc('state'),
         title: 'Состояние',
     });
     columns.push({
@@ -50,11 +50,11 @@ export const useColumns = (filters: Record<string, FilterValue | null>) => {
     });
     columns.push({
         ...getColumnPropsHoc('width'),
-        title: 'Вес гр.',
+        title: 'Остаток гр.',
     });
     columns.push({
         ...getColumnPropsHoc('count'),
-        title: 'Штук',
+        title: 'Остаток шт.',
     });
 
     columns.push({

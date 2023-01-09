@@ -78,10 +78,14 @@ export const useProps = ({ onClose, record, operationId, setTask }: iProps) => {
     );
 
     const profile = useQuery(
-        ['profile', 'model'],
-        () => getProfile(state.workpieceTypeId.value),
+        ['profile', 'model', state.sizeRangeModelId.value],
+        () => getProfile(state.workpieceTypeId.value, state.sizeRangeModelId.value),
         {
-            enabled: !!(storeId && state.workpieceTypeId.value),
+            enabled: !!(
+                storeId &&
+                state.workpieceTypeId.value &&
+                state.sizeRangeModelId.value
+            ),
         },
     );
     const sizeRecord = useQuery(
@@ -95,26 +99,14 @@ export const useProps = ({ onClose, record, operationId, setTask }: iProps) => {
     const size = sizeRecord.data ? sizeRecord.data[0]?.size : 0;
 
     const sizeRangeModel = useQuery(
-        [
-            'sizeRangeModel',
-            'model',
-            state.workpieceTypeId.value,
-            state.profileId.value,
-            size,
-        ],
+        ['sizeRangeModel', 'model', state.workpieceTypeId.value, size],
         () =>
             getSizeRangeModel({
                 workpieceTypeId: state.workpieceTypeId.value,
-                profileId: state.profileId.value,
                 size,
             }),
         {
-            enabled: !!(
-                storeId &&
-                state.workpieceTypeId.value &&
-                state.profileId.value &&
-                size
-            ),
+            enabled: !!(storeId && state.workpieceTypeId.value && size),
         },
     );
 
@@ -151,9 +143,6 @@ export const useProps = ({ onClose, record, operationId, setTask }: iProps) => {
     useEffect(() => {
         setValue('profileId', undefined);
     }, [state.workpieceTypeId.value]);
-    useEffect(() => {
-        setValue('sizeRangeModelId', undefined);
-    }, [state.profileId.value]);
 
     return {
         data: { workpieceType, profile, sizeRangeModel, fullModels },
