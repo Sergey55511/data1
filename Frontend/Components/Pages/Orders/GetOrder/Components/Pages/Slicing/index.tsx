@@ -10,6 +10,7 @@ import { Field } from '../../../../../../Helpers/classes';
 import { usePostData } from './Components/Hooks/usePostData';
 import { OPERATIONS } from '../../../../../../../../Shared/constants';
 import { round } from '../../../../../../../../Shared/Helpers';
+import moment from 'moment';
 
 export interface iState {
     stateId: iField;
@@ -36,6 +37,7 @@ export const Slicing = observer(
         const [state, setState] = useState<iState[]>([]);
         const [losses, setLosses] = useState<number>(0);
         const [garbage, setGarbage] = useState<tValue>(undefined);
+        const [date, setDate] = useState<moment.Moment | undefined>(moment());
         const [defect, setDefect] = useState<tValue>(undefined);
         const [moveBack, setMoveBack] = useState<tValue>(undefined);
         const postData = usePostData();
@@ -127,6 +129,7 @@ export const Slicing = observer(
                 garbage,
                 defect,
                 moveBack,
+                date
             });
         };
 
@@ -145,6 +148,8 @@ export const Slicing = observer(
                     moveBack={moveBack}
                     losses={losses}
                     isLoading={postData?.isLoading}
+                    date={date}
+                    setDate={setDate}
                 />
                 <div>
                     {data.map((item, index) => (

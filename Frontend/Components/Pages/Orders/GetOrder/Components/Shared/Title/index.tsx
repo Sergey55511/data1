@@ -1,4 +1,4 @@
-import { Button } from 'antd';
+import { Button, DatePicker } from 'antd';
 import { InputNumber, tValue } from '../../../../../../Shared/InputNumber';
 import { Wrapper } from './style';
 import { confirmAction } from '../../../../../../Shared/ConfirmSubbmit';
@@ -17,6 +17,8 @@ export const Title = ({
     isLoading,
     pruning,
     setPruning,
+    date,
+    setDate,
 }: {
     subbmitHandler: () => void;
     addRowHandler: (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => void;
@@ -30,6 +32,8 @@ export const Title = ({
     defect?: tValue;
     losses?: number;
     isLoading?: boolean;
+    date?: moment.Moment | undefined;
+    setDate?: (value: moment.Moment | undefined) => void;
 }) => {
     const confirmSubbmit = () => {
         confirmAction({
@@ -41,6 +45,15 @@ export const Title = ({
             <a href="#" onClick={addRowHandler}>
                 Добавить строку
             </a>
+            {setDate && (
+                <div>
+                    <DatePicker
+                        className="input"
+                        value={date}
+                        onChange={(v) => setDate(v ?? undefined)}
+                    />
+                </div>
+            )}
             {setPruning && (
                 <div>
                     <InputNumber

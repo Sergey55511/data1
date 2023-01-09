@@ -60,20 +60,21 @@ export const prepareSubbmitData = ({
     defect?: tValue;
     moveBack?: tValue;
 }) => {
+    const recordDate = { ...record, date: data[0].date };
     if (losses) {
-        data.push(getLosseObject(record, WORKPIECETYPE.losses.id, +losses));
+        data.push(getLosseObject(recordDate, WORKPIECETYPE.losses.id, +losses));
     }
 
     if (defect) {
-        data.push(getLosseObject(record, WORKPIECETYPE.defect.id, +defect));
+        data.push(getLosseObject(recordDate, WORKPIECETYPE.defect.id, +defect));
     }
     if (garbage) {
-        data.push(getLosseObject(record, WORKPIECETYPE.garbage.id, +garbage));
+        data.push(getLosseObject(recordDate, WORKPIECETYPE.garbage.id, +garbage));
     }
     if (pruning) {
         let codePrun = record.widthOut ? (record.code || 0) / record.widthOut : 0;
         codePrun = codePrun * +pruning;
-        data.push(getLosseObject(record, WORKPIECETYPE.prunes.id, +pruning, codePrun));
+        data.push(getLosseObject(recordDate, WORKPIECETYPE.prunes.id, +pruning, codePrun));
     }
 
     if (moveBack) {
@@ -83,7 +84,7 @@ export const prepareSubbmitData = ({
             moveBack ? +moveBack : undefined,
         );
         data.push({
-            ...record,
+            ...recordDate,
             widthOut: +moveBack * -1,
             moneyOut: moveBackMoney,
         });
@@ -161,6 +162,7 @@ export const validation = (setState: (value: any) => void) => {
 export const prepareDataTable = (data: iData): iDataTable => {
     const dataTableKeys = [
         'lot',
+        'date',
         'numProduction',
         'pp',
         'articleId',

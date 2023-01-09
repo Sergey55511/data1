@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 export interface iUser {
     id?: number;
     login: string;
@@ -106,6 +108,7 @@ export interface iDataTable {
 }
 
 export interface iData extends iDataTable {
+    dateSystem?: moment.Moment;
     key?: number;
     userLogin?: string;
     recipient?: string;

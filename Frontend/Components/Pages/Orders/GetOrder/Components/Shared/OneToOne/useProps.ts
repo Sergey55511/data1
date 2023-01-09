@@ -61,6 +61,7 @@ export const useProps = ({ isCheckLosses, isShowChannel, record, stateId }: iPro
         const data: iData[] = [
             {
                 ...record,
+                date: state.date,
                 widthOut: undefined,
                 widthIn: state.widthIn,
                 stateId: stateId,

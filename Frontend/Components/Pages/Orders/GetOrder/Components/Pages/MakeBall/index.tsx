@@ -18,6 +18,8 @@ export const MakeBall = observer((props: iProps) => {
                 defect={params.defect}
                 losses={params.losses}
                 isLoading={params.isLoading}
+                date={params.date}
+                setDate={params.setDate}
             />
             <div>
                 {params.state.map((item, index) => (

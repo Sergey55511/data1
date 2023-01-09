@@ -1,8 +1,6 @@
 import { notification } from 'antd';
-import { observer } from 'mobx-react-lite';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import { OPERATIONS } from '../../../../../../../../Shared/constants';
 import {
     iData,
     iField,
@@ -10,12 +8,10 @@ import {
 } from '../../../../../../../../Shared/Types/interfaces';
 import { useStores } from '../../../../../../../Store/useStores';
 import { tValue } from '../../../../../../Shared/InputNumber';
-import { RowWrapper } from './RowWrapper';
-import { Wrapper } from './style';
 import { getTotalSum, sendData, validation } from '../../../../../../Helpers';
-import { Title } from '../../Shared/Title';
 import { Field } from '../../../../../../Helpers/classes';
 import { round } from '../../../../../../../../Shared/Helpers';
+import moment from 'moment';
 
 export interface iState {
     color: iField;
@@ -26,6 +22,7 @@ export interface iState {
 export const useProps = ({ record, stateId }: { record: iData; stateId: number }) => {
     const { OperationStore, ListsStore, loginStore } = useStores();
     const [state, setState] = useState<iState[]>([]);
+    const [date, setDate] = useState<moment.Moment | undefined>(moment());
     const [sizeRagne, setSizeRagne] = useState<iSizeRange[]>([]);
     const [losses, setLosses] = useState<number>(0);
     const [moveBack, setMoveBack] = useState<tValue>(undefined);
@@ -101,6 +98,7 @@ export const useProps = ({ record, stateId }: { record: iData; stateId: number }
         const codeOneItem = record.width ? code / totalSum : 0;
         const data: iData[] = state.map((item) => ({
             ...record,
+            date,
             colorId: item.color.value ? +item.color.value : undefined,
             widthOut: undefined,
             widthIn: +item.widthIn.value!,
@@ -133,5 +131,7 @@ export const useProps = ({ record, stateId }: { record: iData; stateId: number }
         moveBack,
         state,
         setState,
+        date,
+        setDate,
     };
 };

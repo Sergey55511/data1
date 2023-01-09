@@ -23,6 +23,8 @@ export const MakeMinalets = observer((props: { record: iData; stateId: number })
                 setDefect={params.setDefect}
                 pruning={params.pruning}
                 setPruning={params.setPruning}
+                date={params.date}
+                setDate={params.setDate}
             />
             <div>
                 {params.state.map((item, index) => (

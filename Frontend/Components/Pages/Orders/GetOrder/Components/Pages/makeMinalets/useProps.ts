@@ -7,6 +7,7 @@ import { tValue } from '../../../../../../Shared/InputNumber';
 import { getTotalSum, sendData, validation } from '../../../../../../Helpers';
 import { Field } from '../../../../../../Helpers/classes';
 import { round } from '../../../../../../../../Shared/Helpers';
+import moment from 'moment';
 
 export interface iState {
     workpieceType: iField;
@@ -26,6 +27,7 @@ export const useProps = ({ record, stateId }: { record: iData; stateId: number }
     const [state, setState] = useState<iState[]>([]);
     const [losses, setLosses] = useState<number>(0);
     const [garbage, setGarbage] = useState<tValue>(undefined);
+    const [date, setDate] = useState<moment.Moment | undefined>(moment());
     const [defect, setDefect] = useState<tValue>(undefined);
     const [pruning, setPruning] = useState<tValue>(undefined);
     const [moveBack, setMoveBack] = useState<tValue>(undefined);
@@ -109,10 +111,9 @@ export const useProps = ({ record, stateId }: { record: iData; stateId: number }
         const code = record.code ? record.code * -1 : 0;
         const codeOneItem = record.width ? code / totalSum : 0;
 
-        console.log('state', JSON.parse(JSON.stringify(state)));
-
         const data: iData[] = state.map((item) => ({
             ...record,
+            date,
             widthOut: undefined,
             fractionId: undefined,
             productionId: undefined,
@@ -126,8 +127,6 @@ export const useProps = ({ record, stateId }: { record: iData; stateId: number }
             countItemsIn: getIdValue(item.countIn.value),
             moneyIn: item.widthIn.value ? codeOneItem * +item.widthIn.value : 0,
         }));
-
-        console.log('data', JSON.parse(JSON.stringify(data)));
 
         sendData({
             data,
@@ -159,5 +158,7 @@ export const useProps = ({ record, stateId }: { record: iData; stateId: number }
         setPruning,
         defect,
         setDefect,
+        date,
+        setDate,
     };
 };

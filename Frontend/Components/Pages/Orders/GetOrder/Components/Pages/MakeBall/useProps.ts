@@ -1,4 +1,5 @@
 import { notification } from 'antd';
+import moment from 'moment';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { OPERATIONS } from '../../../../../../../../Shared/constants';
@@ -29,6 +30,7 @@ export const useProps = ({ record, stateId }: iProps) => {
     const { ListsStore, loginStore, OperationStore } = useStores();
     const [grades, setGrades] = useState<iGrade[]>([]);
     const [nextType, setNextType] = useState<number | undefined>(undefined);
+    const [date, setDate] = useState<moment.Moment | undefined>(moment());
     const [state, setState] = useState<iState[]>([]);
     const [defect, setDefect] = useState<tValue>(undefined);
     const [losses, setLosses] = useState<number>(0);
@@ -152,6 +154,7 @@ export const useProps = ({ record, stateId }: iProps) => {
         const codeOneItem = record.width ? code / totalSum : 0;
         const data: iData[] = state.map((item) => ({
             ...record,
+            date,
             workpieceTypeId: nextType,
             sizeRangeId: +item.sizeRange.value,
             gradeId: +item.grade.value,
@@ -195,5 +198,7 @@ export const useProps = ({ record, stateId }: iProps) => {
         sizeRange,
         grades,
         removeRow,
+        date,
+        setDate,
     };
 };

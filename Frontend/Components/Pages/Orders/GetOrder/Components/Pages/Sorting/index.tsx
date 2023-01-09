@@ -1,5 +1,6 @@
 import { notification } from 'antd';
 import { observer } from 'mobx-react-lite';
+import moment from 'moment';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { round } from '../../../../../../../../Shared/Helpers';
@@ -27,6 +28,7 @@ export const Sorting = observer(
         const [state, setState] = useState<iState[]>([]);
         const [grade, setGrade] = useState<iGrade[]>([]);
         const [moveBack, setMoveBack] = useState<tValue>(undefined);
+        const [date, setDate] = useState<moment.Moment | undefined>(moment());
         const [losses, setLosses] = useState<number>(0);
         const [isLoading, setIsLoading] = useState(false);
         const router = useRouter();
@@ -77,7 +79,6 @@ export const Sorting = observer(
             }
 
             const isError = validation(setState);
-            console.log('isError', isError);
 
             if (isError) {
                 errorNote();
@@ -97,6 +98,7 @@ export const Sorting = observer(
             const codeOneItem = record.width ? code / totalSum : 0;
             const data: iData[] = state.map((item) => ({
                 ...record,
+                date,
                 typeId: +item.typeId.value,
                 gradeId: +item.gradeId.value,
                 colorId: +item.colorId.value,
@@ -126,6 +128,8 @@ export const Sorting = observer(
                     moveBack={moveBack}
                     losses={losses}
                     isLoading={isLoading}
+                    date={date}
+                    setDate={setDate}
                 />
                 <div>
                     {state.map((item, index) => {

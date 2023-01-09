@@ -12,6 +12,7 @@ import { tValue } from '../../../../../../../../Shared/InputNumber';
 import { postOrderResult } from '../../../../../../../../../Store/OperationStore/Api';
 import { useRouter } from 'next/router';
 import { ROUTES } from '../../../../../../../constants';
+import moment from 'moment';
 
 export const usePostData = () => {
     const router = useRouter();
@@ -24,6 +25,7 @@ export const usePostData = () => {
             garbage,
             defect,
             moveBack,
+            date,
         }: {
             state: iState[];
             setState: Dispatch<SetStateAction<iState[]>>;
@@ -32,6 +34,7 @@ export const usePostData = () => {
             garbage?: tValue;
             defect?: tValue;
             moveBack?: tValue;
+            date?: moment.Moment;
         }) => {
             const errorNote = () => {
                 notification.error({
@@ -63,6 +66,7 @@ export const usePostData = () => {
             const codeOneItem = record.width ? code / totalSum : 0;
             const data: iData[] = state.map((item) => ({
                 ...record,
+                date,
                 workpieceTypeId: +item.workpieceTypeId.value,
                 gradeId: +item.gradeId.value,
                 colorId: +item.colorId.value,
