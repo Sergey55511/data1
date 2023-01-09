@@ -1,11 +1,8 @@
 import moment from 'moment';
 import { SetStateAction, useEffect, useRef, useState } from 'react';
-import { iData } from '../../../../../../../Shared/Types/interfaces';
 import { useStores } from '../../../../../../Store/useStores';
 import { prepareDataTable } from '../../../../../Helpers';
-import { contentDrawer } from '../../../../../Shared/contentDrawer';
 import { KEYSLEFTOVERS } from '../../../../../Shared/Table/constants';
-import { NumProduction } from './Drawers/NumProduction';
 import { iProps } from '.';
 import { OPERATIONS } from '../../../../../../../Shared/constants';
 
@@ -32,6 +29,10 @@ export const useProps = (props: iProps) => {
     const [count, setCount] = useState<tValue>(undefined);
     const [date, setDate] = useState<moment.Moment | null>(moment());
     const subbmitButton = useRef<HTMLElement>(null);
+
+    useEffect(() => {
+        if (props.record.productionId) setNumProd(props.record.productionId);
+    }, []);
 
     useEffect(() => {
         const isOperation = operation != OPERATIONS.makingMinalets.id;

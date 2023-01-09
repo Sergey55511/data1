@@ -74,7 +74,6 @@ export interface iDataTable {
     id?: number;
     lot?: number;
     workingHours?: number;
-    numProduction?: string;
     numDocument?: string;
     pp?: number;
     articleId?: number;
