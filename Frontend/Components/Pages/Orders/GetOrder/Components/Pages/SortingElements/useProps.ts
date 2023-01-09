@@ -23,6 +23,7 @@ export const useProps = ({ record, stateId }: { record: iData; stateId: number }
     const { OperationStore, ListsStore, loginStore } = useStores();
     const [state, setState] = useState<iState[]>([]);
     const [date, setDate] = useState<moment.Moment | undefined>(moment());
+    const [workingHours, setWorkingHours] = useState<string | undefined>('');
     const [sizeRagne, setSizeRagne] = useState<iSizeRange[]>([]);
     const [losses, setLosses] = useState<number>(0);
     const [moveBack, setMoveBack] = useState<tValue>(undefined);
@@ -96,8 +97,10 @@ export const useProps = ({ record, stateId }: { record: iData; stateId: number }
         }
         const code = record.code ? record.code * -1 : 0;
         const codeOneItem = record.width ? code / totalSum : 0;
+        const getNumber = (v: any) => (v ? +v : undefined);
         const data: iData[] = state.map((item) => ({
             ...record,
+            workingHours: getNumber(workingHours),
             date,
             colorId: item.color.value ? +item.color.value : undefined,
             widthOut: undefined,
@@ -133,5 +136,7 @@ export const useProps = ({ record, stateId }: { record: iData; stateId: number }
         setState,
         date,
         setDate,
+        workingHours,
+        setWorkingHours,
     };
 };

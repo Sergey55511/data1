@@ -33,6 +33,17 @@ export const OneToOne = (props: iProps) => {
                     }
                 />
             </Item>
+            {props.isShowWorkingHours && (
+                <Item title="Время работы">
+                    <InputNumber
+                        placeholder="Введите данные"
+                        value={params.state.workingHours}
+                        onChangeHandler={(v) => {
+                            params.onChangeInput('workingHours', v);
+                        }}
+                    />
+                </Item>
+            )}
             {props.isShowChannel && (
                 <Item title="Канал">
                     <InputField

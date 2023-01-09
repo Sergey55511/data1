@@ -15,11 +15,13 @@ export interface iProps {
     isCheckLosses?: boolean;
     defect?: boolean;
     pruning?: boolean;
+    isShowWorkingHours?: boolean;
 }
 
 interface iState {
     date?: moment.Moment;
     widthIn?: number;
+    workingHours?: number;
     moveBack?: number;
     losses?: number;
     defect?: number;
@@ -61,6 +63,7 @@ export const useProps = ({ isCheckLosses, isShowChannel, record, stateId }: iPro
         const data: iData[] = [
             {
                 ...record,
+                workingHours: state.workingHours,
                 date: state.date,
                 widthOut: undefined,
                 widthIn: state.widthIn,

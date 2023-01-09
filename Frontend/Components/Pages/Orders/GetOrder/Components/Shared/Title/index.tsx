@@ -2,7 +2,7 @@ import { Button, DatePicker } from 'antd';
 import { InputNumber, tValue } from '../../../../../../Shared/InputNumber';
 import { Wrapper } from './style';
 import { confirmAction } from '../../../../../../Shared/ConfirmSubbmit';
-import { SetStateAction } from 'react';
+import { Dispatch, SetStateAction } from 'react';
 
 export const Title = ({
     subbmitHandler,
@@ -19,6 +19,8 @@ export const Title = ({
     setPruning,
     date,
     setDate,
+    workingHours,
+    setWorkingHours,
 }: {
     subbmitHandler: () => void;
     addRowHandler: (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => void;
@@ -34,6 +36,8 @@ export const Title = ({
     isLoading?: boolean;
     date?: moment.Moment | undefined;
     setDate?: (value: moment.Moment | undefined) => void;
+    workingHours?: string;
+    setWorkingHours?: Dispatch<SetStateAction<string | undefined>>;
 }) => {
     const confirmSubbmit = () => {
         confirmAction({
@@ -51,6 +55,18 @@ export const Title = ({
                         className="input"
                         value={date}
                         onChange={(v) => setDate(v ?? undefined)}
+                    />
+                </div>
+            )}
+            {setWorkingHours && (
+                <div>
+                    <InputNumber
+                        className="input"
+                        value={workingHours ?? ''}
+                        placeholder="Рабочее время"
+                        onChangeHandler={(v) => {
+                            if (setWorkingHours) setWorkingHours(v ? `${v}` : '');
+                        }}
                     />
                 </div>
             )}

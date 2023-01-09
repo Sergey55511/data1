@@ -25,6 +25,7 @@ export const dal = (req: NextApiRequest): iDataTable[] => {
     const data: iDataTable[] = params.map((item) => ({
         id: prepareNumber(item.id),
         lot: prepareNumber(item.lot),
+        workingHours: prepareNumber(item.workingHours),
         numDocument: prepareStaring(item.numDocument),
         pp: prepareNumber(item.pp),
         workpieceTypeId: prepareNumber(item.workpieceTypeId),

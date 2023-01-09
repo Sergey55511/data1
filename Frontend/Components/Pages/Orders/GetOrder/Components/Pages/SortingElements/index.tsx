@@ -19,6 +19,8 @@ export const SortingElements = observer((props: { record: iData; stateId: number
                 isLoading={params.isLoading}
                 date={params.date}
                 setDate={params.setDate}
+                workingHours={params.workingHours}
+                setWorkingHours={params.setWorkingHours}
             />
             <div>
                 {params.state.map((item, index) => (

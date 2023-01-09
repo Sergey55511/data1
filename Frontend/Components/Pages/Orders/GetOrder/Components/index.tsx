@@ -25,24 +25,84 @@ export const GetOrderSwitcher = ({
                     stateId={STATE.slicedBillets.id}
                     defect
                     pruning
+                    isShowWorkingHours
                 />
             );
         case OPERATIONS.drillingPill.id:
-            return <OneToOne record={record} stateId={STATE.drilledPill.id} defect isShowChannel/>;
+            return (
+                <OneToOne
+                    record={record}
+                    stateId={STATE.drilledPill.id}
+                    defect
+                    isShowChannel
+                    isShowWorkingHours
+                />
+            );
         case OPERATIONS.drilling.id:
-            return <OneToOne record={record} stateId={STATE.drilled.id} defect isShowChannel />;
+            return (
+                <OneToOne
+                    record={record}
+                    stateId={STATE.drilled.id}
+                    defect
+                    isShowChannel
+                    isShowWorkingHours
+                />
+            );
         case OPERATIONS.waterDrilling.id:
-            return <OneToOne record={record} stateId={STATE.waterDrilled.id} defect isShowChannel/>;
+            return (
+                <OneToOne
+                    record={record}
+                    stateId={STATE.waterDrilled.id}
+                    defect
+                    isShowChannel
+                    isShowWorkingHours
+                />
+            );
         case OPERATIONS.grindingMsc.id:
-            return <OneToOne record={record} stateId={STATE.grindedMsc.id} defect />;
+            return (
+                <OneToOne
+                    record={record}
+                    stateId={STATE.grindedMsc.id}
+                    defect
+                    isShowWorkingHours
+                />
+            );
         case OPERATIONS.roughTumbling.id:
-            return <OneToOne record={record} stateId={STATE.roughTumbled.id} defect />;
+            return (
+                <OneToOne
+                    record={record}
+                    stateId={STATE.roughTumbled.id}
+                    defect
+                    isShowWorkingHours
+                />
+            );
         case OPERATIONS.polishingMsc.id:
-            return <OneToOne record={record} stateId={STATE.polishedMsc.id} defect />;
+            return (
+                <OneToOne
+                    record={record}
+                    stateId={STATE.polishedMsc.id}
+                    defect
+                    isShowWorkingHours
+                />
+            );
         case OPERATIONS.thermoOven.id:
-            return <OneToOne record={record} stateId={STATE.thermedOven.id} defect />;
+            return (
+                <OneToOne
+                    record={record}
+                    stateId={STATE.thermedOven.id}
+                    defect
+                    isShowWorkingHours
+                />
+            );
         case OPERATIONS.thermoLamp.id:
-            return <OneToOne record={record} stateId={STATE.thermedLamp.id} defect />;
+            return (
+                <OneToOne
+                    record={record}
+                    stateId={STATE.thermedLamp.id}
+                    defect
+                    isShowWorkingHours
+                />
+            );
 
         case OPERATIONS.sorting.id:
             return <Sorting record={record} stateId={STATE.sorted.id} />;
@@ -111,6 +171,7 @@ export const GetOrderSwitcher = ({
             );
         case OPERATIONS.sortingLength.id:
             return <SortingLength record={record} stateId={STATE.sortedLength.id} />;
+            
         case OPERATIONS.sortingElements.id:
             return <SortingElements record={record} stateId={STATE.sertedElements.id} />;
         case OPERATIONS.makingMinalets.id:

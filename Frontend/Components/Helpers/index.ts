@@ -164,6 +164,7 @@ export const prepareDataTable = (data: iData): iDataTable => {
         'lot',
         'date',
         'numProduction',
+        'workingHours',
         'pp',
         'articleId',
         'typeId',
