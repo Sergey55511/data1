@@ -65,12 +65,18 @@ export const useProps = (
             const minaret = data.fullModel.data?.find((item) => item.id == minaretId);
             const bead = data.fullModel.data?.find((item) => item.id == beadId);
 
-            const model = (minaret?.Models.model ?? '').replace('I', '');
+            const model = `${minaret?.Models.model}${minaret?.Profile.profile}${minaret?.SizeRangeModel.sizeRange}`;
 
             res = 'TM';
             res += model; //взять из модели миналета
-            res += bead?.Profile.profile ?? ''; //взять из профиля бусины
-            res += bead?.SizeRangeModel.sizeRange ?? ''; //взять из размера бусины
+            res += '/';
+            if (bead) {
+                res += bead.Profile.profile ?? ''; //взять из профиля бусины
+                res += bead.SizeRangeModel.sizeRange ?? ''; //взять из размера бусины
+                res += 'x';
+                res += bead.LengthModel.length ?? ''; //взять из размера бусины
+            }
+
             if (state.typeAssemble.value) {
                 const typeAssemble = data.types.data?.find(
                     (item) => `${item.id}` == state.typeAssemble.value,
