@@ -19,7 +19,10 @@ export const Assemble = () => {
                     >
                         <Radio.Button value="assembleCreate">Остаток</Radio.Button>
                         <Badge count={params.countTasks} size="small">
-                            <Radio.Button value="assembleGet">
+                            <Radio.Button
+                                value="assembleGet"
+                                disabled={!params.countTasks}
+                            >
                                 Принять результат работы
                             </Radio.Button>
                         </Badge>
