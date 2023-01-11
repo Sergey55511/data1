@@ -18,5 +18,5 @@ export const useProps = () => {
         if (loginStore.user.storeId) OperationStore.getLeftovers(loginStore.user.storeId);
     }, [loginStore.user.storeId]);
 
-    return { filters, setFilters, rowSelection };
+    return { filters, setFilters, rowSelection, selectedRows };
 };

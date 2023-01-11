@@ -4,11 +4,11 @@ import { observer } from 'mobx-react-lite';
 import { useProps } from './useProps';
 
 export default observer(() => {
-    const { setFilters, filters, rowSelection } = useProps();
+    const { setFilters, filters, rowSelection, selectedRows } = useProps();
 
     return (
         <>
-            <MenuLeftovers setFilters={setFilters} />
+            <MenuLeftovers setFilters={setFilters} selectedRows={selectedRows} />
             <TableLeftOvers {...{ filters, setFilters, rowSelection }} />
         </>
     );

@@ -1,5 +1,4 @@
 import { NextApiRequest } from 'next';
-import { iDataProductTable } from '../../../../../Shared/Types/interfaces';
 import { tPrisma } from '../../../../types';
 import { dal } from './Dal';
 

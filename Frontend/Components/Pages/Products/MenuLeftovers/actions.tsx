@@ -1,0 +1,51 @@
+import { Button, Dropdown, Menu } from 'antd';
+import { ExportOutlined, CarOutlined, DeploymentUnitOutlined } from '@ant-design/icons';
+import { iDataProduct } from '../../../../../Shared/Types/interfaces';
+
+export const Actions = ({ selectedRows }: { selectedRows: iDataProduct[] }) => {
+    const reAssembleHandler = () => {
+        const articles = selectedRows.map((item) => item.articleId);
+        console.log('reAssemble', articles);
+    };
+
+    const moveOutAssembleHandler = () => {
+        const articles = selectedRows.map((item) => item.articleId);
+        console.log('moveOutAssemble', articles);
+    };
+
+    const shareAssembleHandler = () => {
+        const articles = selectedRows.map((item) => item.articleId);
+        console.log('shareAssemble', articles);
+    };
+
+    const menu = (
+        <Menu
+            items={[
+                {
+                    key: '1',
+                    label: 'Разобрать',
+                    icon: <DeploymentUnitOutlined />,
+                    onClick: reAssembleHandler,
+                },
+                {
+                    key: '2',
+                    label: 'Отгрузить',
+                    icon: <ExportOutlined />,
+                    onClick: moveOutAssembleHandler,
+                },
+                {
+                    key: '3',
+                    label: 'Перемещение',
+                    icon: <CarOutlined />,
+                    onClick: shareAssembleHandler,
+                },
+            ]}
+        />
+    );
+
+    return (
+        <Dropdown overlay={menu} disabled={!selectedRows.length}>
+            <Button>Действия</Button>
+        </Dropdown>
+    );
+};

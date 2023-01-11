@@ -20,6 +20,13 @@ export const leftoversAssemble = (storeId: number) => {
     }).then((res) => res.data as iData[]);
 };
 
+export const assembleTakeApart = (storeId: number) => {
+    return axios({
+        url: `/api/data/leftovers/assemble?storeId=${storeId}`,
+        method: 'GET',
+    }).then((res) => res.data as iData[]);
+};
+
 export const getOrders = (storeId: number) => {
     return axios({
         url: `/api/data/orders?storeId=${storeId}`,

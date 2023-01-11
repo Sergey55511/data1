@@ -11,6 +11,11 @@ export const Wrapper = styled.div`
             column-gap: 24px;
             align-items: baseline;
         }
+
+        .titleWrapper {
+            display: flex;
+            column-gap: 16px;
+        }
     }
     .additionalsParams {
         display: flex;
