@@ -68,10 +68,6 @@ export const MoveIn = observer(() => {
             ...getColumnPropsHoc(KEYSLEFTOVERS.numDocument.key),
             title: 'Номер документа',
         },
-        {
-            dataIndex: 'countRows',
-            title: 'Кол-во позиций',
-        },
     ];
 
     return (

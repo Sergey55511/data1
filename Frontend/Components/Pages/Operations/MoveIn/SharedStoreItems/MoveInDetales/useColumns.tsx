@@ -56,28 +56,16 @@ export const useColumns = (
             title: KEYSLEFTOVERS.state.title,
         },
         {
-            ...getColumnPropsHoc(KEYSLEFTOVERS.model.key),
-            title: KEYSLEFTOVERS.model.title,
-        },
-        {
-            ...getColumnPropsHoc(KEYSLEFTOVERS.fraction.key),
-            title: KEYSLEFTOVERS.fraction.title,
-        },
-        {
-            ...getColumnPropsHoc(KEYSLEFTOVERS.materialGroup.key),
-            title: KEYSLEFTOVERS.materialGroup.title,
-        },
-        {
             ...getColumnPropsHoc(KEYSLEFTOVERS.color.key),
             title: KEYSLEFTOVERS.color.title,
         },
         {
-            ...getColumnPropsHoc(KEYSLEFTOVERS.length.key),
-            title: KEYSLEFTOVERS.length.title,
+            ...getColumnPropsHoc(KEYSLEFTOVERS.sizeRange.key),
+            title: KEYSLEFTOVERS.sizeRange.title,
         },
         {
-            ...getColumnPropsHoc(KEYSLEFTOVERS.channel.key),
-            title: KEYSLEFTOVERS.channel.title,
+            ...getColumnPropsHoc(KEYSLEFTOVERS.length.key),
+            title: KEYSLEFTOVERS.length.title,
         },
         {
             ...getColumnPropsHoc(KEYSLEFTOVERS.grade.key),
@@ -89,11 +77,7 @@ export const useColumns = (
         },
         {
             ...getColumnPropsHoc(KEYSLEFTOVERS.widthOut.key),
-            title: KEYSLEFTOVERS.widthOut.title,
-        },
-        {
-            ...getColumnPropsHoc(KEYSLEFTOVERS.countItemsOut.key),
-            title: KEYSLEFTOVERS.countItemsOut.title,
+            title: 'Отгружено гр.',
         },
         {
             dataIndex: 'widthIn',
@@ -107,27 +91,7 @@ export const useColumns = (
                     />
                 );
             },
-            title: 'Приянть гр.',
-            width: 100,
-            fixed: 'right',
-        },
-        {
-            dataIndex: 'countItemsIn',
-            render: (_value, record) => {
-                return (
-                    <InputNumber
-                        value={record.countItemsIn}
-                        onChangeHandler={(v) =>
-                            onChangeHandler(
-                                record.id!,
-                                'countItemsIn',
-                                v ? +v : undefined,
-                            )
-                        }
-                    />
-                );
-            },
-            title: 'Приянть шт.',
+            title: 'Принять гр.',
             width: 100,
             fixed: 'right',
         },
