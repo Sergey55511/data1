@@ -1,10 +1,7 @@
-import { STORES } from '../../../../../Shared/constants';
-import { useStores } from '../../../../Store/useStores';
-import { KEYSLEFTOVERS } from '../../../Shared/Table/constants';
 import { getColumnProps } from '../../../Shared/Table/Helpers/getColumnProps';
 import { FilterValue } from 'antd/es/table/interface';
 import type { ColumnsType } from 'antd/es/table';
-import { iData, iDataProduct } from '../../../../../Shared/Types/interfaces';
+import { iDataProduct } from '../../../../../Shared/Types/interfaces';
 import { getFilteredleftovers } from '../../../Shared/Table/Helpers/getFilteredleftovers';
 import { useData } from './useData';
 
@@ -31,7 +28,7 @@ export const useColumns = (filters: Record<string, FilterValue | null>) => {
     columns.push({
         ...getColumnPropsHoc('articleId'),
         title: 'Номер изделия',
-    });  
+    });
     columns.push({
         ...getColumnPropsHoc('state'),
         title: 'Состояние',

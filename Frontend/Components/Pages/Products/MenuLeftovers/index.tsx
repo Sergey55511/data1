@@ -18,7 +18,9 @@ export const MenuLeftovers = observer(
         return (
             <Wrapper>
                 <div className="params">
-                    <Title text="Остатки готовых изделий:" />
+                    <div>
+                        <Title text="Остатки готовых изделий:" />
+                    </div>
                     <div className="settings">
                         <a href="#" onClick={cliarFiltersHandler}>
                             Очистить фильтры
