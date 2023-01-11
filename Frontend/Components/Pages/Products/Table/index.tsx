@@ -2,7 +2,7 @@ import { iDataProduct } from '../../../../../Shared/Types/interfaces';
 import type { TableProps } from 'antd/es/table';
 import { observer } from 'mobx-react-lite';
 import { Dispatch, SetStateAction } from 'react';
-import { FilterValue } from 'antd/es/table/interface';
+import { FilterValue, TableRowSelection } from 'antd/es/table/interface';
 import { TableApp } from '../../../Shared/Table';
 import { useColumns } from './useСolumns';
 
@@ -10,9 +10,11 @@ export const TableLeftOvers = observer(
     ({
         filters,
         setFilters,
+        rowSelection,
     }: {
         filters: Record<string, FilterValue | null>;
         setFilters: Dispatch<SetStateAction<Record<string, FilterValue | null>>>;
+        rowSelection?: TableRowSelection<iDataProduct>;
     }) => {
         const { columns, data } = useColumns(filters);
 
@@ -31,6 +33,7 @@ export const TableLeftOvers = observer(
                     columns={columns}
                     dataSource={data}
                     onChange={handleChange}
+                    rowSelection={rowSelection}
                 />
             </>
         );
