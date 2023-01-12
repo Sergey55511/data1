@@ -26,18 +26,21 @@ export const Actions = ({ selectedRows }: { selectedRows: iDataProduct[] }) => {
                     label: 'Разобрать',
                     icon: <DeploymentUnitOutlined />,
                     onClick: reAssembleHandler,
+                    disabled: true,
                 },
                 {
                     key: '2',
                     label: 'Отгрузить',
                     icon: <ExportOutlined />,
                     onClick: moveOutAssembleHandler,
+                    disabled: true,
                 },
                 {
                     key: '3',
                     label: 'Перемещение',
                     icon: <CarOutlined />,
                     onClick: shareAssembleHandler,
+                    disabled: true,
                 },
             ]}
         />
