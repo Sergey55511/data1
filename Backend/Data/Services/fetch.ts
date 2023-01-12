@@ -4,6 +4,7 @@ import { varifyJWT } from './verifyJWT';
 import { PrismaClient } from '@prisma/client';
 import { tPrisma } from '../../types';
 import { sendUsersNewMaxId } from './sendUsersNewMaxId';
+import { iUser } from '../../../Shared/Types/interfaces';
 
 export const fetchService = async <T>({
     req,
@@ -14,7 +15,7 @@ export const fetchService = async <T>({
 }: {
     req: NextApiRequest;
     res: NextApiResponse;
-    fetch: (prisma: tPrisma) => Promise<T>;
+    fetch: (prisma: tPrisma, user: iUser) => Promise<T>;
     validation?: (prisma: tPrisma) => void;
     isSendUsersNewMaxId?: boolean;
 }) => {
@@ -22,7 +23,7 @@ export const fetchService = async <T>({
     try {
         const user = await varifyJWT(req, res, prisma);
         if (validation) await validation(prisma);
-        const result = await fetch(prisma);
+        const result = await fetch(prisma, user);
 
         if (isSendUsersNewMaxId) {
             await sendUsersNewMaxId(prisma, user.storeId);
