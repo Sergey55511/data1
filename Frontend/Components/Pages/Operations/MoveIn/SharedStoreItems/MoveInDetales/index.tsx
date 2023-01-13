@@ -32,7 +32,7 @@ export const MoveInDetales = observer(() => {
                 columns={columns}
                 dataSource={data}
                 onChange={handleChange}
-                scroll={{ x: 2000 }}
+                // scroll={{ x: 2000 }}
             />
         </Wrapper>
     );

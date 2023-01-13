@@ -38,10 +38,12 @@ export const useColumns = (
         {
             ...getColumnPropsHoc(KEYSLEFTOVERS.user.key),
             title: 'Отправил',
+            width: 100,
         },
         {
             ...getColumnPropsHoc(KEYSLEFTOVERS.store.key),
             title: 'Отправитель',
+            width: 100,
         },
         {
             ...getColumnPropsHoc(KEYSLEFTOVERS.numDocument.key),
@@ -58,10 +60,12 @@ export const useColumns = (
         {
             ...getColumnPropsHoc(KEYSLEFTOVERS.color.key),
             title: KEYSLEFTOVERS.color.title,
+            width: 100,
         },
         {
             ...getColumnPropsHoc(KEYSLEFTOVERS.sizeRange.key),
             title: KEYSLEFTOVERS.sizeRange.title,
+            width: 150,
         },
         {
             ...getColumnPropsHoc(KEYSLEFTOVERS.length.key),
@@ -70,14 +74,17 @@ export const useColumns = (
         {
             ...getColumnPropsHoc(KEYSLEFTOVERS.grade.key),
             title: KEYSLEFTOVERS.grade.title,
+            width: 80,
         },
         {
             ...getColumnPropsHoc(KEYSLEFTOVERS.lot.key),
             title: KEYSLEFTOVERS.lot.title,
+            width: 80,
         },
         {
             ...getColumnPropsHoc(KEYSLEFTOVERS.widthOut.key),
             title: 'Отгружено гр.',
+            width: 130,
         },
         {
             dataIndex: 'widthIn',
