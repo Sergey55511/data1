@@ -1,9 +1,7 @@
 export const schema = {
     type: 'object',
     properties: {
-        userId: { type: 'integer' },
-        recipientId: { type: 'integer' },
-        numDocument: { type: 'string' },
+        managerId: { type: 'integer' },
         articles: {
             type: 'array',
             items: {
@@ -12,6 +10,6 @@ export const schema = {
             },
         },
     },
-    required: ['userId', 'recipientId', 'numDocument', 'articles'],
+    required: ['managerId', 'articles'],
     additionalProperties: false,
 };

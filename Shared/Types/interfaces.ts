@@ -38,6 +38,11 @@ export interface iShared {
     countRows: number;
 }
 
+export interface iAssembleTakeApartData {
+    managerId: number;
+    articles: number[];
+}
+
 export interface iDataProductTable {
     storeId?: number;
     model?: string;

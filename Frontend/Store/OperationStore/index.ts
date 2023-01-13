@@ -1,7 +1,13 @@
 import { flow, makeAutoObservable } from 'mobx';
 import * as api from './Api';
 import { ErrorStore } from '../ErrorStore';
-import { iError, iData, iDataTable, iShared } from '../../../Shared/Types/interfaces';
+import {
+    iError,
+    iData,
+    iDataTable,
+    iShared,
+    iAssembleTakeApartData,
+} from '../../../Shared/Types/interfaces';
 import { Login } from '../LoginStore';
 import { ListsStore } from '../Lists';
 
@@ -43,6 +49,17 @@ export class OperationStore {
             this.listsStore.getFraction();
             this.listsStore.getStores();
             this.isFetched = true;
+        } catch (err) {
+            this.errorStore.setError(err as iError);
+        }
+    });
+
+    assembleTakeApart = flow(function* (
+        this: OperationStore,
+        data: iAssembleTakeApartData,
+    ) {
+        try {
+            yield api.assembleTakeApart(data);
         } catch (err) {
             this.errorStore.setError(err as iError);
         }

@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react';
 import { FilterValue } from 'antd/es/table/interface';
 import { useStores } from '../../../Store/useStores';
 import { iDataProduct } from '../../../../Shared/Types/interfaces';
+import { getDataProduct } from '../../../Store/OperationStore/Api';
+import { useQuery } from '@tanstack/react-query';
 
 export const useProps = () => {
     const [filters, setFilters] = useState<Record<string, FilterValue | null>>({});
@@ -18,5 +20,14 @@ export const useProps = () => {
         if (loginStore.user.storeId) OperationStore.getLeftovers(loginStore.user.storeId);
     }, [loginStore.user.storeId]);
 
-    return { filters, setFilters, rowSelection, selectedRows };
+    const getProductsHandler = async () => {
+        const res = await getDataProduct(loginStore.user.storeId);
+        return res;
+    };
+
+    const products = useQuery(['products'], getProductsHandler, {
+        enabled: !!loginStore.user.storeId,
+    });
+
+    return { filters, setFilters, rowSelection, selectedRows, products, setSelectedRows };
 };

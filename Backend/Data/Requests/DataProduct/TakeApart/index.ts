@@ -23,7 +23,6 @@ export const takeApart = async <T>(
             gradeId: true,
             stateId: true,
             articleId: true,
-            Recipient: true,
             widthIn: true,
             widthOut: true,
             moneyIn: true,
@@ -52,11 +51,36 @@ export const takeApart = async <T>(
         widthOut: item.widthIn,
         countItemsIn: undefined,
         countItemsOut: item.countItemsIn,
-        operationId: OPERATIONS.shareItems.id,
-        userId: data.userId,
-        recipientId: data.recipientId,
-        numDocument: data.numDocument,
+        operationId: OPERATIONS.takeApart.id,
+        userId: user.id!,
+        managerId: data.managerId,
     }));
 
-    return (await prisma.dataProduct.createMany({ data: preparedData })) as any;
+    const moveOutDataProduct = await prisma.dataProduct.createMany({
+        data: preparedData,
+    });
+
+    const itemsProduct = await prisma.data.findMany({
+        where: { articleId: { in: data.articles } },
+    });
+
+    const preparedItemsProduct = itemsProduct.map((item) => ({
+        ...item,
+        id: undefined,
+        date: undefined,
+        dateSystem: undefined,
+        pp: undefined,
+        widthIn: item.widthOut,
+        widthOut: undefined,
+        countItemsIn: item.countItemsOut,
+        countItemsOut: undefined,
+        moneyIn: item.countItemsOut,
+        moneyOut: undefined,
+        userId: user.id,
+        managerId: data.managerId,
+    }));
+
+    const moveInData = await prisma.data.createMany({ data: preparedItemsProduct });
+
+    return { moveOutDataProduct, moveInData } as any;
 };

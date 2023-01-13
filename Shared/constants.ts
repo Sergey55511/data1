@@ -36,6 +36,7 @@ export const OPERATIONS = {
     makingMinalets: { id: 37 }, //Пр-во мин группы
     mixingLot: { id: 39 }, //Смешивание партия
     assemble: { id: 40 }, //Сборка
+    takeApart: { id: 41 }, //Разобрать изделие
 };
 export const STATE = {
     washed: { id: 1 },

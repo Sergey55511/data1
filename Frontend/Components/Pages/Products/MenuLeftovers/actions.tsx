@@ -1,22 +1,20 @@
 import { Button, Dropdown, Menu } from 'antd';
 import { ExportOutlined, CarOutlined, DeploymentUnitOutlined } from '@ant-design/icons';
-import { iDataProduct } from '../../../../../Shared/Types/interfaces';
+import { iProps, useProps } from './useProps';
+import { SelectUser } from './SelectUser';
 
-export const Actions = ({ selectedRows }: { selectedRows: iDataProduct[] }) => {
-    const reAssembleHandler = () => {
-        const articles = selectedRows.map((item) => item.articleId);
-        console.log('reAssemble', articles);
-    };
-
-    const moveOutAssembleHandler = () => {
-        const articles = selectedRows.map((item) => item.articleId);
-        console.log('moveOutAssemble', articles);
-    };
-
-    const shareAssembleHandler = () => {
-        const articles = selectedRows.map((item) => item.articleId);
-        console.log('shareAssemble', articles);
-    };
+export const Actions = (props: iProps) => {
+    const {
+        reAssembleHandler,
+        moveOutAssembleHandler,
+        shareAssembleHandler,
+        takeApartHandler,
+        isShowSelectUser,
+        setIsShowSelectUser,
+        managerId,
+        setManagerId,
+        managers,
+    } = useProps(props);
 
     const menu = (
         <Menu
@@ -25,8 +23,7 @@ export const Actions = ({ selectedRows }: { selectedRows: iDataProduct[] }) => {
                     key: '1',
                     label: 'Разобрать',
                     icon: <DeploymentUnitOutlined />,
-                    onClick: reAssembleHandler,
-                    disabled: true,
+                    onClick: () => setIsShowSelectUser(true),
                 },
                 {
                     key: '2',
@@ -47,8 +44,20 @@ export const Actions = ({ selectedRows }: { selectedRows: iDataProduct[] }) => {
     );
 
     return (
-        <Dropdown overlay={menu} disabled={!selectedRows.length}>
-            <Button>Действия</Button>
-        </Dropdown>
+        <>
+            {isShowSelectUser && (
+                <SelectUser
+                    onCancel={() => setIsShowSelectUser(false)}
+                    reAssembleHandler={reAssembleHandler}
+                    isLoading={takeApartHandler.isLoading}
+                    managerId={managerId}
+                    setManagerId={setManagerId}
+                    managers={managers}
+                />
+            )}
+            <Dropdown overlay={menu} disabled={!props.selectedRows.length}>
+                <Button>Действия</Button>
+            </Dropdown>
+        </>
     );
 };

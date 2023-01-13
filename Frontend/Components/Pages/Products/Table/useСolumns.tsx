@@ -3,11 +3,12 @@ import { FilterValue } from 'antd/es/table/interface';
 import type { ColumnsType } from 'antd/es/table';
 import { iDataProduct } from '../../../../../Shared/Types/interfaces';
 import { getFilteredleftovers } from '../../../Shared/Table/Helpers/getFilteredleftovers';
-import { useData } from './useData';
+import { UseQueryResult } from '@tanstack/react-query';
 
-export const useColumns = (filters: Record<string, FilterValue | null>) => {
-    const { products } = useData();
-
+export const useColumns = (
+    filters: Record<string, FilterValue | null>,
+    products: UseQueryResult<iDataProduct[], unknown>,
+) => {
     const data = products.data?.map((item, index) => ({ ...item, key: index })) || [];
 
     const filteredleftovers = getFilteredleftovers<iDataProduct>({ data, filters });

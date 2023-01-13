@@ -1,5 +1,6 @@
 import axios from 'axios';
 import {
+    iAssembleTakeApartData,
     iData,
     iDataProduct,
     iDataProductTable,
@@ -20,10 +21,11 @@ export const leftoversAssemble = (storeId: number) => {
     }).then((res) => res.data as iData[]);
 };
 
-export const assembleTakeApart = (storeId: number) => {
+export const assembleTakeApart = (data: iAssembleTakeApartData) => {
     return axios({
-        url: `/api/data/leftovers/assemble?storeId=${storeId}`,
-        method: 'GET',
+        url: `/api/dataproduct/takeapart`,
+        method: 'POST',
+        data,
     }).then((res) => res.data as iData[]);
 };
 
