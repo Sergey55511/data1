@@ -26,7 +26,9 @@ export const useColumns = (
     const getColumnPropsHoc = (dataIndex: string) =>
         getColumnProps(dataIndex, filteredData, filters);
 
-    const onChangeHandler = (id: number, field: keyof iDataTable, v?: number) => {
+    const onChangeHandler = (id: number, field: keyof iDataTable, v?: any) => {
+        console.log('v', v);
+
         setData((prev) => {
             const item = prev.find((i) => i.id == id);
             if (item) item[field] = v;
@@ -92,9 +94,7 @@ export const useColumns = (
                 return (
                     <InputNumber
                         value={record.widthIn}
-                        onChangeHandler={(v) =>
-                            onChangeHandler(record.id!, 'widthIn', v ? +v : undefined)
-                        }
+                        onChangeHandler={(v) => onChangeHandler(record.id!, 'widthIn', v)}
                     />
                 );
             },
