@@ -37,8 +37,8 @@ export const orders = <T>(prisma: tPrisma, storeId: number): PrismaPromise<T> =>
             lot,
             task,
             "widthOut",
-            COALESCE(round(sum("widthIn")::numeric,2),0)-COALESCE(round(coalesce(sum("widthOut"),0)::numeric,2),0) as "width",
-            COALESCE(round(sum("countItemsIn")::numeric,2),0)-COALESCE(round(sum("countItemsOut")::numeric,2),0) as "count",
+            ABS(COALESCE(round(sum("widthIn")::numeric,2),0)-COALESCE(round(coalesce(sum("widthOut"),0)::numeric,2),0)) as "width",
+            ABS(COALESCE(round(sum("countItemsIn")::numeric,2),0)-COALESCE(round(sum("countItemsOut")::numeric,2),0)) as "count",
             COALESCE(sum("moneyIn"),0)-COALESCE(sum("moneyOut"),0) as "code"
         FROM 
             public."Data" left join "WorkpieceType" on "Data"."workpieceTypeId"="WorkpieceType".id
