@@ -95,6 +95,10 @@ export const useProps = ({ record, stateId }: { record: iData; stateId: number }
             errorNote();
             return;
         }
+        if (!workingHours) {
+            errorNote();
+            return;
+        }
         const code = record.code ? record.code * -1 : 0;
         const codeOneItem = record.width ? code / totalSum : 0;
         const getNumber = (v: any) => (v ? +v : undefined);

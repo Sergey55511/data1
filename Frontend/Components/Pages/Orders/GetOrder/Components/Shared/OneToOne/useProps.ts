@@ -29,7 +29,13 @@ interface iState {
     channel?: number;
 }
 
-export const useProps = ({ isCheckLosses, isShowChannel, record, stateId }: iProps) => {
+export const useProps = ({
+    isCheckLosses,
+    isShowChannel,
+    record,
+    stateId,
+    isShowWorkingHours,
+}: iProps) => {
     const router = useRouter();
     const [isLoading, setIsLoading] = useState(false);
     const { OperationStore } = useStores();
@@ -44,6 +50,11 @@ export const useProps = ({ isCheckLosses, isShowChannel, record, stateId }: iPro
 
     const isValid = (() => {
         if (!state.date || !state.widthIn) return false;
+        if (isShowWorkingHours) {
+            if (!state.workingHours) {
+                return false;
+            }
+        }
         if (state.widthIn! < 0) return false;
         if (isCheckLosses) {
             if (state.losses! < 0) return false;
