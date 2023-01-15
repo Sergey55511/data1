@@ -126,6 +126,7 @@ export const useProps = ({ record, stateId }: { record: iData; stateId: number }
             stateId,
             workpieceTypeId: getIdValue(item.workpieceType.value),
             sizeRangeId: getIdValue(item.sizeRangeModel.value),
+            lengthId: undefined,
             fullModelId: getIdValue(item.fullModelId.value),
             colorId: getIdValue(item.color.value),
             gradeId: getIdValue(item.grade.value),
