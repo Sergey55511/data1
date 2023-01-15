@@ -1,5 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { useEffect } from 'react';
+import { iData } from '../../../../../../../../../../Shared/Types/interfaces';
 import {
     getFullModels,
     getModels,
@@ -9,13 +10,14 @@ import {
 import { useStores } from '../../../../../../../../../Store/useStores';
 import { iState } from '../../useProps';
 
-
 export const useProps = ({
     state,
     resetValue,
+    record,
 }: {
     state: iState;
     resetValue: (fieldName: keyof iState) => void;
+    record: iData;
 }) => {
     const { loginStore } = useStores();
     const storeId = loginStore.user.storeId;
@@ -66,7 +68,12 @@ export const useProps = ({
             const profileId = getIdValue(state.profile.value);
             const modelId = getIdValue(state.model.value);
 
-            return getSizeRangeModel({ workpieceTypeId, profileId, modelId });
+            return getSizeRangeModel({
+                workpieceTypeId,
+                profileId,
+                modelId,
+                size: record.size,
+            });
         },
         {
             enabled: !!(

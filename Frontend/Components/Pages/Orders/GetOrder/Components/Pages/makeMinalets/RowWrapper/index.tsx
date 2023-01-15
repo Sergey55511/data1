@@ -48,6 +48,7 @@ export const RowWrapper = observer((props: iProps) => {
                             setState={props.setState}
                             index={props.index}
                             onChange={paraps.onChange}
+                            record={props.record}
                         />
                     </InputField>,
                     <InputField key="color" isError={props.state.color.isError}>

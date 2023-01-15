@@ -1,6 +1,7 @@
 import { Button, Modal } from 'antd';
 import { isArray } from 'lodash';
 import { SetStateAction } from 'react';
+import { iData } from '../../../../../../../../../../Shared/Types/interfaces';
 import { useStores } from '../../../../../../../../../Store/useStores';
 import { InputField } from '../../../../../../../../Shared/InputField';
 import { SelectField } from '../../../../../../../../Shared/SelectField';
@@ -14,11 +15,13 @@ export const ModalFullModel = (props: {
     index: number;
     onCancel: () => void;
     onChange: (v: string | number, index: number, fieldName: keyof iState) => void;
+    record: iData;
 }) => {
     const paraps = useProps({
         state: props.state,
         resetValue: (fieldName: keyof iState) =>
             props.onChange('', props.index, fieldName),
+        record: props.record,
     });
 
     return (

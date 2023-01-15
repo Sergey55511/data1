@@ -5,7 +5,7 @@ import { iCookies, iUser } from '../../../../../../Shared/Types/interfaces';
 import { KEY } from '../../../../Services/createJWT';
 import { tPrisma } from '../../../../../types';
 
-export const getOrder = <T>(prisma: tPrisma,req: NextApiRequest): PrismaPromise<T> => {
+export const getOrder = <T>(prisma: tPrisma, req: NextApiRequest): PrismaPromise<T> => {
     const cookies = req.cookies as iCookies;
     const atkn = jwt.verify(cookies?.atkn, KEY) as iUser;
     const storeId = atkn.storeId;
@@ -23,6 +23,7 @@ export const getOrder = <T>(prisma: tPrisma,req: NextApiRequest): PrismaPromise<
             type,
             "sizeRangeId",
             "sizeRange",
+            size,
 			"operationId",
 			"operation",
 			"workpieceTypeId",
@@ -74,6 +75,7 @@ export const getOrder = <T>(prisma: tPrisma,req: NextApiRequest): PrismaPromise<
             type,
             "sizeRangeId",
             "sizeRange",
+            size,
 			"operationId",
 			"operation",
             "workpieceTypeId",

@@ -2,17 +2,20 @@ import { Dispatch, SetStateAction, useState } from 'react';
 import { iState } from '../useProps';
 import { Button } from 'antd';
 import { ModalFullModel } from './ModalFullModel';
+import { iData } from '../../../../../../../../../Shared/Types/interfaces';
 
 export const FullModelButton = ({
     state,
     setState,
     index,
     onChange,
+    record,
 }: {
     state: iState;
     setState: Dispatch<SetStateAction<iState[]>>;
     index: number;
     onChange: (v: string | number, index: number, fieldName: keyof iState) => void;
+    record: iData;
 }) => {
     const [isShowModalFullModel, setIsShowModalFullModel] = useState(false);
 
@@ -25,6 +28,7 @@ export const FullModelButton = ({
                     index={index}
                     onCancel={() => setIsShowModalFullModel(false)}
                     onChange={onChange}
+                    record={record}
                 />
             )}
             <Button

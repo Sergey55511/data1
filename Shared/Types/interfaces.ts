@@ -115,6 +115,7 @@ export interface iDataTable {
 export interface iData extends iDataTable {
     dateSystem?: moment.Moment;
     key?: number;
+    size?: number;
     userLogin?: string;
     recipient?: string;
     fullModel?: string;
