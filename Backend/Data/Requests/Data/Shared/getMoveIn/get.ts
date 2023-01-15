@@ -53,6 +53,7 @@ export const getMoveIn = <T>(
             LEFT JOIN "Channel" on "Data"."channelId"="Channel".id
             LEFT JOIN "Productions" on "Data"."productionId"="Productions".id
             LEFT JOIN "State" on "Data"."stateId"="State".id
-        WHERE "Recipients"."storeId"=${+storeId} AND "Data"."numDocument"=${numDocument};
+        WHERE "Recipients"."storeId"=${+storeId} AND "Data"."numDocument"=${numDocument}
+        ORDER BY "SizeRange".size asc;
     `;
 };
