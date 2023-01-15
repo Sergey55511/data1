@@ -56,6 +56,9 @@ export const useProps = ({
             }
         }
         if (state.widthIn! < 0) return false;
+
+        console.log('isCheckLosses', isCheckLosses, state.losses, state.losses! < 0);
+
         if (isCheckLosses) {
             if (state.losses! < 0) return false;
         }
