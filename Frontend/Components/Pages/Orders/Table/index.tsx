@@ -37,6 +37,10 @@ export const OrdersTable = observer(() => {
             title: KEYSLEFTOVERS.pp.title,
         },
         {
+            ...getColumnPropsHoc(KEYSLEFTOVERS.productionId.key),
+            title: KEYSLEFTOVERS.productionId.title,
+        },
+        {
             ...getColumnPropsHoc(KEYSLEFTOVERS.user.key),
             title: KEYSLEFTOVERS.user.title,
         },
