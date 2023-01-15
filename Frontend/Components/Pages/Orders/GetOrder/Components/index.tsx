@@ -171,11 +171,13 @@ export const GetOrderSwitcher = ({
             );
         case OPERATIONS.sortingLength.id:
             return <SortingLength record={record} stateId={STATE.sortedLength.id} />;
-            
+
         case OPERATIONS.sortingElements.id:
             return <SortingElements record={record} stateId={STATE.sertedElements.id} />;
         case OPERATIONS.makingMinalets.id:
-            return <MakeMinalets record={record} stateId={STATE.sertedElements.id} />;
+            return (
+                <MakeMinalets record={record} stateId={STATE.minaretFinishedElement.id} />
+            );
     }
     return <></>;
 };

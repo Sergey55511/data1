@@ -70,6 +70,7 @@ export const STATE = {
     thermedOven: { id: 28 },
     polishedMsc: { id: 29 },
     sertedElements: { id: 30 },
+    minaretFinishedElement: { id: 32 },
     createdProduct: { id: 35 },
 };
 export const WORKPIECETYPE = {
