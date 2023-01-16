@@ -2,6 +2,7 @@ import { Button, Dropdown, Menu } from 'antd';
 import { ExportOutlined, CarOutlined, DeploymentUnitOutlined } from '@ant-design/icons';
 import { iProps, useProps } from './useProps';
 import { SelectUser } from './SelectUser';
+import { SelectRecipient } from './SelectRecipient';
 
 export const Actions = (props: iProps) => {
     const {
@@ -14,6 +15,9 @@ export const Actions = (props: iProps) => {
         managerId,
         setManagerId,
         managers,
+        isShowRecipient,
+        setIsShowRecipient,
+        recipients,
     } = useProps(props);
 
     const menu = (
@@ -29,8 +33,7 @@ export const Actions = (props: iProps) => {
                     key: '2',
                     label: 'Отгрузить',
                     icon: <ExportOutlined />,
-                    onClick: moveOutAssembleHandler,
-                    disabled: true,
+                    onClick: () => setIsShowRecipient(true),
                 },
                 {
                     key: '3',
@@ -53,6 +56,17 @@ export const Actions = (props: iProps) => {
                     managerId={managerId}
                     setManagerId={setManagerId}
                     managers={managers}
+                />
+            )}
+            {isShowRecipient && (
+                <SelectRecipient
+                    onCancel={() => setIsShowRecipient(false)}
+                    submitHandler={reAssembleHandler}
+                    isLoading={takeApartHandler.isLoading}
+                    recipientId={managerId}
+                    setRecipientId={setManagerId}
+                    recipient={recipients}
+                    isShowAddInput
                 />
             )}
             <Dropdown overlay={menu} disabled={!props.selectedRows.length}>

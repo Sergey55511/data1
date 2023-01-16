@@ -2,13 +2,14 @@ import { useMutation, useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { OPERATIONS } from '../../../../../Shared/constants';
 import { iAssembleTakeApartData } from '../../../../../Shared/Types/interfaces';
-import { getManagers } from '../../../../Store/Lists/api';
+import { getManagers, getRecipient } from '../../../../Store/Lists/api';
 import { assembleTakeApart } from '../../../../Store/OperationStore/Api';
 import { useStores } from '../../../../Store/useStores';
 import { iProps } from './useProps';
 
 export const useData = (props: iProps) => {
     const [isShowSelectUser, setIsShowSelectUser] = useState(false);
+    const [isShowRecipient, setIsShowRecipient] = useState(false);
     const [managerId, setManagerId] = useState<number | undefined>();
     const { loginStore } = useStores();
     const takeApartHandler = useMutation(async (data: iAssembleTakeApartData) => {
@@ -28,6 +29,14 @@ export const useData = (props: iProps) => {
             }),
         { enabled: !!loginStore.user.storeId },
     );
+    const recipients = useQuery(['recipients'], () => getRecipient(), {
+        enabled: !!loginStore.user.storeId,
+    });
+    const recipientsInternal = useQuery(
+        ['recipients', loginStore.user.storeId],
+        () => getRecipient(loginStore.user.storeId),
+        { enabled: !!loginStore.user.storeId },
+    );
 
     return {
         takeApartHandler,
@@ -36,5 +45,9 @@ export const useData = (props: iProps) => {
         setIsShowSelectUser,
         managerId,
         setManagerId,
+        isShowRecipient,
+        setIsShowRecipient,
+        recipients,
+        recipientsInternal,
     };
 };

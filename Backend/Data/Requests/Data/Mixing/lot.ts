@@ -24,6 +24,8 @@ export const mixingLot = async <T>(
         widthOut: undefined,
         countItemsOut: undefined,
         widthIn: item.widthOut,
+        moneyIn: item.moneyOut,
+        moneyOut: undefined,
         countItemsIn: item.countItemsOut,
     }));
 

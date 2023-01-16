@@ -10,20 +10,13 @@ export interface iProps {
 }
 
 export const useProps = (props: iProps) => {
-    const {
-        takeApartHandler,
-        isShowSelectUser,
-        setIsShowSelectUser,
-        managers,
-        managerId,
-        setManagerId,
-    } = useData(props);
+    const params = useData(props);
 
     const reAssembleHandler = async () => {
         const articles = props.selectedRows.map((item) => item.articleId || 0);
-        takeApartHandler.mutate({
+        params.takeApartHandler.mutate({
             articles,
-            managerId: managerId!,
+            managerId: params.managerId!,
         });
     };
 
@@ -41,11 +34,6 @@ export const useProps = (props: iProps) => {
         reAssembleHandler,
         moveOutAssembleHandler,
         shareAssembleHandler,
-        takeApartHandler,
-        isShowSelectUser,
-        setIsShowSelectUser,
-        managerId,
-        setManagerId,
-        managers,
+        ...params,
     };
 };

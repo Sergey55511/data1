@@ -1,6 +1,6 @@
 import { UseQueryResult } from '@tanstack/react-query';
 import { Button, Modal } from 'antd';
-import { Dispatch, SetStateAction, useState } from 'react';
+import { Dispatch, SetStateAction } from 'react';
 import { iManager } from '../../../../../../Shared/Types/interfaces';
 import { SelectField } from '../../../../Shared/SelectField';
 import { Wrapper } from './style';
