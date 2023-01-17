@@ -119,6 +119,7 @@ export interface iData extends iDataTable {
     userLogin?: string;
     recipient?: string;
     fullModel?: string;
+    fullModelTask?: string;
     managerLogin?: string;
     sizeRange?: string;
     materialGroup?: string;

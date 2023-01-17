@@ -1,4 +1,4 @@
-export const fullModelSQL = `(
+const getfullModelSQL = (idField = 'fullModelId', name = 'fullModel') => `(
     SELECT  
         concat(
             "model",
@@ -13,11 +13,14 @@ export const fullModelSQL = `(
             CASE WHEN "sizeRange" IS NOT NULL THEN 
                 CASE WHEN "length" IS NOT NULL THEN '_' END 
             END,
-            "length") as "fullModel"
+            "length") as "${name}"
     FROM public."FullModels"
         LEFT JOIN "Models" ON "Models".id = "FullModels"."modelId"
         LEFT JOIN "Profile" ON "Profile".id = "FullModels"."profileId"
         LEFT JOIN "SizeRange" ON "SizeRange".id = "FullModels"."sizeRangeModelId"
         LEFT JOIN "LengthModel" ON "LengthModel".id = "FullModels"."lengthModelId"
-    WHERE "FullModels".id="fullModelId"
+    WHERE "FullModels".id="${idField}"
 )`;
+
+export const fullModelSQL = getfullModelSQL();
+export const fullModelSQLTask = getfullModelSQL('task', 'fullModelTask');

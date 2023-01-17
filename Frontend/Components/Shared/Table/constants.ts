@@ -7,6 +7,7 @@ export const KEYSLEFTOVERS = {
     operation: { key: 'operation', title: 'Операция' },
     workpieceType: { key: 'workpieceType', title: 'Тип заготовки' },
     fullModel: { key: 'fullModel', title: 'Модель' },
+    fullModelTask: { key: 'fullModelTask', title: 'Задача' },
     numDocument: { key: 'numDocument', title: 'Номер документа' },
     model: { key: 'model', title: 'Модель' },
     type: { key: 'type', title: 'Тип' },

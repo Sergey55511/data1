@@ -1,7 +1,7 @@
 import { PrismaPromise } from '@prisma/client';
 import { OPERATIONS } from '../../../../../Shared/constants';
 import { tPrisma } from '../../../../types';
-import { fullModelSQL } from '../constants';
+import { fullModelSQL, fullModelSQLTask } from '../constants';
 
 export const orders = <T>(prisma: tPrisma, storeId: number): PrismaPromise<T> => {
     return prisma.$queryRawUnsafe(`
@@ -36,6 +36,7 @@ export const orders = <T>(prisma: tPrisma, storeId: number): PrismaPromise<T> =>
             state,
             lot,
             task,
+            ${fullModelSQLTask},
             "widthOut",
             ABS(COALESCE(round(sum("widthIn")::numeric,2),0)-COALESCE(round(coalesce(sum("widthOut"),0)::numeric,2),0)) as "width",
             ABS(COALESCE(round(sum("countItemsIn")::numeric,2),0)-COALESCE(round(sum("countItemsOut")::numeric,2),0)) as "count",
@@ -94,6 +95,7 @@ export const orders = <T>(prisma: tPrisma, storeId: number): PrismaPromise<T> =>
             state,
             lot,
             task,
+            ${fullModelSQLTask},
             "widthOut"
         HAVING 
             pp is not null 
