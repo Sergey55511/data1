@@ -7,6 +7,7 @@ export const orders = <T>(prisma: tPrisma, storeId: number): PrismaPromise<T> =>
     return prisma.$queryRawUnsafe(`
         SELECT 
             pp,
+            "productionId",
 			"userId",
 			u."login" as "userLogin",
 			"managerId",
@@ -66,6 +67,7 @@ export const orders = <T>(prisma: tPrisma, storeId: number): PrismaPromise<T> =>
 			) and "operationId" <> ${+OPERATIONS.assemble.id}
         GROUP BY 
 			pp,
+            "productionId",
 			"userId",
 			u."login",
 			"managerId",
