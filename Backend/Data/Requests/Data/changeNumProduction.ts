@@ -19,9 +19,11 @@ export const changeNumProduction = async <T>(
     const dateOut = data?.map(tmpData);
     const dateIn = data?.map((item) => ({
         ...tmpData(item),
-        widthOut: undefined,
-        countItemsOut: undefined,
         widthIn: item.widthOut,
+        widthOut: undefined,
+        moneyIn: item.moneyOut,
+        moneyOut: undefined,
+        countItemsOut: undefined,
         countItemsIn: item.countItemsOut,
         productionId: item.productionId,
     }));
