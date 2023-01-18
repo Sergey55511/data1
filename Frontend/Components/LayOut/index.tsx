@@ -8,6 +8,7 @@ import { observer } from 'mobx-react-lite';
 import { ErrorHandler } from './Components/ErrorHandler';
 import { Spin } from 'antd';
 import { ConfigProvider } from 'antd';
+import 'moment/locale/ru';
 import locale from 'antd/lib/locale/ru_RU';
 import { tPages } from '../Pages/constants';
 import { QueryClientProvider } from '@tanstack/react-query';
