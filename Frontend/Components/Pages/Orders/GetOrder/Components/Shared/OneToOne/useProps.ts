@@ -71,7 +71,7 @@ export const useProps = ({
     };
 
     const subbmitHandler = async () => {
-        const code = getCode(record.code, record.width, state.moveBack);
+        const code = getCode(record.code, record.width, state.moveBack, state.pruning);
 
         const data: iData[] = [
             {

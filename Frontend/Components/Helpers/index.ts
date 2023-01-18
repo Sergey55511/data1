@@ -6,9 +6,15 @@ import { ROUTES } from '../Pages/constants';
 import { tValue } from '../Shared/InputNumber';
 import divide from 'lodash/divide';
 
-export const getCode = (code?: number, width?: number, moveBack?: number) => {
-    const codePoint = divide(code || 0, width || 0);
-    const productWidth = (width || 0) * -1 - (moveBack || 0);
+export const getCode = (
+    code?: number,
+    width?: number,
+    moveBack?: number,
+    prune?: number,
+) => {
+    const getValue = (v: any) => (v ? +v : 0);
+    const codePoint = divide(getValue(code), getValue(width));
+    const productWidth = getValue(width) * -1 - getValue(moveBack) - getValue(prune);
     return productWidth * codePoint;
 };
 
