@@ -4,6 +4,13 @@ import { WORKPIECETYPE } from '../../../Shared/constants';
 import { iData, iDataTable, iField } from '../../../Shared/Types/interfaces';
 import { ROUTES } from '../Pages/constants';
 import { tValue } from '../Shared/InputNumber';
+import divide from 'lodash/divide';
+
+export const getCode = (code?: number, width?: number, moveBack?: number) => {
+    const codePoint = divide(code || 0, width || 0);
+    const productWidth = (width || 0) * -1 - (moveBack || 0);
+    return productWidth * codePoint;
+};
 
 export const getLosseObject = (
     record: iData,
@@ -74,7 +81,9 @@ export const prepareSubbmitData = ({
     if (pruning) {
         let codePrun = record.widthOut ? (record.code || 0) / record.widthOut : 0;
         codePrun = codePrun * +pruning;
-        data.push(getLosseObject(recordDate, WORKPIECETYPE.prunes.id, +pruning, codePrun));
+        data.push(
+            getLosseObject(recordDate, WORKPIECETYPE.prunes.id, +pruning, codePrun),
+        );
     }
 
     if (moveBack) {

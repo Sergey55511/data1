@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { round } from '../../../../../../../../Shared/Helpers';
 import { iData } from '../../../../../../../../Shared/Types/interfaces';
 import { useStores } from '../../../../../../../Store/useStores';
-import { sendData } from '../../../../../../Helpers';
+import { getCode, sendData } from '../../../../../../Helpers';
 import { confirmAction } from '../../../../../../Shared/ConfirmSubbmit';
 import { useData } from './useData';
 
@@ -57,8 +57,6 @@ export const useProps = ({
         }
         if (state.widthIn! < 0) return false;
 
-        console.log('isCheckLosses', isCheckLosses, state.losses, state.losses! < 0);
-
         if (isCheckLosses) {
             if (state.losses! < 0) return false;
         }
@@ -73,7 +71,8 @@ export const useProps = ({
     };
 
     const subbmitHandler = async () => {
-        const code = record.code ? record.code * -1 : 0;
+        const code = getCode(record.code, record.width, state.moveBack);
+
         const data: iData[] = [
             {
                 ...record,
