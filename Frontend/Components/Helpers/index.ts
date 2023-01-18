@@ -23,15 +23,17 @@ export const getPruneObject = (
     workpieceTypeId: number,
     losses: number,
     code?: number,
+    stateId?: number,
 ): iData => ({
     ...record,
     workpieceTypeId,
     fractionId: undefined,
     materialGroupId: undefined,
+    stateId,
     colorId: undefined,
     fullModelId: undefined,
     task: undefined,
-    length: undefined,
+    lengthId: undefined,
     channelId: undefined,
     gradeId: undefined,
     widthOut: undefined,
@@ -54,7 +56,7 @@ export const getLosseObject = (
     sizeRangeId: undefined,
     fullModelId: undefined,
     task: undefined,
-    length: undefined,
+    lengthId: undefined,
     channelId: undefined,
     gradeId: undefined,
     widthOut: undefined,
@@ -88,6 +90,7 @@ export const prepareSubbmitData = ({
     pruning,
     defect,
     moveBack,
+    stateId,
 }: {
     record: iData;
     data: iData[];
@@ -96,6 +99,7 @@ export const prepareSubbmitData = ({
     pruning?: tValue;
     defect?: tValue;
     moveBack?: tValue;
+    stateId?: number;
 }) => {
     const recordDate = { ...record, date: data[0].date };
     if (losses) {
@@ -110,9 +114,9 @@ export const prepareSubbmitData = ({
     }
     if (pruning) {
         let codePrun = record.widthOut ? (record.code || 0) / record.widthOut : 0;
-        codePrun = codePrun * +pruning;
+        codePrun = codePrun * +pruning * -1;
         data.push(
-            getPruneObject(recordDate, WORKPIECETYPE.prunes.id, +pruning, codePrun),
+            getPruneObject(record, WORKPIECETYPE.prunes.id, +pruning, codePrun, stateId),
         );
     }
 
@@ -145,6 +149,7 @@ export const sendData = async ({
     setIsLoading,
     router,
     postOrderResult,
+    stateId,
 }: {
     record: iData;
     data: iData[];
@@ -159,6 +164,7 @@ export const sendData = async ({
         data: iDataTable[],
         callBack?: (() => void) | undefined,
     ) => Promise<void>;
+    stateId?: number;
 }) => {
     const dataTable = prepareSubbmitData({
         record,
@@ -168,6 +174,7 @@ export const sendData = async ({
         defect,
         moveBack,
         pruning,
+        stateId,
     });
     setIsLoading(true);
     await postOrderResult(dataTable);

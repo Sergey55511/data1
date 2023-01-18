@@ -21,27 +21,27 @@ export const prepareData = async (prisma: tPrisma, data: iDataTable[]) => {
 
     return data.map((item) => {
         const isMoveBack = (item.widthOut || 0) < 0;
+        const isProductive = ![
+            WORKPIECETYPE.defect.id,
+            WORKPIECETYPE.garbage.id,
+            WORKPIECETYPE.losses.id,
+            WORKPIECETYPE.prunes.id,
+        ].includes(item.workpieceTypeId || 0);
 
         if (!isMoveBack) {
             if (isTask) {
-                if (
-                    ![
-                        WORKPIECETYPE.defect.id,
-                        WORKPIECETYPE.garbage.id,
-                        WORKPIECETYPE.losses.id,
-                        WORKPIECETYPE.prunes.id,
-                    ].includes(item.workpieceTypeId || 0)
-                ) {
+                if (isProductive) {
+                    item.sizeRangeId = sizeRangeId;
                     item.workpieceTypeId = prepareNumber(workpieceTypeId);
                 }
+
                 item.fullModelId = prepareNumber(item.task);
-                item.sizeRangeId = sizeRangeId;
                 item.lengthId = undefined;
             }
         }
 
-        item.task=undefined
-        
+        item.task = undefined;
+
         return item;
     });
 };

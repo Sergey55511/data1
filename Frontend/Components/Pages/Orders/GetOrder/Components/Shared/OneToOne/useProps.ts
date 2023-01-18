@@ -96,6 +96,7 @@ export const useProps = ({
             postOrderResult: OperationStore.postOrderResult.bind(OperationStore),
             router,
             losses: state.losses,
+            stateId,
         });
     };
 

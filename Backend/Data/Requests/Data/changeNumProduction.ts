@@ -12,13 +12,14 @@ export const changeNumProduction = async <T>(
         date: moment(item.date)?.toDate(),
         operationId: OPERATIONS.changeProduction.id,
         pp: undefined,
-        managerId: item.userId,
+        task: undefined,
         productionId: undefined,
     });
 
     const dateOut = data?.map(tmpData);
     const dateIn = data?.map((item) => ({
         ...tmpData(item),
+        task: undefined,
         widthIn: item.widthOut,
         widthOut: undefined,
         moneyIn: item.moneyOut,
