@@ -12,6 +12,27 @@ export const getCode = (code?: number, width?: number, moveBack?: number) => {
     return productWidth * codePoint;
 };
 
+export const getPruneObject = (
+    record: iData,
+    workpieceTypeId: number,
+    losses: number,
+    code?: number,
+): iData => ({
+    ...record,
+    workpieceTypeId,
+    fractionId: undefined,
+    materialGroupId: undefined,
+    colorId: undefined,
+    fullModelId: undefined,
+    task: undefined,
+    length: undefined,
+    channelId: undefined,
+    gradeId: undefined,
+    widthOut: undefined,
+    widthIn: +losses.toFixed(2),
+    moneyIn: code ? code : undefined,
+});
+
 export const getLosseObject = (
     record: iData,
     workpieceTypeId: number,
@@ -85,7 +106,7 @@ export const prepareSubbmitData = ({
         let codePrun = record.widthOut ? (record.code || 0) / record.widthOut : 0;
         codePrun = codePrun * +pruning;
         data.push(
-            getLosseObject(recordDate, WORKPIECETYPE.prunes.id, +pruning, codePrun),
+            getPruneObject(recordDate, WORKPIECETYPE.prunes.id, +pruning, codePrun),
         );
     }
 

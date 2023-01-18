@@ -40,12 +40,19 @@ export const useProps = ({ record, stateId }: { record: iData; stateId: number }
     useEffect(() => {}, [loginStore.user.storeId]);
 
     useEffect(() => {
+        const getValue = (v?: any) => (v ? +v : 0);
         const totalSum = getTotalSum(state);
-        let res = (record?.widthOut || 0) - totalSum - (moveBack ? +moveBack : 0);
+        let res =
+            getValue(record?.widthOut) -
+            getValue(totalSum) -
+            getValue(moveBack) -
+            getValue(pruning) -
+            getValue(garbage) -
+            getValue(defect);
         res = isNaN(res) ? 0 : res;
         res = round(res);
         setLosses(res);
-    }, [state, moveBack]);
+    }, [state, record?.widthOut, moveBack, pruning, defect, garbage]);
 
     const addRowHandler = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
         e.preventDefault();
