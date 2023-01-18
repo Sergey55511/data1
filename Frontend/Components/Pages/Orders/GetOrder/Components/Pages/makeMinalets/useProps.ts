@@ -153,6 +153,7 @@ export const useProps = ({ record, stateId }: { record: iData; stateId: number }
             moveBack,
             garbage,
             defect,
+            stateId,
         });
     };
     return {
