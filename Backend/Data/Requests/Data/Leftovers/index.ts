@@ -5,7 +5,7 @@ import { fullModelSQL } from '../constants';
 
 export const leftovers = <T>(prisma: tPrisma, req: NextApiRequest): PrismaPromise<T> => {
     const storeId: any = req.query.storeId;
-    
+
     return prisma.$queryRawUnsafe(`
       SELECT 
             "Data"."workpieceTypeId",
@@ -14,6 +14,7 @@ export const leftovers = <T>(prisma: tPrisma, req: NextApiRequest): PrismaPromis
             type,
             "sizeRangeId",
             "sizeRange",
+            "SizeRange".size,
 			"productionId",
 			"Productions".description as "production",
             "fullModelId",
@@ -57,6 +58,7 @@ export const leftovers = <T>(prisma: tPrisma, req: NextApiRequest): PrismaPromis
             type,
             "sizeRangeId",
             "sizeRange",
+            "SizeRange".size,
 			"productionId",
 			"Productions".description,
 			"fullModelId",

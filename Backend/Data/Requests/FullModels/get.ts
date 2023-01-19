@@ -23,6 +23,11 @@ export const getFullModels = async <T>(
             workpieceTypeId: data.workpieceTypeId,
             profileId: data.profileId,
             sizeRangeModelId: data.sizeRangeModelId,
+            SizeRangeModel: data.size
+                ? {
+                      size: { lte: data.size },
+                  }
+                : undefined,
             modelId: data.modelId,
             active: true,
         },

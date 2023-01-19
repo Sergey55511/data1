@@ -5,6 +5,7 @@ export const schema = {
         profileId: { type: 'integer' },
         sizeRangeModelId: { type: 'integer' },
         modelId: { type: 'integer' },
+        size: { type: 'integer' },
     },
     additionalProperties: false,
 };

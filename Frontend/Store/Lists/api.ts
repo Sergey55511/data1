@@ -279,6 +279,7 @@ export const getFullModels = (params: {
     profileId?: number;
     sizeRangeModelId?: number;
     modelId?: number;
+    size?: number;
 }) => {
     return axios({
         url: `/api/list/fullmodels`,

@@ -6,14 +6,17 @@ export interface iParams {
     profileId?: number;
     sizeRangeModelId?: number;
     modelId?: number;
+    size?: number;
 }
 
 export const dal = (params: { [key: string]: any }): iParams => {
+    const getValue = (v: any) => (v ? +v : undefined);
     const data: iParams = {
-        workpieceTypeId: params.workpieceTypeId ? +params.workpieceTypeId : undefined,
-        profileId: params.profileId ? +params.profileId : undefined,
-        sizeRangeModelId: params.sizeRangeModelId ? +params.sizeRangeModelId : undefined,
-        modelId: params.modelId ? +params.modelId : undefined,
+        workpieceTypeId: getValue(params.workpieceTypeId),
+        profileId: getValue(params.profileId),
+        sizeRangeModelId: getValue(params.sizeRangeModelId),
+        modelId: getValue(params.modelId),
+        size: getValue(params.size),
     };
 
     return checkSchema(data, schema);

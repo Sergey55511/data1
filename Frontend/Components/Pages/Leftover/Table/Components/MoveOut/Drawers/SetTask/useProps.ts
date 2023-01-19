@@ -124,6 +124,7 @@ export const useProps = ({ onClose, record, operationId, setTask }: iProps) => {
                 workpieceTypeId: state.workpieceTypeId.value,
                 profileId: state.profileId.value,
                 sizeRangeModelId: state.sizeRangeModelId.value,
+                size: record.size,
             }),
         {
             enabled: !!storeId,
