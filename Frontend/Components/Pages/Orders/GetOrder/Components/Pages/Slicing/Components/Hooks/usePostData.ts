@@ -2,6 +2,7 @@ import { useMutation } from '@tanstack/react-query';
 import { notification } from 'antd';
 import { iState } from '../..';
 import {
+    getCodeOneItem,
     getTotalSum,
     prepareSubbmitData,
     validation,
@@ -62,8 +63,14 @@ export const usePostData = () => {
                 errorNote();
                 throw { error: 'losses less then 0' };
             }
-            const code = record.code ? record.code * -1 : 0;
-            const codeOneItem = record.width ? code / totalSum : 0;
+
+            const codeOneItem = getCodeOneItem({
+                recordCode: record.code,
+                recordWidth: record.width,
+                moveBack,
+                totalSum,
+            });
+
             const data: iData[] = state.map((item) => ({
                 ...record,
                 date,

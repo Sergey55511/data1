@@ -82,6 +82,29 @@ export const getTotalSum = <T extends { widthIn: { value: string | number } }>(
         return (res += +item.widthIn?.value || 0);
     }, 0);
 
+export const getCodeOneItem = ({
+    recordCode,
+    recordWidth,
+    totalSum,
+    moveBack,
+    pruning,
+}: {
+    recordCode?: number;
+    recordWidth?: number;
+    moveBack?: tValue;
+    pruning?: tValue;
+    totalSum: number;
+}) => {
+    const getNumber = (value: any) => (value ? +value : 0);
+    const absRecordWidth = Math.abs(getNumber(recordWidth));
+    let code = getNumber(recordCode);
+    code = code < 0 ? code * -1 : code;
+    const width = getNumber(absRecordWidth) - getNumber(moveBack) - getNumber(pruning);
+    let codeOneItem = absRecordWidth ? code / absRecordWidth : 0;
+    const codeRest = codeOneItem * width;
+    return recordWidth ? codeRest / totalSum : 0;
+};
+
 export const prepareSubbmitData = ({
     record,
     data,

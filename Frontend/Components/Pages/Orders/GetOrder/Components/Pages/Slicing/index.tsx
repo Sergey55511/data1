@@ -62,19 +62,14 @@ export const Slicing = observer(
                 }
             });
 
-            let isNeedRefresh = false;
-
             return state.map((item, index) => {
                 if (rows[index].count > 1) {
-                    isNeedRefresh = true;
                     item.duplicate = true;
                 } else {
                     item.duplicate = false;
                 }
                 return { ...item };
             });
-
-            // if (isNeedRefresh) setState([...res]);
         };
 
         useEffect(() => {
@@ -129,7 +124,7 @@ export const Slicing = observer(
                 garbage,
                 defect,
                 moveBack,
-                date
+                date,
             });
         };
 

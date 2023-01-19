@@ -1,5 +1,4 @@
 import { Button, Tooltip } from 'antd';
-import { iState } from '../..';
 import { InputField } from '../../../../../../../../Shared/InputField';
 import { InputNumber } from '../../../../../../../../Shared/InputNumber';
 import { SelectField } from '../../../../../../../../Shared/SelectField';
@@ -8,15 +7,13 @@ import { Wrapper } from './style';
 import { observer } from 'mobx-react-lite';
 import { useStores } from '../../../../../../../../../Store/useStores';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
-import { getSizeRange, useLists } from '../Hooks';
-import {
-    OPERATIONS,
-    WORKPIECETYPE,
-} from '../../../../../../../../../../Shared/constants';
+import { getSizeRange } from '../Hooks';
+import { WORKPIECETYPE } from '../../../../../../../../../../Shared/constants';
 import {
     iGrade,
     iSizeRange,
 } from '../../../../../../../../../../Shared/Types/interfaces';
+import { iState } from '../../useProps';
 
 export const Row = observer(
     ({

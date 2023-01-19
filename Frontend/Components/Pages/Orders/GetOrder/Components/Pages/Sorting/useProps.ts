@@ -1,14 +1,10 @@
 import { notification } from 'antd';
+import moment from 'moment';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import { OPERATIONS } from '../../../../../../../../Shared/constants';
-import {
-    iData,
-    iField,
-    iSizeRange,
-} from '../../../../../../../../Shared/Types/interfaces';
+import { round } from '../../../../../../../../Shared/Helpers';
+import { iData, iField, iGrade } from '../../../../../../../../Shared/Types/interfaces';
 import { useStores } from '../../../../../../../Store/useStores';
-import { tValue } from '../../../../../../Shared/InputNumber';
 import {
     getCodeOneItem,
     getTotalSum,
@@ -16,27 +12,35 @@ import {
     validation,
 } from '../../../../../../Helpers';
 import { Field } from '../../../../../../Helpers/classes';
-import { round } from '../../../../../../../../Shared/Helpers';
-import moment from 'moment';
+import { tValue } from '../../../../../../Shared/InputNumber';
+import { getRootLists } from './Components/Hooks';
 
 export interface iState {
-    length: iField;
-    grade: iField;
+    typeId: iField;
+    gradeId: iField;
+    colorId: iField;
+    sizeRangeId: iField;
     widthIn: iField;
 }
+
 export interface iProps {
     record: iData;
     stateId: number;
 }
 
 export const useProps = ({ record, stateId }: iProps) => {
-    const { OperationStore, ListsStore, loginStore } = useStores();
+    const { ListsStore, OperationStore, loginStore } = useStores();
     const [state, setState] = useState<iState[]>([]);
-    const [losses, setLosses] = useState<number>(0);
-    const [date, setDate] = useState<moment.Moment | undefined>(moment());
+    const [grade, setGrade] = useState<iGrade[]>([]);
     const [moveBack, setMoveBack] = useState<tValue>(undefined);
+    const [date, setDate] = useState<moment.Moment | undefined>(moment());
+    const [losses, setLosses] = useState<number>(0);
     const [isLoading, setIsLoading] = useState(false);
     const router = useRouter();
+
+    useEffect(() => {
+        getRootLists(ListsStore, setGrade, loginStore.user.storeId);
+    }, [loginStore.user.storeId]);
 
     useEffect(() => {
         const totalSum = getTotalSum(state);
@@ -52,8 +56,10 @@ export const useProps = ({ record, stateId }: iProps) => {
             const res: iState[] = [
                 ...prev,
                 {
-                    length: new Field('length', 'Длинна'),
-                    grade: new Field('grade', 'сорт'),
+                    typeId: new Field('typeId', 'Тип'),
+                    gradeId: new Field('gradeId', 'Сорт'),
+                    colorId: new Field('colorId', 'Цвет'),
+                    sizeRangeId: new Field('sizeRangeId', 'Размерный ряд'),
                     widthIn: new Field('widthIn', 'Вес гр.'),
                 },
             ];
@@ -78,6 +84,7 @@ export const useProps = ({ record, stateId }: iProps) => {
         }
 
         const isError = validation(setState);
+
         if (isError) {
             errorNote();
             return;
@@ -103,17 +110,15 @@ export const useProps = ({ record, stateId }: iProps) => {
         const data: iData[] = state.map((item) => ({
             ...record,
             date,
-            lengthId: item.length.value ? +item.length.value : undefined,
+            typeId: +item.typeId.value,
+            gradeId: +item.gradeId.value,
+            colorId: +item.colorId.value,
+            sizeRangeId: +item.sizeRangeId.value,
             widthOut: undefined,
             widthIn: +item.widthIn.value!,
-            fractionId: undefined,
-            gradeId: item.grade.value ? +item.grade.value : undefined,
-            workpieceType: undefined,
-            productionId: undefined,
             stateId,
             moneyIn: item.widthIn.value ? codeOneItem * +item.widthIn.value : 0,
         }));
-
         sendData({
             data,
             record,
@@ -124,16 +129,6 @@ export const useProps = ({ record, stateId }: iProps) => {
             moveBack,
         });
     };
-
-    const copyRow = (index: number) => {
-        setState((prev) => {
-            const elem: iState = JSON.parse(JSON.stringify(prev[index]));
-            elem.widthIn.value = '';
-            prev.splice(index + 1, 0, elem);
-            return [...prev];
-        });
-    };
-
     return {
         subbmitHandler,
         addRowHandler,
@@ -141,12 +136,11 @@ export const useProps = ({ record, stateId }: iProps) => {
         moveBack,
         losses,
         isLoading,
-        state,
-        removeRow,
-        copyRow,
-        setState,
-        record,
         date,
         setDate,
+        state,
+        grade,
+        setState,
+        removeRow,
     };
 };

@@ -1,14 +1,15 @@
 import { notification } from 'antd';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import {
-    iData,
-    iField,
-    iSizeRange,
-} from '../../../../../../../../Shared/Types/interfaces';
+import { iData, iField } from '../../../../../../../../Shared/Types/interfaces';
 import { useStores } from '../../../../../../../Store/useStores';
 import { tValue } from '../../../../../../Shared/InputNumber';
-import { getTotalSum, sendData, validation } from '../../../../../../Helpers';
+import {
+    getCodeOneItem,
+    getTotalSum,
+    sendData,
+    validation,
+} from '../../../../../../Helpers';
 import { Field } from '../../../../../../Helpers/classes';
 import { round } from '../../../../../../../../Shared/Helpers';
 import moment from 'moment';
@@ -20,11 +21,10 @@ export interface iState {
 }
 
 export const useProps = ({ record, stateId }: { record: iData; stateId: number }) => {
-    const { OperationStore, ListsStore, loginStore } = useStores();
+    const { OperationStore, loginStore } = useStores();
     const [state, setState] = useState<iState[]>([]);
     const [date, setDate] = useState<moment.Moment | undefined>(moment());
     const [workingHours, setWorkingHours] = useState<string | undefined>('');
-    const [sizeRagne, setSizeRagne] = useState<iSizeRange[]>([]);
     const [losses, setLosses] = useState<number>(0);
     const [moveBack, setMoveBack] = useState<tValue>(undefined);
     const [isLoading, setIsLoading] = useState(false);
@@ -99,8 +99,14 @@ export const useProps = ({ record, stateId }: { record: iData; stateId: number }
             errorNote();
             return;
         }
-        const code = record.code ? record.code * -1 : 0;
-        const codeOneItem = record.width ? code / totalSum : 0;
+
+        const codeOneItem = getCodeOneItem({
+            recordCode: record.code,
+            recordWidth: record.width,
+            moveBack,
+            totalSum,
+        });
+
         const getNumber = (v: any) => (v ? +v : undefined);
         const data: iData[] = state.map((item) => ({
             ...record,

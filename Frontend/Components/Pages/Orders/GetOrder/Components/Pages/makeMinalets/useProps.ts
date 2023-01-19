@@ -4,7 +4,12 @@ import { useEffect, useState } from 'react';
 import { iData, iField } from '../../../../../../../../Shared/Types/interfaces';
 import { useStores } from '../../../../../../../Store/useStores';
 import { tValue } from '../../../../../../Shared/InputNumber';
-import { getTotalSum, sendData, validation } from '../../../../../../Helpers';
+import {
+    getCodeOneItem,
+    getTotalSum,
+    sendData,
+    validation,
+} from '../../../../../../Helpers';
 import { Field } from '../../../../../../Helpers/classes';
 import { round } from '../../../../../../../../Shared/Helpers';
 import moment from 'moment';
@@ -36,6 +41,7 @@ export const useProps = ({ record, stateId }: { record: iData; stateId: number }
     const router = useRouter();
 
     const getIdValue = (value: any) => (value ? +value : undefined);
+    const setNumber = (value: any) => (value ? +value : 0);
 
     useEffect(() => {}, [loginStore.user.storeId]);
 
@@ -120,8 +126,14 @@ export const useProps = ({ record, stateId }: { record: iData; stateId: number }
             errorNote();
             return;
         }
-        const code = record.code ? record.code * -1 : 0;
-        const codeOneItem = record.width ? code / totalSum : 0;
+
+        const codeOneItem = getCodeOneItem({
+            recordCode: record.code,
+            recordWidth: record.width,
+            moveBack,
+            pruning,
+            totalSum,
+        });
 
         const data: iData[] = state.map((item) => ({
             ...record,
@@ -129,7 +141,6 @@ export const useProps = ({ record, stateId }: { record: iData; stateId: number }
             workingHours: getIdValue(workingHours),
             widthOut: undefined,
             fractionId: undefined,
-            productionId: undefined,
             stateId,
             workpieceTypeId: getIdValue(item.workpieceType.value),
             sizeRangeId: getIdValue(item.sizeRangeModel.value),

@@ -1,17 +1,15 @@
 import { SetStateAction, useEffect } from 'react';
-import { iState } from '../..';
 import {
     OPERATIONS,
     WORKPIECETYPE,
 } from '../../../../../../../../../../Shared/constants';
 import {
     iGrade,
-    iQueryFilters,
     iSizeRange,
-    iType,
 } from '../../../../../../../../../../Shared/Types/interfaces';
 import { ListsStore } from '../../../../../../../../../Store/Lists';
 import { useStores } from '../../../../../../../../../Store/useStores';
+import { iState } from '../../useProps';
 
 export const useLists = (
     storeId: number,

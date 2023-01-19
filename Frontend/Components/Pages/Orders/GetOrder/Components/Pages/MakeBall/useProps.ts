@@ -11,7 +11,12 @@ import {
     iSizeRange,
 } from '../../../../../../../../Shared/Types/interfaces';
 import { useStores } from '../../../../../../../Store/useStores';
-import { getTotalSum, validation, sendData } from '../../../../../../Helpers';
+import {
+    getTotalSum,
+    validation,
+    sendData,
+    getCodeOneItem,
+} from '../../../../../../Helpers';
 import { Field } from '../../../../../../Helpers/classes';
 import { tValue } from '../../../../../../Shared/InputNumber';
 
@@ -150,8 +155,14 @@ export const useProps = ({ record, stateId }: iProps) => {
             errorNote();
             return;
         }
-        const code = record.code ? record.code * -1 : 0;
-        const codeOneItem = record.width ? code / totalSum : 0;
+
+        const codeOneItem = getCodeOneItem({
+            recordCode: record.code,
+            recordWidth: record.width,
+            moveBack,
+            totalSum,
+        });
+
         const data: iData[] = state.map((item) => ({
             ...record,
             date,
@@ -163,6 +174,7 @@ export const useProps = ({ record, stateId }: iProps) => {
             stateId,
             moneyIn: item.widthIn.value ? codeOneItem * +item.widthIn.value : 0,
         }));
+
         sendData({
             data,
             record,
