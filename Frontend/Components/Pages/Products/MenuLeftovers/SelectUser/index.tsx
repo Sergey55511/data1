@@ -1,8 +1,9 @@
 import { UseQueryResult } from '@tanstack/react-query';
 import { Button, Modal } from 'antd';
 import { Dispatch, SetStateAction } from 'react';
-import { iManager } from '../../../../../../Shared/Types/interfaces';
+import { iDataProduct, iManager } from '../../../../../../Shared/Types/interfaces';
 import { SelectField } from '../../../../Shared/SelectField';
+import { ListModels } from '../TableItems';
 import { Wrapper } from './style';
 
 export const SelectUser = ({
@@ -12,6 +13,7 @@ export const SelectUser = ({
     managerId,
     setManagerId,
     managers,
+    selectedRows,
 }: {
     onCancel: () => void;
     reAssembleHandler: () => Promise<void>;
@@ -19,6 +21,7 @@ export const SelectUser = ({
     managerId: number | undefined;
     setManagerId: Dispatch<SetStateAction<number | undefined>>;
     managers: UseQueryResult<iManager[], unknown>;
+    selectedRows: iDataProduct[];
 }) => {
     return (
         <Modal open onCancel={onCancel} footer={false}>
@@ -35,6 +38,9 @@ export const SelectUser = ({
                         }))}
                         selectProps={{ loading: managers.isFetching }}
                     />
+                </div>
+                <div className="listItems">
+                    <ListModels selectedRows={selectedRows} />
                 </div>
                 <div>
                     <Button

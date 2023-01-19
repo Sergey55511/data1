@@ -11,4 +11,7 @@ export const Wrapper = styled.div`
     .selectWrapper {
         margin-bottom: 16px;
     }
+    .listItems {
+        margin-bottom: 16px;
+    }
 `;

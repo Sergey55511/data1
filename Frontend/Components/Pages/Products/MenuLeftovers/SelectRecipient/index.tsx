@@ -1,9 +1,10 @@
 import { UseQueryResult } from '@tanstack/react-query';
 import { Button, Input, Modal } from 'antd';
 import { Dispatch, SetStateAction } from 'react';
-import { iRecipient } from '../../../../../../Shared/Types/interfaces';
+import { iDataProduct, iRecipient } from '../../../../../../Shared/Types/interfaces';
 import { SelectField } from '../../../../Shared/SelectField';
 import { Wrapper } from './style';
+import { ListModels } from '../TableItems';
 import { useProps } from './useProps';
 
 const { Search } = Input;
@@ -16,6 +17,7 @@ export const SelectRecipient = ({
     setRecipientId,
     recipient,
     isShowAddInput,
+    selectedRows,
 }: {
     onCancel: () => void;
     submitHandler: () => Promise<void>;
@@ -24,6 +26,7 @@ export const SelectRecipient = ({
     setRecipientId: Dispatch<SetStateAction<number | undefined>>;
     recipient: UseQueryResult<iRecipient[], unknown>;
     isShowAddInput?: boolean;
+    selectedRows: iDataProduct[];
 }) => {
     const { newRecipient, setNewRecipient, addRecipient, addRecipientHandler } = useProps(
         recipient,
@@ -57,6 +60,9 @@ export const SelectRecipient = ({
                         }))}
                         selectProps={{ loading: recipient.isFetching }}
                     />
+                </div>
+                <div className="listItems">
+                    <ListModels selectedRows={selectedRows} />
                 </div>
                 <div>
                     <Button
