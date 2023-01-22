@@ -1,4 +1,5 @@
 import { NextApiRequest } from 'next';
+import { WORKPIECETYPE } from '../../../../../../Shared/constants';
 import { tPrisma } from '../../../../../types';
 import { fullModelSQL } from '../../constants';
 
@@ -37,7 +38,9 @@ export const getLeftoversAssemble = (prisma: tPrisma, req: NextApiRequest) => {
 			left join "Productions" on "Data"."productionId"="Productions".id
             left join "State" on "Data"."stateId"="State".id
             left join "SizeRange" on "Data"."sizeRangeId"="SizeRange".id
-		WHERE "Data"."storeId"=${+storeId} AND "WorkpieceType"."isShow"=true and "stateId" in (30, 32, 36)
+		WHERE "Data"."storeId"=${+storeId} AND "WorkpieceType"."isShow"=true and "stateId" in (30, 32, 36) and "Data"."workpieceTypeId" != ${
+        WORKPIECETYPE.prunes.id
+    }
         GROUP BY 
             "Data"."workpieceTypeId",
             "workpieceType",
