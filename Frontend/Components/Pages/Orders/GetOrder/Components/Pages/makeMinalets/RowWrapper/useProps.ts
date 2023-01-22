@@ -3,7 +3,7 @@ import { Dispatch, SetStateAction, useEffect } from 'react';
 import { iData } from '../../../../../../../../../Shared/Types/interfaces';
 import {
     getColors,
-    getGrades,
+    getGradesWorpieceType,
     getWorkpieceTypeModel,
 } from '../../../../../../../../Store/Lists/api';
 import { useStores } from '../../../../../../../../Store/useStores';
@@ -31,7 +31,11 @@ export const useProps = (props: iProps) => {
         });
     };
 
-    const grade = useQuery(['grade', props.index], () => getGrades({}));
+    const grade = useQuery(
+        ['grade', props.state.workpieceType.value],
+        () => getGradesWorpieceType(+props.state.workpieceType.value),
+        { enabled: !!props.state.workpieceType.value },
+    );
     const color = useQuery(['color', props.index], () => getColors({ storeId }), {
         enabled: !!storeId,
     });

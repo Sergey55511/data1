@@ -141,6 +141,13 @@ export const getGrades = (filters: iQueryFilters) => {
         method: 'GET',
     }).then((res) => res.data as iGrade[]);
 };
+export const getGradesWorpieceType = (workpieceTypeId?: number) => {
+    return axios({
+        url: `/api/list/gradesworpiecetype`,
+        method: 'GET',
+        params: { workpieceTypeId },
+    }).then((res) => res.data as iGrade[]);
+};
 export const getTypes = (filters: iQueryFilters) => {
     const params = getQueryParams(filters);
     return axios({
