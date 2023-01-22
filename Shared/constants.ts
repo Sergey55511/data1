@@ -37,6 +37,7 @@ export const OPERATIONS = {
     mixingLot: { id: 39 }, //Смешивание партия
     assemble: { id: 40 }, //Сборка
     takeApart: { id: 41 }, //Разобрать изделие
+    mixingProduction: { id: 42 }, //Смешивание партия
 };
 export const STATE = {
     washed: { id: 1 },

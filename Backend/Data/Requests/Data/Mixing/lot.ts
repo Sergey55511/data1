@@ -1,6 +1,7 @@
 import moment from 'moment';
 import { iDataTable } from '../../../../../Shared/Types/interfaces';
 import { tPrisma } from '../../../../types';
+import { defaultGetInData } from './utils';
 
 export const mixingLot = async <T>(
     prisma: tPrisma,
@@ -13,7 +14,7 @@ export const mixingLot = async <T>(
         pp = Array.isArray(queryMaxPP) ? queryMaxPP[0]?.maxpp : 0;
         pp++;
     }
-    const dataPrepared = data?.map((item) => ({
+    const dataPrepared: iDataTable[] = data?.map((item) => ({
         ...item,
         date: moment()?.toDate(),
         pp: pp,
@@ -21,12 +22,7 @@ export const mixingLot = async <T>(
     const dataCom = dataPrepared?.map((item) => ({
         ...item,
         lot: undefined,
-        widthOut: undefined,
-        countItemsOut: undefined,
-        widthIn: item.widthOut,
-        moneyIn: item.moneyOut,
-        moneyOut: undefined,
-        countItemsIn: item.countItemsOut,
+        ...defaultGetInData(item),
     }));
 
     await prisma.data.createMany({

@@ -11,14 +11,18 @@ import { prepareDataTable } from '../../../Helpers';
 export interface iDataIndex extends iData {
     index?: number;
 }
-
-export const useProps = ({
-    title,
-    type,
-}: {
+export interface iProps {
     title: string;
-    type?: 'moveOut' | 'shareItems' | 'mixingGrade' | 'mixingSize' | 'mixingLot';
-}) => {
+    type?:
+        | 'moveOut'
+        | 'shareItems'
+        | 'mixingGrade'
+        | 'mixingSize'
+        | 'mixingLot'
+        | 'mixingProduction';
+}
+
+export const useProps = ({ type }: iProps) => {
     const [isRecipientLoading, setIsRecipientLoading] = useState(false);
     const [numDocument, setNumDocument] = useState('');
     const [isSubmitLoading, setIsSubmitLoading] = useState(false);
@@ -30,7 +34,12 @@ export const useProps = ({
     const { ListsStore, loginStore, OperationStore } = useStores();
     const { leftovers } = OperationStore;
 
-    const isMixing = ['mixingGrade', 'mixingSize', 'mixingLot'].includes(type || '');
+    const isMixing = [
+        'mixingGrade',
+        'mixingSize',
+        'mixingLot',
+        'mixingProduction',
+    ].includes(type || '');
 
     useEffect(() => {
         let data: iDataIndex[] = leftovers;
@@ -41,7 +50,10 @@ export const useProps = ({
             data = leftovers.filter((item) => item.stateId == STATE.polished.id);
         }
         if (type == 'mixingLot') {
-            data = leftovers.filter((item) => !item.lot);
+            data = leftovers.filter((item) => item.lot);
+        }
+        if (type == 'mixingProduction') {
+            data = leftovers.filter((item) => item.productionId);
         }
         data = data.map((item, index) => {
             return { ...item, index };
@@ -136,6 +148,10 @@ export const useProps = ({
                 operationId = OPERATIONS.mixingLot.id;
                 nDocUniq = '';
                 break;
+            case 'mixingProduction':
+                operationId = OPERATIONS.mixingProduction.id;
+                nDocUniq = '';
+                break;
         }
 
         const getMoney = (data: iData) => {
@@ -159,6 +175,8 @@ export const useProps = ({
         const noteMixingSuccess = () =>
             notification.success({ message: 'Смешивание прошла успешно' });
 
+        if (type == 'mixingProduction')
+            await OperationStore.mixingProduction(dataSendPrepared, noteMixingSuccess);
         if (type == 'mixingLot')
             await OperationStore.mixingLot(dataSendPrepared, noteMixingSuccess);
         if (type == 'mixingGrade')

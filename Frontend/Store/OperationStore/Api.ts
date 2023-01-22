@@ -93,6 +93,17 @@ export const moveToWork = (data: {
     }).then((res) => res.data as { count?: number; pp?: number; articleId?: number });
 };
 
+export const mixingProduction = (data: {
+    data: iDataTable[];
+    storeId: number;
+    maxId: number;
+}) => {
+    return axios({
+        url: `/api/data/mixing/production`,
+        method: 'POST',
+        data,
+    }).then((res) => res.data);
+};
 export const mixingLot = (data: {
     data: iDataTable[];
     storeId: number;

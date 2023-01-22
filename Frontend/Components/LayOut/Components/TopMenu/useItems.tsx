@@ -32,6 +32,11 @@ export const useItems = () => {
                   key: ROUTES.mixingLot,
                   icon: <FullscreenExitOutlined />,
               },
+              {
+                  label: 'Смешивание производства',
+                  key: ROUTES.mixingProduction,
+                  icon: <FullscreenExitOutlined />,
+              },
           ]
         : [
               {

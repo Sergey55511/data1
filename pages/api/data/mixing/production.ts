@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { mixingSize } from '../../../../Backend/Data/Requests/Data/Mixing/size';
+import { mixingProduction } from '../../../../Backend/Data/Requests/Data/Mixing/production';
 import { fetchService } from '../../../../Backend/Data/Services/fetch';
 import { validateLeftovers } from '../../../../Backend/Data/Validation/Data/ValidateLeftovers';
 import { tPrisma } from '../../../../Backend/types';
@@ -10,7 +10,7 @@ export default async function (req: NextApiRequest, res: NextApiResponse) {
         req,
         res,
         validation: (prisma: tPrisma) => validateLeftovers(prisma, req),
-        fetch: (prisma: tPrisma) => mixingSize(prisma, req.body.data as iData[]),
+        fetch: (prisma: tPrisma) => mixingProduction(prisma, req.body.data as iData[]),
         isSendUsersNewMaxId: true,
     });
 }

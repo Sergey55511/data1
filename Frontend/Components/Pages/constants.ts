@@ -11,6 +11,7 @@ export const pages = {
     mixingGrade: 'mixingGrade',
     mixingSize: 'mixingSize',
     mixingLot: 'mixingLot',
+    mixingProduction: 'mixingProduction',
     moveIn: 'moveIn',
     moveInDetales: 'moveInDetales',
     assemble: 'assemble',
@@ -29,6 +30,7 @@ export const ROUTES = {
     mixingGrade: '/operations/mixing/grade',
     mixingSize: '/operations/mixing/size',
     mixingLot: '/operations/mixing/lot',
+    mixingProduction: '/operations/mixing/production',
     getOrder: '/orders/getOrder',
     assemble: '/assemble',
 };
