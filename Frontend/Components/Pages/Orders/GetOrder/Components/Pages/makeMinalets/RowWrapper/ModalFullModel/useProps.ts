@@ -28,14 +28,20 @@ export const useProps = ({
         ['profile', state.workpieceType.value],
         () => {
             const workpieceType = getIdValue(state.workpieceType.value);
+            const sizeRangeModel = getIdValue(state.sizeRangeModel.value);
 
-            return getProfile(workpieceType);
+            return getProfile(workpieceType, sizeRangeModel);
         },
         {
-            enabled: !!(storeId && state.workpieceType.value),
+            enabled: !!(
+                storeId &&
+                state.workpieceType.value &&
+                state.sizeRangeModel.value
+            ),
         },
     );
 
+    useEffect(() => resetValue('profile'), [state.sizeRangeModel.value]);
     useEffect(() => resetValue('model'), [state.profile.value]);
 
     const model = useQuery(
@@ -50,38 +56,26 @@ export const useProps = ({
         },
     );
 
-    useEffect(
-        () => resetValue('sizeRangeModel'),
-        [state.profile.value, state.model.value],
-    );
-
     const sizeRangeModel = useQuery(
         [
             'sizeRangeModel',
             state.workpieceType.value,
-            state.profile.value,
-            state.model.value,
+            // state.profile.value,
+            // state.model.value,
         ],
         () => {
             const workpieceTypeId = getIdValue(state.workpieceType.value);
 
-            const profileId = getIdValue(state.profile.value);
-            const modelId = getIdValue(state.model.value);
+            // const profileId = getIdValue(state.profile.value);
+            // const modelId = getIdValue(state.model.value);
 
             return getSizeRangeModel({
                 workpieceTypeId,
-                profileId,
-                modelId,
                 size: record.size,
             });
         },
         {
-            enabled: !!(
-                storeId &&
-                state.workpieceType.value &&
-                state.profile.value &&
-                state.model.value
-            ),
+            enabled: !!(storeId && state.workpieceType.value),
         },
     );
 

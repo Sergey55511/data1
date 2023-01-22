@@ -37,6 +37,19 @@ export const ModalFullModel = (props: {
         >
             <Wrapper>
                 <SelectField
+                    placeholder={props.state.sizeRangeModel.placeholder}
+                    value={+props.state.sizeRangeModel.value || undefined}
+                    onChange={(v) => props.onChange(v, props.index, 'sizeRangeModel')}
+                    options={paraps.data.sizeRangeModel.data?.map((item) => ({
+                        value: item.id,
+                        caption: item.sizeRange,
+                    }))}
+                    selectProps={{
+                        loading: paraps.data.sizeRangeModel.isFetching,
+                        allowClear: true,
+                    }}
+                />
+                <SelectField
                     placeholder={props.state.profile.placeholder}
                     value={+props.state.profile.value || undefined}
                     onChange={(v) => props.onChange(v, props.index, 'profile')}
@@ -47,6 +60,7 @@ export const ModalFullModel = (props: {
                     selectProps={{
                         disabled: paraps.data.profile.isLoading,
                         loading: paraps.data.profile.isFetching,
+                        allowClear: true,
                     }}
                 />
                 <SelectField
@@ -60,19 +74,7 @@ export const ModalFullModel = (props: {
                     selectProps={{
                         disabled: paraps.data.model.isLoading,
                         loading: paraps.data.model.isFetching,
-                    }}
-                />
-                <SelectField
-                    placeholder={props.state.sizeRangeModel.placeholder}
-                    value={+props.state.sizeRangeModel.value || undefined}
-                    onChange={(v) => props.onChange(v, props.index, 'sizeRangeModel')}
-                    options={paraps.data.sizeRangeModel.data?.map((item) => ({
-                        value: item.id,
-                        caption: item.sizeRange,
-                    }))}
-                    selectProps={{
-                        disabled: paraps.data.sizeRangeModel.isLoading,
-                        loading: paraps.data.sizeRangeModel.isFetching,
+                        allowClear: true,
                     }}
                 />
                 <SelectField
@@ -93,6 +95,7 @@ export const ModalFullModel = (props: {
                     selectProps={{
                         disabled: paraps.data.fullModel.isLoading,
                         loading: paraps.data.fullModel.isFetching,
+                        allowClear: true,
                     }}
                 />
             </Wrapper>
