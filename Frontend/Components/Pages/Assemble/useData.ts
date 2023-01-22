@@ -47,7 +47,7 @@ export const useData = (state: State, model: string, resetState: () => void) => 
         const props = {
             rows,
             pp: moveToWorkRes.pp,
-            articleId: moveToWorkRes.articleId,
+            articleId: (moveToWorkRes.articleId || 0) + 1,
         };
 
         await moveOutDefectHandler(props);
