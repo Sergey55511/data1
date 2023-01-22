@@ -40,6 +40,9 @@ export const useProps = ({
         if (type == 'mixingSize') {
             data = leftovers.filter((item) => item.stateId == STATE.polished.id);
         }
+        if (type == 'mixingLot') {
+            data = leftovers.filter((item) => !item.lot);
+        }
         data = data.map((item, index) => {
             return { ...item, index };
         });
