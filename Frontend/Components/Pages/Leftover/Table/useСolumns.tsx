@@ -66,12 +66,17 @@ export const useColumns = (filters: Record<string, FilterValue | null>) => {
         title: KEYSLEFTOVERS.grade.title,
     });
     columns.push({
+        ...getColumnPropsHoc(KEYSLEFTOVERS.channel.key),
+        title: KEYSLEFTOVERS.channel.title,
+    });
+    columns.push({
         ...getColumnPropsHoc(KEYSLEFTOVERS.lot.key),
         title: KEYSLEFTOVERS.lot.title,
     });
     columns.push({
         ...getColumnPropsHoc(KEYSLEFTOVERS.productionId.key),
         title: KEYSLEFTOVERS.productionId.title,
+        width: 100,
     });
     columns.push({
         ...getColumnPropsHoc(KEYSLEFTOVERS.width.key),
@@ -80,6 +85,7 @@ export const useColumns = (filters: Record<string, FilterValue | null>) => {
     columns.push({
         ...getColumnPropsHoc(KEYSLEFTOVERS.count.key),
         title: KEYSLEFTOVERS.count.title,
+        width: 50,
     });
     columns.push({
         dataIndex: 'code',

@@ -51,6 +51,8 @@ export const takeApart = async <T>(
         widthOut: item.widthIn,
         countItemsIn: undefined,
         countItemsOut: item.countItemsIn,
+        moneyIn: undefined,
+        moneyOut: item.moneyIn,
         operationId: OPERATIONS.takeApart.id,
         userId: user.id!,
         managerId: data.managerId,
@@ -74,10 +76,11 @@ export const takeApart = async <T>(
         widthOut: undefined,
         countItemsIn: item.countItemsOut,
         countItemsOut: undefined,
-        moneyIn: item.countItemsOut,
+        moneyIn: item.moneyOut,
         moneyOut: undefined,
         userId: user.id,
         managerId: data.managerId,
+        operationId: OPERATIONS.takeApart.id,
     }));
 
     const moveInData = await prisma.data.createMany({ data: preparedItemsProduct });

@@ -95,6 +95,11 @@ export const useColumns = (filters: Record<string, FilterValue | null>) => {
         ...getColumnPropsHoc(KEYSLEFTOVERS.lot.key),
         title: KEYSLEFTOVERS.lot.title,
     });
+    if (isMSC)
+        columns.push({
+            ...getColumnPropsHoc(KEYSLEFTOVERS.channel.key),
+            title: KEYSLEFTOVERS.channel.title,
+        });
     columns.push({
         ...getColumnPropsHoc(KEYSLEFTOVERS.width.key),
         title: 'В работе гр.',
