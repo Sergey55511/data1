@@ -101,13 +101,12 @@ export const useProps = ({
     };
 
     const onChangeInput = (fieldName: keyof iState, v: any) => {
-        const keys = Object.keys(state).filter((item) => item != fieldName);
+        const value = +v < 0 ? '' : v;
 
-        if (v == '') return;
         setState((prev) => {
             return {
                 ...prev,
-                [fieldName]: v,
+                [fieldName]: value,
             };
         });
     };
