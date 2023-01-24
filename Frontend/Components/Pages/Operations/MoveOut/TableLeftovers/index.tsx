@@ -4,6 +4,7 @@ import { FilterValue } from 'antd/es/table/interface';
 import { TableApp } from '../../../../Shared/Table';
 import { iDataIndex } from '../useProps';
 import { useProps } from './useProps';
+import { TableRowSelection } from 'antd/lib/table/interface';
 
 export const TableLeftOvers = observer(
     (props: {
@@ -11,6 +12,7 @@ export const TableLeftOvers = observer(
         setFilters: Dispatch<SetStateAction<Record<string, FilterValue | null>>>;
         leftovers: iDataIndex[];
         selectRow: (i: number) => void;
+        rowSelection?: TableRowSelection<iDataIndex>;
     }) => {
         const { columns, data, handleChange } = useProps(props);
 
@@ -26,6 +28,7 @@ export const TableLeftOvers = observer(
                 columns={columns}
                 dataSource={data}
                 onChange={handleChange}
+                rowSelection={props.rowSelection}
             />
         );
     },

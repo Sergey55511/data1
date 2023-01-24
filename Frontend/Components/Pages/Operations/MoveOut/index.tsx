@@ -84,8 +84,9 @@ export const MoveOut = observer((props: iProps) => {
                         {...{
                             filters: params.filters,
                             setFilters: params.setFilters,
-                            leftovers: params.leftoversData,
+                            leftovers: params.data,
                             selectRow: params.selectRow,
+                            rowSelection: params.rowSelection,
                         }}
                     />
                 )}

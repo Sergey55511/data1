@@ -6,6 +6,7 @@ import { FilterValue } from 'antd/es/table/interface';
 import { MoveOutSoloHoc } from './Components/MoveOut';
 import { TableApp } from '../../../Shared/Table';
 import { useColumns } from './useСolumns';
+import { WORKPIECETYPE } from '../../../../../Shared/constants';
 
 export const TableLeftOvers = observer(
     ({
@@ -40,6 +41,8 @@ export const TableLeftOvers = observer(
                     onRow={(record) => {
                         return {
                             onDoubleClick: () => {
+                                if (record.workpieceTypeId == WORKPIECETYPE.prunes.id)
+                                    return;
                                 recordRef.current = record;
                                 setIsShowMoveOutSolo(true);
                             },

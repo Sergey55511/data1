@@ -81,9 +81,6 @@ export const useProps = ({ type }: iProps) => {
         });
     };
 
-    const leftoversData: iDataIndex[] = data?.filter(
-        (_, index) => !selectedRows.includes(index),
-    );
     const moveOutData: iDataIndex[] = data?.filter((_, index) =>
         selectedRows.includes(index),
     );
@@ -211,7 +208,15 @@ export const useProps = ({ type }: iProps) => {
         }
     };
 
+    const rowSelection = {
+        onChange: (selectedRowKeys: React.Key[], selectedRows: iData[]) => {
+            setSelectedRows(selectedRowKeys.map((item) => +item));
+        },
+        selectedRowKeys: selectedRows,
+    };
+
     return {
+        rowSelection,
         isMixing,
         recipient,
         recipientList: ListsStore.recipient,
@@ -228,10 +233,10 @@ export const useProps = ({ type }: iProps) => {
         isSubmitLoading,
         filters,
         setFilters,
-        leftoversData,
         selectRow,
         moveOutData,
         onChange,
         setSelectedRows,
+        data,
     };
 };
