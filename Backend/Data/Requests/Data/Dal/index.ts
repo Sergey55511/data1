@@ -1,13 +1,9 @@
 import { NextApiRequest } from 'next';
-import {
-    iCookies,
-    iDataTable,
-    iUser,
-} from '../../../../../../../../Shared/Types/interfaces';
-import { checkSchema } from '../../../../../../../Helpers/checkSchema';
+import { iCookies, iDataTable, iUser } from '../../../../../Shared/Types/interfaces';
+import { checkSchema } from '../../../../Helpers/checkSchema';
 import { schema } from './scima';
 import jwt from 'jsonwebtoken';
-import { KEY } from '../../../../../../Services/createJWT';
+import { KEY } from '../../../Services/createJWT';
 
 export const prepareNumber = (value?: number | string | null, isTask?: boolean) => {
     if (isTask) return;

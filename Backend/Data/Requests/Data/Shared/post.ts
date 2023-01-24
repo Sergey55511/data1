@@ -1,7 +1,9 @@
 import { PrismaPromise } from '@prisma/client';
-import { iDataTable } from '../../../../../Shared/Types/interfaces';
+import { NextApiRequest } from 'next';
 import { tPrisma } from '../../../../types';
+import { dal } from '../Dal';
 
-export const postMoveIn = <T>(prisma: tPrisma, data: iDataTable[]): PrismaPromise<T> => {
+export const postMoveIn = <T>(prisma: tPrisma, req: NextApiRequest): PrismaPromise<T> => {
+    const data = dal(req);
     return prisma.data.createMany({ data }) as any;
 };
