@@ -8,8 +8,6 @@ export const getGradesWorpieceType = <T>(
 ): Promise<T> => {
     const data = dal(req.query);
 
-    console.log('workpieceTypeId', data.workpieceTypeId);
-
     return prisma.grade.findMany({
         select: {
             id: true,

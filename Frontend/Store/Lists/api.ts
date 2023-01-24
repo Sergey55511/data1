@@ -248,19 +248,23 @@ export const getWorkpieceTypeModel = (operationId?: number, isMinaletGroup?: boo
     }).then((res) => res.data as iWorkpieceType[]);
 };
 
-export const getModels = (workpieceTypeId?: number, profileId?: number) => {
+export const getModels = (
+    workpieceTypeId?: number,
+    profileId?: number,
+    sizeRangeModelId?: number,
+) => {
     return axios({
         url: `/api/list/model`,
         method: 'GET',
-        params: { workpieceTypeId, profileId },
+        params: { workpieceTypeId, profileId, sizeRangeModelId },
     }).then((res) => res.data as iModel[]);
 };
 
-export const getProfile = (workpieceTypeId?: number, sizeRangeId?: number) => {
+export const getProfile = (workpieceTypeId?: number, sizeRangeModelId?: number) => {
     return axios({
         url: `/api/list/profile`,
         method: 'GET',
-        params: { workpieceTypeId, sizeRangeId },
+        params: { workpieceTypeId, sizeRangeModelId },
     }).then((res) => res.data as iProfile[]);
 };
 export const getLengthModel = () => {

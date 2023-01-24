@@ -25,7 +25,7 @@ export const useProps = ({
     const getIdValue = (value: any) => (value ? +value : undefined);
 
     const profile = useQuery(
-        ['profile', state.workpieceType.value],
+        ['profile', storeId, state.workpieceType.value, state.sizeRangeModel.value],
         () => {
             const workpieceType = getIdValue(state.workpieceType.value);
             const sizeRangeModel = getIdValue(state.sizeRangeModel.value);
@@ -45,24 +45,31 @@ export const useProps = ({
     useEffect(() => resetValue('model'), [state.profile.value]);
 
     const model = useQuery(
-        ['model', state.workpieceType.value, state.profile.value],
+        [
+            'model',
+            storeId,
+            state.workpieceType.value,
+            state.profile.value,
+            state.sizeRangeModel.value,
+        ],
         () => {
             const workpieceTypeId = getIdValue(state.workpieceType.value);
             const profileId = getIdValue(state.profile.value);
-            return getModels(workpieceTypeId, profileId);
+            const sizeRangeModelId = getIdValue(state.sizeRangeModel.value);
+            return getModels(workpieceTypeId, profileId, sizeRangeModelId);
         },
         {
-            enabled: !!(storeId && state.workpieceType.value && state.profile.value),
+            enabled: !!(
+                storeId &&
+                state.workpieceType.value &&
+                state.profile.value &&
+                state.sizeRangeModel.value
+            ),
         },
     );
 
     const sizeRangeModel = useQuery(
-        [
-            'sizeRangeModel',
-            state.workpieceType.value,
-            // state.profile.value,
-            // state.model.value,
-        ],
+        ['sizeRangeModel', state.workpieceType.value, record.size],
         () => {
             const workpieceTypeId = getIdValue(state.workpieceType.value);
 

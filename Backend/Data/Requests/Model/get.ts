@@ -17,6 +17,7 @@ export const getModel = <T>(prisma: tPrisma, req: NextApiRequest): PrismaPromise
                 some: {
                     workpieceTypeId: data.workpieceTypeId,
                     profileId: data.profileId,
+                    sizeRangeModelId: data.sizeRangeModelId,
                     active: true,
                 },
             },

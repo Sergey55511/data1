@@ -5,6 +5,7 @@ import { dal } from './Dal';
 
 export const getProfile = <T>(prisma: tPrisma, req: NextApiRequest): PrismaPromise<T> => {
     const data = dal(req.query);
+
     return prisma.profile.findMany({
         select: {
             id: true,
@@ -12,7 +13,13 @@ export const getProfile = <T>(prisma: tPrisma, req: NextApiRequest): PrismaPromi
         },
         where: {
             active: true,
-            FullModels: { some: { workpieceTypeId: data.workpieceTypeId, active: true } },
+            FullModels: {
+                some: {
+                    workpieceTypeId: data.workpieceTypeId,
+                    sizeRangeModelId: data.sizeRangeModelId,
+                    active: true,
+                },
+            },
         },
         orderBy: { profile: 'asc' },
     }) as any;
