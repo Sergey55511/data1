@@ -6,6 +6,7 @@ import { Slicing } from './Pages/Slicing';
 import { Sorting } from './Pages/Sorting';
 import { SortingElements } from './Pages/SortingElements';
 import { SortingLength } from './Pages/SortingLength';
+import { SortingPrunings } from './Pages/SortingPrunings';
 import { OneToOne } from './Shared/OneToOne';
 
 export const GetOrderSwitcher = ({
@@ -196,7 +197,8 @@ export const GetOrderSwitcher = ({
             );
         case OPERATIONS.sortingLength.id:
             return <SortingLength record={record} stateId={STATE.sortedLength.id} />;
-
+        case OPERATIONS.sortingPrunings.id:
+            return <SortingPrunings record={record} stateId={STATE.sortedLength.id} />;
         case OPERATIONS.sortingElements.id:
             return <SortingElements record={record} stateId={STATE.sertedElements.id} />;
         case OPERATIONS.makingMinalets.id:

@@ -34,6 +34,7 @@ export const OPERATIONS = {
     polishingMsc: { id: 34 }, //Полировка заготовки
     sortingElements: { id: 35 }, //Сортировка элементов
     makingMinalets: { id: 37 }, //Пр-во мин группы
+    sortingPrunings: { id: 38 }, //Сортировка обрезков
     mixingLot: { id: 39 }, //Смешивание партия
     assemble: { id: 40 }, //Сборка
     takeApart: { id: 41 }, //Разобрать изделие
