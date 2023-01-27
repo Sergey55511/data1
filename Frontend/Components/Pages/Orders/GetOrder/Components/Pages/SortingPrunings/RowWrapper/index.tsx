@@ -17,16 +17,16 @@ export const RowWrapper = observer((props: iProps) => {
             fields={[
                 <InputField key="sizeRange" isError={props.state.length.isError}>
                     <SelectField
-                        placeholder={props.state.length.placeholder}
-                        value={+props.state.length.value || undefined}
+                        placeholder={props.state.sizeRange.placeholder}
+                        value={+props.state.sizeRange.value || undefined}
                         onChange={(v) => params.onChange(v, props.index, 'sizeRange')}
                         options={params.sizeRange.data?.map((item) => ({
                             value: item.id,
                             caption: item.sizeRange,
                         }))}
                         selectProps={{
-                            disabled: params.length.isLoading,
-                            loading: params.length.isFetching,
+                            disabled: params.sizeRange.isLoading,
+                            loading: params.sizeRange.isFetching,
                         }}
                     />
                 </InputField>,

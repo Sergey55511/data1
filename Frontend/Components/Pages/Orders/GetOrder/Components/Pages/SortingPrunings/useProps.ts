@@ -1,12 +1,8 @@
 import { notification } from 'antd';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import { OPERATIONS } from '../../../../../../../../Shared/constants';
-import {
-    iData,
-    iField,
-    iSizeRange,
-} from '../../../../../../../../Shared/Types/interfaces';
+import { WORKPIECETYPE } from '../../../../../../../../Shared/constants';
+import { iData, iField } from '../../../../../../../../Shared/Types/interfaces';
 import { useStores } from '../../../../../../../Store/useStores';
 import { tValue } from '../../../../../../Shared/InputNumber';
 import {
@@ -102,15 +98,18 @@ export const useProps = ({ record, stateId }: iProps) => {
             totalSum,
         });
 
+        const getValue = (v: any) => (v ? +v : undefined);
+
         const data: iData[] = state.map((item) => ({
             ...record,
             date,
-            lengthId: item.length.value ? +item.length.value : undefined,
+            workpieceTypeId: WORKPIECETYPE.cylinder.id,
+            sizeRangeId: getValue(item.sizeRange.value),
+            lengthId: getValue(item.length.value),
             widthOut: undefined,
-            widthIn: +item.widthIn.value!,
+            widthIn: getValue(item.widthIn.value),
             fractionId: undefined,
-            gradeId: item.grade.value ? +item.grade.value : undefined,
-            workpieceType: undefined,
+            gradeId: getValue(item.grade.value),
             productionId: undefined,
             stateId,
             moneyIn: item.widthIn.value ? codeOneItem * +item.widthIn.value : 0,

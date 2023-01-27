@@ -41,7 +41,7 @@ export const TableLeftOvers = observer(
                     onRow={(record) => {
                         return {
                             onDoubleClick: () => {
-                                if (record.workpieceTypeId == WORKPIECETYPE.prunes.id)
+                                if (record.workpieceTypeId == WORKPIECETYPE.defect.id)
                                     return;
                                 recordRef.current = record;
                                 setIsShowMoveOutSolo(true);

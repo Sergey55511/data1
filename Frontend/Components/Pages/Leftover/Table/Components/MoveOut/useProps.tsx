@@ -4,7 +4,7 @@ import { useStores } from '../../../../../../Store/useStores';
 import { prepareDataTable } from '../../../../../Helpers';
 import { KEYSLEFTOVERS } from '../../../../../Shared/Table/constants';
 import { iProps } from '.';
-import { OPERATIONS } from '../../../../../../../Shared/constants';
+import { OPERATIONS, STATE, WORKPIECETYPE } from '../../../../../../../Shared/constants';
 
 export type tConstKeys = keyof typeof KEYSLEFTOVERS;
 type tValue = number | string | undefined;
@@ -43,7 +43,11 @@ export const useProps = (props: iProps) => {
         setManagerId(undefined);
         ListsStore.resetManagers();
         if (loginStore.user.storeId) {
-            ListsStore.getOperations(loginStore.user.storeId, props.record.stateId!);
+            const stateId =
+                props.record.workpieceTypeId == WORKPIECETYPE.prunes.id
+                    ? STATE.prunings.id
+                    : props.record.stateId;
+            ListsStore.getOperations(loginStore.user.storeId, stateId || 0);
             if (operation)
                 ListsStore.getManagers({
                     storeId: loginStore.user.storeId,

@@ -74,12 +74,14 @@ export const STATE = {
     sertedElements: { id: 30 },
     minaretFinishedElement: { id: 32 },
     createdProduct: { id: 35 },
+    prunings: { id: 37 },
 };
 export const WORKPIECETYPE = {
     stone: { id: 1 },
     losses: { id: 2 },
     garbage: { id: 3 },
     defect: { id: 4 },
+    cylinder: { id: 12 }, //цилиндр
     bead: { id: 15 }, //бусина
     minaret: { id: 17 },
     prunes: { id: 23 }, //обрезки
