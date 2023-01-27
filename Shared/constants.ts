@@ -73,6 +73,7 @@ export const STATE = {
     polishedMsc: { id: 29 },
     sertedElements: { id: 30 },
     minaretFinishedElement: { id: 32 },
+    mixed: { id: 34 },
     createdProduct: { id: 35 },
     prunings: { id: 37 },
 };

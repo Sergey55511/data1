@@ -18,6 +18,8 @@ export const SortingPrunings = observer((props: iProps) => {
                 isLoading={params.isLoading}
                 date={params.date}
                 setDate={params.setDate}
+                defect={params.defect}
+                setDefect={params.setDefect}
             />
             <div>
                 {params.state.map((item, index) => (

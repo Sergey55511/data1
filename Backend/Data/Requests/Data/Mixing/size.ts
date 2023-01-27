@@ -1,5 +1,6 @@
 import moment from 'moment';
 import { MyError } from '../../../../../Shared/Classes/error';
+import { STATE } from '../../../../../Shared/constants';
 import { iDataTable, iSizeRange } from '../../../../../Shared/Types/interfaces';
 import { tPrisma } from '../../../../types';
 import { defaultGetInData } from './utils';
@@ -44,6 +45,7 @@ export const mixingSize = async <T>(
         return {
             ...item,
             sizeRangeId: nextSizeRangeId,
+            stateId: STATE.mixed.id,
             ...defaultGetInData(item),
         };
     });

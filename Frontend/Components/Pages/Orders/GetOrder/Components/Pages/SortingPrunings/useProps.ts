@@ -30,18 +30,25 @@ export const useProps = ({ record, stateId }: iProps) => {
     const { OperationStore, ListsStore, loginStore } = useStores();
     const [state, setState] = useState<iState[]>([]);
     const [losses, setLosses] = useState<number>(0);
+    const [defect, setDefect] = useState<tValue>();
     const [date, setDate] = useState<moment.Moment | undefined>(moment());
     const [moveBack, setMoveBack] = useState<tValue>(undefined);
     const [isLoading, setIsLoading] = useState(false);
     const router = useRouter();
 
+    const getNumber = (v: any) => (v ? +v : 0);
+
     useEffect(() => {
         const totalSum = getTotalSum(state);
-        let res = (record?.widthOut || 0) - totalSum - (moveBack ? +moveBack : 0);
+        let res =
+            getNumber(record?.widthOut) -
+            totalSum -
+            getNumber(moveBack) -
+            getNumber(defect);
         res = isNaN(res) ? 0 : res;
         res = round(res);
         setLosses(res);
-    }, [state, moveBack]);
+    }, [state, moveBack, defect]);
 
     const addRowHandler = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
         e.preventDefault();
@@ -123,6 +130,7 @@ export const useProps = ({ record, stateId }: iProps) => {
             router,
             losses,
             moveBack,
+            defect,
         });
     };
 
@@ -149,5 +157,7 @@ export const useProps = ({ record, stateId }: iProps) => {
         record,
         date,
         setDate,
+        defect,
+        setDefect,
     };
 };

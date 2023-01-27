@@ -6,8 +6,9 @@ import {
     getLength,
     getSizeRange,
 } from '../../../../../../../../Store/Lists/api';
-import { Dispatch, SetStateAction } from 'react';
+import { Dispatch, SetStateAction, useEffect } from 'react';
 import { iData } from '../../../../../../../../../Shared/Types/interfaces';
+import { WORKPIECETYPE } from '../../../../../../../../../Shared/constants';
 
 export interface iProps {
     isLoading?: boolean;
@@ -18,10 +19,10 @@ export interface iProps {
     setState: Dispatch<SetStateAction<iState[]>>;
     record: iData;
 }
-export const useProps = ({ record, setState }: iProps) => {
+export const useProps = ({ setState, state, index }: iProps) => {
     const { loginStore } = useStores();
 
-    const workpieceTypeId = record.workpieceTypeId;
+    const getValue = (v: any) => (v ? +v : undefined);
 
     const onChange = (v: string | number, index: number, fieldName: keyof iState) => {
         setState((prev) => {
@@ -41,21 +42,23 @@ export const useProps = ({ record, setState }: iProps) => {
         { enabled: !!storeId },
     );
     const length = useQuery(
-        ['length', storeId],
+        ['length', storeId, state.sizeRange.value],
         () =>
             getLength({
                 storeId: storeId,
+                sizeRangeId: getValue(state.sizeRange.value),
+                workpieceTypeId: WORKPIECETYPE.cylinder.id,
             }),
-        { enabled: !!storeId },
+        { enabled: !!(storeId && state.sizeRange.value) },
     );
 
-    const grade = useQuery(
-        ['grade', storeId],
-        () =>
-            getGrades({
-                storeId: storeId,
-            }),
-        { enabled: !!storeId },
-    );
+    const grade = useQuery(['grade', storeId], () => getGrades({}), {
+        enabled: !!storeId,
+    });
+
+    useEffect(() => {
+        onChange('', index, 'length');
+    }, [state.sizeRange.value]);
+
     return { length, grade, onChange, sizeRange };
 };
