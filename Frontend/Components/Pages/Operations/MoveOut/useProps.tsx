@@ -48,7 +48,7 @@ export const useProps = ({ type }: iProps) => {
         }
         if (type == 'mixingSize') {
             data = leftovers.filter((item) =>
-                [STATE.polished.id, STATE.glued.id].includes(item.stateId ?? 0),
+                [STATE.polished.id, STATE.gluedBlank.id].includes(item.stateId ?? 0),
             );
         }
         if (type == 'mixingLot') {
