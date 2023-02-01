@@ -1,15 +1,15 @@
-import { checkSchema } from '../../../../../Helpers/checkSchema';
+import { checkSchema } from '../../../../Helpers/checkSchema';
 import { schema } from './scima';
 
 export interface iParams {
-    managerId: number;
-    operationId: number;
+    productionId: number;
 }
 
 export const dal = (params: { [key: string]: any }): iParams => {
+    console.log('params', params);
+
     const data: iParams = {
-        managerId: +params.managerId,
-        operationId: +params.operationId,
+        productionId: +params.productionId,
     };
 
     return checkSchema(data, schema);

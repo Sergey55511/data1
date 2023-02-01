@@ -3,9 +3,7 @@ import { Wrapper } from './style';
 import { Models } from './Models';
 import { Search } from './Search';
 import { observer } from 'mobx-react-lite';
-import { iData } from '../../../../../../../../../Shared/Types/interfaces';
 import { iProps, useProps } from './useProps';
-import { Task } from '../../useProps';
 
 export const SetTask = observer((props: iProps) => {
     const params = useProps(props);

@@ -19,6 +19,7 @@ export interface iState {
     sizeRange: iField;
     length: iField;
     grade: iField;
+    color: iField;
     widthIn: iField;
 }
 export interface iProps {
@@ -27,7 +28,8 @@ export interface iProps {
 }
 
 export const useProps = ({ record, stateId }: iProps) => {
-    const { OperationStore, ListsStore, loginStore } = useStores();
+    const { OperationStore } = useStores();
+    const [workingHours, setWorkingHours] = useState<string | undefined>('');
     const [state, setState] = useState<iState[]>([]);
     const [losses, setLosses] = useState<number>(0);
     const [defect, setDefect] = useState<tValue>();
@@ -59,6 +61,7 @@ export const useProps = ({ record, stateId }: iProps) => {
                     sizeRange: new Field('sizeRange', 'Размер'),
                     length: new Field('length', 'Длинна'),
                     grade: new Field('grade', 'сорт'),
+                    color: new Field('color', 'цвет'),
                     widthIn: new Field('widthIn', 'Вес гр.'),
                 },
             ];
@@ -98,6 +101,11 @@ export const useProps = ({ record, stateId }: iProps) => {
             return;
         }
 
+        if (!workingHours) {
+            errorNote();
+            return;
+        }
+
         const codeOneItem = getCodeOneItem({
             recordCode: record.code,
             recordWidth: record.width,
@@ -110,12 +118,14 @@ export const useProps = ({ record, stateId }: iProps) => {
         const data: iData[] = state.map((item) => ({
             ...record,
             date,
+            workingHours: getValue(workingHours),
             workpieceTypeId: WORKPIECETYPE.cylinder.id,
             sizeRangeId: getValue(item.sizeRange.value),
             lengthId: getValue(item.length.value),
             widthOut: undefined,
             widthIn: getValue(item.widthIn.value),
             fractionId: undefined,
+            colorId: getValue(item.color.value),
             gradeId: getValue(item.grade.value),
             productionId: undefined,
             stateId,
@@ -159,5 +169,7 @@ export const useProps = ({ record, stateId }: iProps) => {
         setDate,
         defect,
         setDefect,
+        workingHours,
+        setWorkingHours,
     };
 };

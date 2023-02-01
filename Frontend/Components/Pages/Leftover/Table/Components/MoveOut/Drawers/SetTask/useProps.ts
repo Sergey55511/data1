@@ -9,6 +9,7 @@ import {
 } from '../../../../../../../../../Shared/Types/interfaces';
 import {
     getFullModels,
+    getProduction,
     getProfile,
     getSizeRange,
     getSizeRangeModel,
@@ -50,8 +51,15 @@ export interface iProps {
     record: iData;
     operationId?: number;
     setTask: (data: Task) => void;
+    productionId?: number;
 }
-export const useProps = ({ onClose, record, operationId, setTask }: iProps) => {
+export const useProps = ({
+    onClose,
+    record,
+    operationId,
+    setTask,
+    productionId,
+}: iProps) => {
     const { loginStore } = useStores();
     const storeId = loginStore.user.storeId;
     const [state, setState] = useState(new State());
@@ -68,6 +76,14 @@ export const useProps = ({ onClose, record, operationId, setTask }: iProps) => {
             return res;
         });
     };
+
+    const production = useQuery(
+        ['productionId', productionId],
+        () => getProduction(productionId),
+        {
+            enabled: !!productionId,
+        },
+    );
 
     const workpieceType = useQuery(
         ['workpieceType', 'model', operationId],

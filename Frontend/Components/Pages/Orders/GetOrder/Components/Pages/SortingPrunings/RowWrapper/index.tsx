@@ -60,6 +60,21 @@ export const RowWrapper = observer((props: iProps) => {
                         }}
                     />
                 </InputField>,
+                <InputField key="color" isError={props.state.grade.isError}>
+                    <SelectField
+                        placeholder={props.state.color.placeholder}
+                        value={+props.state.color.value || undefined}
+                        onChange={(v) => params.onChange(v, props.index, 'color')}
+                        options={params.color.data?.map((item) => ({
+                            value: item.id,
+                            caption: item.color,
+                        }))}
+                        selectProps={{
+                            disabled: params.color.isLoading,
+                            loading: params.color.isFetching,
+                        }}
+                    />
+                </InputField>,
                 <InputField key="widthIn" isError={props.state.widthIn.isError}>
                     <InputNumber
                         placeholder={props.state.widthIn.placeholder}

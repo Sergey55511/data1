@@ -18,6 +18,7 @@ export const Drawers = ({
                     record={record}
                     operationId={props.operation}
                     setTask={props.setTask}
+                    productionId={4}
                 />
             )}
             {props.isNumProduction && (

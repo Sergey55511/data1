@@ -248,6 +248,14 @@ export const getWorkpieceTypeModel = (operationId?: number, isMinaletGroup?: boo
     }).then((res) => res.data as iWorkpieceType[]);
 };
 
+export const getProduction = (productionId?: number) => {
+    return axios({
+        url: `/api/list/production`,
+        method: 'GET',
+        params: { productionId },
+    }).then((res) => res.data as iWorkpieceType[]);
+};
+
 export const getModels = (
     workpieceTypeId?: number,
     profileId?: number,

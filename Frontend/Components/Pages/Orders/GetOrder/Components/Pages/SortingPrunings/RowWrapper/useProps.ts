@@ -2,11 +2,12 @@ import { useStores } from '../../../../../../../../Store/useStores';
 import { iState } from '../useProps';
 import { useQuery } from '@tanstack/react-query';
 import {
+    getColors,
     getGrades,
     getLength,
     getSizeRange,
 } from '../../../../../../../../Store/Lists/api';
-import { Dispatch, SetStateAction, useEffect } from 'react';
+import { Dispatch, SetStateAction, useEffect, useRef } from 'react';
 import { iData } from '../../../../../../../../../Shared/Types/interfaces';
 import { WORKPIECETYPE } from '../../../../../../../../../Shared/constants';
 
@@ -20,6 +21,7 @@ export interface iProps {
     record: iData;
 }
 export const useProps = ({ setState, state, index }: iProps) => {
+    const isFirstRender = useRef(true);
     const { loginStore } = useStores();
 
     const getValue = (v: any) => (v ? +v : undefined);
@@ -55,10 +57,14 @@ export const useProps = ({ setState, state, index }: iProps) => {
     const grade = useQuery(['grade', storeId], () => getGrades({}), {
         enabled: !!storeId,
     });
+    const color = useQuery(['color', storeId], () => getColors({}), {
+        enabled: !!storeId,
+    });
 
     useEffect(() => {
-        onChange('', index, 'length');
+        if (!isFirstRender.current) onChange('', index, 'length');
+        isFirstRender.current = false;
     }, [state.sizeRange.value]);
 
-    return { length, grade, onChange, sizeRange };
+    return { length, grade, color, onChange, sizeRange };
 };
