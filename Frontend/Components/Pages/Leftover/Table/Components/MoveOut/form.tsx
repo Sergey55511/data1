@@ -15,6 +15,11 @@ export const Form = ({
     record: iData;
     props: ReturnType<typeof useProps>;
 }) => {
+    const isDisabledSetTask = !(
+        (props.numProd || record.productionId) &&
+        props.operation
+    );
+
     return (
         <div className="formWrapper">
             <DatePicker
@@ -102,7 +107,7 @@ export const Form = ({
                         <Button
                             type="link"
                             onClick={props.setTaskIsShowTask}
-                            disabled={!props.operation}
+                            disabled={isDisabledSetTask}
                         >
                             Назначить задание
                         </Button>

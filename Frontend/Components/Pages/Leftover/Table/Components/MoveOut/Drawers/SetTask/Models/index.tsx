@@ -6,6 +6,8 @@ import { iProps, useProps } from './useProps';
 export const Models = (props: iProps) => {
     const params = useProps(props);
 
+    const isLoading =
+        props.data.production.isFetching || props.data.fullModels.isFetching;
     return (
         <Wrapper>
             <h4>Модели</h4>
@@ -19,20 +21,28 @@ export const Models = (props: iProps) => {
                 allowClear
             />
             <div className="modelsList">
-                {params.dataFiltred?.map((item) => {
-                    const className = item.id == params.state.id ? 'row selected' : 'row';
-                    return (
-                        <div
-                            key={item.id}
-                            className={className}
-                            onClick={() =>
-                                params.setState({ id: item.id, model: item.fullModel })
-                            }
-                        >
-                            {item.fullModel}
-                        </div>
-                    );
-                })}
+                {isLoading ? (
+                    <>Загрузка...</>
+                ) : (
+                    params.dataFiltred?.map((item) => {
+                        const className =
+                            item.id == params.state.id ? 'row selected' : 'row';
+                        return (
+                            <div
+                                key={item.id}
+                                className={className}
+                                onClick={() =>
+                                    params.setState({
+                                        id: item.id,
+                                        model: item.fullModel,
+                                    })
+                                }
+                            >
+                                {item.fullModel}
+                            </div>
+                        );
+                    })
+                )}
             </div>
             <div className="selectedModel">выбрана модель: {params.state.model}</div>
             <div>

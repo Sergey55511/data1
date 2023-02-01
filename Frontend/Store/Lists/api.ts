@@ -254,7 +254,7 @@ export const getProduction = (productionId?: number) => {
         url: `/api/list/production`,
         method: 'GET',
         params: { productionId },
-    }).then((res) => res.data as iProduction[]);
+    }).then((res) => res.data as iProduction);
 };
 
 export const getModels = (

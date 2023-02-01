@@ -1,7 +1,7 @@
 import { iData } from '../../../../../../../../Shared/Types/interfaces';
 import { NumProduction } from './NumProduction';
 import { SetTask } from './SetTask';
-import { useProps } from '../useProps';
+import { Task, useProps } from '../useProps';
 
 export const Drawers = ({
     record,
@@ -18,12 +18,13 @@ export const Drawers = ({
                     record={record}
                     operationId={props.operation}
                     setTask={props.setTask}
-                    productionId={4}
+                    productionId={record.operationId || props.numProd}
                 />
             )}
             {props.isNumProduction && (
                 <NumProduction
                     setValue={(v: number) => {
+                        props.setTask(new Task());
                         props.isNewProductionId.current = true;
                         props.setNumProd(v);
                     }}

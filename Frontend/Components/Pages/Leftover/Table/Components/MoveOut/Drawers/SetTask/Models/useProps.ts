@@ -1,6 +1,3 @@
-import { Button, Input } from 'antd';
-import { SearchOutlined } from '@ant-design/icons';
-import { Wrapper } from './style';
 import { useEffect, useState } from 'react';
 import { iDataProps } from '../useProps';
 import { Task } from '../../../useProps';
@@ -22,8 +19,6 @@ export const useProps = ({ data, submitButton }: iProps) => {
     useEffect(() => {
         setState(new StateModel());
     }, [data]);
-
-    console.log('data.production.data', data.production.data);
 
     const dataFiltred = data.fullModels.data?.filter((item) => {
         if (data.production.data?.fullModalId) {
