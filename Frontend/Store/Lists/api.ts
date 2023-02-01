@@ -22,6 +22,7 @@ import {
     iTypeAssemble,
     iVariantAssemble,
     iYarnAssemble,
+    iProduction,
 } from '../../../Shared/Types/interfaces';
 
 export const getMaterialGroup = () => {
@@ -253,7 +254,7 @@ export const getProduction = (productionId?: number) => {
         url: `/api/list/production`,
         method: 'GET',
         params: { productionId },
-    }).then((res) => res.data as iWorkpieceType[]);
+    }).then((res) => res.data as iProduction[]);
 };
 
 export const getModels = (

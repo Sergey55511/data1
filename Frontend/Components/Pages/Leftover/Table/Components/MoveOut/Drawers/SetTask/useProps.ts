@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import {
     iData,
     iFullModel,
+    iProduction,
     iProfile,
     iSizeRangeModel,
     iWorkpieceType,
@@ -19,6 +20,7 @@ import { useStores } from '../../../../../../../../Store/useStores';
 import { Task } from '../../useProps';
 
 export interface iDataProps {
+    production: UseQueryResult<iProduction, unknown>;
     workpieceType: UseQueryResult<iWorkpieceType[], unknown>;
     profile: UseQueryResult<iProfile[], unknown>;
     sizeRangeModel: UseQueryResult<iSizeRangeModel[], unknown>;
@@ -162,7 +164,7 @@ export const useProps = ({
     }, [state.workpieceTypeId.value]);
 
     return {
-        data: { workpieceType, profile, sizeRangeModel, fullModels },
+        data: { workpieceType, profile, sizeRangeModel, fullModels, production },
         state,
         setValue,
         submitButton,

@@ -23,7 +23,12 @@ export const useProps = ({ data, submitButton }: iProps) => {
         setState(new StateModel());
     }, [data]);
 
+    console.log('data.production.data', data.production.data);
+
     const dataFiltred = data.fullModels.data?.filter((item) => {
+        if (data.production.data?.fullModalId) {
+            return item.id == data.production.data?.fullModalId;
+        }
         return item.fullModel.toLowerCase().split(search.toLowerCase()).length > 1;
     });
 

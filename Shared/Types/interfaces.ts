@@ -207,6 +207,11 @@ export interface iYarnAssemble {
     id: number;
     yarnAssemble: string;
 }
+export interface iProduction {
+    id: number;
+    description: string;
+    fullModalId?: number;
+}
 export interface iWorkpieceType {
     id: number;
     workpieceType: string;

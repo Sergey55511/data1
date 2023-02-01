@@ -1,9 +1,7 @@
 import { Button, Input } from 'antd';
 import { SearchOutlined } from '@ant-design/icons';
 import { Wrapper } from './style';
-import { iDataProps } from '../useProps';
 import { iProps, useProps } from './useProps';
-import { Task } from '../../../useProps';
 
 export const Models = (props: iProps) => {
     const params = useProps(props);

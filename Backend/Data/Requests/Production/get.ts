@@ -3,21 +3,30 @@ import { tPrisma } from '../../../types';
 import { NextApiRequest } from 'next';
 import { dal } from './Dal';
 
-export const getProduction = <T>(
+export const getProduction = async <T>(
     prisma: tPrisma,
     req: NextApiRequest,
-): PrismaPromise<T> => {
+): Promise<T> => {
     const data = dal(req.query);
 
-    return prisma.productions.findMany({
+    const production = await prisma.productions.findFirst({
         select: {
             id: true,
             description: true,
             Data: {
                 select: { task: true, fullModelId: true },
-                where: { OR: [{ task: true }, { fullModelId: true }] },
+                where: { OR: [{ task: { not: null } }, { fullModelId: { not: null } }] },
             },
         },
         where: { id: data.productionId },
-    }) as any;
+    });
+
+    const fullModal = production?.Data.find((item) => item.fullModelId || item.task);
+    const fullModalId = fullModal?.fullModelId || fullModal?.task;
+
+    return {
+        id: production?.id,
+        description: production?.description,
+        fullModalId,
+    } as any;
 };
