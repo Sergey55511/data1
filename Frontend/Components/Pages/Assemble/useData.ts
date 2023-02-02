@@ -16,6 +16,7 @@ export const useData = (state: State, model: string, resetState: () => void) => 
 
     const getCode = (item: iData) => {
         const code = item.code || 0;
+        if (!item.width) return 0;
         return (
             (code / (item.width || code)) * ((item.widthOut || 0) + (item.defect || 0))
         );
