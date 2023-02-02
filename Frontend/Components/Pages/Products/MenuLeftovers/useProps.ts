@@ -1,8 +1,9 @@
 import { iDataProduct } from '../../../../../Shared/Types/interfaces';
 import { UseQueryResult } from '@tanstack/react-query';
-import { SetStateAction, useRef, useState } from 'react';
+import { SetStateAction, useState } from 'react';
 import { tRecipientType, useData } from './useData';
 import { useStores } from '../../../../Store/useStores';
+import { OPERATIONS } from '../../../../../Shared/constants';
 
 export interface iProps {
     selectedRows: iDataProduct[];
@@ -32,6 +33,10 @@ export const useProps = (props: iProps) => {
     const moveOutAssembleHandler = async () => {
         const data = props.selectedRows.map((item) => ({
             ...item,
+            operationId:
+                recipientType == 'recipientsInternal'
+                    ? OPERATIONS.shareItems.id
+                    : OPERATIONS.sale.id,
             userId: loginStore.user.id,
             storeId: loginStore.user.storeId,
             recipientId: params.recipientId,
