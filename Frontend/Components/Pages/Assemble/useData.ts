@@ -12,13 +12,16 @@ export const useData = (state: State, model: string, resetState: () => void) => 
     const storeId = loginStore.user.storeId;
     const maxId = OperationStore.maxId;
 
-    const getNumber = (v: any) => (v ? +v : undefined);
+    const getValue = (v: any) => (v ? +v : undefined);
+    const getNumber = (v: any) => (v ? +v : 0);
 
     const getCode = (item: iData) => {
         const code = item.code || 0;
         if (!item.width) return 0;
+
         return (
-            (code / (item.width || code)) * ((item.widthOut || 0) + (item.defect || 0))
+            (code / (item.width || code)) *
+            (getNumber(item.widthOut) + getNumber(item.defect))
         );
     };
 
@@ -27,12 +30,12 @@ export const useData = (state: State, model: string, resetState: () => void) => 
             const res = prepareDataTable(item);
             const moneyOut = getCode(item);
             res.userId = loginStore.user.id;
-            res.managerId = getNumber(state.manager.value);
+            res.managerId = getValue(state.manager.value);
             res.storeId = loginStore.user.storeId;
             res.moneyOut = moneyOut;
-            res.widthOut = getNumber(res.widthOut);
+            res.widthOut = getValue(res.widthOut);
             res.defect = undefined;
-            res.countItemsOut = getNumber(res.countItemsOut);
+            res.countItemsOut = getValue(res.countItemsOut);
             res.operationId = OPERATIONS.assemble.id;
             return res;
         });
@@ -72,12 +75,12 @@ export const useData = (state: State, model: string, resetState: () => void) => 
             .map((item) => {
                 const res = prepareDataTable(item);
                 res.userId = loginStore.user.id;
-                res.managerId = getNumber(state.manager.value);
+                res.managerId = getValue(state.manager.value);
                 res.pp = pp;
                 res.storeId = loginStore.user.storeId;
                 res.moneyOut = undefined;
-                res.widthOut = getNumber(item.defect);
-                res.countItemsOut = getNumber(res.countItemsOut);
+                res.widthOut = getValue(item.defect);
+                res.countItemsOut = getValue(res.countItemsOut);
                 res.operationId = OPERATIONS.assemble.id;
                 return res;
             });
@@ -114,15 +117,15 @@ export const useData = (state: State, model: string, resetState: () => void) => 
                 articleId,
                 operationId: OPERATIONS.assemble.id,
                 userId: loginStore.user.id,
-                managerId: getNumber(state.manager.value),
-                widthIn: getNumber(state.widthIn.value),
-                countItemsIn: getNumber(state.countItemIn.value),
+                managerId: getValue(state.manager.value),
+                widthIn: getValue(state.widthIn.value),
+                countItemsIn: getValue(state.countItemIn.value),
                 stateId: STATE.createdProduct.id,
                 moneyIn: code,
-                workpieceTypeId: getNumber(state.typeBillet.value),
-                colorId: getNumber(state.color.value),
-                length: getNumber(state.length.value),
-                gradeId: getNumber(state.grade.value),
+                workpieceTypeId: getValue(state.typeBillet.value),
+                colorId: getValue(state.color.value),
+                length: getValue(state.length.value),
+                gradeId: getValue(state.grade.value),
             },
         ];
 
@@ -139,7 +142,7 @@ export const useData = (state: State, model: string, resetState: () => void) => 
         articleId?: number;
     }) => {
         const defectValue = rows.reduce(
-            (res, item) => (res += getNumber(item.defect) ?? 0),
+            (res, item) => (res += getValue(item.defect) ?? 0),
             0,
         );
 
@@ -147,13 +150,13 @@ export const useData = (state: State, model: string, resetState: () => void) => 
             storeId: loginStore.user.storeId,
             operationId: OPERATIONS.assemble.id,
             userId: loginStore.user.id,
-            managerId: getNumber(state.manager.value),
-            widthIn: getNumber(state.widthIn.value),
+            managerId: getValue(state.manager.value),
+            widthIn: getValue(state.widthIn.value),
             stateId: STATE.createdProduct.id,
             moneyIn: undefined,
-            workpieceTypeId: getNumber(state.typeBillet.value),
-            colorId: getNumber(state.color.value),
-            gradeId: getNumber(state.grade.value),
+            workpieceTypeId: getValue(state.typeBillet.value),
+            colorId: getValue(state.color.value),
+            gradeId: getValue(state.grade.value),
             pp,
             articleId,
         };
