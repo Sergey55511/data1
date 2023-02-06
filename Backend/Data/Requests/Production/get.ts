@@ -14,15 +14,15 @@ export const getProduction = async <T>(
             id: true,
             description: true,
             Data: {
-                select: { task: true, fullModelId: true },
-                where: { OR: [{ task: { not: null } }, { fullModelId: { not: null } }] },
+                select: { task: true },
+                where: { task: { not: null } },
             },
         },
         where: { id: data.productionId },
     });
 
-    const fullModal = production?.Data.find((item) => item.fullModelId || item.task);
-    const fullModalId = fullModal?.fullModelId || fullModal?.task;
+    const fullModal = production?.Data.find((item) => item.task);
+    const fullModalId = fullModal?.task;
 
     return {
         id: production?.id,
