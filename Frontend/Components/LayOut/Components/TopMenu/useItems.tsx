@@ -21,6 +21,7 @@ import { ItemType } from 'antd/lib/menu/hooks/useItems';
 export const useItems = () => {
     const { loginStore, OperationStore } = useStores();
     const ordersCount = OperationStore.orders.length;
+    const ordersGetOutCount = OperationStore.ordersGetOut.length;
     const sharedCount = OperationStore.shared.length;
 
     const isMSC = loginStore.user.storeId == STORES.Moscow.id;
@@ -75,6 +76,18 @@ export const useItems = () => {
         key: ROUTES.orders,
         icon: <StarOutlined />,
     });
+
+    if (isMSC) {
+        items.push({
+            label: (
+                <Badge size="small" count={ordersGetOutCount} overflowCount={999}>
+                    <>Выбытие</>
+                </Badge>
+            ),
+            key: ROUTES.ordersGetOut,
+            icon: <StarOutlined />,
+        });
+    }
 
     if (isMSC) {
         items.push({

@@ -19,6 +19,8 @@ export const PageSwitcher = ({ page }: { page: tPages }) => {
             return <NewItem />;
         case pages.orders:
             return <Orders />;
+        case pages.ordersGetOut:
+            return <Orders isGetOut />;
         case pages.getOrder:
             return <GetOrder />;
         case pages.moveOut:

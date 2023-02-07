@@ -40,6 +40,7 @@ export const OPERATIONS = {
     takeApart: { id: 41 }, //Разобрать изделие
     mixingProduction: { id: 42 }, //Смешивание партия
     inventory: { id: 43 }, //Инвентаризация
+    getOut: { id: 44 }, //Выбытие
 };
 export const STATE = {
     washed: { id: 1 },

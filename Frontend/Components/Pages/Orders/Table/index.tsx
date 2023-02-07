@@ -3,18 +3,12 @@ import { TableApp } from '../../../Shared/Table';
 import { ROUTES } from '../../constants';
 import { useProps } from './useProps';
 
-export const OrdersTable = observer(() => {
-    const { handleChange, router, data, columns } = useProps();
+export const OrdersTable = observer(({ isGetOut }: { isGetOut?: boolean }) => {
+    const { handleChange, onRowHandler, data, columns } = useProps(isGetOut);
 
     return (
         <TableApp
-            onRow={(record, _rowIndex) => {
-                return {
-                    onDoubleClick: (_event) => {
-                        router.push(`${ROUTES.getOrder}/${record.pp}`);
-                    },
-                };
-            }}
+            onRow={onRowHandler}
             columns={columns}
             dataSource={data}
             onChange={handleChange}

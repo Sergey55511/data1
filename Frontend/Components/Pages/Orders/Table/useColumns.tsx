@@ -6,12 +6,15 @@ import { getColumnProps } from '../../../Shared/Table/Helpers/getColumnProps';
 import { KEYSLEFTOVERS } from '../../../Shared/Table/constants';
 import { STORES } from '../../../../../Shared/constants';
 
-export const useColumns = (filters: Record<string, FilterValue | null>) => {
-    const { OperationStore, loginStore } = useStores();
+export const useColumns = (
+    filters: Record<string, FilterValue | null>,
+    data: iData[],
+) => {
+    const { loginStore } = useStores();
 
     const isMSC = loginStore.user.storeId == STORES.Moscow.id;
 
-    const filteredleftovers = OperationStore.orders.filter((item) => {
+    const filteredleftovers = data.filter((item) => {
         for (const key in item) {
             const value: any = item[key as keyof typeof item];
             if (filters[key]?.length) {

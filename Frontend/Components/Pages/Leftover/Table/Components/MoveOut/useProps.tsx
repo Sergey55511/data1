@@ -38,6 +38,7 @@ export const useProps = (props: iProps) => {
         const isOperation = ![
             OPERATIONS.makingMinalets.id,
             OPERATIONS.inventory.id,
+            OPERATIONS.getOut.id,
         ].includes(operation ?? 0);
         setIsShowTask(!!(props.isShowTask && isOperation));
     }, [props.isShowTask, operation]);
@@ -100,7 +101,8 @@ export const useProps = (props: iProps) => {
         if (test(count)) return false;
         if (isMinus(props.record.width!, width)) return false;
         if (count) if ((props.record.count ?? 0 - +count) < 0) return false;
-        if (operation != OPERATIONS.inventory.id) {
+
+        if (![OPERATIONS.inventory.id, OPERATIONS.getOut.id].includes(operation || 0)) {
             if (props.validationFields?.numProduction) {
                 if (!numProd) return false;
             }
@@ -140,8 +142,12 @@ export const useProps = (props: iProps) => {
             });
 
         await OperationStore.moveToWork([data]);
-        if (loginStore.user.storeId)
-            await OperationStore.getOrders(loginStore.user.storeId!);
+        if (loginStore.user.storeId) {
+            if (operation != OPERATIONS.getOut.id)
+                await OperationStore.getOrders(loginStore.user.storeId!);
+            if (operation == OPERATIONS.getOut.id)
+                await OperationStore.getOrdersGetOut(loginStore.user.storeId!);
+        }
 
         setIsLoading(false);
 

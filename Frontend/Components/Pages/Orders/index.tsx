@@ -5,18 +5,23 @@ import { Title } from '../../Shared/Title';
 import { Wrapper } from './style';
 import { OrdersTable } from './Table';
 
-export const Orders = observer(() => {
+export const Orders = observer(({ isGetOut }: { isGetOut?: boolean }) => {
     const { loginStore, OperationStore } = useStores();
     useEffect(() => {
-        if (loginStore.user.storeId) OperationStore.getOrders(loginStore.user.storeId);
+        if (loginStore.user.storeId) {
+            if (!isGetOut) OperationStore.getOrders(loginStore.user.storeId);
+            if (isGetOut) OperationStore.getOrdersGetOut(loginStore.user.storeId);
+        }
     }, [loginStore.user.storeId]);
+
+    const title = isGetOut ? 'Выбытие:' : 'Задачи в работе:';
     return (
         <Wrapper>
             <div>
-                <Title text="Задачи в работе:" />
+                <Title text={title} />
             </div>
             <div>
-                <OrdersTable />
+                <OrdersTable isGetOut={isGetOut} />
             </div>
         </Wrapper>
     );

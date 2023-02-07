@@ -3,7 +3,7 @@ import { OPERATIONS } from '../../../../../Shared/constants';
 import { tPrisma } from '../../../../types';
 import { fullModelSQL, fullModelSQLTask } from '../constants';
 
-export const orders = <T>(prisma: tPrisma, storeId: number): PrismaPromise<T> => {
+export const getGetOut = <T>(prisma: tPrisma, storeId: number): PrismaPromise<T> => {
     return prisma.$queryRawUnsafe(`
         SELECT 
             pp,
@@ -65,8 +65,7 @@ export const orders = <T>(prisma: tPrisma, storeId: number): PrismaPromise<T> =>
 				having 
 					COALESCE(round(sum("widthIn")::numeric,2),0)-COALESCE(round(coalesce(sum("widthOut"),0)::numeric,2),0)<>0
 			) 
-            and "operationId" <> ${+OPERATIONS.assemble.id} 
-            and "operationId" <> ${+OPERATIONS.getOut.id}
+            and "operationId" = ${+OPERATIONS.getOut.id}
         GROUP BY 
 			pp,
             "productionId",

@@ -22,6 +22,7 @@ export class OperationStore {
     shared: iShared[] = [];
     leftovers: iData[] = [];
     orders: iData[] = [];
+    ordersGetOut: iData[] = [];
 
     constructor(errorStore: ErrorStore, login: Login, listsStore: ListsStore) {
         makeAutoObservable(this);
@@ -41,8 +42,9 @@ export class OperationStore {
     fetchInitData = flow(function* (this: OperationStore, storeId: number) {
         if (this.isFetched) return;
         try {
-            this.getShared(storeId);
-            this.getOrders(storeId);
+            this.getShared(storeId, false);
+            this.getOrders(storeId, false);
+            this.getOrdersGetOut(storeId);
             this.listsStore.getProductions(storeId);
             this.listsStore.getUsers(storeId);
             this.listsStore.getMaterialGroup();
@@ -65,18 +67,39 @@ export class OperationStore {
         }
     });
 
-    getLeftovers = flow(function* (this: OperationStore, storeId: number) {
+    getLeftovers = flow(function* (
+        this: OperationStore,
+        storeId: number,
+        isGetMaxId = true,
+    ) {
         try {
             this.leftovers = yield api.leftovers(storeId);
-            yield this.getMaxId();
+            if (isGetMaxId) yield this.getMaxId();
         } catch (err) {
             this.errorStore.setError(err as iError);
         }
     });
-    getOrders = flow(function* (this: OperationStore, storeId: number) {
+    getOrders = flow(function* (
+        this: OperationStore,
+        storeId: number,
+        isGetMaxId = true,
+    ) {
         try {
             this.orders = yield api.getOrders(storeId);
-            yield this.getMaxId();
+            if (isGetMaxId) yield this.getMaxId();
+        } catch (err) {
+            this.errorStore.setError(err as iError);
+        }
+    });
+
+    getOrdersGetOut = flow(function* (
+        this: OperationStore,
+        storeId: number,
+        isGetMaxId = true,
+    ) {
+        try {
+            this.ordersGetOut = yield api.getOrdersGetOut(storeId);
+            if (isGetMaxId) yield this.getMaxId();
         } catch (err) {
             this.errorStore.setError(err as iError);
         }
@@ -107,9 +130,14 @@ export class OperationStore {
         }
     });
 
-    getShared = flow(function* (this: OperationStore, storeId: number) {
+    getShared = flow(function* (
+        this: OperationStore,
+        storeId: number,
+        isGetMaxId = true,
+    ) {
         try {
             this.shared = yield api.getShared(storeId);
+            if (isGetMaxId) this.getMaxId();
         } catch (err) {
             this.errorStore.setError(err as iError);
         }

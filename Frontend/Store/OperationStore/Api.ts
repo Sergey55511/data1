@@ -35,6 +35,12 @@ export const getOrders = (storeId: number) => {
         method: 'GET',
     }).then((res) => res.data);
 };
+export const getOrdersGetOut = (storeId: number) => {
+    return axios({
+        url: `/api/data/orders/getOut?storeId=${storeId}`,
+        method: 'GET',
+    }).then((res) => res.data);
+};
 
 export const postMoveInShared = (data: iDataTable[]) => {
     return axios({
