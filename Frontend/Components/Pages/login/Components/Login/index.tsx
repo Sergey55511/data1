@@ -19,7 +19,7 @@ export default observer(() => {
     const { loginStore } = useStores();
     const onClickHandler = async () => {
         setIsLoading(true);
-        await loginStore.login({ login: loginV, password }, () => {
+        await loginStore.login({ login: loginV, password, storeId: 0 }, () => {
             router.push(ROUTES.root);
         });
         setIsLoading(false);

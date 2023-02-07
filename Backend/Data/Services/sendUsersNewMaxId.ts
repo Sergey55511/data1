@@ -5,13 +5,14 @@ import { getMaxId } from '../Requests/Data/getMaxId';
 
 export const sendUsersNewMaxId = async (
     prisma: tPrisma,
-    storeId?: string | undefined,
+    storeId?: number | undefined,
 ) => {
     if (!storeId) throw new MyError(400, 'empty storeId sendUsersNewMaxId');
     const maxId = await getMaxId(prisma, +storeId);
     const room = `store_${storeId}`;
 
-    const socketUrl = process.env.NODE_ENV=='development'?'tdata1.ru': 'socketservice';
+    const socketUrl =
+        process.env.NODE_ENV == 'development' ? 'tdata1.ru' : 'socketservice';
 
     axios({
         url: `http://${socketUrl}:5000/sendMessage`,

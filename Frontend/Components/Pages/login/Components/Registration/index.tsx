@@ -25,7 +25,7 @@ export const Registration = observer(() => {
             login: loginV,
             password,
             status,
-            storeId: store + '',
+            storeId: store,
         });
         setIsLoading(false);
     };
