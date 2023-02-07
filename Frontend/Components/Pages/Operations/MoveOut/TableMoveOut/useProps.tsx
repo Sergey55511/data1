@@ -1,9 +1,7 @@
 import { Dispatch, SetStateAction, useEffect } from 'react';
 import { FilterValue } from 'antd/es/table/interface';
 import { iDataIndex } from '../useProps';
-import { getColumnProps } from '../../../../Shared/Table/Helpers/getColumnProps';
-import type { ColumnsType, TableProps } from 'antd/es/table';
-import { KEYSLEFTOVERS } from '../../../../Shared/Table/constants';
+import type { TableProps } from 'antd/es/table';
 import { InputF } from './inputF';
 import { useColumns } from '../useColumps';
 
@@ -35,7 +33,7 @@ export const useProps = ({
         key: index,
     }));
 
-    const columns: ColumnsType<iDataIndex> = useColumns({ filters, leftovers });
+    const { columns, filteredleftovers } = useColumns({ filters, leftovers });
 
     columns.push({
         dataIndex: 'widthOut',
@@ -75,5 +73,5 @@ export const useProps = ({
         // setSortedInfo(sorter as SorterResult<DataType>);
     };
 
-    return { columns, data, handleChange };
+    return { columns, data, handleChange, filteredleftovers };
 };

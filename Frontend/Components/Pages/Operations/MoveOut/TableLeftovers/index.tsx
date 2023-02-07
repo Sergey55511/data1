@@ -5,6 +5,7 @@ import { TableApp } from '../../../../Shared/Table';
 import { iDataIndex } from '../useProps';
 import { useProps } from './useProps';
 import { TableRowSelection } from 'antd/lib/table/interface';
+import { Counter } from '../../../../Shared/Counter';
 
 export const TableLeftOvers = observer(
     (props: {
@@ -14,22 +15,25 @@ export const TableLeftOvers = observer(
         selectRow: (i: number) => void;
         rowSelection?: TableRowSelection<iDataIndex>;
     }) => {
-        const { columns, data, handleChange } = useProps(props);
+        const { columns, data, handleChange, filteredleftovers } = useProps(props);
 
         return (
-            <TableApp
-                onRow={(record: iDataIndex, _rowIndex) => {
-                    return {
-                        onDoubleClick: (_event) => {
-                            props.selectRow(record.index!);
-                        },
-                    };
-                }}
-                columns={columns}
-                dataSource={data}
-                onChange={handleChange}
-                rowSelection={props.rowSelection}
-            />
+            <>
+                <Counter data={filteredleftovers} />
+                <TableApp
+                    onRow={(record: iDataIndex, _rowIndex) => {
+                        return {
+                            onDoubleClick: (_event) => {
+                                props.selectRow(record.index!);
+                            },
+                        };
+                    }}
+                    columns={columns}
+                    dataSource={data}
+                    onChange={handleChange}
+                    rowSelection={props.rowSelection}
+                />
+            </>
         );
     },
 );

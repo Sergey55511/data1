@@ -7,6 +7,7 @@ import { MoveOutSoloHoc } from './Components/MoveOut';
 import { TableApp } from '../../../Shared/Table';
 import { useColumns } from './useСolumns';
 import { WORKPIECETYPE } from '../../../../../Shared/constants';
+import { Counter } from '../../../Shared/Counter';
 
 export const TableLeftOvers = observer(
     ({
@@ -16,7 +17,7 @@ export const TableLeftOvers = observer(
         filters: Record<string, FilterValue | null>;
         setFilters: Dispatch<SetStateAction<Record<string, FilterValue | null>>>;
     }) => {
-        const { columns, data } = useColumns(filters);
+        const { columns, data, filteredleftovers } = useColumns(filters);
         const recordRef = useRef<iData | undefined>();
         const [isShowMoveOutSolo, setIsShowMoveOutSolo] = useState(false);
 
@@ -37,6 +38,7 @@ export const TableLeftOvers = observer(
                         onClose={() => setIsShowMoveOutSolo(false)}
                     />
                 )}
+                <Counter data={filteredleftovers} />
                 <TableApp
                     onRow={(record) => {
                         return {

@@ -89,5 +89,5 @@ export const useColumns = ({
         ...getColumnPropsHoc(KEYSLEFTOVERS.count.key),
         title: KEYSLEFTOVERS.count.title,
     });
-    return columns;
+    return { columns, filteredleftovers };
 };

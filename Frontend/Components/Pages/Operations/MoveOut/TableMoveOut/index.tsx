@@ -10,6 +10,7 @@ import { InputField } from '../../../../Shared/InputField';
 import { Wrapper } from './style';
 import { iDataIndex } from '../useProps';
 import { useProps } from './useProps';
+import { Counter } from '../../../../Shared/Counter';
 
 export const TableMoveOut = observer(
     (props: {
@@ -23,10 +24,11 @@ export const TableMoveOut = observer(
             value: iDataIndex[keyof iDataIndex],
         ) => void;
     }) => {
-        const { columns, data, handleChange } = useProps(props);
+        const { columns, data, handleChange, filteredleftovers } = useProps(props);
 
         return (
             <Wrapper>
+                <Counter data={filteredleftovers} />
                 <TableApp
                     onRow={(record: iDataIndex, _rowIndex) => {
                         return {
