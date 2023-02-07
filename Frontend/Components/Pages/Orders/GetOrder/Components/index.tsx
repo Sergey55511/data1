@@ -18,7 +18,7 @@ export const GetOrderSwitcher = ({
     record: iData;
 }) => {
     switch (operationId) {
-        case OPERATIONS.inventory.id:
+        case OPERATIONS.resorting.id:
             return <SortingInventory record={record} />;
         case OPERATIONS.wash.id:
             return <OneToOne record={record} stateId={STATE.washed.id} isCheckLosses />;

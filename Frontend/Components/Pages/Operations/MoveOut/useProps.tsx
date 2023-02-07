@@ -19,7 +19,8 @@ export interface iProps {
         | 'mixingGrade'
         | 'mixingSize'
         | 'mixingLot'
-        | 'mixingProduction';
+        | 'mixingProduction'
+        | 'inventory';
 }
 
 export const useProps = ({ type }: iProps) => {
@@ -40,6 +41,8 @@ export const useProps = ({ type }: iProps) => {
         'mixingLot',
         'mixingProduction',
     ].includes(type || '');
+
+    const isInventory = type == 'inventory';
 
     useEffect(() => {
         let data: iDataIndex[] = leftovers;
@@ -104,7 +107,7 @@ export const useProps = ({ type }: iProps) => {
 
     const isDisabled = (() => {
         let res = false;
-        if (!isMixing) {
+        if (!(isMixing || isInventory)) {
             if (!recipient) res = true;
             if (!numDocument) res = true;
         }
@@ -151,6 +154,10 @@ export const useProps = ({ type }: iProps) => {
                 operationId = OPERATIONS.mixingProduction.id;
                 nDocUniq = '';
                 break;
+            case 'inventory':
+                operationId = OPERATIONS.inventory.id;
+                nDocUniq = '';
+                break;
         }
 
         const getMoney = (data: iData) => {
@@ -183,8 +190,10 @@ export const useProps = ({ type }: iProps) => {
 
         if (type == 'mixingSize')
             await OperationStore.mixingSize(dataSendPrepared, noteMixingSuccess);
+        if (type == 'inventory')
+            await OperationStore.inventory(dataSendPrepared, noteMixingSuccess);
 
-        if (!isMixing) {
+        if (!(isMixing || isInventory)) {
             await OperationStore.moveToWork(
                 dataSendPrepared,
                 () => {

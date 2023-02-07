@@ -269,6 +269,20 @@ export class OperationStore {
         }
     });
 
+    inventory = flow(function* (
+        this: OperationStore,
+        data: iDataTable[],
+        callBack?: () => void,
+    ) {
+        try {
+            yield console.log('data', data);
+
+            if (callBack) callBack();
+        } catch (err) {
+            this.errorStore.setError(err as iError);
+        }
+    });
+
     postOrderResult = flow(function* (
         this: OperationStore,
         data: iDataTable[],

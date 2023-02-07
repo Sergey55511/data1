@@ -127,6 +127,11 @@ export const useItems = () => {
                 icon: <CarOutlined />,
             },
             {
+                label: 'Инвентаризация',
+                key: ROUTES.inventory,
+                icon: <FullscreenExitOutlined />,
+            },
+            {
                 label: 'Смешивание',
                 key: 'mixingGroup',
                 icon: <FullscreenExitOutlined />,

@@ -39,8 +39,9 @@ export const OPERATIONS = {
     assemble: { id: 40 }, //Сборка
     takeApart: { id: 41 }, //Разобрать изделие
     mixingProduction: { id: 42 }, //Смешивание партия
-    inventory: { id: 43 }, //Инвентаризация
+    resorting: { id: 43 }, //Пересорт
     getOut: { id: 44 }, //Выбытие
+    inventory: { id: 44 }, //Инвернаризация
 };
 export const STATE = {
     washed: { id: 1 },

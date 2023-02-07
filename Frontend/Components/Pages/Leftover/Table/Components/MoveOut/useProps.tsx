@@ -37,7 +37,7 @@ export const useProps = (props: iProps) => {
     useEffect(() => {
         const isOperation = ![
             OPERATIONS.makingMinalets.id,
-            OPERATIONS.inventory.id,
+            OPERATIONS.resorting.id,
             OPERATIONS.getOut.id,
         ].includes(operation ?? 0);
         setIsShowTask(!!(props.isShowTask && isOperation));
@@ -102,7 +102,7 @@ export const useProps = (props: iProps) => {
         if (isMinus(props.record.width!, width)) return false;
         if (count) if ((props.record.count ?? 0 - +count) < 0) return false;
 
-        if (![OPERATIONS.inventory.id, OPERATIONS.getOut.id].includes(operation || 0)) {
+        if (![OPERATIONS.resorting.id, OPERATIONS.getOut.id].includes(operation || 0)) {
             if (props.validationFields?.numProduction) {
                 if (!numProd) return false;
             }

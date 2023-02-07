@@ -23,6 +23,8 @@ export const PageSwitcher = ({ page }: { page: tPages }) => {
             return <Orders isGetOut />;
         case pages.getOrder:
             return <GetOrder />;
+        case pages.inventory:
+            return <MoveOut title="Инвентаризация:" type="inventory" />;
         case pages.moveOut:
             return <MoveOut title="Отгрузка:" type="moveOut" />;
         case pages.shareItems:
