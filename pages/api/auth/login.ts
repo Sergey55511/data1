@@ -18,6 +18,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                     key: true,
                     login: true,
                     status: true,
+                    role: true,
                     store: { select: { id: true, name: true } },
                 },
                 where: {

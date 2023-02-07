@@ -10,6 +10,7 @@ export const useColumns = (
     data: iDataTable[],
     setData: Dispatch<SetStateAction<iDataTable[]>>,
     filters: Record<string, FilterValue | null>,
+    isEditor?: boolean,
 ) => {
     const filteredData = data.filter((item) => {
         for (const key in item) {
@@ -27,8 +28,6 @@ export const useColumns = (
         getColumnProps(dataIndex, filteredData, filters);
 
     const onChangeHandler = (id: number, field: keyof iDataTable, v?: any) => {
-        console.log('v', v);
-
         setData((prev) => {
             const item = prev.find((i) => i.id == id);
             if (item) item[field] = v;
@@ -89,7 +88,7 @@ export const useColumns = (
             width: 130,
         },
         {
-            dataIndex: 'widthIn',
+            dataIndex: KEYSLEFTOVERS.widthIn.key,
             render: (_value, record) => {
                 return (
                     <InputNumber
@@ -103,6 +102,28 @@ export const useColumns = (
             fixed: 'right',
         },
     ];
+    if (isEditor) {
+        columns.push({
+            dataIndex: KEYSLEFTOVERS.code.key,
+            title: 'код',
+            width: 100,
+            fixed: 'right',
+        });
+        columns.push({
+            dataIndex: KEYSLEFTOVERS.moneyIn.key,
+            render: (_value, record) => {
+                return (
+                    <InputNumber
+                        value={record.moneyIn}
+                        onChangeHandler={(v) => onChangeHandler(record.id!, 'moneyIn', v)}
+                    />
+                );
+            },
+            title: KEYSLEFTOVERS.moneyIn.title,
+            width: 150,
+            fixed: 'right',
+        });
+    }
 
     return { columns };
 };

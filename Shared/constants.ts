@@ -99,3 +99,7 @@ export const RESULTASSEMBLE = {
     chaplet: { id: 1 }, //четки
     beads: { id: 2 }, //бусы
 };
+
+export const ROLES = {
+    editor: 'editor',
+};

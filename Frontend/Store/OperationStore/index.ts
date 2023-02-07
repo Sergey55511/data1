@@ -101,7 +101,7 @@ export class OperationStore {
         numDocument: string,
     ) {
         try {
-            return yield api.getMoveIn(storeId, numDocument);
+            if (storeId) return yield api.getMoveIn(storeId, numDocument);
         } catch (err) {
             this.errorStore.setError(err as iError);
         }

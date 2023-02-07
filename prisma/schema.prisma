@@ -147,6 +147,7 @@ model Users {
   password    String
   key         String?
   status      String?
+  role        String?
   store       Stores?       @relation(fields: [storeId], references: [id])
   activ       Boolean       @default(true)
   storeId     Int?          @map("storesId")

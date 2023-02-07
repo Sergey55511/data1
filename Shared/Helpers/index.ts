@@ -3,7 +3,6 @@ import { MyError } from '../Classes/error';
 import { iQueryFilters, iUser } from '../Types/interfaces';
 
 export const resError = (err: any, res: NextApiResponse) => {
-    console.log('err', err);
     const error = err as MyError;
     res.status(error?.status || 500).json(err);
 };
@@ -15,6 +14,7 @@ export const createAtkn = (user: iUser) => {
         status: user.status,
         store: user.store,
         storeId: user.storeId,
+        role: user.role
     };
 };
 

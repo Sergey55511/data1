@@ -6,8 +6,9 @@ export interface iUser {
     password?: string;
     key?: string;
     status?: string;
-    storeId?: string;
+    storeId: number;
     store?: string;
+    role?: string;
 }
 export interface iManager {
     id: number;

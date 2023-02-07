@@ -26,6 +26,8 @@ export const KEYSLEFTOVERS = {
     width: { key: 'width', title: 'Остаток гр.' },
     count: { key: 'count', title: 'Шт.' },
     widthOut: { key: 'widthOut', title: 'Отгрузка гр.' },
+    widthIn: { key: 'widthIn', title: 'Принять гр.' },
+    moneyIn: { key: 'moneyIn', title: 'Принять код' },
     countItemsOut: { key: 'countItemsOut', title: 'Отгрузка шт.' },
     code: { key: 'code', title: '' },
     defect: { key: 'defect', title: '' },

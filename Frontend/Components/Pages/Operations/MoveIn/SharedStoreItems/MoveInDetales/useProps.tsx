@@ -2,6 +2,7 @@ import { TableProps } from 'antd/es/table';
 import { FilterValue } from 'antd/es/table/interface';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
+import { ROLES, STORES } from '../../../../../../../Shared/constants';
 import { iData, iDataTable } from '../../../../../../../Shared/Types/interfaces';
 import { useStores } from '../../../../../../Store/useStores';
 import { prepareDataTable } from '../../../../../Helpers';
@@ -11,10 +12,13 @@ import { useColumns } from './useColumns';
 export const useProps = () => {
     const { loginStore, OperationStore } = useStores();
     const [filters, setFilters] = useState<Record<string, FilterValue | null>>({});
-    const [data, setData] = useState<iDataTable[]>([]);
+    const [data, setData] = useState<iData[]>([]);
     const [isLoading, setIsLoading] = useState(false);
+    const [isValidCode, setIsValidCode] = useState(true);
+    const [codeDifference, setCodeDifference] = useState(0);
     const router = useRouter();
     const numDocument = router.query.numDocument;
+    const isEditor = loginStore.user.role == ROLES.editor;
 
     useEffect(() => {
         if (loginStore.user.storeId && numDocument) {
@@ -28,6 +32,7 @@ export const useProps = () => {
                     ...item,
                     key: index,
                     widthIn: item.widthOut,
+                    code: item.moneyOut,
                     moneyIn: item.moneyOut,
                     moneyOut: undefined,
                     countItemsIn: item.countItemsOut,
@@ -36,6 +41,18 @@ export const useProps = () => {
             })();
         }
     }, [loginStore.user.storeId, numDocument]);
+
+    useEffect(() => {
+        const getNumber = (v: any) => (v ? +v : 0);
+        let ttlSumCode = 0;
+        let ttlSumMoneyIn = 0;
+        data.forEach((item) => {
+            ttlSumCode += getNumber(item?.code);
+            ttlSumMoneyIn += getNumber(item?.moneyIn);
+        });
+        setCodeDifference(ttlSumCode - ttlSumMoneyIn);
+        setIsValidCode(ttlSumCode == ttlSumMoneyIn);
+    }, [data]);
 
     const handleChange: TableProps<iData>['onChange'] = (
         _pagination,
@@ -54,6 +71,7 @@ export const useProps = () => {
             data.storeId = loginStore.user.storeId;
             data.widthOut = undefined;
             data.countItemsOut = undefined;
+
             return data;
         });
         if (!preparedData.length) return;
@@ -63,7 +81,17 @@ export const useProps = () => {
         setIsLoading(false);
     };
 
-    const { columns } = useColumns(data, setData, filters);
+    const { columns } = useColumns(data, setData, filters, isEditor);
 
-    return { numDocument, submitHandler, isLoading, columns, data, handleChange };
+    return {
+        numDocument,
+        submitHandler,
+        isLoading,
+        columns,
+        data,
+        handleChange,
+        isEditor,
+        codeDifference,
+        isValidCode,
+    };
 };
