@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction, useEffect } from 'react';
 import { FilterValue } from 'antd/es/table/interface';
-import { iDataIndex } from '../useProps';
+import { iDataIndex } from '../UseProps';
 import type { TableProps } from 'antd/es/table';
 import { InputF } from './inputF';
 import { useColumns } from '../useColumps';
@@ -11,6 +11,7 @@ export const useProps = ({
     leftovers,
     removeRow,
     onChange,
+    isInventory,
 }: {
     filters: Record<string, FilterValue | null>;
     setFilters: Dispatch<SetStateAction<Record<string, FilterValue | null>>>;
@@ -21,6 +22,7 @@ export const useProps = ({
         key: keyof iDataIndex,
         value: iDataIndex[keyof iDataIndex],
     ) => void;
+    isInventory?: boolean;
 }) => {
     useEffect(() => {
         for (const item of leftovers) {
@@ -44,7 +46,11 @@ export const useProps = ({
                 <InputF
                     value={value}
                     onChangeHandler={(v: any) => onChange(record, 'widthOut', v)}
-                    isError={(record.width || 0) - (record.widthOut || 0) < 0}
+                    isError={
+                        isInventory
+                            ? undefined
+                            : (record.width || 0) - (record.widthOut || 0) < 0
+                    }
                 />
             );
         },
@@ -58,7 +64,11 @@ export const useProps = ({
                 <InputF
                     value={value}
                     onChangeHandler={(v: any) => onChange(record, 'countItemsOut', v)}
-                    isError={(record.count || 0) - (record.countItemsOut || 0) < 0}
+                    isError={
+                        isInventory
+                            ? undefined
+                            : (record.count || 0) - (record.countItemsOut || 0) < 0
+                    }
                 />
             );
         },

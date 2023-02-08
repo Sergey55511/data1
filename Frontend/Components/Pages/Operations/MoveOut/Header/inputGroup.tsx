@@ -1,7 +1,7 @@
 import { Input } from 'antd';
 import { InputField } from '../../../../Shared/InputField';
 import { SelectField } from '../../../../Shared/SelectField';
-import { iProps, useProps } from '../useProps';
+import { iProps, useProps } from '../UseProps';
 
 export const InputGroup = ({
     props,

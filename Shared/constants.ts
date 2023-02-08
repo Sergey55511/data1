@@ -41,7 +41,7 @@ export const OPERATIONS = {
     mixingProduction: { id: 42 }, //Смешивание партия
     resorting: { id: 43 }, //Пересорт
     getOut: { id: 44 }, //Выбытие
-    inventory: { id: 44 }, //Инвернаризация
+    inventory: { id: 45 }, //Инвернаризация
 };
 export const STATE = {
     washed: { id: 1 },

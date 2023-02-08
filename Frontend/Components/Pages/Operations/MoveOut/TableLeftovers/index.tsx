@@ -2,7 +2,7 @@ import { observer } from 'mobx-react-lite';
 import { Dispatch, SetStateAction } from 'react';
 import { FilterValue } from 'antd/es/table/interface';
 import { TableApp } from '../../../../Shared/Table';
-import { iDataIndex } from '../useProps';
+import { iDataIndex } from '../UseProps';
 import { useProps } from './useProps';
 import { TableRowSelection } from 'antd/lib/table/interface';
 import { Counter } from '../../../../Shared/Counter';

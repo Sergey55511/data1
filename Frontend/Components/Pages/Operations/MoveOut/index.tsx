@@ -4,7 +4,7 @@ import { Header } from './Header';
 import { Wrapper } from './style';
 import { TableLeftOvers } from './TableLeftovers';
 import { TableMoveOut } from './TableMoveOut';
-import { iProps, useProps } from './useProps';
+import { iProps, useProps } from './UseProps';
 
 export const MoveOut = observer((props: iProps) => {
     const params = useProps(props);
@@ -37,6 +37,7 @@ export const MoveOut = observer((props: iProps) => {
                                     const res = prev.filter((item) => item != i);
                                     return [...res];
                                 }),
+                            isInventory: params.isInventory,
                         }}
                     />
                 )}

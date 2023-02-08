@@ -1,12 +1,13 @@
 import { useEffect, useState } from 'react';
-import { iData } from '../../../../../Shared/Types/interfaces';
+import { iData, iUser } from '../../../../../../Shared/Types/interfaces';
 import { FilterValue } from 'antd/lib/table/interface';
-import { useStores } from '../../../../Store/useStores';
-import { OPERATIONS, STATE } from '../../../../../Shared/constants';
-import { myModal } from '../../../Shared/MyModal';
-import { ModalContent } from './AddRecipient';
+import { useStores } from '../../../../../Store/useStores';
+import { OPERATIONS, STATE } from '../../../../../../Shared/constants';
+import { myModal } from '../../../../Shared/MyModal';
+import { ModalContent } from '../AddRecipient';
 import { notification } from 'antd';
-import { prepareDataTable } from '../../../Helpers';
+import { prepareDataTable } from '../../../../Helpers';
+import { dataInventoryPrepare } from './dataInventoryPrepare';
 
 export interface iDataIndex extends iData {
     index?: number;
@@ -113,14 +114,15 @@ export const useProps = ({ type }: iProps) => {
         }
         if (!moveOutData.length) res = true;
         if (!moveOutData.find((item) => item.widthOut || item.countItemsOut)) res = true;
-        if (
-            moveOutData.find(
-                (item) =>
-                    (item.width || 0) - (item.widthOut || 0) < 0 ||
-                    (item.count || 0) - (item.countItemsOut || 0) < 0,
+        if (!isInventory)
+            if (
+                moveOutData.find(
+                    (item) =>
+                        (item.width || 0) - (item.widthOut || 0) < 0 ||
+                        (item.count || 0) - (item.countItemsOut || 0) < 0,
+                )
             )
-        )
-            res = true;
+                res = true;
 
         return res;
     })();
@@ -154,10 +156,6 @@ export const useProps = ({ type }: iProps) => {
                 operationId = OPERATIONS.mixingProduction.id;
                 nDocUniq = '';
                 break;
-            case 'inventory':
-                operationId = OPERATIONS.inventory.id;
-                nDocUniq = '';
-                break;
         }
 
         const getMoney = (data: iData) => {
@@ -178,27 +176,37 @@ export const useProps = ({ type }: iProps) => {
         });
         setIsSubmitLoading(true);
 
-        const noteMixingSuccess = () =>
-            notification.success({ message: 'Смешивание прошла успешно' });
+        const noteSuccess = (message: string) => {
+            notification.success({ message });
+        };
 
         if (type == 'mixingProduction')
-            await OperationStore.mixingProduction(dataSendPrepared, noteMixingSuccess);
+            await OperationStore.mixingProduction(dataSendPrepared, () =>
+                noteSuccess('Смешивание прошла успешно'),
+            );
         if (type == 'mixingLot')
-            await OperationStore.mixingLot(dataSendPrepared, noteMixingSuccess);
+            await OperationStore.mixingLot(dataSendPrepared, () =>
+                noteSuccess('Смешивание прошла успешно'),
+            );
         if (type == 'mixingGrade')
-            await OperationStore.mixingGrade(dataSendPrepared, noteMixingSuccess);
+            await OperationStore.mixingGrade(dataSendPrepared, () =>
+                noteSuccess('Смешивание прошла успешно'),
+            );
 
         if (type == 'mixingSize')
-            await OperationStore.mixingSize(dataSendPrepared, noteMixingSuccess);
+            await OperationStore.mixingSize(dataSendPrepared, () =>
+                noteSuccess('Смешивание прошла успешно'),
+            );
         if (type == 'inventory')
-            await OperationStore.inventory(dataSendPrepared, noteMixingSuccess);
+            await OperationStore.inventory(
+                dataInventoryPrepare(dataSend, loginStore.user),
+                () => noteSuccess('Инвентаризация прошла успешно'),
+            );
 
         if (!(isMixing || isInventory)) {
             await OperationStore.moveToWork(
                 dataSendPrepared,
-                () => {
-                    notification.success({ message: 'Отгрузка прошла успешно' });
-                },
+                () => noteSuccess('Отгрузка прошла успешно'),
                 false,
             );
         }
@@ -249,5 +257,6 @@ export const useProps = ({ type }: iProps) => {
         onChange,
         setSelectedRows,
         data,
+        isInventory,
     };
 };

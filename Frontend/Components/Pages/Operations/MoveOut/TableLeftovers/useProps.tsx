@@ -1,4 +1,4 @@
-import { iDataIndex } from '../useProps';
+import { iDataIndex } from '../UseProps';
 import { FilterValue } from 'antd/es/table/interface';
 import { Dispatch, SetStateAction } from 'react';
 import type { TableProps } from 'antd/es/table';

@@ -1,5 +1,5 @@
 import { Badge, Button, Radio } from 'antd';
-import { useProps } from './useProps';
+import { useProps } from './UseProps';
 
 export const ButtonGroup = ({ params }: { params: ReturnType<typeof useProps> }) => {
     return (

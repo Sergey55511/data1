@@ -1,4 +1,4 @@
-import { iDataIndex } from './useProps';
+import { iDataIndex } from './UseProps';
 import { FilterValue } from 'antd/es/table/interface';
 import { getColumnProps } from '../../../Shared/Table/Helpers/getColumnProps';
 import type { ColumnsType } from 'antd/es/table';

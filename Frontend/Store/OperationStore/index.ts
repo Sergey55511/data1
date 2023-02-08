@@ -275,7 +275,11 @@ export class OperationStore {
         callBack?: () => void,
     ) {
         try {
-            yield console.log('data', data);
+            yield api.inventory({
+                data: data,
+                storeId: this.loginStore.user.storeId,
+                maxId: this.maxId,
+            });
 
             if (callBack) callBack();
         } catch (err) {

@@ -1,14 +1,9 @@
-import type { ColumnsType, TableProps } from 'antd/es/table';
-import { getColumnProps } from '../../../../Shared/Table/Helpers/getColumnProps';
 import { observer } from 'mobx-react-lite';
-import { Dispatch, SetStateAction, useEffect } from 'react';
+import { Dispatch, SetStateAction } from 'react';
 import { FilterValue } from 'antd/es/table/interface';
 import { TableApp } from '../../../../Shared/Table';
-import { KEYSLEFTOVERS } from '../../../../Shared/Table/constants';
-import { InputNumber } from '../../../../Shared/InputNumber';
-import { InputField } from '../../../../Shared/InputField';
 import { Wrapper } from './style';
-import { iDataIndex } from '../useProps';
+import { iDataIndex } from '../UseProps';
 import { useProps } from './useProps';
 import { Counter } from '../../../../Shared/Counter';
 
@@ -23,6 +18,7 @@ export const TableMoveOut = observer(
             key: keyof iDataIndex,
             value: iDataIndex[keyof iDataIndex],
         ) => void;
+        isInventory?: boolean;
     }) => {
         const { columns, data, handleChange, filteredleftovers } = useProps(props);
 
