@@ -129,7 +129,7 @@ export const useItems = () => {
             {
                 label: 'Инвентаризация',
                 key: ROUTES.inventory,
-                icon: <FullscreenExitOutlined />,
+                icon: <DatabaseOutlined />,
             },
             {
                 label: 'Смешивание',

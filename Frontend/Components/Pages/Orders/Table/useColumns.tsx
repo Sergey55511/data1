@@ -47,10 +47,6 @@ export const useColumns = (
         title: KEYSLEFTOVERS.manager.title,
     });
     columns.push({
-        ...getColumnPropsHoc(KEYSLEFTOVERS.operation.key),
-        title: KEYSLEFTOVERS.operation.title,
-    });
-    columns.push({
         ...getColumnPropsHoc(KEYSLEFTOVERS.workpieceType.key),
         title: KEYSLEFTOVERS.workpieceType.title,
     });
@@ -89,11 +85,6 @@ export const useColumns = (
         ...getColumnPropsHoc(KEYSLEFTOVERS.grade.key),
         title: KEYSLEFTOVERS.grade.title,
     });
-    if (isMSC)
-        columns.push({
-            ...getColumnPropsHoc(KEYSLEFTOVERS.fullModelTask.key),
-            title: KEYSLEFTOVERS.fullModelTask.title,
-        });
     columns.push({
         ...getColumnPropsHoc(KEYSLEFTOVERS.lot.key),
         title: KEYSLEFTOVERS.lot.title,

@@ -25,10 +25,11 @@ export const useColumns = (filters: Record<string, FilterValue | null>) => {
         ...getColumnPropsHoc(KEYSLEFTOVERS.workpieceType.key),
         title: KEYSLEFTOVERS.workpieceType.title,
     });
-    columns.push({
-        ...getColumnPropsHoc(KEYSLEFTOVERS.fullModel.key),
-        title: KEYSLEFTOVERS.fullModel.title,
-    });
+    if (isMSC)
+        columns.push({
+            ...getColumnPropsHoc(KEYSLEFTOVERS.fullModel.key),
+            title: KEYSLEFTOVERS.fullModel.title,
+        });
     columns.push({
         ...getColumnPropsHoc(KEYSLEFTOVERS.state.key),
         title: KEYSLEFTOVERS.state.title,
@@ -65,28 +66,31 @@ export const useColumns = (filters: Record<string, FilterValue | null>) => {
         ...getColumnPropsHoc(KEYSLEFTOVERS.grade.key),
         title: KEYSLEFTOVERS.grade.title,
     });
-    columns.push({
-        ...getColumnPropsHoc(KEYSLEFTOVERS.channel.key),
-        title: KEYSLEFTOVERS.channel.title,
-    });
+    if (isMSC)
+        columns.push({
+            ...getColumnPropsHoc(KEYSLEFTOVERS.channel.key),
+            title: KEYSLEFTOVERS.channel.title,
+        });
     columns.push({
         ...getColumnPropsHoc(KEYSLEFTOVERS.lot.key),
         title: KEYSLEFTOVERS.lot.title,
     });
-    columns.push({
-        ...getColumnPropsHoc(KEYSLEFTOVERS.productionId.key),
-        title: KEYSLEFTOVERS.productionId.title,
-        width: 100,
-    });
+    if (isMSC)
+        columns.push({
+            ...getColumnPropsHoc(KEYSLEFTOVERS.productionId.key),
+            title: KEYSLEFTOVERS.productionId.title,
+            width: 100,
+        });
     columns.push({
         ...getColumnPropsHoc(KEYSLEFTOVERS.width.key),
         title: KEYSLEFTOVERS.width.title,
     });
-    columns.push({
-        ...getColumnPropsHoc(KEYSLEFTOVERS.count.key),
-        title: KEYSLEFTOVERS.count.title,
-        width: 50,
-    });
+    if (isMSC)
+        columns.push({
+            ...getColumnPropsHoc(KEYSLEFTOVERS.count.key),
+            title: KEYSLEFTOVERS.count.title,
+            width: 50,
+        });
     columns.push({
         dataIndex: 'code',
         title: 'code',

@@ -4,6 +4,8 @@ import { iDataIndex } from '../UseProps';
 import type { TableProps } from 'antd/es/table';
 import { InputF } from './inputF';
 import { useColumns } from '../useColumps';
+import { useStores } from '../../../../../Store/useStores';
+import { STORES } from '../../../../../../Shared/constants';
 
 export const useProps = ({
     filters,
@@ -24,6 +26,8 @@ export const useProps = ({
     ) => void;
     isInventory?: boolean;
 }) => {
+    const { loginStore } = useStores();
+    const isMSC = loginStore.user.storeId == STORES.Moscow.id;
     useEffect(() => {
         for (const item of leftovers) {
             if (!item.widthOut) onChange(item, 'widthOut', item.width);
@@ -39,7 +43,7 @@ export const useProps = ({
 
     columns.push({
         dataIndex: 'widthOut',
-        title: 'Отгрузка гр.',
+        title: isInventory ? 'Факт гр.' : 'Отгрузка гр.',
         width: '115px',
         render: (value, record) => {
             return (
@@ -55,24 +59,25 @@ export const useProps = ({
             );
         },
     });
-    columns.push({
-        dataIndex: 'countItemsOut',
-        title: 'Отгрузка шт.',
-        width: '115px',
-        render: (value, record) => {
-            return (
-                <InputF
-                    value={value}
-                    onChangeHandler={(v: any) => onChange(record, 'countItemsOut', v)}
-                    isError={
-                        isInventory
-                            ? undefined
-                            : (record.count || 0) - (record.countItemsOut || 0) < 0
-                    }
-                />
-            );
-        },
-    });
+    if (isMSC)
+        columns.push({
+            dataIndex: 'countItemsOut',
+            title: isInventory ? 'Факт шт.' : 'Отгрузка шт.',
+            width: '115px',
+            render: (value, record) => {
+                return (
+                    <InputF
+                        value={value}
+                        onChangeHandler={(v: any) => onChange(record, 'countItemsOut', v)}
+                        isError={
+                            isInventory
+                                ? undefined
+                                : (record.count || 0) - (record.countItemsOut || 0) < 0
+                        }
+                    />
+                );
+            },
+        });
 
     const handleChange: TableProps<iDataIndex>['onChange'] = (
         _pagination,

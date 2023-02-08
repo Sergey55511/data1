@@ -19,8 +19,9 @@ export const Counter = ({ data }: { data: iData[] }) => {
 
     return (
         <Wrapper>
-            <div>шт: {count.count.toLocaleString()}</div>
+            <div>строк: {data.length.toLocaleString()}</div>
             <div>вес: {count.width.toLocaleString()}</div>
+            <div>шт: {count.count.toLocaleString()}</div>
         </Wrapper>
     );
 };

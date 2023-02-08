@@ -77,17 +77,19 @@ export const useColumns = ({
         ...getColumnPropsHoc(KEYSLEFTOVERS.lot.key),
         title: KEYSLEFTOVERS.lot.title,
     });
-    columns.push({
-        ...getColumnPropsHoc(KEYSLEFTOVERS.productionId.key),
-        title: KEYSLEFTOVERS.productionId.title,
-    });
+    if (isMSC)
+        columns.push({
+            ...getColumnPropsHoc(KEYSLEFTOVERS.productionId.key),
+            title: KEYSLEFTOVERS.productionId.title,
+        });
     columns.push({
         ...getColumnPropsHoc(KEYSLEFTOVERS.width.key),
         title: KEYSLEFTOVERS.width.title,
     });
-    columns.push({
-        ...getColumnPropsHoc(KEYSLEFTOVERS.count.key),
-        title: KEYSLEFTOVERS.count.title,
-    });
+    if (isMSC)
+        columns.push({
+            ...getColumnPropsHoc(KEYSLEFTOVERS.count.key),
+            title: KEYSLEFTOVERS.count.title,
+        });
     return { columns, filteredleftovers };
 };
