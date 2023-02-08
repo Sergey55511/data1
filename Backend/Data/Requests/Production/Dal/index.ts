@@ -6,8 +6,6 @@ export interface iParams {
 }
 
 export const dal = (params: { [key: string]: any }): iParams => {
-    console.log('params', params);
-
     const data: iParams = {
         productionId: +params.productionId,
     };

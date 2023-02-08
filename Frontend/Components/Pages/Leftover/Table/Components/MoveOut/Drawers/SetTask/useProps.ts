@@ -62,7 +62,7 @@ export const useProps = ({
     setTask,
     productionId,
 }: iProps) => {
-    const { loginStore } = useStores();
+    const { loginStore, ListsStore } = useStores();
     const storeId = loginStore.user.storeId;
     const [state, setState] = useState(new State());
 
@@ -163,10 +163,14 @@ export const useProps = ({
         setValue('profileId', undefined);
     }, [state.workpieceTypeId.value]);
 
+    const isShowSeartch = !ListsStore.productions.find((item) => item.id == productionId)
+        ?.fullModel;
+
     return {
         data: { workpieceType, profile, sizeRangeModel, fullModels, production },
         state,
         setValue,
         submitButton,
+        isShowSeartch,
     };
 };

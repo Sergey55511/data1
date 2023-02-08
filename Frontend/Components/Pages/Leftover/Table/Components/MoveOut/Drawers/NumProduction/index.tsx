@@ -3,7 +3,7 @@ import { observer } from 'mobx-react-lite';
 import { Wrapper } from './style';
 import { SearchOutlined } from '@ant-design/icons';
 import { useStores } from '../../../../../../../../Store/useStores';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Loading } from '../../../../../../../Shared/Loading';
 
 export const NumProduction = observer(
@@ -11,7 +11,7 @@ export const NumProduction = observer(
         const [description, setDescription] = useState('');
         const [search, setSearch] = useState('');
         const [isLoading, setIsLoading] = useState(false);
-        const { OperationStore, ListsStore } = useStores();
+        const { OperationStore, ListsStore, loginStore } = useStores();
 
         const newProductionHandler = async () => {
             setIsLoading(true);
@@ -20,10 +20,16 @@ export const NumProduction = observer(
             setIsLoading(false);
         };
 
+        useEffect(() => {
+            if (loginStore.user.storeId)
+                ListsStore.getProductions(loginStore.user.storeId);
+        }, [loginStore.user.storeId]);
+
         const productions = ListsStore.productions.filter(
             (item) =>
-                `${item.id}${item.description}`.toLowerCase().split(search.toLowerCase())
-                    .length > 1,
+                `${item.id}${item.fullModel}${item.description}`
+                    .toLowerCase()
+                    .split(search.toLowerCase()).length > 1,
         );
 
         const selectProduction = (v: number) => {
@@ -58,6 +64,14 @@ export const NumProduction = observer(
                                 >
                                     <span className="number">{item.id}</span>
                                     {' - '}
+                                    {item.fullModel && (
+                                        <>
+                                            <span className="number">
+                                                {item.fullModel}
+                                            </span>
+                                            {' - '}
+                                        </>
+                                    )}
                                     <span className="description">
                                         {item.description}
                                     </span>

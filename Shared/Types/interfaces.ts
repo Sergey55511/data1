@@ -171,6 +171,7 @@ export interface iChannel {
 export interface iProductions {
     id: number;
     description: string;
+    fullModel: string;
 }
 export interface iGrade {
     id: number;

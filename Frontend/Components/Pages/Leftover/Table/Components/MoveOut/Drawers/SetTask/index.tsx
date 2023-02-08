@@ -11,7 +11,7 @@ export const SetTask = observer((props: iProps) => {
     return (
         <Drawer open title="Назначить задание" onClose={props.onClose}>
             <Wrapper>
-                <Search {...params} />
+                {params.isShowSeartch && <Search {...params} />}
                 <Models data={params.data} submitButton={params.submitButton} />
             </Wrapper>
         </Drawer>
