@@ -34,10 +34,11 @@ export const useColumns = (
         ...getColumnPropsHoc(KEYSLEFTOVERS.pp.key),
         title: KEYSLEFTOVERS.pp.title,
     });
-    columns.push({
-        ...getColumnPropsHoc(KEYSLEFTOVERS.productionId.key),
-        title: KEYSLEFTOVERS.productionId.title,
-    });
+    if (isMSC)
+        columns.push({
+            ...getColumnPropsHoc(KEYSLEFTOVERS.productionId.key),
+            title: KEYSLEFTOVERS.productionId.title,
+        });
     columns.push({
         ...getColumnPropsHoc(KEYSLEFTOVERS.user.key),
         title: KEYSLEFTOVERS.user.title,
@@ -98,10 +99,11 @@ export const useColumns = (
         ...getColumnPropsHoc(KEYSLEFTOVERS.width.key),
         title: 'В работе гр.',
     });
-    columns.push({
-        ...getColumnPropsHoc(KEYSLEFTOVERS.count.key),
-        title: 'В работе шт.',
-    });
+    if (isMSC)
+        columns.push({
+            ...getColumnPropsHoc(KEYSLEFTOVERS.count.key),
+            title: 'В работе шт.',
+        });
 
     return { columns };
 };
