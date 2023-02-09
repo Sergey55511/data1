@@ -106,38 +106,41 @@ export const useItems = () => {
         key: ROUTES.movein,
         icon: <VerticalAlignBottomOutlined />,
     });
+
+    const operationChildren = [];
+    if (!isMSC)
+        operationChildren.push({
+            label: 'Приход сырья',
+            key: ROUTES.newItem,
+            icon: <ImportOutlined />,
+        });
+    operationChildren.push({
+        label: 'Отгрузка',
+        key: ROUTES.moveout,
+        icon: <ExportOutlined />,
+    });
+    operationChildren.push({
+        label: 'Перемещение',
+        key: ROUTES.shareItems,
+        icon: <CarOutlined />,
+    });
+    operationChildren.push({
+        label: 'Инвентаризация',
+        key: ROUTES.inventory,
+        icon: <DatabaseOutlined />,
+    });
+    operationChildren.push({
+        label: 'Смешивание',
+        key: 'mixingGroup',
+        icon: <FullscreenExitOutlined />,
+        children: mixingChildrens,
+    });
+
     items.push({
         label: 'Операции',
         key: 'Operations',
         icon: <MoreOutlined />,
-        children: [
-            {
-                label: 'Приход сырья',
-                key: ROUTES.newItem,
-                icon: <ImportOutlined />,
-            },
-            {
-                label: 'Отгрузка',
-                key: ROUTES.moveout,
-                icon: <ExportOutlined />,
-            },
-            {
-                label: 'Перемещение',
-                key: ROUTES.shareItems,
-                icon: <CarOutlined />,
-            },
-            {
-                label: 'Инвентаризация',
-                key: ROUTES.inventory,
-                icon: <DatabaseOutlined />,
-            },
-            {
-                label: 'Смешивание',
-                key: 'mixingGroup',
-                icon: <FullscreenExitOutlined />,
-                children: mixingChildrens,
-            },
-        ],
+        children: operationChildren,
     });
     items.push({
         label: 'Администрирование',

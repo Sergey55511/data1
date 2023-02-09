@@ -55,10 +55,5 @@ export const useColumns = (
         title: 'Остаток шт.',
     });
 
-    columns.push({
-        dataIndex: 'code',
-        title: 'code',
-    });
-
     return { columns, data };
 };

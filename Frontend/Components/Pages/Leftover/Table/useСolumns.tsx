@@ -91,10 +91,6 @@ export const useColumns = (filters: Record<string, FilterValue | null>) => {
             title: KEYSLEFTOVERS.count.title,
             width: 50,
         });
-    columns.push({
-        dataIndex: 'code',
-        title: 'code',
-    });
 
     return { columns, data, filteredleftovers };
 };
