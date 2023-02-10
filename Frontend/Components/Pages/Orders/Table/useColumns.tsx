@@ -40,6 +40,10 @@ export const useColumns = (
             title: KEYSLEFTOVERS.productionId.title,
         });
     columns.push({
+        ...getColumnPropsHoc(KEYSLEFTOVERS.operation.key),
+        title: KEYSLEFTOVERS.operation.title,
+    });
+    columns.push({
         ...getColumnPropsHoc(KEYSLEFTOVERS.user.key),
         title: KEYSLEFTOVERS.user.title,
     });
