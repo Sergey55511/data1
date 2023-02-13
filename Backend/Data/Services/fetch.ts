@@ -16,13 +16,13 @@ export const fetchService = async <T>({
     req: NextApiRequest;
     res: NextApiResponse;
     fetch: (prisma: tPrisma, user: iUser) => Promise<T>;
-    validation?: (prisma: tPrisma) => void;
+    validation?: (prisma: tPrisma, user: iUser) => void;
     isSendUsersNewMaxId?: boolean;
 }) => {
     const prisma = new PrismaClient();
     try {
         const user = await varifyJWT(req, res, prisma);
-        if (validation) await validation(prisma);
+        if (validation) await validation(prisma, user);
         const result = await fetch(prisma, user);
 
         if (isSendUsersNewMaxId) {

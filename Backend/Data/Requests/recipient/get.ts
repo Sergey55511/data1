@@ -1,8 +1,13 @@
 import { NextApiRequest } from 'next';
+import { iUser } from '../../../../Shared/Types/interfaces';
 import { tPrisma } from '../../../types';
 
-export const getRecipient = <T>(prisma: tPrisma, req: NextApiRequest): Promise<T> => {
-    let storeId = req.query.storeId as number | undefined;
+export const getRecipient = <T>(
+    prisma: tPrisma,
+    req: NextApiRequest,
+    user: iUser,
+): Promise<T> => {
+    let storeId = user.storeId as number | undefined;
     storeId = storeId ? +storeId : undefined;
     let where: any = { storeId: null, active: true };
     if (storeId) {

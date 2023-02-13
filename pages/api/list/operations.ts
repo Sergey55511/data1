@@ -10,7 +10,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             await fetchService<iOperation>({
                 req,
                 res,
-                fetch: (prisma: tPrisma) => getOperations(prisma, req.query),
+                fetch: (prisma, user) => getOperations(prisma, req.query, user),
             });
             break;
         }

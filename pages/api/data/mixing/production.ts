@@ -12,7 +12,7 @@ export default async function mixingProductionFoo(
     await fetchService<iData>({
         req,
         res,
-        validation: (prisma: tPrisma) => validateLeftovers(prisma, req),
+        validation: (prisma, user) => validateLeftovers(prisma, req, user),
         fetch: (prisma: tPrisma) => mixingProduction(prisma, req.body.data as iData[]),
         isSendUsersNewMaxId: true,
     });

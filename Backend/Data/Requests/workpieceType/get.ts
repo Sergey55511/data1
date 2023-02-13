@@ -1,9 +1,14 @@
 import { NextApiRequest } from 'next';
+import { iUser } from '../../../../Shared/Types/interfaces';
 import { getFilters } from '../../../Helpers/getQueryParam';
 import { tPrisma } from '../../../types';
 
-export const getWorkpieceType = <T>(prisma: tPrisma, req: NextApiRequest): Promise<T> => {
-    const params = getFilters(req.query);
+export const getWorkpieceType = <T>(
+    prisma: tPrisma,
+    req: NextApiRequest,
+    user: iUser,
+): Promise<T> => {
+    const params = getFilters(req.query, user);
 
     return prisma.workpieceType.findMany({
         select: {

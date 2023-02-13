@@ -11,7 +11,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             await fetchService<iUser>({
                 req,
                 res,
-                fetch: (prisma: tPrisma) => getRecipient(prisma, req),
+                fetch: (prisma, user) => getRecipient(prisma, req, user),
             });
             break;
         }

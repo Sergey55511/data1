@@ -1,7 +1,7 @@
 import { NextApiRequest } from 'next';
 import { MyError } from '../../../../../Shared/Classes/error';
 import { OPERATIONS } from '../../../../../Shared/constants';
-import { iDataProductTable, iUser } from '../../../../../Shared/Types/interfaces';
+import { iUser } from '../../../../../Shared/Types/interfaces';
 import { tPrisma } from '../../../../types';
 import { dal } from './Dal';
 
@@ -28,7 +28,7 @@ export const takeApart = async <T>(
             moneyIn: true,
             countItemsIn: true,
         },
-        where: { articleId: { in: data.articles }, active: true, storeId: 1 },
+        where: { articleId: { in: data.articles }, active: true, storeId: user.storeId },
     });
 
     if (!products.length) {

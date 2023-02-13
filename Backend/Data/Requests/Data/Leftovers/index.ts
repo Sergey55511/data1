@@ -1,10 +1,10 @@
 import { PrismaPromise } from '@prisma/client';
-import { NextApiRequest } from 'next';
+import { iUser } from '../../../../../Shared/Types/interfaces';
 import { tPrisma } from '../../../../types';
 import { fullModelSQL } from '../constants';
 
-export const leftovers = <T>(prisma: tPrisma, req: NextApiRequest): PrismaPromise<T> => {
-    const storeId: any = req.query.storeId;
+export const leftovers = <T>(prisma: tPrisma, user: iUser): PrismaPromise<T> => {
+    const storeId = user.storeId;
 
     return prisma.$queryRawUnsafe(`
       SELECT 

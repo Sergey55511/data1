@@ -1,6 +1,5 @@
 import { PrismaPromise } from '@prisma/client';
 import { tPrisma } from '../../../../../types';
-import { fullModelSQL } from '../../constants';
 
 export const getMoveIn = <T>(
     prisma: tPrisma,

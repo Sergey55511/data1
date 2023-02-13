@@ -11,7 +11,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             await fetchService<iData>({
                 req,
                 res,
-                fetch: (prisma: tPrisma) => getDataProduct(prisma, req),
+                fetch: (prisma, user) => getDataProduct(prisma, user),
             });
             break;
         }

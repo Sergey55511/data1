@@ -1,7 +1,9 @@
 import { PrismaPromise } from '@prisma/client';
+import { iUser } from '../../../../../Shared/Types/interfaces';
 import { tPrisma } from '../../../../types';
 
-export const getShared = <T>(prisma: tPrisma, storeId: number): PrismaPromise<T> => {
+export const getShared = <T>(prisma: tPrisma, user: iUser): PrismaPromise<T> => {
+    const storeId = user.storeId;
     return prisma.$queryRaw`
         SELECT 
             date,

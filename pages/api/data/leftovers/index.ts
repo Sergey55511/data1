@@ -8,6 +8,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     await fetchService<iData>({
         req,
         res,
-        fetch: (prisma: tPrisma) => leftovers(prisma, req),
+        fetch: (prisma, user) => leftovers(prisma, user),
     });
 }

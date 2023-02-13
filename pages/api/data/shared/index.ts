@@ -11,8 +11,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             await fetchService({
                 req,
                 res,
-                fetch: (prisma: tPrisma) =>
-                    getShared(prisma, +req.query.storeId! as number),
+                fetch: (prisma, user) => getShared(prisma, user),
             });
             break;
         }

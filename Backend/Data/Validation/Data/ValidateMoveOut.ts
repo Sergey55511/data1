@@ -1,12 +1,12 @@
 import { NextApiRequest } from 'next';
 import { PrismaClient } from '@prisma/client';
 import { MyError } from '../../../../Shared/Classes/error';
-import { iData } from '../../../../Shared/Types/interfaces';
+import { iData, iUser } from '../../../../Shared/Types/interfaces';
 
-export const validateLeftovers = async (req: NextApiRequest) => {
+export const validateLeftovers = async (req: NextApiRequest, user: iUser) => {
     const prisma = new PrismaClient();
     const data = req.body.data as iData[];
-    const storeId = req.body.storeId as number;
+    const storeId = user.storeId as number;
     const maxId = req.body.maxId as number;
     const maxIdDB = await prisma.data.aggregate({
         _max: { id: true },

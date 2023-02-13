@@ -9,7 +9,7 @@ export default async function moveToWork(req: NextApiRequest, res: NextApiRespon
     await fetchService<iData>({
         req,
         res,
-        validation: (prisma: tPrisma) => validateLeftovers(prisma, req),
+        validation: (prisma, user) => validateLeftovers(prisma, req, user),
         fetch: (prisma: tPrisma) =>
             postNewItems(
                 prisma,

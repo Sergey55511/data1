@@ -9,7 +9,7 @@ export default async function mixingGradeFoo(req: NextApiRequest, res: NextApiRe
     await fetchService<iData>({
         req,
         res,
-        validation: (prisma: tPrisma) => validateLeftovers(prisma, req),
+        validation: (prisma, user) => validateLeftovers(prisma, req, user),
         fetch: (prisma: tPrisma) => mixingGrade(prisma, req.body.data as iData[]),
         isSendUsersNewMaxId: true,
     });

@@ -11,7 +11,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             await fetchService<iOperation>({
                 req,
                 res,
-                fetch: (prisma: tPrisma) => getProductions(prisma, +req.query.storeId!),
+                fetch: (prisma, user) => getProductions(prisma, user),
             });
             break;
         }
@@ -20,11 +20,15 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             await fetchService<iOperation>({
                 req,
                 res,
-                fetch: (prisma: tPrisma) =>
-                    postProductions(prisma, {
-                        descriprion: description,
-                        storeId: req.body.storeId,
-                    }),
+                fetch: (prisma: tPrisma, user) =>
+                    postProductions(
+                        prisma,
+                        {
+                            descriprion: description,
+                            storeId: user.storeId,
+                        },
+                        user,
+                    ),
             });
             break;
         }

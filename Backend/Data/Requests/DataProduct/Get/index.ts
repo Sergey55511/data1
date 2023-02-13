@@ -1,12 +1,8 @@
-import { NextApiRequest } from 'next';
+import { iUser } from '../../../../../Shared/Types/interfaces';
 import { tPrisma } from '../../../../types';
-import { dal } from './Dal';
 
-export const getDataProduct = async <T>(
-    prisma: tPrisma,
-    req: NextApiRequest,
-): Promise<T> => {
-    const data = dal(req.query);
+export const getDataProduct = async <T>(prisma: tPrisma, user: iUser): Promise<T> => {
+    const storeId = user.storeId;
 
     return (await prisma.$queryRaw`
         SELECT 
@@ -34,7 +30,7 @@ export const getDataProduct = async <T>(
                     ON "GradesAssemble".id = "DataProduct"."gradeId"
                 LEFT JOIN public."State" 
                     ON "State".id = "DataProduct"."stateId"		
-        WHERE public."DataProduct"."storeId"=${+data.storeId} 
+        WHERE public."DataProduct"."storeId"=${+storeId} 
             and public."DataProduct"."active"=true
         GROUP BY 
             model,

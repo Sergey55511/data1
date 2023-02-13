@@ -1,8 +1,8 @@
 import { PrismaPromise } from '@prisma/client';
+import { iUser } from '../../../../Shared/Types/interfaces';
 import { tPrisma } from '../../../types';
-import { fullModelSQL } from '../Data/constants';
 
-export const getProductions = <T>(prisma: tPrisma, storeId: number): PrismaPromise<T> => {
+export const getProductions = <T>(prisma: tPrisma, user: iUser): PrismaPromise<T> => {
     return prisma.$queryRawUnsafe(`
         SELECT 
         "Productions".id,
@@ -37,7 +37,7 @@ export const getProductions = <T>(prisma: tPrisma, storeId: number): PrismaPromi
                 )	
         )
         FROM public."Productions"
-        WHERE active = true and "storeId"=${+storeId}
+        WHERE active = true and "storeId"=${+user.storeId}
         ORDER BY id DESC;
     `) as any;
 };

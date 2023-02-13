@@ -1,9 +1,11 @@
 import { PrismaPromise } from '@prisma/client';
 import { OPERATIONS } from '../../../../../Shared/constants';
+import { iUser } from '../../../../../Shared/Types/interfaces';
 import { tPrisma } from '../../../../types';
 import { fullModelSQL, fullModelSQLTask } from '../constants';
 
-export const orders = <T>(prisma: tPrisma, storeId: number): PrismaPromise<T> => {
+export const orders = <T>(prisma: tPrisma, user: iUser): PrismaPromise<T> => {
+    const storeId = user.storeId;
     return prisma.$queryRawUnsafe(`
         SELECT 
             pp,

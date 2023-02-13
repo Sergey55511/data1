@@ -10,7 +10,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             await fetchService<iData>({
                 req,
                 res,
-                fetch: (prisma: tPrisma) => orders(prisma, +req.query.storeId!),
+                fetch: (prisma, user) => orders(prisma, user),
             });
             break;
         }

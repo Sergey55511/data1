@@ -1,7 +1,8 @@
+import { iUser } from '../../../../../Shared/Types/interfaces';
 import { tPrisma } from '../../../../types';
 import { dal } from './Dal';
 
-export const getManagers = <T>(prisma: tPrisma, params: any): Promise<T> => {
+export const getManagers = <T>(prisma: tPrisma, params: any, user: iUser): Promise<T> => {
     const data = dal(params);
 
     return prisma.managers.findMany({
@@ -12,7 +13,7 @@ export const getManagers = <T>(prisma: tPrisma, params: any): Promise<T> => {
         },
         where: {
             active: data.active,
-            storeId: data.storeId,
+            storeId: user.storeId,
             name: { contains: data.search, mode: 'insensitive' },
             ManagerOperations: data.operationId
                 ? { some: { Operation: { id: data.operationId }, active: true } }

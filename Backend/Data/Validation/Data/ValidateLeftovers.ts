@@ -1,12 +1,16 @@
 import { NextApiRequest } from 'next';
 import { MyError } from '../../../../Shared/Classes/error';
 import { round } from '../../../../Shared/Helpers';
-import { iData } from '../../../../Shared/Types/interfaces';
+import { iData, iUser } from '../../../../Shared/Types/interfaces';
 import { tPrisma } from '../../../types';
 
-export const validateLeftovers = async (prisma: tPrisma, req: NextApiRequest) => {
+export const validateLeftovers = async (
+    prisma: tPrisma,
+    req: NextApiRequest,
+    user: iUser,
+) => {
     const data = req.body.data as iData[];
-    const storeId = req.body.storeId as number;
+    const storeId = user.storeId as number;
     const maxId = req.body.maxId as number;
     const maxIdDB = await prisma.data.findFirst({
         select: { id: true },
@@ -29,6 +33,7 @@ export const validateLeftovers = async (prisma: tPrisma, req: NextApiRequest) =>
             materialGroupId: item.materialGroupId,
             stateId: item.stateId,
             lot: item.lot,
+            storeId,
         };
         const leftovers = await prisma.data.aggregate({
             _sum: {

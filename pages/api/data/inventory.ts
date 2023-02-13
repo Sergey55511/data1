@@ -9,7 +9,7 @@ export default async function inventoryFoo(req: NextApiRequest, res: NextApiResp
     await fetchService<iData>({
         req,
         res,
-        validation: (prisma: tPrisma) => validateLeftovers(prisma, req),
+        validation: (prisma, user) => validateLeftovers(prisma, req, user),
         fetch: (prisma: tPrisma) => inventory(prisma, req.body.data as iData[]),
         isSendUsersNewMaxId: true,
     });

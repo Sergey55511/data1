@@ -1,10 +1,10 @@
-import { NextApiRequest } from 'next';
 import { WORKPIECETYPE } from '../../../../../../Shared/constants';
+import { iUser } from '../../../../../../Shared/Types/interfaces';
 import { tPrisma } from '../../../../../types';
 import { fullModelSQL } from '../../constants';
 
-export const getLeftoversAssemble = (prisma: tPrisma, req: NextApiRequest) => {
-    const storeId: any = req.query.storeId;
+export const getLeftoversAssemble = (prisma: tPrisma, user: iUser) => {
+    const storeId = user.storeId;
     return prisma.$queryRawUnsafe(`SELECT 
             "Data"."workpieceTypeId",
             "workpieceType",
