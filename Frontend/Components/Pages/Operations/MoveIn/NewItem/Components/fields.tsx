@@ -11,10 +11,7 @@ export const Field = ({ item, onChangeHandler, ...rest }: iField) => (
 interface iPrimeField extends InputProps {
     primeData: iPrimeData;
     fieldName: keyof iPrimeData;
-    setPrameValue: <T extends keyof iPrimeData>(
-        key: T,
-        value: tValue,
-    ) => void;
+    setPrameValue: <T extends keyof iPrimeData>(key: T, value: tValue) => void;
 }
 
 export const PrimeField = ({
@@ -38,19 +35,19 @@ const InputField = ({
 }) => {
     return (
         <div className="item">
-            <InputNumber
+            {/* <InputNumber
                 placeholder={item.placeholder}
                 onChangeHandler={(v) => onChangeHandler(v)}
                 value={item.value}
                 allowClear
-            />
-            {/* <Input
+            /> */}
+            <Input
                 placeholder={item.placeholder}
                 onChange={(v) => onChangeHandler(v.target.value)}
                 value={item.value}
                 allowClear
                 {...rest}
-            /> */}
+            />
             {item.isError && <small style={{ color: 'red' }}>{item.errorMessage}</small>}
         </div>
     );
