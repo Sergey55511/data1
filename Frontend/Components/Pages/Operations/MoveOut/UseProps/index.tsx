@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
-import { iData, iUser } from '../../../../../../Shared/Types/interfaces';
+import { iData } from '../../../../../../Shared/Types/interfaces';
 import { FilterValue } from 'antd/lib/table/interface';
 import { useStores } from '../../../../../Store/useStores';
-import { OPERATIONS, STATE } from '../../../../../../Shared/constants';
+import { GRADE, OPERATIONS, STATE } from '../../../../../../Shared/constants';
 import { myModal } from '../../../../Shared/MyModal';
 import { ModalContent } from '../AddRecipient';
 import { notification } from 'antd';
@@ -48,7 +48,13 @@ export const useProps = ({ type }: iProps) => {
     useEffect(() => {
         let data: iDataIndex[] = leftovers;
         if (type == 'mixingGrade') {
-            data = leftovers.filter((item) => item.stateId == STATE.sliced.id);
+            data = leftovers.filter((item) => {
+                if (item.gradeId != GRADE.mix.id) {
+                    if (item.stateId == STATE.sliced.id) return true;
+                    if (item.stateId == STATE.balled.id) return true;
+                }
+                return false;
+            });
         }
         if (type == 'mixingSize') {
             data = leftovers.filter((item) =>
