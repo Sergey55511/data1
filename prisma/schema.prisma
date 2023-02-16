@@ -34,7 +34,7 @@ model Data {
   typeOfProcessing String?
   materialGroup    MaterialGroup? @relation(fields: [materialGroupId], references: [id])
   materialGroupId  Int?
-  WorkpieceType    WorkpieceType? @relation(fields: [workpieceTypeId], references: [id])
+  WorkpieceType    WorkpieceType? @relation(fields: [workpieceTypeId], references: [id], onDelete: NoAction)
   workpieceTypeId  Int?
   Operations       Operations?    @relation(fields: [operationId], references: [id])
   operationId      Int?

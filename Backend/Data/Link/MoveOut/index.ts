@@ -17,7 +17,7 @@ export const moveOut = async (
     const { atkn, rtkn } = red.cookies;
     try {
         await axios({
-            url: `http://localhost:3000/api/getShared`,
+            url: `http://${url}/api/getShared`,
             method: 'POST',
             withCredentials: true,
             headers: {

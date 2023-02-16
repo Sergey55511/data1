@@ -8,9 +8,12 @@ import { MoveOut } from './Operations/MoveOut';
 import { MoveIn } from './Operations/MoveIn/SharedStoreItems';
 import { MoveInDetales } from './Operations/MoveIn/SharedStoreItems/MoveInDetales';
 import { Assemble } from './Assemble';
+import { ListOperations } from './ListOperations';
 
 export const PageSwitcher = ({ page }: { page: tPages }) => {
     switch (page) {
+        case pages.listOperations:
+            return <ListOperations />;
         case pages.products:
             return <Products />;
         case pages.leftover:

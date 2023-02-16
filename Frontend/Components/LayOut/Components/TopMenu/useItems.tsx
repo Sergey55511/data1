@@ -11,6 +11,7 @@ import {
     MoreOutlined,
     TeamOutlined,
     DeploymentUnitOutlined,
+    UnorderedListOutlined,
 } from '@ant-design/icons';
 import { useStores } from '../../../../Store/useStores';
 import { ROUTES } from '../../../Pages/constants';
@@ -105,6 +106,11 @@ export const useItems = () => {
         ),
         key: ROUTES.movein,
         icon: <VerticalAlignBottomOutlined />,
+    });
+    items.push({
+        label: 'Записи',
+        key: ROUTES.listOperations,
+        icon: <UnorderedListOutlined />,
     });
 
     const operationChildren = [];
