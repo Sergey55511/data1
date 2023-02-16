@@ -1,28 +1,41 @@
-import { tPrisma } from '../../../types';
 import { NextApiRequest } from 'next';
-import { iUser } from '../../../../Shared/Types/interfaces';
 import { encrypt } from '../../../Helpers/Crypto/encript';
 import { dal } from '../../Dal';
 import { MyError } from '../../../../Shared/Classes/error';
+import { PrismaClient } from '@prisma/client';
 
-export const moveOut = async (prisma: tPrisma, req: NextApiRequest, user: iUser) => {
+export const moveIn = async (req: NextApiRequest) => {
     const data = dal(req);
     const { key, value } = req.cookies;
 
     if (!key) throw new MyError(401, 'not allowed');
     const valueEqual = encrypt(key);
+
     if (value != valueEqual) throw new MyError(401, 'not allowed');
 
-    const cryptoKeyDb = await prisma.crypto.findFirst({
-        select: { key: true },
-        where: { key },
-    });
+    const prisma = new PrismaClient();
+    try {
+        const cryptoKeyDb = await prisma.crypto.findFirst({
+            select: { key: true },
+            where: { key },
+        });
 
-    if (cryptoKeyDb?.key) throw new MyError(400, 'key already exists');
+        if (cryptoKeyDb?.key) throw new MyError(400, 'key already exists');
 
-    await prisma.crypto.create({ data: { key } });
+        const numDocument = data.find((item) => item.numDocument)?.numDocument;
+        if (!numDocument) throw new MyError(400, 'num document is not set');
 
-    await prisma.data.createMany({ data });
+        const varifyNumDoc = await prisma.data.findFirst({ where: { numDocument } });
 
-    return { message: 'data get successfully' };
+        if (varifyNumDoc) throw new MyError(400, 'the document was created before');
+
+        await prisma.crypto.create({ data: { key } });
+
+        await prisma.data.createMany({ data });
+
+        return { message: 'data get successfully' };
+    } catch (err) {
+        prisma.$disconnect();
+        throw err;
+    }
 };

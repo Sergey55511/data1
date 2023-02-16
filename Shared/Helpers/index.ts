@@ -14,7 +14,7 @@ export const createAtkn = (user: iUser) => {
         status: user.status,
         store: user.store,
         storeId: user.storeId,
-        role: user.role
+        role: user.role,
     };
 };
 

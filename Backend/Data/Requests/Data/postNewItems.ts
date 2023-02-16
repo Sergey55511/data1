@@ -1,13 +1,16 @@
 import moment from 'moment';
+import type { NextApiRequest } from 'next';
 import { iDataTable } from '../../../../Shared/Types/interfaces';
 import { tPrisma } from '../../../types';
+import { moveOutHoc } from '../../Link';
 
 export const postNewItems = async <T>(
     prisma: tPrisma,
-    data: iDataTable[],
-    isSetNewPP = true,
-    isSetArticleId = false,
+    req: NextApiRequest,
 ): Promise<T> => {
+    const data = req.body.data as iDataTable[];
+    const isSetNewPP = req.body.isSetNewPP;
+    const isSetArticleId = req.body.isSetArticleId;
     let pp: number | undefined;
     let articleId: number | undefined;
     if (isSetNewPP) {
@@ -37,6 +40,12 @@ export const postNewItems = async <T>(
         });
     result.pp = pp;
     result.articleId = articleId;
+
+    const recipient = dataPrepared.find((item) => item.recipientId);
+
+    if (recipient) {
+        await moveOutHoc(prisma, recipient, data, req);
+    }
 
     return result as any;
 };

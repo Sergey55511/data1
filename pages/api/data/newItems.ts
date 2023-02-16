@@ -7,7 +7,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     await fetchService<any>({
         req,
         res,
-        fetch: (prisma: tPrisma) => postNewItems(prisma, req.body, false),
+        fetch: (prisma: tPrisma) => postNewItems(prisma, req),
         isSendUsersNewMaxId: true,
     });
 }
