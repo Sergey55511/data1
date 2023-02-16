@@ -1,9 +1,9 @@
 export const schema = {
     type: 'object',
     properties: {
-        month: { type: 'integer' },
-        year: { type: 'integer' },
+        start: { type: 'string' },
+        end: { type: 'string' },
     },
-    required: ['month', 'year'],
+    required: ['start', 'end'],
     additionalProperties: false,
 };

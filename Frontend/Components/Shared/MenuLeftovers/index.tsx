@@ -8,9 +8,11 @@ export const MenuLeftovers = observer(
     ({
         text = 'Остатки товара:',
         setFilters,
+        content,
     }: {
         text?: string;
         setFilters: Dispatch<SetStateAction<Record<string, FilterValue | null>>>;
+        content?: JSX.Element;
     }) => {
         const cliarFiltersHandler = (e: React.MouseEvent<HTMLElement>) => {
             e.preventDefault();
@@ -21,6 +23,7 @@ export const MenuLeftovers = observer(
             <Wrapper>
                 <div className="params">
                     <Title text={text} />
+                    {content}
                     <div className="settings">
                         <a href="#" onClick={cliarFiltersHandler}>
                             Очистить фильтры

@@ -11,10 +11,12 @@ export const getListOperations = <T>(
     user: iUser,
 ): PrismaPromise<T> => {
     const data = dal(req.query);
+
     const storeId = +user.storeId;
     return prisma.$queryRawUnsafe(`
         SELECT 
             "Data"."workpieceTypeId",
+            pp,
             date,
             "workpieceType",
             "typeId",
@@ -61,7 +63,7 @@ export const getListOperations = <T>(
             left join "Types" on "Data"."typeId"="Types".id
             left join "SizeRange" on "Data"."sizeRangeId"="SizeRange".id
         WHERE "Data"."storeId"=${storeId} 
-            AND date_part('month', date)=${+data.month} 
-            AND date_part('year', date)=${+data.year}
+            AND date>='${data.start}' 
+            AND date<='${data.end}'
     `) as any;
 };

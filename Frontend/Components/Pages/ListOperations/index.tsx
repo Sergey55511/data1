@@ -3,18 +3,29 @@ import { Wrapper } from './style';
 import { TableApp } from '../../Shared/Table';
 import { observer } from 'mobx-react-lite';
 import { useProps } from './useProps';
+import { DateFilter } from './dateFilter';
 
 export const ListOperations = observer(() => {
-    const { setFilters, handleChange, listOperations, columns } = useProps();
+    const {
+        setFilters,
+        handleChange,
+        listOperations,
+        columns,
+        filterDate,
+        setFilterDate,
+        data,
+    } = useProps();
 
     return (
         <Wrapper>
-            <MenuLeftovers text="Лист операций:" setFilters={setFilters} />
-            <TableApp
-                columns={columns}
-                dataSource={listOperations.data}
-                onChange={handleChange}
+            <MenuLeftovers
+                text="Лист операций:"
+                setFilters={setFilters}
+                content={
+                    <DateFilter {...{ filterDate, setFilterDate, listOperations }} />
+                }
             />
+            <TableApp columns={columns} dataSource={data} onChange={handleChange} />
         </Wrapper>
     );
 });

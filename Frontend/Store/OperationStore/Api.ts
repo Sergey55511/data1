@@ -13,7 +13,7 @@ export const leftovers = (storeId: number) => {
         method: 'GET',
     }).then((res) => res.data as iData[]);
 };
-export const listOperations = (params: { month: number; year: number }) => {
+export const listOperations = (params: { start: moment.Moment; end: moment.Moment }) => {
     return axios({
         url: `/api/data/getListOperations`,
         method: 'GET',
