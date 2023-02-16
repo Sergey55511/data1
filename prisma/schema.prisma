@@ -7,6 +7,11 @@ datasource db {
   provider = "postgresql"
 }
 
+model Crypto {
+  id  Int    @id @default(autoincrement())
+  key String
+}
+
 model Data {
   id               Int            @id @default(autoincrement())
   dateSystem       DateTime       @default(now()) @db.Date()
@@ -166,6 +171,7 @@ model Stores {
   Recipients            Recipients[]
   Brige                 Bridge[]
   DataProduct           DataProduct[]
+  pathKey               String?
 }
 
 model Operations {

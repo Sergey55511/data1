@@ -1,5 +1,5 @@
 import { checkSchema } from '../../../../Helpers/checkSchema';
-import { prepareNumber } from '../../Data/Dal';
+import { prepareNumber } from '../../../../Data/Dal';
 import { schema } from './scima';
 
 export interface iParams {

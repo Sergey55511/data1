@@ -1,7 +1,7 @@
 import { iDataTable } from '../../../../../../../Shared/Types/interfaces';
 import { tPrisma } from '../../../../../../types';
 import { WORKPIECETYPE } from '../../../../../../../Shared/constants';
-import { prepareNumber } from '../../../Dal';
+import { prepareNumber } from '../../../../../Dal';
 
 export const prepareData = async (prisma: tPrisma, data: iDataTable[]) => {
     const taskItem = data.find((item) => item.task);

@@ -1,5 +1,4 @@
 import { PrismaPromise } from '@prisma/client';
-import isArray from 'lodash/isArray';
 import { NextApiRequest } from 'next';
 import { tPrisma } from '../../../types';
 
