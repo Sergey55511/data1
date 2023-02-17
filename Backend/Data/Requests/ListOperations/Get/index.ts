@@ -72,6 +72,9 @@ export const getListOperations = <T>(
         WHERE "Data"."storeId"=${storeId} 
             AND date>='${data.start}' 
             AND date<='${data.end}'
+            ${data.pp ? `AND pp='${data.pp}'` : ''}
+            ${data.lot ? `AND lot='${data.lot}'` : ''}
+            ${data.operationId ? `AND "operationId"='${data.operationId}'` : ''}
         ORDER BY "Data".id ASC
     `) as any;
 };

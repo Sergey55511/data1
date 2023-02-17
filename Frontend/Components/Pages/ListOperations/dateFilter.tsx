@@ -1,47 +1,78 @@
-import { MenuLeftovers } from '../../Shared/MenuLeftovers';
-import { Wrapper } from './style';
-import { TableApp } from '../../Shared/Table';
-import { observer } from 'mobx-react-lite';
-import { iFilterDate, useProps } from './useProps';
-import { Button, DatePicker } from 'antd';
+import { useProps } from './useProps';
+import { Button, DatePicker, Select } from 'antd';
 import type { RangePickerProps } from 'antd/es/date-picker';
 import moment from 'moment';
-import { Dispatch, SetStateAction } from 'react';
-import { UseQueryResult } from '@tanstack/react-query';
-import { iData } from '../../../../Shared/Types/interfaces';
+import { InputNumber } from '../../Shared/InputNumber';
+import { SelectField } from '../../Shared/SelectField';
 const { RangePicker } = DatePicker;
 
 export const DateFilter = ({
     filterDate,
     setFilterDate,
     listOperations,
-}: {
-    filterDate: iFilterDate;
-    setFilterDate: Dispatch<SetStateAction<iFilterDate>>;
-    listOperations: UseQueryResult<iData[], unknown>;
-}) => {
+    lot,
+    setLot,
+    pp,
+    setPP,
+    operations,
+    operationId,
+    setOperationId,
+}: ReturnType<typeof useProps>) => {
     const disabledDate: RangePickerProps['disabledDate'] = (current) => {
         if (current > moment().endOf('day')) return true;
-        return current && current < moment().subtract(6, 'month').endOf('day');
+        if (current < moment(filterDate.start)) return true;
+        if (current > moment(filterDate.start).add(31, 'days')) return true;
+        return false;
     };
 
     return (
         <div className="dateFilterWrapper">
-            <RangePicker
-                disabledDate={disabledDate}
-                value={[filterDate.start, filterDate.end]}
+            <DatePicker
+                value={filterDate.start}
                 onChange={(value) => {
                     setFilterDate({
-                        start: value ? value[0] : null,
-                        end: value ? value[1] : null,
+                        start: value,
+                        end: null,
                     });
                 }}
+            />
+            <DatePicker
+                disabledDate={disabledDate}
+                disabled={!filterDate.start}
+                value={filterDate.end}
+                onChange={(value) => {
+                    setFilterDate((state) => ({ ...state, end: value }));
+                }}
+            />
+            <InputNumber
+                placeholder="Партия"
+                onChangeHandler={(v) => setLot(v)}
+                style={{ width: '100px' }}
+                value={lot}
+                allowClear
+            />
+            <SelectField
+                placeholder="Операция"
+                value={operationId}
+                onChange={(v) => setOperationId(v)}
+                options={operations.data?.map((item) => ({
+                    value: item.id,
+                    caption: item.operation,
+                }))}
+                selectProps={{ style: { width: '150px' }, allowClear: true }}
+            />
+            <InputNumber
+                placeholder="ПП"
+                onChangeHandler={(v) => setPP(v)}
+                style={{ width: '100px' }}
+                value={pp}
+                allowClear
             />
             <Button
                 disabled={!(filterDate.start && filterDate.end)}
                 type="primary"
                 onClick={() => listOperations.refetch()}
-                loading={listOperations.isLoading}
+                loading={listOperations.isFetching}
             >
                 Выгрузить
             </Button>

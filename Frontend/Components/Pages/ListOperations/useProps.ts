@@ -1,12 +1,14 @@
 import { useQuery } from '@tanstack/react-query';
 import { useStores } from '../../../Store/useStores';
-import * as api from '../../../../Frontend/Store/OperationStore/Api';
 import { FilterValue } from 'antd/lib/table/interface';
 import { useState } from 'react';
 import { iData } from '../../../../Shared/Types/interfaces';
 import type { TableProps } from 'antd/es/table';
 import { useColumns } from './useСolumns';
 import moment, { Moment } from 'moment';
+import { tValue } from '../../Shared/InputNumber';
+import { getOperations } from '../../../Store/Lists/api';
+import * as api from '../../../../Frontend/Store/OperationStore/Api';
 
 export interface iFilterDate {
     start: moment.Moment | null;
@@ -20,6 +22,10 @@ export const useProps = () => {
         start: moment().subtract(31, 'days'),
         end: moment(),
     });
+    const [lot, setLot] = useState<tValue>();
+    const [pp, setPP] = useState<tValue>();
+    const [operationId, setOperationId] = useState<number>();
+    const getNumber = (v: any) => (v ? +v : undefined);
 
     const handleChange: TableProps<iData>['onChange'] = (
         _pagination,
@@ -32,7 +38,19 @@ export const useProps = () => {
 
     const listOperations = useQuery(
         ['listOperations', loginStore.user.storeId],
-        () => api.listOperations({ start: filterDate.start!, end: filterDate.end! }),
+        () =>
+            api.listOperations({
+                start: filterDate.start!,
+                end: filterDate.end!,
+                lot: getNumber(lot),
+                pp: getNumber(pp),
+                operationId: getNumber(operationId),
+            }),
+        { enabled: !!loginStore.user.storeId },
+    );
+    const operations = useQuery(
+        ['operations', loginStore.user.storeId],
+        () => getOperations(loginStore.user.storeId),
         { enabled: !!loginStore.user.storeId },
     );
     const data = listOperations.data?.map((item, index) => ({
@@ -51,5 +69,12 @@ export const useProps = () => {
         filterDate,
         setFilterDate,
         data,
+        lot,
+        setLot,
+        pp,
+        setPP,
+        operations,
+        operationId,
+        setOperationId,
     };
 };

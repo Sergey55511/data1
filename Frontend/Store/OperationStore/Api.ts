@@ -6,6 +6,7 @@ import {
     iDataProductTable,
     iDataTable,
 } from '../../../Shared/Types/interfaces';
+import { tValue } from '../../Components/Shared/InputNumber';
 
 export const leftovers = (storeId: number) => {
     return axios({
@@ -13,7 +14,13 @@ export const leftovers = (storeId: number) => {
         method: 'GET',
     }).then((res) => res.data as iData[]);
 };
-export const listOperations = (params: { start: moment.Moment; end: moment.Moment }) => {
+export const listOperations = (params: {
+    start: moment.Moment;
+    end: moment.Moment;
+    lot?: number;
+    pp?: number;
+    operationId?: number;
+}) => {
     return axios({
         url: `/api/data/getListOperations`,
         method: 'GET',

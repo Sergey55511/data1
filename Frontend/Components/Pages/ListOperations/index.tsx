@@ -6,26 +6,20 @@ import { useProps } from './useProps';
 import { DateFilter } from './dateFilter';
 
 export const ListOperations = observer(() => {
-    const {
-        setFilters,
-        handleChange,
-        listOperations,
-        columns,
-        filterDate,
-        setFilterDate,
-        data,
-    } = useProps();
+    const props = useProps();
 
     return (
         <Wrapper>
             <MenuLeftovers
                 text="Лист операций:"
-                setFilters={setFilters}
-                content={
-                    <DateFilter {...{ filterDate, setFilterDate, listOperations }} />
-                }
+                setFilters={props.setFilters}
+                content={<DateFilter {...props} />}
             />
-            <TableApp columns={columns} dataSource={data} onChange={handleChange} />
+            <TableApp
+                columns={props.columns}
+                dataSource={props.data}
+                onChange={props.handleChange}
+            />
         </Wrapper>
     );
 });

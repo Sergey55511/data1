@@ -7,9 +7,13 @@ import { schema } from './scima';
 export interface iParams {
     start: string;
     end: string;
+    lot?: number;
+    pp?: number;
+    operationId?: number;
 }
 
 export const dal = (params: { [key: string]: any }): iParams => {
+    const getNumber = (v: any) => (v ? +v : undefined);
     const data: iParams = {
         start: params.start
             ? moment(params.start.replaceAll('"', '')).format('YYYY-MM-DD')
@@ -17,6 +21,9 @@ export const dal = (params: { [key: string]: any }): iParams => {
         end: params.start
             ? moment(params.end.replaceAll('"', '')).format('YYYY-MM-DD')
             : '',
+        lot: getNumber(params.lot),
+        pp: getNumber(params.pp),
+        operationId: getNumber(params.operationId),
     };
     return checkSchema(data, schema);
 };
