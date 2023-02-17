@@ -35,9 +35,12 @@ export const useProps = () => {
         () => api.listOperations({ start: filterDate.start!, end: filterDate.end! }),
         { enabled: !!loginStore.user.storeId },
     );
-
-    const { columns } = useColumns(filters, listOperations.data);
-    const data = listOperations.data?.map((item, index) => ({ ...item, key: index }));
+    const data = listOperations.data?.map((item, index) => ({
+        ...item,
+        key: index,
+        date: moment(item.date).format('DD.MM.YYYY'),
+    }));
+    const { columns } = useColumns(filters, data);
 
     return {
         listOperations,

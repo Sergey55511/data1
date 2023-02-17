@@ -15,12 +15,17 @@ export const getListOperations = <T>(
     const storeId = +user.storeId;
     return prisma.$queryRawUnsafe(`
         SELECT 
+            "Data".id,
             "Data"."workpieceTypeId",
+            "managerId",
+            "Managers".name as "managerLogin",
             pp,
             date,
             "workpieceType",
             "typeId",
             type,
+            "operationId",
+            "Operations".operation,
             "sizeRangeId",
             "sizeRange",
             "SizeRange".size,
@@ -62,6 +67,8 @@ export const getListOperations = <T>(
             left join "State" on "Data"."stateId"="State".id
             left join "Types" on "Data"."typeId"="Types".id
             left join "SizeRange" on "Data"."sizeRangeId"="SizeRange".id
+            LEFT JOIN "Operations" on "Data"."operationId"="Operations".id
+            LEFT JOIN "Managers" on "Data"."managerId"="Managers".id
         WHERE "Data"."storeId"=${storeId} 
             AND date>='${data.start}' 
             AND date<='${data.end}'

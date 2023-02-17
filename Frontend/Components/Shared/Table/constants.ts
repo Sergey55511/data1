@@ -22,7 +22,7 @@ export const KEYSLEFTOVERS = {
     lot: { key: 'lot', title: 'Партия' },
     productionId: { key: 'productionId', title: '№ пр-ва.' },
     production: { key: 'production', title: 'Производство' },
-    numProduction: { key: 'numProduction', title: '№ производства' },
+    numProduction: { key: 'numProduction', title: '№ пр-ва' },
     width: { key: 'width', title: 'Остаток гр.' },
     count: { key: 'count', title: 'Шт.' },
     widthOut: { key: 'widthOut', title: 'Отгрузка гр.' },
