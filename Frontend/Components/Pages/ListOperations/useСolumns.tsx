@@ -11,8 +11,6 @@ export const useColumns = (
     filters: Record<string, FilterValue | null>,
     data?: iData[],
 ) => {
-    console.log(data);
-
     const { loginStore } = useStores();
     const filteredleftovers = getFilteredleftovers({ data, filters });
 
