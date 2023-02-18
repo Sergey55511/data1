@@ -1,6 +1,6 @@
 import { useMutation } from '@tanstack/react-query';
 import { notification } from 'antd';
-import { iState } from '../..';
+import { iState } from '../../useProps';
 import {
     getCodeOneItem,
     getTotalSum,
