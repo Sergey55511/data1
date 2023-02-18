@@ -1,11 +1,10 @@
-import { Button, Tooltip } from 'antd';
+import { Button, InputRef, Tooltip } from 'antd';
 import { MinusOutlined, CopyOutlined } from '@ant-design/icons';
 import { InputField } from '../../../../../../../../Shared/InputField';
 import { SelectField } from '../../../../../../../../Shared/SelectField';
 import { InputNumber } from '../../../../../../../../Shared/InputNumber';
 import { useStores } from '../../../../../../../../../Store/useStores';
 import { Dispatch, SetStateAction } from 'react';
-import { iState } from '../..';
 import { observer } from 'mobx-react-lite';
 import {
     iField,
@@ -15,6 +14,7 @@ import {
 } from '../../../../../../../../../../Shared/Types/interfaces';
 import { useData } from '../Hooks/useData';
 import { STATE } from '../../../../../../../../../../Shared/constants';
+import { iState, useProps } from '../../useProps';
 
 export interface iLists {
     sizeRange: iSizeRange[];
@@ -30,6 +30,8 @@ export const Row = observer(
         state,
         setState,
         isShowState,
+        inputRefs,
+        activeInput,
     }: {
         operationId: number;
         index: number;
@@ -38,6 +40,8 @@ export const Row = observer(
         state: iState;
         setState: Dispatch<SetStateAction<iState[]>>;
         isShowState?: boolean;
+        inputRefs: ReturnType<typeof useProps>['inputRefs'];
+        activeInput: ReturnType<typeof useProps>['activeInput'];
     }) => {
         const { loginStore } = useStores();
 
@@ -154,6 +158,28 @@ export const Row = observer(
                                 onChange(v!, 'widthIn');
                             }}
                             value={state.widthIn.value || ''}
+                            ref={(ref) => {
+                                if (!inputRefs.current[index]) {
+                                    if (ref) inputRefs.current.push(ref);
+                                }
+                            }}
+                            onKeyDown={(key) => {
+                                const nextIndex = (activeInput.current || 0) + 1;
+                                const prevIndex = (activeInput.current || 1) - 1;
+                                if (key.code == 'ArrowDown') {
+                                    const elem = inputRefs.current[nextIndex];
+                                    elem?.focus();
+                                    setTimeout(() => elem?.select());
+                                }
+                                if (key.code == 'ArrowUp') {
+                                    const elem = inputRefs.current[prevIndex];
+                                    elem?.focus();
+                                    setTimeout(() => elem?.select());
+                                }
+                            }}
+                            onFocus={() => {
+                                activeInput.current = index;
+                            }}
                         />
                     </InputField>
                 </div>

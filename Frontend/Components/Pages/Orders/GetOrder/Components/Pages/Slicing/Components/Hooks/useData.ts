@@ -1,6 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { useEffect, useLayoutEffect, useRef } from 'react';
-import { iState } from '../..';
+import { useEffect, useRef } from 'react';
 import {
     getColors,
     getGrades,
@@ -8,6 +7,7 @@ import {
     getStates,
     getWorkpieceType,
 } from '../../../../../../../../../Store/Lists/api';
+import { iState } from '../../useProps';
 
 export const useData = (
     operationId: number,
