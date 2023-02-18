@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { iData, iField } from '../../../../../../../../Shared/Types/interfaces';
 import { tValue } from '../../../../../../Shared/InputNumber';
 import { getTotalSum } from '../../../../../../Helpers';
@@ -7,7 +7,7 @@ import { usePostData } from './Components/Hooks/usePostData';
 import { OPERATIONS } from '../../../../../../../../Shared/constants';
 import { round } from '../../../../../../../../Shared/Helpers';
 import moment from 'moment';
-import { InputRef } from 'antd';
+import { useKeyArrow } from '../../Shared/Hooks/useKeyArrow';
 
 export interface iState {
     stateId: iField;
@@ -27,8 +27,7 @@ export interface iProps {
 }
 
 export const useProps = ({ record, operationId, stateId }: iProps) => {
-    const inputRefs = useRef<Array<InputRef | null>>([]);
-    const activeInput = useRef<number>();
+    const { onKeyDown, onFocus, refHandler } = useKeyArrow();
     const [state, setState] = useState<iState[]>([]);
     const [losses, setLosses] = useState<number>(0);
     const [garbage, setGarbage] = useState<tValue>(undefined);
@@ -143,7 +142,8 @@ export const useProps = ({ record, operationId, stateId }: iProps) => {
         copyRow,
         setState,
         operationId,
-        inputRefs,
-        activeInput,
+        onKeyDown,
+        onFocus,
+        refHandler,
     };
 };

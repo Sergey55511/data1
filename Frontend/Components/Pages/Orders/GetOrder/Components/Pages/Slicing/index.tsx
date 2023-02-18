@@ -33,8 +33,9 @@ export const Slicing = observer((props: iProps) => {
                         key={index}
                         isShowState={props.isShowState}
                         operationId={params.operationId}
-                        inputRefs={params.inputRefs}
-                        activeInput={params.activeInput}
+                        onKeyDown={params.onKeyDown}
+                        onFocus={params.onFocus}
+                        refHandler={params.refHandler}
                     />
                 ))}
             </div>
