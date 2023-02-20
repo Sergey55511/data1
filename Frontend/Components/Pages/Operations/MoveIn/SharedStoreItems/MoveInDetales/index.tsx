@@ -26,7 +26,7 @@ export const MoveInDetales = observer(() => {
                     onClick={submitHandler}
                     type="primary"
                     loading={isLoading}
-                    disabled={!isValidCode}
+                    // disabled={!isValidCode}
                 >
                     Принять
                 </Button>

@@ -3,6 +3,7 @@ import { makeRandomString } from '../../../../Shared/Helpers';
 import axios, { AxiosError } from 'axios';
 import { iDataTable } from '../../../../Shared/Types/interfaces';
 import { NextApiRequest } from 'next';
+import { MyError } from '../../../../Shared/Classes/error';
 
 export const moveOut = async (
     url: string | undefined,

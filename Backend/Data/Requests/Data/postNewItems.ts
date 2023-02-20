@@ -44,7 +44,7 @@ export const postNewItems = async <T>(
     const recipient = dataPrepared.find((item) => item.recipientId);
 
     if (recipient) {
-        await moveOutHoc(prisma, recipient, data, req);
+        await moveOutHoc(prisma, recipient, dataPrepared, req);
     }
 
     return result as any;
