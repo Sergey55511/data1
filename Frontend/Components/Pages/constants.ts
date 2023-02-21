@@ -3,6 +3,7 @@ export type tPages = keyof typeof pages;
 export const pages = {
     leftover: 'leftover',
     newItem: 'newItem',
+    newItemBillets: 'newItemBillets',
     orders: 'orders',
     ordersGetOut: 'ordersGetOut',
     getOrder: 'getOrder',
@@ -29,6 +30,7 @@ export const ROUTES = {
     movein: '/operations/movein',
     listOperations: '/listOperations',
     newItem: '/newItem',
+    newItemBillets: '/newItemBillets',
     moveout: '/operations/moveout',
     shareItems: '/operations/shareItems',
     mixingGrade: '/operations/mixing/grade',

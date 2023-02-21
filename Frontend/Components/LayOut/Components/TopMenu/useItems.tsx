@@ -121,6 +121,11 @@ export const useItems = () => {
             icon: <ImportOutlined />,
         });
     operationChildren.push({
+        label: 'Приход заготовок',
+        key: ROUTES.newItemBillets,
+        icon: <ImportOutlined />,
+    });
+    operationChildren.push({
         label: 'Отгрузка',
         key: ROUTES.moveout,
         icon: <ExportOutlined />,

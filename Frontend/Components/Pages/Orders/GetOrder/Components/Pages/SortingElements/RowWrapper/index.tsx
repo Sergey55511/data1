@@ -5,9 +5,9 @@ import { useStores } from '../../../../../../../../Store/useStores';
 import { Dispatch, SetStateAction, useState } from 'react';
 import { observer } from 'mobx-react-lite';
 import { iData } from '../../../../../../../../../Shared/Types/interfaces';
-import { Row } from '../../../Shared/Row';
 import { iState } from '../useProps';
 import { useProps } from './useProps';
+import { Row } from '../../../../../../../Shared/Row';
 
 export const RowWrapper = observer(
     (props: {

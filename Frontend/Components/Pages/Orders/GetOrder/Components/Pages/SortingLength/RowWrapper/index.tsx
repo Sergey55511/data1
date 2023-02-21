@@ -2,8 +2,8 @@ import { InputField } from '../../../../../../../Shared/InputField';
 import { SelectField } from '../../../../../../../Shared/SelectField';
 import { InputNumber } from '../../../../../../../Shared/InputNumber';
 import { observer } from 'mobx-react-lite';
-import { Row } from '../../../Shared/Row';
 import { iProps, useProps } from './useProps';
+import { Row } from '../../../../../../../Shared/Row';
 
 export const RowWrapper = observer((props: iProps) => {
     const params = useProps(props);

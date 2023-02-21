@@ -1,15 +1,8 @@
-import { useEffect, useState } from 'react';
-import { OPERATIONS } from '../../../../../../../../../Shared/constants';
-import {
-    iGrade,
-    iLength,
-    iSizeRange,
-} from '../../../../../../../../../Shared/Types/interfaces';
-import { useStores } from '../../../../../../../../Store/useStores';
+import { iGrade, iSizeRange } from '../../../../../../../../../Shared/Types/interfaces';
 import { InputField } from '../../../../../../../Shared/InputField';
 import { InputNumber } from '../../../../../../../Shared/InputNumber';
+import { Row } from '../../../../../../../Shared/Row';
 import { SelectField } from '../../../../../../../Shared/SelectField';
-import { Row } from '../../../Shared/Row';
 import { iState } from '../useProps';
 
 export const RowWrapper = ({

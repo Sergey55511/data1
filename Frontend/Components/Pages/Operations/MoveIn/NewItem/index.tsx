@@ -1,7 +1,7 @@
 import { Button, notification, Tooltip } from 'antd';
 import { Title } from '../../../../Shared/Title';
 import { Wrapper } from './style';
-import { CheckOutlined, MinusOutlined } from '@ant-design/icons';
+import { MinusOutlined } from '@ant-design/icons';
 import { useEffect, useRef, useState } from 'react';
 import { iItem, initData, initPrimeData, iPrimeData, iRow } from './constants';
 import { Field, PrimeField, SelectField } from './Components/fields';

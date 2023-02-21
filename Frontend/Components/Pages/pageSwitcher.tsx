@@ -9,9 +9,12 @@ import { MoveIn } from './Operations/MoveIn/SharedStoreItems';
 import { MoveInDetales } from './Operations/MoveIn/SharedStoreItems/MoveInDetales';
 import { Assemble } from './Assemble';
 import { ListOperations } from './ListOperations';
+import { NewItemBillets } from './Operations/MoveIn/NewItemBillets';
 
 export const PageSwitcher = ({ page }: { page: tPages }) => {
     switch (page) {
+        case pages.newItemBillets:
+            return <NewItemBillets />;
         case pages.listOperations:
             return <ListOperations />;
         case pages.products:
@@ -27,7 +30,7 @@ export const PageSwitcher = ({ page }: { page: tPages }) => {
         case pages.getOrder:
             return <GetOrder />;
         case pages.inventory:
-            return <MoveOut title="Инвентаризация:" type="inventory" />;
+            return <MoveOut title="Пересорт:" type="inventory" />;
         case pages.moveOut:
             return <MoveOut title="Отгрузка:" type="moveOut" />;
         case pages.shareItems:
