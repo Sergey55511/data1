@@ -60,7 +60,7 @@ export const RowWrapper = observer((props: iProps) => {
                         }}
                     />
                 </InputField>,
-                <InputField key="color" isError={props.state.grade.isError}>
+                <InputField key="color" isError={props.state.color.isError}>
                     <SelectField
                         placeholder={props.state.color.placeholder}
                         value={+props.state.color.value || undefined}
