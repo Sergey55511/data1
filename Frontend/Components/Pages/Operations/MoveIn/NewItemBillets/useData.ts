@@ -3,12 +3,12 @@ import { notification } from 'antd';
 import moment from 'moment';
 import { useRouter } from 'next/router';
 import { Dispatch, SetStateAction } from 'react';
+import { OPERATIONS } from '../../../../../../Shared/constants';
 import { iData } from '../../../../../../Shared/Types/interfaces';
 import * as api from '../../../../../Store/Lists/api';
 import { postOrderResult } from '../../../../../Store/OperationStore/Api';
 import { useStores } from '../../../../../Store/useStores';
-import { getTotalSum, prepareSubbmitData, validation } from '../../../../Helpers';
-import { tValue } from '../../../../Shared/InputNumber';
+import { getTotalSum, validation } from '../../../../Helpers';
 import { ROUTES } from '../../../constants';
 import { iState } from './useProps';
 
@@ -31,6 +31,15 @@ export const useData = () => {
         () => api.getSizeRange({ storeId }),
         { enabled: !!storeId },
     );
+    const length = useQuery(['length', storeId], () => api.getLength({ storeId }), {
+        enabled: !!storeId,
+    });
+    const channel = useQuery(['channel', storeId], () => api.getChannel(), {
+        enabled: !!storeId,
+    });
+    const type = useQuery(['type', storeId], () => api.getTypes({ storeId }), {
+        enabled: !!storeId,
+    });
 
     const router = useRouter();
     const submitMutation = useMutation(
@@ -64,21 +73,24 @@ export const useData = () => {
                 errorNote();
                 throw { error: 'error total sym' };
             }
-
+            const getNumber = (v: any) => (v ? +v : undefined);
             const data: iData[] = state.map((item) => ({
                 date,
-                workpieceTypeId: +item.workpieceTypeId.value,
-                gradeId: +item.gradeId.value,
-                colorId: +item.colorId.value,
-                sizeRangeId: +item.sizeRangeId.value,
-                widthOut: undefined,
-                widthIn: +item.widthIn.value!,
-                fractionId: undefined,
-                materialGroupId: undefined,
-                typeId: undefined,
-                workpieceType: undefined,
-                productionId: undefined,
-                stateId: +item.stateId.value,
+                workpieceTypeId: getNumber(item.workpieceTypeId.value),
+                gradeId: getNumber(item.gradeId.value),
+                colorId: getNumber(item.colorId.value),
+                sizeRangeId: getNumber(item.sizeRangeId.value),
+                widthIn: getNumber(item.widthIn.value),
+                stateId: getNumber(item.stateId.value),
+                widthInDocument: getNumber(item.widthInDocument.value),
+                countItemsIn: getNumber(item.countItemsIn.value),
+                moneyIn: getNumber(item.moneyIn.value),
+                lengthId: getNumber(item.lengthId.value),
+                channelId: getNumber(item.channelId.value),
+                typeId: getNumber(item.typeId.value),
+                userId: loginStore.user.id,
+                storeId: loginStore.user.storeId,
+                operationId: OPERATIONS.purchase.id,
             }));
 
             return postOrderResult(data);
@@ -93,5 +105,14 @@ export const useData = () => {
         },
     );
 
-    return { workpieceType, grade, color, sizeRange, submitMutation };
+    return {
+        workpieceType,
+        grade,
+        color,
+        sizeRange,
+        length,
+        channel,
+        type,
+        submitMutation,
+    };
 };

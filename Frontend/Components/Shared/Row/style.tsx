@@ -7,6 +7,11 @@ export const Wrapper = styled.div`
     padding: 4px;
     border-radius: 4px;
     background-color: RGB(250, 250, 250);
+
+    &.duplicate {
+        background-color: rgb(238, 109, 109);
+    }
+
     .item {
         width: 185px;
     }
