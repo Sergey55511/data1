@@ -96,7 +96,7 @@ export const postNewItems = <T>(data: T[]) => {
     return axios({
         url: `/api/data/newItems`,
         method: 'POST',
-        data,
+        data: { data },
     }).then((res) => res.data);
 };
 export const moveToWork = (data: {

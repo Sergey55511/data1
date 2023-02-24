@@ -30,12 +30,16 @@ export const useProps = () => {
     const [state, setState] = useState<iState[]>([]);
     const [lot, setLot] = useState<tValue>('');
     const [numDocument, setNumDocument] = useState<tValue>('');
-    const maxLot = useQuery(['maxLot', loginStore.user.storeId], getMaxLot, {
-        enabled: !!loginStore.user.storeId,
-    });
+    const [isValidated, setIsValidated] = useState(false);
+
+    const resetState = () => {
+        setState([]);
+        setLot('');
+        setNumDocument('');
+    };
 
     const stateDuplicate: iState[] = checkDuplicate(state);
-    const data = useData();
+    const data = useData(resetState, setIsValidated);
 
     const subbmitHandler = () => {
         data.submitMutation.mutate({
@@ -98,7 +102,6 @@ export const useProps = () => {
     };
 
     return {
-        maxLot,
         lot,
         setLot,
         numDocument,
@@ -111,5 +114,6 @@ export const useProps = () => {
         subbmitHandler,
         data,
         stateDuplicate,
+        isValidated,
     };
 };

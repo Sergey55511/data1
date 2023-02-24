@@ -18,24 +18,38 @@ export const NewItemBillets = () => {
                     <div className="inputWrapper">
                         <Tooltip
                             placement="top"
-                            title={`Макс партия: ${props.maxLot.data || 0}`}
+                            title={`Макс партия: ${props.data.maxLot.data || 0}`}
                         >
-                            <InputNumber
-                                value={props.lot}
-                                placeholder="Партия"
-                                onChangeHandler={(v) => props.setLot(v)}
+                            <InputField
+                                isError={props.isValidated && !props.lot}
+                                width="150px"
+                            >
+                                <InputNumber
+                                    value={props.lot}
+                                    placeholder="Партия"
+                                    onChangeHandler={(v) => props.setLot(v)}
+                                    width={300}
+                                    allowClear
+                                />
+                            </InputField>
+                        </Tooltip>
+                        <InputField
+                            isError={props.isValidated && !props.numDocument}
+                            width="150px"
+                        >
+                            <Input
+                                value={props.numDocument}
+                                placeholder="Накладная"
+                                onChange={(e) => props.setNumDocument(e.target.value)}
                                 width={300}
                                 allowClear
                             />
-                        </Tooltip>
-                        <Input
-                            value={props.numDocument}
-                            placeholder="Накладная"
-                            onChange={(e) => props.setNumDocument(e.target.value)}
-                            width={300}
-                            allowClear
-                        />
-                        <Button type="primary" onClick={props.subbmitHandler}>
+                        </InputField>
+                        <Button
+                            type="primary"
+                            onClick={props.subbmitHandler}
+                            loading={props.data.submitMutation.isLoading}
+                        >
                             Сохранить
                         </Button>
                     </div>
@@ -88,6 +102,21 @@ export const NewItemBillets = () => {
                                     selectProps={{
                                         disabled: props.data.grade.isLoading,
                                         loading: props.data.grade.isFetching,
+                                    }}
+                                />
+                            </InputField>,
+                            <InputField key="stateId" isError={item.stateId.isError}>
+                                <SelectField
+                                    placeholder={item.stateId.placeholder}
+                                    value={+item.stateId.value || undefined}
+                                    onChange={(v) => props.onChange(index, v, 'stateId')}
+                                    options={props.data.state?.data?.map((item) => ({
+                                        value: item.id,
+                                        caption: item.state,
+                                    }))}
+                                    selectProps={{
+                                        disabled: props.data.state.isLoading,
+                                        loading: props.data.state.isFetching,
                                     }}
                                 />
                             </InputField>,

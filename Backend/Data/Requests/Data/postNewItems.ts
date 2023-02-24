@@ -29,7 +29,7 @@ export const postNewItems = async <T>(
     }
     const dataPrepared = data?.map((item) => ({
         ...item,
-        date: moment(item.date)?.toDate(),
+        date: item.date ? moment(item.date)?.toDate() : undefined,
         pp: pp ? pp : item.pp,
         articleId,
     }));
@@ -38,6 +38,7 @@ export const postNewItems = async <T>(
         await prisma.data.createMany({
             data: dataPrepared,
         });
+
     result.pp = pp;
     result.articleId = articleId;
 

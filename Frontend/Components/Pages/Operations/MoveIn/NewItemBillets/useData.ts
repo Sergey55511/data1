@@ -1,19 +1,20 @@
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { notification } from 'antd';
 import moment from 'moment';
-import { useRouter } from 'next/router';
 import { Dispatch, SetStateAction } from 'react';
 import { OPERATIONS } from '../../../../../../Shared/constants';
 import { iData } from '../../../../../../Shared/Types/interfaces';
 import * as api from '../../../../../Store/Lists/api';
-import { postOrderResult } from '../../../../../Store/OperationStore/Api';
+import { getMaxLot, postNewItems } from '../../../../../Store/OperationStore/Api';
 import { useStores } from '../../../../../Store/useStores';
 import { getTotalSum, validation } from '../../../../Helpers';
-import { ROUTES } from '../../../constants';
 import { iState } from './useProps';
 
-export const useData = () => {
-    const { loginStore } = useStores();
+export const useData = (
+    resetState: () => void,
+    setIsValidated: Dispatch<SetStateAction<boolean>>,
+) => {
+    const { loginStore, OperationStore } = useStores();
     const storeId = loginStore.user.storeId;
     const workpieceType = useQuery(
         ['workpieceType', storeId],
@@ -40,8 +41,13 @@ export const useData = () => {
     const type = useQuery(['type', storeId], () => api.getTypes({ storeId }), {
         enabled: !!storeId,
     });
+    const state = useQuery(['state', storeId], () => api.getStates(), {
+        enabled: !!storeId,
+    });
+    const maxLot = useQuery(['maxLot', loginStore.user.storeId], getMaxLot, {
+        enabled: !!loginStore.user.storeId,
+    });
 
-    const router = useRouter();
     const submitMutation = useMutation(
         ({
             state,
@@ -50,6 +56,7 @@ export const useData = () => {
             state: iState[];
             setState: Dispatch<SetStateAction<iState[]>>;
         }) => {
+            setIsValidated(true);
             const date = moment();
             const errorNote = () => {
                 notification.error({
@@ -63,6 +70,7 @@ export const useData = () => {
             }
 
             const isError = validation(setState);
+
             if (isError) {
                 errorNote();
                 throw { error: 'validation error' };
@@ -93,14 +101,15 @@ export const useData = () => {
                 operationId: OPERATIONS.purchase.id,
             }));
 
-            return postOrderResult(data);
+            return postNewItems(data);
         },
         {
             onSuccess: () => {
                 notification.success({
                     message: 'Сохранение прошло успешно',
                 });
-                router.push(ROUTES.newItemBillets);
+                OperationStore.getMaxLot();
+                resetState();
             },
         },
     );
@@ -114,5 +123,7 @@ export const useData = () => {
         channel,
         type,
         submitMutation,
+        state,
+        maxLot,
     };
 };
