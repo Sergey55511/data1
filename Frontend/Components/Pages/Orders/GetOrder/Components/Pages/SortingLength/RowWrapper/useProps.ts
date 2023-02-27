@@ -4,6 +4,7 @@ import { useQuery } from '@tanstack/react-query';
 import { getGrades, getLength } from '../../../../../../../../Store/Lists/api';
 import { Dispatch, SetStateAction } from 'react';
 import { iData } from '../../../../../../../../../Shared/Types/interfaces';
+import { useKeyArrow } from '../../../Shared/Hooks/useKeyArrow';
 
 export interface iProps {
     isLoading?: boolean;
@@ -16,7 +17,7 @@ export interface iProps {
 }
 export const useProps = ({ record, setState }: iProps) => {
     const { loginStore } = useStores();
-
+    const { onKeyDown, onFocus, refHandler } = useKeyArrow();
     const workpieceTypeId = record.workpieceTypeId;
 
     const onChange = (v: string | number, index: number, fieldName: keyof iState) => {
@@ -48,5 +49,5 @@ export const useProps = ({ record, setState }: iProps) => {
             }),
         { enabled: !!(storeId && workpieceTypeId) },
     );
-    return { length, grade, onChange };
+    return { length, grade, onChange, onKeyDown, onFocus, refHandler };
 };

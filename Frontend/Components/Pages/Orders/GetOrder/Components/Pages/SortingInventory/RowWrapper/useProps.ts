@@ -9,7 +9,7 @@ import {
 } from '../../../../../../../../Store/Lists/api';
 import { Dispatch, SetStateAction, useEffect, useRef } from 'react';
 import { iData } from '../../../../../../../../../Shared/Types/interfaces';
-import { WORKPIECETYPE } from '../../../../../../../../../Shared/constants';
+import { useKeyArrow } from '../../../Shared/Hooks/useKeyArrow';
 
 export interface iProps {
     isLoading?: boolean;
@@ -23,6 +23,7 @@ export interface iProps {
 export const useProps = ({ setState, state, index, record }: iProps) => {
     const isFirstRender = useRef(true);
     const { loginStore } = useStores();
+    const { onKeyDown, onFocus, refHandler } = useKeyArrow();
 
     const getValue = (v: any) => (v ? +v : undefined);
 
@@ -66,5 +67,5 @@ export const useProps = ({ setState, state, index, record }: iProps) => {
         isFirstRender.current = false;
     }, [state.sizeRange.value]);
 
-    return { length, grade, color, onChange, sizeRange };
+    return { length, grade, color, onChange, sizeRange, onKeyDown, onFocus, refHandler };
 };

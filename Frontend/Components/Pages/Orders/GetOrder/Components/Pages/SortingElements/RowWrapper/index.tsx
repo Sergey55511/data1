@@ -31,7 +31,7 @@ export const RowWrapper = observer(
 
         const storeId = loginStore.user.storeId;
 
-        const paraps = useProps(storeId);
+        const params = useProps(storeId);
 
         return (
             <Row
@@ -45,7 +45,7 @@ export const RowWrapper = observer(
                             placeholder={props.state.color.placeholder}
                             value={+props.state.color.value || undefined}
                             onChange={(v) => onChange(v, props.index, 'color')}
-                            options={paraps.data.color.data?.map((item) => ({
+                            options={params.data.color.data?.map((item) => ({
                                 value: item.id,
                                 caption: item.color,
                             }))}
@@ -60,7 +60,7 @@ export const RowWrapper = observer(
                             placeholder={props.state.grade.placeholder}
                             value={+props.state.grade.value || undefined}
                             onChange={(v) => onChange(v, props.index, 'grade')}
-                            options={paraps.data.grade.data?.map((item) => ({
+                            options={params.data.grade.data?.map((item) => ({
                                 value: item.id,
                                 caption: item.grade,
                             }))}
@@ -77,6 +77,9 @@ export const RowWrapper = observer(
                                 onChange(v!, props.index, 'widthIn');
                             }}
                             value={props.state.widthIn.value || ''}
+                            ref={(r) => params.refHandler(r, props.index)}
+                            onKeyDown={params.onKeyDown}
+                            onFocus={() => params.onFocus(props.index)}
                         />
                     </InputField>,
                 ]}

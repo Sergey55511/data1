@@ -3,6 +3,7 @@ import { InputField } from '../../../../../../../Shared/InputField';
 import { InputNumber } from '../../../../../../../Shared/InputNumber';
 import { Row } from '../../../../../../../Shared/Row';
 import { SelectField } from '../../../../../../../Shared/SelectField';
+import { useKeyArrow } from '../../../Shared/Hooks/useKeyArrow';
 import { iState } from '../useProps';
 
 export const RowWrapper = ({
@@ -24,6 +25,7 @@ export const RowWrapper = ({
     grades: iGrade[];
     removeRow: (index: number) => void;
 }) => {
+    const { onKeyDown, onFocus, refHandler } = useKeyArrow();
     return (
         <Row
             key={index}
@@ -59,6 +61,9 @@ export const RowWrapper = ({
                             onChange(v!, index, 'widthIn');
                         }}
                         value={state.widthIn.value || ''}
+                        ref={(r) => refHandler(r, index)}
+                        onKeyDown={onKeyDown}
+                        onFocus={() => onFocus(index)}
                     />
                 </InputField>,
             ]}

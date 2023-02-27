@@ -24,13 +24,15 @@ import {
     iYarnAssemble,
     iProduction,
     iType,
+    iFraction,
+    iMaterialGroup,
 } from '../../../Shared/Types/interfaces';
 
 export const getMaterialGroup = () => {
     return axios({
         url: '/api/list/materialGroup',
         method: 'GET',
-    }).then((res) => res.data);
+    }).then((res) => res.data as iMaterialGroup[]);
 };
 
 export const getChannel = () => {
@@ -59,7 +61,7 @@ export const getFraction = () => {
     return axios({
         url: '/api/list/fraction',
         method: 'GET',
-    }).then((res) => res.data);
+    }).then((res) => res.data as iFraction[]);
 };
 
 export const postManagerOperations = (data: {

@@ -1,24 +1,39 @@
 import { Button, notification, Tooltip } from 'antd';
 import { Title } from '../../../../Shared/Title';
 import { Wrapper } from './style';
-import { MinusOutlined } from '@ant-design/icons';
 import { useEffect, useRef, useState } from 'react';
-import { iItem, initData, initPrimeData, iPrimeData, iRow } from './constants';
-import { Field, PrimeField, SelectField } from './Components/fields';
-import isNumber from 'lodash/isNumber';
+import { iItem, initData, initPrimeData, iPrimeData } from './constants';
+import { PrimeField } from './Components/fields';
 import { observer } from 'mobx-react-lite';
 import { useStores } from '../../../../../Store/useStores';
-import { iData } from '../../../../../../Shared/Types/interfaces';
+import { iData, iField } from '../../../../../../Shared/Types/interfaces';
 import { Frame } from '../../../../Shared/Frame';
 import { STATE, WORKPIECETYPE } from '../../../../../../Shared/constants';
-import { tValue } from '../../../../Shared/InputNumber';
+import { InputNumber, tValue } from '../../../../Shared/InputNumber';
+import { Row } from '../../../../Shared/Row';
+import { checkDuplicate, getTotalSum, validation } from '../../../../Helpers';
+import { InputField } from '../../../../Shared/InputField';
+import { SelectField } from '../../../../Shared/SelectField';
+import { useKeyArrow } from '../../../Orders/GetOrder/Components/Shared/Hooks/useKeyArrow';
+import { useQuery } from '@tanstack/react-query';
+import { getFraction, getMaterialGroup } from '../../../../../Store/Lists/api';
+
+export interface iState {
+    fractionId: iField;
+    materialGroupId: iField;
+    widthInDocument: iField;
+    widthIn: iField;
+    moneyIn: iField;
+    duplicate: boolean;
+}
 
 export const NewItem = observer(() => {
     const [primeData, setPrimeData] = useState<iPrimeData>(initPrimeData());
     const [isLoading, setIsLoading] = useState(false);
-    const [data, setData] = useState<iRow[]>([]);
+    const [data, setData] = useState<iState[]>([]);
     const tuched = useRef(false);
-    const { ListsStore, OperationStore, loginStore } = useStores();
+    const { OperationStore, loginStore } = useStores();
+    const { onKeyDown, onFocus, refHandler } = useKeyArrow();
 
     useEffect(() => {
         OperationStore.getMaxLot();
@@ -26,7 +41,10 @@ export const NewItem = observer(() => {
 
     const addRowHandler = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
         e.preventDefault();
-        setData((prev) => [...prev, initData()]);
+        setData((prev) => {
+            const newRow = initData();
+            return [...prev, newRow];
+        });
     };
 
     const removeHandler = (index: number) => {
@@ -38,12 +56,10 @@ export const NewItem = observer(() => {
         item.isError = value ? false : true;
     };
 
-    const setValue = (indexRow: number, key: keyof iRow, value: any) => {
-        if (isNumber(+value)) {
-            if (+value < 0) return;
-        }
+    const onChange = (index: number, v: string | number, fieldName: keyof iState) => {
         setData((prev) => {
-            setItemValue(prev[indexRow][key], value);
+            const field = prev[index][fieldName] as iField;
+            field.value = v;
             return [...prev];
         });
     };
@@ -57,88 +73,74 @@ export const NewItem = observer(() => {
 
     const subbmitHandler = async () => {
         tuched.current = true;
-
-        if (isValid()) {
-            setIsLoading(true);
-            const preparedData: iData[] = data.map((item) => {
-                item.widthInDocument.value;
-                const res: iData = {
-                    lot: +primeData.lot.value,
-                    numDocument: `${primeData.numDocument.value}`,
-                    operationId: 1,
-                    workpieceTypeId: WORKPIECETYPE.stone.id,
-                    userId: loginStore.user.id,
-                    storeId: loginStore.user.storeId,
-                    stateId: STATE.stone.id,
-                    widthInDocument: +item.widthInDocument.value,
-                    widthIn: +item.widthIn.value,
-                    moneyIn: +item.moneyIn.value,
-                    materialGroupId: +item.materialGroup.value,
-                    fractionId: +item.fractionId.value,
-                };
-                return res;
-            });
-
-            await OperationStore.postNewItems(preparedData, () => {
-                setPrimeData(initPrimeData());
-                setData([]);
-                notification.success({
-                    message: 'Успешно',
-                    description: 'Приход сохранен успешно',
-                });
-            });
-            setIsLoading(false);
-        } else {
+        const isError = validation(setData);
+        const errorNote = () => {
             notification.error({
-                message: 'Ошибка',
-                description: 'Заполните обязательные поля',
+                message: 'Ошибка!',
+                description: 'Не верно заполнены поля!',
             });
-        }
-    };
-
-    const isValid = () => {
-        let result = true;
-
-        if (!tuched.current) return result;
-        if (!data.length) return false;
-        const findErrors = <T extends object>(item: T) => {
-            for (const key in item) {
-                const fieldName = key as keyof T;
-                const field: any = item[fieldName];
-                if (field.value) {
-                    field.isError = false;
-                } else {
-                    field.isError = true;
-                    result = false;
-                }
-            }
         };
-        setPrimeData((prev) => {
-            findErrors(prev);
+        if (!data.length) {
+            errorNote();
+            throw { error: 'error count row' };
+        }
+        if (isError) {
+            errorNote();
+            throw { error: 'validation error' };
+        }
 
-            setData((prev) => {
-                prev = prev.map((item) => {
-                    findErrors(item);
-                    return item;
-                });
-                return [...prev];
-            });
-
-            return { ...prev };
+        const totalSum = getTotalSum(data);
+        if (!totalSum) {
+            errorNote();
+            throw { error: 'error total sym' };
+        }
+        setIsLoading(true);
+        const preparedData: iData[] = data.map((item) => {
+            item.widthInDocument.value;
+            const res: iData = {
+                lot: +primeData.lot.value,
+                numDocument: `${primeData.numDocument.value}`,
+                operationId: 1,
+                workpieceTypeId: WORKPIECETYPE.stone.id,
+                userId: loginStore.user.id,
+                storeId: loginStore.user.storeId,
+                stateId: STATE.stone.id,
+                widthInDocument: +item.widthInDocument.value,
+                widthIn: +item.widthIn.value,
+                moneyIn: +item.moneyIn.value,
+                materialGroupId: +item.materialGroupId.value,
+                fractionId: +item.fractionId.value,
+            };
+            return res;
         });
 
-        return result;
+        await OperationStore.postNewItems(preparedData, () => {
+            setPrimeData(initPrimeData());
+            setData([]);
+            notification.success({
+                message: 'Успешно',
+                description: 'Приход сохранен успешно',
+            });
+        });
+        setIsLoading(false);
     };
 
-    const materialGroup = ListsStore.materialGroup.map((item) => ({
-        value: item.id,
-        caption: item.materialGroup,
-    }));
+    const copyRow = (index: number) => {
+        setData((prev) => {
+            const elem: iState = JSON.parse(JSON.stringify(prev[index]));
+            elem.widthIn.value = '';
+            prev.splice(index + 1, 0, elem);
+            return [...prev];
+        });
+    };
 
-    const fraction = ListsStore.fraction.map((item) => ({
-        value: item.id,
-        caption: item.fraction,
-    }));
+    const storeId = loginStore.user.storeId;
+    const fraction = useQuery(['fraction', storeId], getFraction, { enabled: !!storeId });
+    const materialGroup = useQuery(['getMaterialGroup', storeId], getMaterialGroup, {
+        enabled: !!storeId,
+    });
+
+    const stateDuplicate: iState[] = checkDuplicate(data);
 
     return (
         <Wrapper>
@@ -180,49 +182,78 @@ export const NewItem = observer(() => {
                     Добавить строку
                 </a>
             </div>
-            {data.map((item, index) => (
-                <div className="addItemWrapper" key={index}>
-                    <div>
-                        <Tooltip placement="right" title="Удалить запись">
-                            <Button
-                                size="small"
-                                shape="circle"
-                                icon={<MinusOutlined />}
-                                onClick={() => removeHandler(index)}
+            {stateDuplicate.map((item, index) => (
+                <Row
+                    key={index}
+                    copyRow={() => copyRow(index)}
+                    removeRow={() => removeHandler(index)}
+                    isDuplicate={item.duplicate}
+                    fields={[
+                        <InputField key="fractionId" isError={item.fractionId.isError}>
+                            <SelectField
+                                placeholder={item.fractionId.placeholder}
+                                value={+item.fractionId.value || undefined}
+                                onChange={(v) => onChange(index, v, 'fractionId')}
+                                options={fraction.data?.map((item) => ({
+                                    value: item.id,
+                                    caption: item.fraction,
+                                }))}
+                                selectProps={{
+                                    disabled: fraction.isLoading,
+                                    loading: fraction.isFetching,
+                                }}
                             />
-                        </Tooltip>
-                    </div>
-                    <SelectField
-                        item={item.fractionId}
-                        onChangeHandler={(v) =>
-                            setValue(index, 'fractionId', v as string)
-                        }
-                        options={fraction}
-                    />
-                    <SelectField
-                        item={item.materialGroup}
-                        onChangeHandler={(v) => setValue(index, 'materialGroup', v)}
-                        options={materialGroup}
-                    />
-                    <Field
-                        item={item.widthInDocument}
-                        onChangeHandler={(v) => setValue(index, 'widthInDocument', v)}
-                        type={item.widthInDocument.type}
-                        step={item.widthInDocument.step}
-                    />
-                    <Field
-                        item={item.widthIn}
-                        onChangeHandler={(v) => setValue(index, 'widthIn', v)}
-                        type={item.widthIn.type}
-                        step={item.widthIn.step}
-                    />
-                    <Field
-                        item={item.moneyIn}
-                        onChangeHandler={(v) => setValue(index, 'moneyIn', v)}
-                        type={item.moneyIn.type}
-                        step={item.moneyIn.step}
-                    />
-                </div>
+                        </InputField>,
+                        <InputField key="gradeId" isError={item.materialGroupId.isError}>
+                            <SelectField
+                                placeholder={item.materialGroupId.placeholder}
+                                value={+item.materialGroupId.value || undefined}
+                                onChange={(v) => onChange(index, v, 'materialGroupId')}
+                                options={materialGroup.data?.map((item) => ({
+                                    value: item.id,
+                                    caption: item.materialGroup,
+                                }))}
+                                selectProps={{
+                                    disabled: materialGroup.isLoading,
+                                    loading: materialGroup.isFetching,
+                                }}
+                            />
+                        </InputField>,
+                        <InputField
+                            key="widthInDocument"
+                            isError={item.widthInDocument.isError}
+                        >
+                            <InputNumber
+                                placeholder={item.widthInDocument.placeholder}
+                                onChangeHandler={(v) => {
+                                    onChange(index, v!, 'widthInDocument');
+                                }}
+                                value={item.widthInDocument.value || ''}
+                            />
+                        </InputField>,
+                        <InputField key="widthIn" isError={item.widthIn.isError}>
+                            <InputNumber
+                                placeholder={item.widthIn.placeholder}
+                                onChangeHandler={(v) => {
+                                    onChange(index, v!, 'widthIn');
+                                }}
+                                value={item.widthIn.value || ''}
+                                ref={(r) => refHandler(r, index)}
+                                onKeyDown={onKeyDown}
+                                onFocus={() => onFocus(index)}
+                            />
+                        </InputField>,
+                        <InputField key="moneyIn" isError={item.moneyIn.isError}>
+                            <InputNumber
+                                placeholder={item.moneyIn.placeholder}
+                                onChangeHandler={(v) => {
+                                    onChange(index, v!, 'moneyIn');
+                                }}
+                                value={item.moneyIn.value || ''}
+                            />
+                        </InputField>,
+                    ]}
+                />
             ))}
         </Wrapper>
     );

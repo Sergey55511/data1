@@ -1,4 +1,5 @@
 import { InputProps } from 'antd';
+import { Field } from '../../../../Helpers/classes';
 
 export interface iRow {
     fractionId: iItem;
@@ -53,26 +54,12 @@ export class Item implements iItem {
 }
 
 export const initData = () => ({
-    fractionId: new Item({ field: 'fractionId', placeholder: 'Фракция' }),
-    materialGroup: new Item({ field: 'materialGroupId', placeholder: 'Группа сырья' }),
-    widthInDocument: new Item({
-        field: 'widthInDocument',
-        placeholder: 'Вес по накладной гр.',
-        type: 'number',
-        step: '0.01',
-    }),
-    widthIn: new Item({
-        field: 'widthIn',
-        placeholder: 'Вес факт гр.',
-        type: 'number',
-        step: '0.01',
-    }),
-    moneyIn: new Item({
-        field: 'moneyIn',
-        placeholder: 'Стоимость',
-        type: 'number',
-        step: '0.01',
-    }),
+    fractionId: new Field('fractionId', 'Фракция', true, true),
+    materialGroupId: new Field('materialGroupId', 'Группа сырья', true, true),
+    widthInDocument: new Field('widthInDocument', 'Вес по накладной гр.', true, false),
+    widthIn: new Field('widthIn', 'Вес факт гр.', true, false),
+    moneyIn: new Field('moneyIn', 'Стоимость', true, false),
+    duplicate: false,
 });
 export const initPrimeData = () => ({
     lot: new Item({ field: 'lot', placeholder: 'Партия', type: 'number' }),

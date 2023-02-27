@@ -10,6 +10,7 @@ import {
 import { Dispatch, SetStateAction, useEffect, useRef } from 'react';
 import { iData } from '../../../../../../../../../Shared/Types/interfaces';
 import { WORKPIECETYPE } from '../../../../../../../../../Shared/constants';
+import { useKeyArrow } from '../../../Shared/Hooks/useKeyArrow';
 
 export interface iProps {
     isLoading?: boolean;
@@ -21,6 +22,7 @@ export interface iProps {
     record: iData;
 }
 export const useProps = ({ setState, state, index }: iProps) => {
+    const { onKeyDown, onFocus, refHandler } = useKeyArrow();
     const isFirstRender = useRef(true);
     const { loginStore } = useStores();
 
@@ -66,5 +68,5 @@ export const useProps = ({ setState, state, index }: iProps) => {
         isFirstRender.current = false;
     }, [state.sizeRange.value]);
 
-    return { length, grade, color, onChange, sizeRange };
+    return { length, grade, color, onChange, sizeRange, onKeyDown, onFocus, refHandler };
 };

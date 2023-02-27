@@ -14,6 +14,7 @@ import {
     iSizeRange,
 } from '../../../../../../../../../../Shared/Types/interfaces';
 import { iState } from '../../useProps';
+import { useKeyArrow } from '../../../../Shared/Hooks/useKeyArrow';
 
 export const Row = observer(
     ({
@@ -32,6 +33,7 @@ export const Row = observer(
         grade: iGrade[];
     }) => {
         const { ListsStore, loginStore } = useStores();
+        const { onKeyDown, onFocus, refHandler } = useKeyArrow();
         const [sizeRange, setSizeRange] = useState<iSizeRange[]>([]);
         const onChange = (v: string | number, index: number, fieldName: keyof iState) => {
             setState((prev) => {
@@ -115,6 +117,9 @@ export const Row = observer(
                                 onChange(v!, index, 'widthIn');
                             }}
                             value={state.widthIn.value || ''}
+                            ref={(r) => refHandler(r, index)}
+                            onKeyDown={onKeyDown}
+                            onFocus={() => onFocus(index)}
                         />
                     </InputField>
                 </div>

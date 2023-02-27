@@ -1,12 +1,9 @@
-import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
-import { STATE } from '../../../../../../Shared/constants';
 import { iField } from '../../../../../../Shared/Types/interfaces';
-import { getMaxLot } from '../../../../../Store/OperationStore/Api';
-import { useStores } from '../../../../../Store/useStores';
-import { checkDuplicate, validation } from '../../../../Helpers';
+import { checkDuplicate } from '../../../../Helpers';
 import { Field } from '../../../../Helpers/classes';
 import { tValue } from '../../../../Shared/InputNumber';
+import { useKeyArrow } from '../../../Orders/GetOrder/Components/Shared/Hooks/useKeyArrow';
 import { useData } from './useData';
 
 export interface iState {
@@ -26,7 +23,7 @@ export interface iState {
 }
 
 export const useProps = () => {
-    const { loginStore } = useStores();
+    const { onKeyDown, onFocus, refHandler } = useKeyArrow();
     const [state, setState] = useState<iState[]>([]);
     const [lot, setLot] = useState<tValue>('');
     const [numDocument, setNumDocument] = useState<tValue>('');
@@ -115,5 +112,8 @@ export const useProps = () => {
         data,
         stateDuplicate,
         isValidated,
+        onKeyDown,
+        onFocus,
+        refHandler,
     };
 };

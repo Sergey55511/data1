@@ -7,6 +7,7 @@ import {
     getWorkpieceTypeModel,
 } from '../../../../../../../../Store/Lists/api';
 import { useStores } from '../../../../../../../../Store/useStores';
+import { useKeyArrow } from '../../../Shared/Hooks/useKeyArrow';
 import { iState } from '../useProps';
 
 export interface iProps {
@@ -21,7 +22,7 @@ export interface iProps {
 
 export const useProps = (props: iProps) => {
     const { loginStore } = useStores();
-
+    const { onKeyDown, onFocus, refHandler } = useKeyArrow();
     const storeId = loginStore.user.storeId;
     const onChange = (v: string | number, index: number, fieldName: keyof iState) => {
         props.setState((prev) => {
@@ -61,5 +62,8 @@ export const useProps = (props: iProps) => {
     return {
         data: { grade, color, workpieceType },
         onChange,
+        onKeyDown,
+        onFocus,
+        refHandler,
     };
 };

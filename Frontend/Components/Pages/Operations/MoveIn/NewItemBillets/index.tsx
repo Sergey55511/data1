@@ -209,6 +209,9 @@ export const NewItemBillets = () => {
                                         props.onChange(index, v!, 'widthIn');
                                     }}
                                     value={item.widthIn.value || ''}
+                                    ref={(r) => props.refHandler(r, index)}
+                                    onKeyDown={props.onKeyDown}
+                                    onFocus={() => props.onFocus(index)}
                                 />
                             </InputField>,
                             <InputField

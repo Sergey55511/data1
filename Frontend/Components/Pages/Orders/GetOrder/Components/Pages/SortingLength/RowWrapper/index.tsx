@@ -52,6 +52,9 @@ export const RowWrapper = observer((props: iProps) => {
                             params.onChange(v!, props.index, 'widthIn');
                         }}
                         value={props.state.widthIn.value || ''}
+                        ref={(r) => params.refHandler(r, props.index)}
+                        onKeyDown={params.onKeyDown}
+                        onFocus={() => params.onFocus(props.index)}
                     />
                 </InputField>,
             ]}

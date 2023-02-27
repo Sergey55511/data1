@@ -88,6 +88,9 @@ export const RowWrapper = observer((props: iProps) => {
                                 paraps.onChange(v!, props.index, 'widthIn');
                             }}
                             value={props.state.widthIn.value || ''}
+                            ref={(r) => paraps.refHandler(r, props.index)}
+                            onKeyDown={paraps.onKeyDown}
+                            onFocus={() => paraps.onFocus(props.index)}
                         />
                     </InputField>,
                     <InputField key="countIn" isError={props.state.countIn.isError}>
