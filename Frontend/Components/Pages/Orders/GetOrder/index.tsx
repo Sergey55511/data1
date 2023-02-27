@@ -50,7 +50,7 @@ export const GetOrder = () => {
                     <Frame legend="В работе">
                         <div>
                             <Item keyObj="operation" />
-                            <Item keyObj="user" />
+                            <Item keyObj="userLogin" />
                             <Item keyObj="manager" />
                             <Item keyObj="lot" />
                             <Item keyObj="productionId" />
