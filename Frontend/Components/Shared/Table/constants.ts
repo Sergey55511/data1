@@ -1,7 +1,6 @@
 export const KEYSLEFTOVERS = {
     pp: { key: 'pp', title: 'ПП' },
     date: { key: 'date', title: 'Дата' },
-    user: { key: 'userLogin', title: 'Выдал' },
     store: { key: 'store', title: 'Выдал' },
     manager: { key: 'managerLogin', title: 'Исполнитель' },
     operation: { key: 'operation', title: 'Операция' },
@@ -32,4 +31,5 @@ export const KEYSLEFTOVERS = {
     countItemsOut: { key: 'countItemsOut', title: 'Отгрузка шт.' },
     code: { key: 'code', title: '' },
     defect: { key: 'defect', title: '' },
+    userLogin: { key: 'userLogin ', title: 'Пользователь' },
 };

@@ -30,6 +30,8 @@ export const useColumns = ({
         getColumnPropsHoc(KEYSLEFTOVERS.channel),
         getColumnPropsHoc(KEYSLEFTOVERS.grade),
         getColumnPropsHoc(KEYSLEFTOVERS.state),
+        getColumnPropsHoc(KEYSLEFTOVERS.model),
+        getColumnPropsHoc(KEYSLEFTOVERS.type),
         getColumnPropsHoc(KEYSLEFTOVERS.lot),
         getColumnPropsHoc(KEYSLEFTOVERS.production),
         getColumnPropsHoc(KEYSLEFTOVERS.width),

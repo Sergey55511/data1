@@ -1,7 +1,9 @@
 import { ColumnsType } from 'antd/es/table';
 import { FilterValue } from 'antd/es/table/interface';
 import { Dispatch, SetStateAction } from 'react';
+import { STORES } from '../../../../../../../Shared/constants';
 import { iData, iDataTable } from '../../../../../../../Shared/Types/interfaces';
+import { useStores } from '../../../../../../Store/useStores';
 import { InputNumber } from '../../../../../Shared/InputNumber';
 import { KEYSLEFTOVERS } from '../../../../../Shared/Table/constants';
 import { getColumnProps } from '../../../../../Shared/Table/Helpers/getColumnProps';
@@ -12,6 +14,7 @@ export const useColumns = (
     filters: Record<string, FilterValue | null>,
     isEditor?: boolean,
 ) => {
+    const { loginStore } = useStores();
     const filteredData = data.filter((item) => {
         for (const key in item) {
             const value: any = item[key as keyof typeof item];
@@ -35,73 +38,66 @@ export const useColumns = (
         });
     };
 
-    const columns: ColumnsType<iData> = [
-        {
-            ...getColumnPropsHoc(KEYSLEFTOVERS.user.key),
-            title: 'Отправил',
-            width: 100,
+    const isMSC = loginStore.user.storeId == STORES.Moscow.id;
+
+    const columns: ColumnsType<iData> = [];
+    columns.push({
+        ...getColumnPropsHoc(KEYSLEFTOVERS.userLogin.key),
+        title: 'Отправил',
+        width: 100,
+    });
+    columns.push({
+        ...getColumnPropsHoc(KEYSLEFTOVERS.store.key),
+        title: 'Отправитель',
+        width: 100,
+    });
+    columns.push({
+        ...getColumnPropsHoc(KEYSLEFTOVERS.numDocument.key),
+        title: 'Номер документа',
+    });
+    columns.push(getColumnPropsHoc(KEYSLEFTOVERS.workpieceType.key));
+    columns.push(getColumnPropsHoc(KEYSLEFTOVERS.state.key));
+    columns.push({
+        ...getColumnPropsHoc(KEYSLEFTOVERS.color.key),
+        width: 100,
+    });
+    columns.push({
+        ...getColumnPropsHoc(KEYSLEFTOVERS.sizeRange.key),
+        width: 150,
+    });
+    columns.push(getColumnPropsHoc(KEYSLEFTOVERS.length.key));
+    columns.push({
+        ...getColumnPropsHoc(KEYSLEFTOVERS.grade.key),
+        width: 80,
+    });
+    if (isMSC) {
+        columns.push(getColumnPropsHoc(KEYSLEFTOVERS.model.key));
+        columns.push(getColumnPropsHoc(KEYSLEFTOVERS.model.key));
+    }
+    columns.push({
+        ...getColumnPropsHoc(KEYSLEFTOVERS.lot.key),
+        width: 80,
+    });
+    columns.push({
+        ...getColumnPropsHoc(KEYSLEFTOVERS.widthOut.key),
+        title: 'Отгружено гр.',
+        width: 130,
+    });
+    columns.push({
+        dataIndex: KEYSLEFTOVERS.widthIn.key,
+        render: (_value, record) => {
+            return (
+                <InputNumber
+                    value={record.widthIn}
+                    onChangeHandler={(v) => onChangeHandler(record.id!, 'widthIn', v)}
+                />
+            );
         },
-        {
-            ...getColumnPropsHoc(KEYSLEFTOVERS.store.key),
-            title: 'Отправитель',
-            width: 100,
-        },
-        {
-            ...getColumnPropsHoc(KEYSLEFTOVERS.numDocument.key),
-            title: 'Номер документа',
-        },
-        {
-            ...getColumnPropsHoc(KEYSLEFTOVERS.workpieceType.key),
-            title: KEYSLEFTOVERS.workpieceType.title,
-        },
-        {
-            ...getColumnPropsHoc(KEYSLEFTOVERS.state.key),
-            title: KEYSLEFTOVERS.state.title,
-        },
-        {
-            ...getColumnPropsHoc(KEYSLEFTOVERS.color.key),
-            title: KEYSLEFTOVERS.color.title,
-            width: 100,
-        },
-        {
-            ...getColumnPropsHoc(KEYSLEFTOVERS.sizeRange.key),
-            title: KEYSLEFTOVERS.sizeRange.title,
-            width: 150,
-        },
-        {
-            ...getColumnPropsHoc(KEYSLEFTOVERS.length.key),
-            title: KEYSLEFTOVERS.length.title,
-        },
-        {
-            ...getColumnPropsHoc(KEYSLEFTOVERS.grade.key),
-            title: KEYSLEFTOVERS.grade.title,
-            width: 80,
-        },
-        {
-            ...getColumnPropsHoc(KEYSLEFTOVERS.lot.key),
-            title: KEYSLEFTOVERS.lot.title,
-            width: 80,
-        },
-        {
-            ...getColumnPropsHoc(KEYSLEFTOVERS.widthOut.key),
-            title: 'Отгружено гр.',
-            width: 130,
-        },
-        {
-            dataIndex: KEYSLEFTOVERS.widthIn.key,
-            render: (_value, record) => {
-                return (
-                    <InputNumber
-                        value={record.widthIn}
-                        onChangeHandler={(v) => onChangeHandler(record.id!, 'widthIn', v)}
-                    />
-                );
-            },
-            title: 'Принять гр.',
-            width: 100,
-            fixed: 'right',
-        },
-    ];
+        title: 'Принять гр.',
+        width: 100,
+        fixed: 'right',
+    });
+
     if (isEditor) {
         columns.push({
             dataIndex: KEYSLEFTOVERS.code.key,

@@ -57,7 +57,7 @@ export const MoveIn = observer(() => {
             title: 'Дата',
         },
         {
-            ...getColumnPropsHoc(KEYSLEFTOVERS.user.key),
+            ...getColumnPropsHoc(KEYSLEFTOVERS.userLogin.key),
             title: 'Отправил',
         },
         {

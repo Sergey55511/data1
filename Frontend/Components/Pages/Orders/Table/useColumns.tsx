@@ -44,8 +44,8 @@ export const useColumns = (
         title: KEYSLEFTOVERS.operation.title,
     });
     columns.push({
-        ...getColumnPropsHoc(KEYSLEFTOVERS.user.key),
-        title: KEYSLEFTOVERS.user.title,
+        ...getColumnPropsHoc(KEYSLEFTOVERS.userLogin.key),
+        title: KEYSLEFTOVERS.userLogin.title,
     });
     columns.push({
         ...getColumnPropsHoc(KEYSLEFTOVERS.manager.key),
@@ -90,6 +90,16 @@ export const useColumns = (
         ...getColumnPropsHoc(KEYSLEFTOVERS.grade.key),
         title: KEYSLEFTOVERS.grade.title,
     });
+    if (isMSC) {
+        columns.push({
+            ...getColumnPropsHoc(KEYSLEFTOVERS.model.key),
+            title: KEYSLEFTOVERS.model.title,
+        });
+        columns.push({
+            ...getColumnPropsHoc(KEYSLEFTOVERS.type.key),
+            title: KEYSLEFTOVERS.type.title,
+        });
+    }
     columns.push({
         ...getColumnPropsHoc(KEYSLEFTOVERS.lot.key),
         title: KEYSLEFTOVERS.lot.title,

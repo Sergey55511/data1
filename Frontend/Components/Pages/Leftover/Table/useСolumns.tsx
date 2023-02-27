@@ -66,11 +66,20 @@ export const useColumns = (filters: Record<string, FilterValue | null>) => {
         ...getColumnPropsHoc(KEYSLEFTOVERS.grade.key),
         title: KEYSLEFTOVERS.grade.title,
     });
-    if (isMSC)
+    if (isMSC) {
         columns.push({
             ...getColumnPropsHoc(KEYSLEFTOVERS.channel.key),
             title: KEYSLEFTOVERS.channel.title,
         });
+        columns.push({
+            ...getColumnPropsHoc(KEYSLEFTOVERS.model.key),
+            title: KEYSLEFTOVERS.model.title,
+        });
+        columns.push({
+            ...getColumnPropsHoc(KEYSLEFTOVERS.type.key),
+            title: KEYSLEFTOVERS.type.title,
+        });
+    }
     columns.push({
         ...getColumnPropsHoc(KEYSLEFTOVERS.lot.key),
         title: KEYSLEFTOVERS.lot.title,
