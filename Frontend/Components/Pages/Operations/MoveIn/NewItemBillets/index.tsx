@@ -13,7 +13,7 @@ export const NewItemBillets = () => {
     return (
         <Wrapper>
             <Title
-                text="Приход заготовок"
+                text="Приход заготовок:"
                 content={
                     <div className="inputWrapper">
                         <Tooltip

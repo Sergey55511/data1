@@ -149,7 +149,6 @@ export const NewItem = observer(() => {
                         <Tooltip
                             placement="top"
                             title={`Макс партия: ${OperationStore.maxLot || 0}`}
-                            onOpenChange={() => console.log('onOpenChange')}
                         >
                             <div>
                                 <PrimeField
