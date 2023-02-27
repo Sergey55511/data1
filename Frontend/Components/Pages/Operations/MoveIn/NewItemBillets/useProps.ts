@@ -4,7 +4,7 @@ import { STATE } from '../../../../../../Shared/constants';
 import { iField } from '../../../../../../Shared/Types/interfaces';
 import { getMaxLot } from '../../../../../Store/OperationStore/Api';
 import { useStores } from '../../../../../Store/useStores';
-import { validation } from '../../../../Helpers';
+import { checkDuplicate, validation } from '../../../../Helpers';
 import { Field } from '../../../../Helpers/classes';
 import { tValue } from '../../../../Shared/InputNumber';
 import { useData } from './useData';
@@ -16,6 +16,12 @@ export interface iState {
     colorId: iField;
     sizeRangeId: iField;
     widthIn: iField;
+    widthInDocument: iField;
+    countItemsIn: iField;
+    moneyIn: iField;
+    lengthId: iField;
+    channelId: iField;
+    typeId: iField;
     duplicate: boolean;
 }
 
@@ -24,11 +30,16 @@ export const useProps = () => {
     const [state, setState] = useState<iState[]>([]);
     const [lot, setLot] = useState<tValue>('');
     const [numDocument, setNumDocument] = useState<tValue>('');
-    const maxLot = useQuery(['maxLot', loginStore.user.storeId], getMaxLot, {
-        enabled: !!loginStore.user.storeId,
-    });
+    const [isValidated, setIsValidated] = useState(false);
 
-    const data = useData();
+    const resetState = () => {
+        setState([]);
+        setLot('');
+        setNumDocument('');
+    };
+
+    const stateDuplicate: iState[] = checkDuplicate(state);
+    const data = useData(resetState, setIsValidated);
 
     const subbmitHandler = () => {
         data.submitMutation.mutate({
@@ -41,12 +52,28 @@ export const useProps = () => {
         e.preventDefault();
         setState((prev) => {
             const newRow: iState = {
-                stateId: new Field('stateId', 'Состояние'),
-                workpieceTypeId: new Field('workpieceTypeId', 'Тип загатовки'),
-                gradeId: new Field('gradeId', 'Сорт'),
-                colorId: new Field('colorId', 'Цвет'),
-                sizeRangeId: new Field('sizeRangeId', 'Размерный ряд'),
-                widthIn: new Field('widthIn', 'Вес гр.'),
+                stateId: new Field('stateId', 'Состояние', true, true),
+                workpieceTypeId: new Field(
+                    'workpieceTypeId',
+                    'Тип загатовки',
+                    true,
+                    true,
+                ),
+                gradeId: new Field('gradeId', 'Сорт', true, true),
+                colorId: new Field('colorId', 'Цвет', true, true),
+                sizeRangeId: new Field('sizeRangeId', 'Размерный ряд', true, true),
+                widthIn: new Field('widthIn', 'Вес гр.', true, false),
+                widthInDocument: new Field(
+                    'widthInDocument',
+                    'Вес документ',
+                    true,
+                    false,
+                ),
+                countItemsIn: new Field('countItemsIn', 'шт.', true, false),
+                moneyIn: new Field('moneyIn', 'Стоимость', true, false),
+                lengthId: new Field('lengthId', 'Длинна', true, true),
+                channelId: new Field('channelId', 'Канал', true, true),
+                typeId: new Field('typeId', 'Тип', true, true),
                 duplicate: false,
             };
             const res: iState[] = [...prev, newRow];
@@ -75,7 +102,6 @@ export const useProps = () => {
     };
 
     return {
-        maxLot,
         lot,
         setLot,
         numDocument,
@@ -87,5 +113,7 @@ export const useProps = () => {
         onChange,
         subbmitHandler,
         data,
+        stateDuplicate,
+        isValidated,
     };
 };

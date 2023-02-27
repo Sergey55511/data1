@@ -1,4 +1,5 @@
 export const OPERATIONS = {
+    purchase: { id: 1 }, //Закупка
     wash: { id: 2 }, //мойка
     changeProduction: { id: 3 }, //номер пр-ва
     sorting: { id: 4 }, //сортировка

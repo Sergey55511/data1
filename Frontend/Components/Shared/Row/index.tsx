@@ -8,15 +8,17 @@ export const Row = ({
     copyRow,
     fields,
     width,
+    isDuplicate,
 }: {
     isLoading?: boolean;
     removeRow: () => void;
     copyRow: () => void;
     fields: JSX.Element[];
     width?: Array<string | undefined>;
+    isDuplicate?: boolean;
 }) => {
     return (
-        <Wrapper>
+        <Wrapper className={isDuplicate ? 'duplicate' : ''}>
             <Tooltip title="Удалить строку">
                 <Button
                     shape="circle"

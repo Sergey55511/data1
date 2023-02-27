@@ -271,3 +271,31 @@ export const prepareDataTable = (data: iData): iDataTable => {
     });
     return result;
 };
+
+export const checkDuplicate = (state: any[]): any[] => {
+    let rows = state.map((item, index) => {
+        const keys = Object.keys(item);
+        const k = keys.filter((key) => item[key]?.checkDuplicate);
+        const values = k.map((key) => item[key].value);
+        const itemString = JSON.stringify(values);
+
+        return { index, itemString, count: 0 };
+    });
+
+    rows.forEach((item) => {
+        const find = rows.filter((itm) => itm.itemString == item.itemString);
+        if (!find[0].count) {
+            const count = find.length;
+            find.forEach((itm) => (itm.count = count));
+        }
+    });
+
+    return state.map((item, index) => {
+        if (rows[index].count > 1) {
+            item.duplicate = true;
+        } else {
+            item.duplicate = false;
+        }
+        return { ...item };
+    });
+};

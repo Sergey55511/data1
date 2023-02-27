@@ -23,6 +23,7 @@ import {
     iVariantAssemble,
     iYarnAssemble,
     iProduction,
+    iType,
 } from '../../../Shared/Types/interfaces';
 
 export const getMaterialGroup = () => {
@@ -154,7 +155,7 @@ export const getTypes = (filters: iQueryFilters) => {
     return axios({
         url: `/api/list/types${params}`,
         method: 'GET',
-    }).then((res) => res.data);
+    }).then((res) => res.data as iType[]);
 };
 export const getColors = (filters: iQueryFilters) => {
     const params = getQueryParams(filters);
