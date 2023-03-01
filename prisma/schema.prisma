@@ -19,7 +19,7 @@ model Data {
   lot              Float?
   numDocument      String?
   pp               Int?
-  sizeRange        SizeRange?     @relation(fields: [sizeRangeId], references: [id])
+  sizeRange        SizeRange?     @relation(fields: [sizeRangeId], references: [id], onDelete: NoAction)
   sizeRangeId      Int?
   widthInDocument  Float?
   widthIn          Float?
@@ -32,39 +32,39 @@ model Data {
   moneyIn          Float?
   moneyOut         Float?
   typeOfProcessing String?
-  materialGroup    MaterialGroup? @relation(fields: [materialGroupId], references: [id])
+  materialGroup    MaterialGroup? @relation(fields: [materialGroupId], references: [id], onDelete: NoAction)
   materialGroupId  Int?
   WorkpieceType    WorkpieceType? @relation(fields: [workpieceTypeId], references: [id], onDelete: NoAction)
   workpieceTypeId  Int?
-  Operations       Operations?    @relation(fields: [operationId], references: [id])
+  Operations       Operations?    @relation(fields: [operationId], references: [id], onDelete: NoAction)
   operationId      Int?
   userId           Int?
   managerId        Int?
-  Stores           Stores?        @relation(fields: [storeId], references: [id])
+  Stores           Stores?        @relation(fields: [storeId], references: [id], onDelete: NoAction)
   storeId          Int?
-  Grade            Grade?         @relation(fields: [gradeId], references: [id])
+  Grade            Grade?         @relation(fields: [gradeId], references: [id], onDelete: NoAction)
   gradeId          Int?
   active           Boolean        @default(true)
-  Productions      Productions?   @relation(fields: [productionId], references: [id])
+  Productions      Productions?   @relation(fields: [productionId], references: [id], onDelete: NoAction)
   productionId     Int?
   articleId        Int?
-  Color            Color?         @relation(fields: [colorId], references: [id])
+  Color            Color?         @relation(fields: [colorId], references: [id], onDelete: NoAction)
   colorId          Int?
-  Length           Length?        @relation(fields: [lengthId], references: [id])
+  Length           Length?        @relation(fields: [lengthId], references: [id], onDelete: NoAction)
   lengthId         Int?
-  State            State?         @relation(fields: [stateId], references: [id])
+  State            State?         @relation(fields: [stateId], references: [id], onDelete: NoAction)
   stateId          Int?
-  Channel          Channel?       @relation(fields: [channelId], references: [id])
+  Channel          Channel?       @relation(fields: [channelId], references: [id], onDelete: NoAction)
   channelId        Int?
-  Users            Users?         @relation(fields: [userId], references: [id])
-  Managers         Managers?      @relation(fields: [managerId], references: [id])
-  Fraction         Fraction?      @relation(fields: [fractionId], references: [id])
+  Users            Users?         @relation(fields: [userId], references: [id], onDelete: NoAction)
+  Managers         Managers?      @relation(fields: [managerId], references: [id], onDelete: NoAction)
+  Fraction         Fraction?      @relation(fields: [fractionId], references: [id], onDelete: NoAction)
   fractionId       Int?
-  Types            Types?         @relation(fields: [typeId], references: [id])
+  Types            Types?         @relation(fields: [typeId], references: [id], onDelete: NoAction)
   typeId           Int?
-  Recipient        Recipients?    @relation(fields: [recipientId], references: [id])
+  Recipient        Recipients?    @relation(fields: [recipientId], references: [id], onDelete: NoAction)
   recipientId      Int?
-  FullModels       FullModels?    @relation(fields: [fullModelId], references: [id])
+  FullModels       FullModels?    @relation(fields: [fullModelId], references: [id], onDelete: NoAction)
   fullModelId      Int?
   model            String?
   task             Int?
@@ -76,26 +76,26 @@ model DataProduct {
   date            DateTime?       @default(now()) @db.Date()
   pp              Int?
   storeId         Int?
-  Stores          Stores?         @relation(fields: [storeId], references: [id])
+  Stores          Stores?         @relation(fields: [storeId], references: [id], onDelete: NoAction)
   model           String
   userId          Int
-  Users           Users           @relation(fields: [userId], references: [id])
+  Users           Users           @relation(fields: [userId], references: [id], onDelete: NoAction)
   managerId       Int?
-  Managers        Managers?       @relation(fields: [managerId], references: [id])
+  Managers        Managers?       @relation(fields: [managerId], references: [id], onDelete: NoAction)
   workpieceTypeId Int
-  workpieceType   ResultsAssemble @relation(fields: [workpieceTypeId], references: [id])
+  workpieceType   ResultsAssemble @relation(fields: [workpieceTypeId], references: [id], onDelete: NoAction)
   colorId         Int
-  color           ColorsAssemble  @relation(fields: [colorId], references: [id])
+  color           ColorsAssemble  @relation(fields: [colorId], references: [id], onDelete: NoAction)
   length          Int
   gradeId         Int
-  grade           GradesAssemble  @relation(fields: [gradeId], references: [id])
+  grade           GradesAssemble  @relation(fields: [gradeId], references: [id], onDelete: NoAction)
   stateId         Int
-  State           State           @relation(fields: [stateId], references: [id])
+  State           State           @relation(fields: [stateId], references: [id], onDelete: NoAction)
   articleId       Int
   recipientId     Int?
-  Recipient       Recipients?     @relation(fields: [recipientId], references: [id])
+  Recipient       Recipients?     @relation(fields: [recipientId], references: [id], onDelete: NoAction)
   operationId     Int?
-  Operations      Operations?     @relation(fields: [operationId], references: [id])
+  Operations      Operations?     @relation(fields: [operationId], references: [id], onDelete: NoAction)
   numDocument     String?
   widthIn         Float?
   widthOut        Float?
@@ -108,28 +108,28 @@ model DataProduct {
 
 model Bridge {
   id              Int            @id @default(autoincrement())
-  Store           Stores?        @relation(fields: [storeId], references: [id])
+  Store           Stores?        @relation(fields: [storeId], references: [id], onDelete: NoAction)
   storeId         Int?
-  Operation       Operations?    @relation(fields: [operationId], references: [id])
+  Operation       Operations?    @relation(fields: [operationId], references: [id], onDelete: NoAction)
   operationId     Int?
-  WorkPieceType   WorkpieceType? @relation(fields: [workpieceTypeId], references: [id])
+  WorkPieceType   WorkpieceType? @relation(fields: [workpieceTypeId], references: [id], onDelete: NoAction)
   workpieceTypeId Int?
-  Type            Types?         @relation(fields: [typeId], references: [id])
+  Type            Types?         @relation(fields: [typeId], references: [id], onDelete: NoAction)
   typeId          Int?
-  Grade           Grade?         @relation(fields: [gradeId], references: [id])
+  Grade           Grade?         @relation(fields: [gradeId], references: [id], onDelete: NoAction)
   gradeId         Int?
-  Color           Color?         @relation(fields: [colorId], references: [id])
+  Color           Color?         @relation(fields: [colorId], references: [id], onDelete: NoAction)
   colorId         Int?
-  SizeRange       SizeRange?     @relation(fields: [sizeRangeId], references: [id])
+  SizeRange       SizeRange?     @relation(fields: [sizeRangeId], references: [id], onDelete: NoAction)
   sizeRangeId     Int?
-  Length          Length?        @relation(fields: [lengthId], references: [id])
+  Length          Length?        @relation(fields: [lengthId], references: [id], onDelete: NoAction)
   lengthId        Int?
 }
 
 model Managers {
   id                Int                 @id @default(autoincrement())
   name              String
-  store             Stores?             @relation(fields: [storeId], references: [id])
+  store             Stores?             @relation(fields: [storeId], references: [id], onDelete: NoAction)
   storeId           Int?
   active            Boolean             @default(true)
   Data              Data[]
@@ -139,9 +139,9 @@ model Managers {
 
 model ManagerOperations {
   id          Int         @id @default(autoincrement())
-  manager     Managers?   @relation(fields: [managerId], references: [id])
+  manager     Managers?   @relation(fields: [managerId], references: [id], onDelete: NoAction)
   managerId   Int?
-  Operation   Operations? @relation(fields: [operationId], references: [id])
+  Operation   Operations? @relation(fields: [operationId], references: [id], onDelete: NoAction)
   operationId Int?
   active      Boolean     @default(true)
 }
@@ -153,7 +153,7 @@ model Users {
   key         String?
   status      String?
   role        String?
-  store       Stores?       @relation(fields: [storeId], references: [id])
+  store       Stores?       @relation(fields: [storeId], references: [id], onDelete: NoAction)
   activ       Boolean       @default(true)
   storeId     Int?          @map("storesId")
   Data        Data[]
@@ -191,9 +191,9 @@ model Operations {
 
 model StoreOperationsBridge {
   id          Int         @id @default(autoincrement())
-  store       Stores?     @relation(fields: [storeId], references: [id])
+  store       Stores?     @relation(fields: [storeId], references: [id], onDelete: NoAction)
   storeId     Int?        @map("storesId")
-  Operations  Operations? @relation(fields: [operationId], references: [id])
+  Operations  Operations? @relation(fields: [operationId], references: [id], onDelete: NoAction)
   operationId Int?
 }
 
@@ -234,15 +234,15 @@ model Color {
 
 model FullModels {
   id               Int            @id @default(autoincrement())
-  WorkpieceType    WorkpieceType? @relation(fields: [workpieceTypeId], references: [id])
+  WorkpieceType    WorkpieceType? @relation(fields: [workpieceTypeId], references: [id], onDelete: NoAction)
   workpieceTypeId  Int?
-  Models           Models?        @relation(fields: [modelId], references: [id])
+  Models           Models?        @relation(fields: [modelId], references: [id], onDelete: NoAction)
   modelId          Int?
-  Profile          Profile?       @relation(fields: [profileId], references: [id])
+  Profile          Profile?       @relation(fields: [profileId], references: [id], onDelete: NoAction)
   profileId        Int?
-  SizeRangeModel   SizeRange?     @relation(fields: [sizeRangeModelId], references: [id])
+  SizeRangeModel   SizeRange?     @relation(fields: [sizeRangeModelId], references: [id], onDelete: NoAction)
   sizeRangeModelId Int?
-  LengthModel      LengthModel?   @relation(fields: [lengthModelId], references: [id])
+  LengthModel      LengthModel?   @relation(fields: [lengthModelId], references: [id], onDelete: NoAction)
   lengthModelId    Int?
   Data             Data[]
   active           Boolean        @default(true)
@@ -257,8 +257,8 @@ model LengthModel {
 
 model OperationWorkPieceTypeBridge {
   id              Int            @id @default(autoincrement())
-  WorkpieceType   WorkpieceType? @relation(fields: [workpieceTypeId], references: [id])
-  Operation       Operations?    @relation(fields: [operationsId], references: [id])
+  WorkpieceType   WorkpieceType? @relation(fields: [workpieceTypeId], references: [id], onDelete: NoAction)
+  Operation       Operations?    @relation(fields: [operationsId], references: [id], onDelete: NoAction)
   active          Boolean        @default(true)
   workpieceTypeId Int?
   operationsId    Int?
@@ -266,8 +266,8 @@ model OperationWorkPieceTypeBridge {
 
 model WorkPieceTypeGradeBridge {
   id              Int            @id @default(autoincrement())
-  WorkpieceType   WorkpieceType? @relation(fields: [workpieceTypeId], references: [id])
-  Grade           Grade?         @relation(fields: [gradeId], references: [id])
+  WorkpieceType   WorkpieceType? @relation(fields: [workpieceTypeId], references: [id], onDelete: NoAction)
+  Grade           Grade?         @relation(fields: [gradeId], references: [id], onDelete: NoAction)
   workpieceTypeId Int?
   gradeId         Int?
 }
@@ -314,9 +314,9 @@ model Length {
 
 model StateOperationBridge {
   id          Int         @id @default(autoincrement())
-  State       State?      @relation(fields: [stateId], references: [id])
+  State       State?      @relation(fields: [stateId], references: [id], onDelete: NoAction)
   stateId     Int?
-  Operation   Operations? @relation(fields: [operationId], references: [id])
+  Operation   Operations? @relation(fields: [operationId], references: [id], onDelete: NoAction)
   operationId Int?
 }
 
@@ -346,7 +346,7 @@ model WorkpieceType {
 model Productions {
   id          Int     @id @default(autoincrement())
   description String
-  Stores      Stores? @relation(fields: [storeId], references: [id])
+  Stores      Stores? @relation(fields: [storeId], references: [id], onDelete: NoAction)
   storeId     Int?
   active      Boolean @default(true)
   Data        Data[]
@@ -373,7 +373,7 @@ model Recipients {
   recipient   String
   active      Boolean       @default(true)
   Data        Data[]
-  Stores      Stores?       @relation(fields: [storeId], references: [id])
+  Stores      Stores?       @relation(fields: [storeId], references: [id], onDelete: NoAction)
   storeId     Int?
   DataProduct DataProduct[]
 }
