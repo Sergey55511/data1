@@ -14,19 +14,19 @@ export const Actions = (props: iProps) => {
                     key: '1',
                     label: 'Разобрать',
                     icon: <DeploymentUnitOutlined />,
-                    onClick: () => params.setIsShowSelectUser(true),
+                    onClick: () => params.setRecipientType('takeApart'),
                 },
                 {
                     key: '2',
                     label: 'Отгрузить',
                     icon: <ExportOutlined />,
-                    onClick: () => params.setTrueIsShowRecipient('recipientsOuter'),
+                    onClick: () => params.setRecipientType('recipientsOuter'),
                 },
                 {
                     key: '3',
                     label: 'Перемещение',
                     icon: <CarOutlined />,
-                    onClick: () => params.setTrueIsShowRecipient('recipientsInternal'),
+                    onClick: () => params.setRecipientType('recipientsInternal'),
                 },
             ]}
         />
@@ -36,7 +36,7 @@ export const Actions = (props: iProps) => {
         <>
             {params.isShowSelectUser && (
                 <SelectUser
-                    onCancel={() => params.setIsShowSelectUser(false)}
+                    onCancel={() => params.setRecipientType(undefined)}
                     reAssembleHandler={params.reAssembleHandler}
                     isLoading={params.takeApartHandler.isLoading}
                     managerId={params.managerId}
@@ -47,14 +47,17 @@ export const Actions = (props: iProps) => {
             )}
             {params.isShowRecipient && (
                 <SelectRecipient
-                    onCancel={() => params.setIsShowRecipient(false)}
+                    onCancel={() => params.setRecipientType(undefined)}
                     submitHandler={params.moveOutAssembleHandler}
                     isLoading={params.postData.isLoading}
                     recipientId={params.recipientId}
                     setRecipientId={params.setRecipientId}
+                    numDocument={params.numDocument}
+                    setNumDocument={params.setNumDocument}
                     recipient={params.recipients}
                     selectedRows={props.selectedRows}
-                    isShowAddInput={params.recipientType == 'recipientsOuter'}
+                    isShowAddInput={params.isShowAddInput}
+                    isShowNumDocument={params.isShowNumDocument}
                 />
             )}
             <Dropdown overlay={menu} disabled={!props.selectedRows.length}>

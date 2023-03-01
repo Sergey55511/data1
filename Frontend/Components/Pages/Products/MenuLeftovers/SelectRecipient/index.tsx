@@ -17,6 +17,7 @@ export const SelectRecipient = ({
     setRecipientId,
     recipient,
     isShowAddInput,
+    isShowNumDocument,
     selectedRows,
 }: {
     onCancel: () => void;
@@ -24,18 +25,35 @@ export const SelectRecipient = ({
     isLoading?: boolean;
     recipientId: number | undefined;
     setRecipientId: Dispatch<SetStateAction<number | undefined>>;
+    numDocument: string;
+    setNumDocument: Dispatch<SetStateAction<string>>;
     recipient: UseQueryResult<iRecipient[], unknown>;
     isShowAddInput?: boolean;
+    isShowNumDocument?: boolean;
     selectedRows: iDataProduct[];
 }) => {
-    const { newRecipient, setNewRecipient, addRecipient, addRecipientHandler } = useProps(
-        recipient,
-        setRecipientId,
-    );
+    const {
+        newRecipient,
+        setNewRecipient,
+        addRecipient,
+        addRecipientHandler,
+        numDocument,
+        setNumDocument,
+    } = useProps(recipient, setRecipientId);
     return (
         <Modal open onCancel={onCancel} footer={false}>
             <Wrapper>
                 <div className="title">Выберите получателя</div>
+                {isShowNumDocument && (
+                    <div className="inputWrapper">
+                        <Input
+                            value={numDocument}
+                            onChange={(e) => setNumDocument(e.target.value)}
+                            allowClear
+                            placeholder="№ документа"
+                        />
+                    </div>
+                )}
                 {isShowAddInput && (
                     <div className="inputWrapper">
                         <Search
@@ -69,7 +87,7 @@ export const SelectRecipient = ({
                         type="primary"
                         onClick={submitHandler}
                         loading={isLoading}
-                        disabled={!recipientId}
+                        disabled={!(recipientId && numDocument)}
                     >
                         Отгрузить
                     </Button>

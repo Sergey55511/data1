@@ -13,14 +13,13 @@ export interface iProps {
 
 export const useProps = (props: iProps) => {
     const { loginStore } = useStores();
-    const [recipientType, setRecipientType] =
-        useState<tRecipientType>('recipientsInternal');
-    const params = useData({ ...props, recipientType });
-
-    const setTrueIsShowRecipient = (recipientTypeValue: tRecipientType) => {
-        setRecipientType(recipientTypeValue);
-        params.setIsShowRecipient(true);
-    };
+    const [recipientType, setRecipientType] = useState<tRecipientType>();
+    const params = useData({ ...props, recipientType }, setRecipientType);
+    const isShowAddInput = recipientType == 'recipientsOuter';
+    const isShowNumDocument = ['recipientsOuter', 'recipientsInternal'].includes(
+        recipientType ?? '',
+    );
+    const isShowRecipient = isShowNumDocument;
 
     const reAssembleHandler = async () => {
         const articles = props.selectedRows.map((item) => item.articleId || 0);
@@ -40,6 +39,7 @@ export const useProps = (props: iProps) => {
             userId: loginStore.user.id,
             storeId: loginStore.user.storeId,
             recipientId: params.recipientId,
+            numDocument: `${params.numDocument}_${Date.now()}`,
             widthOut: item.width,
             countItemsOut: item.count,
             moneyOut: item.code,
@@ -51,8 +51,11 @@ export const useProps = (props: iProps) => {
     return {
         reAssembleHandler,
         moveOutAssembleHandler,
-        setTrueIsShowRecipient,
+        isShowAddInput,
+        isShowNumDocument,
         recipientType,
+        setRecipientType,
+        isShowRecipient,
         ...params,
     };
 };
