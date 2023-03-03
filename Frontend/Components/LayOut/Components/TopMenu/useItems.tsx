@@ -78,17 +78,15 @@ export const useItems = () => {
         icon: <StarOutlined />,
     });
 
-    if (isMSC) {
-        items.push({
-            label: (
-                <Badge size="small" count={ordersGetOutCount} overflowCount={999}>
-                    <>Выбытие</>
-                </Badge>
-            ),
-            key: ROUTES.ordersGetOut,
-            icon: <StarOutlined />,
-        });
-    }
+    items.push({
+        label: (
+            <Badge size="small" count={ordersGetOutCount} overflowCount={999}>
+                <>Выбытие</>
+            </Badge>
+        ),
+        key: ROUTES.ordersGetOut,
+        icon: <StarOutlined />,
+    });
 
     if (isMSC) {
         items.push({

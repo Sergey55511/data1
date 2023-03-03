@@ -61,11 +61,6 @@ export const useColumns = (
     });
     if (!isMSC)
         columns.push({
-            ...getColumnPropsHoc(KEYSLEFTOVERS.type.key),
-            title: KEYSLEFTOVERS.type.title,
-        });
-    if (!isMSC)
-        columns.push({
             ...getColumnPropsHoc(KEYSLEFTOVERS.fraction.key),
             title: KEYSLEFTOVERS.fraction.title,
         });
@@ -90,16 +85,16 @@ export const useColumns = (
         ...getColumnPropsHoc(KEYSLEFTOVERS.grade.key),
         title: KEYSLEFTOVERS.grade.title,
     });
-    if (isMSC) {
+    if (isMSC)
         columns.push({
             ...getColumnPropsHoc(KEYSLEFTOVERS.model.key),
             title: KEYSLEFTOVERS.model.title,
         });
-        columns.push({
-            ...getColumnPropsHoc(KEYSLEFTOVERS.type.key),
-            title: KEYSLEFTOVERS.type.title,
-        });
-    }
+
+    columns.push({
+        ...getColumnPropsHoc(KEYSLEFTOVERS.type.key),
+        title: KEYSLEFTOVERS.type.title,
+    });
     columns.push({
         ...getColumnPropsHoc(KEYSLEFTOVERS.lot.key),
         title: KEYSLEFTOVERS.lot.title,
