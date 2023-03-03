@@ -55,6 +55,10 @@ export const useColumns = (
         ...getColumnPropsHoc(KEYSLEFTOVERS.numDocument.key),
         title: 'Номер документа',
     });
+    if (!isMSC) {
+        columns.push(getColumnPropsHoc(KEYSLEFTOVERS.fraction.key));
+        columns.push(getColumnPropsHoc(KEYSLEFTOVERS.materialGroup.key));
+    }
     columns.push(getColumnPropsHoc(KEYSLEFTOVERS.workpieceType.key));
     columns.push(getColumnPropsHoc(KEYSLEFTOVERS.state.key));
     columns.push({
