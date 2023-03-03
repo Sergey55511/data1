@@ -15,35 +15,7 @@ export const useData = (
     setIsValidated: Dispatch<SetStateAction<boolean>>,
 ) => {
     const { loginStore, OperationStore } = useStores();
-    const storeId = loginStore.user.storeId;
-    const workpieceType = useQuery(
-        ['workpieceType', storeId],
-        () => api.getWorkpieceType({ storeId }),
-        { enabled: !!storeId },
-    );
-    const grade = useQuery(['grade', storeId], () => api.getGrades({ storeId }), {
-        enabled: !!storeId,
-    });
-    const color = useQuery(['color', storeId], () => api.getColors({ storeId }), {
-        enabled: !!storeId,
-    });
-    const sizeRange = useQuery(
-        ['sizeRange', storeId],
-        () => api.getSizeRange({ storeId }),
-        { enabled: !!storeId },
-    );
-    const length = useQuery(['length', storeId], () => api.getLength({ storeId }), {
-        enabled: !!storeId,
-    });
-    const channel = useQuery(['channel', storeId], () => api.getChannel(), {
-        enabled: !!storeId,
-    });
-    const type = useQuery(['type', storeId], () => api.getTypes({ storeId }), {
-        enabled: !!storeId,
-    });
-    const state = useQuery(['state', storeId], () => api.getStates(), {
-        enabled: !!storeId,
-    });
+
     const maxLot = useQuery(['maxLot', loginStore.user.storeId], getMaxLot, {
         enabled: !!loginStore.user.storeId,
     });
@@ -91,7 +63,6 @@ export const useData = (
                 widthIn: getNumber(item.widthIn.value),
                 stateId: getNumber(item.stateId.value),
                 widthInDocument: getNumber(item.widthInDocument.value),
-                countItemsIn: getNumber(item.countItemsIn.value),
                 moneyIn: getNumber(item.moneyIn.value),
                 lengthId: getNumber(item.lengthId.value),
                 channelId: getNumber(item.channelId.value),
@@ -115,15 +86,7 @@ export const useData = (
     );
 
     return {
-        workpieceType,
-        grade,
-        color,
-        sizeRange,
-        length,
-        channel,
-        type,
         submitMutation,
-        state,
         maxLot,
     };
 };

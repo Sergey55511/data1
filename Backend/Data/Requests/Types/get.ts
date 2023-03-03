@@ -2,13 +2,14 @@ import { NextApiRequest } from 'next';
 import { iUser } from '../../../../Shared/Types/interfaces';
 import { getFilters } from '../../../Helpers/getQueryParam';
 import { tPrisma } from '../../../types';
+import { dal } from './Dal';
 
 export const getTypes = <T>(
     prisma: tPrisma,
     req: NextApiRequest,
     user: iUser,
 ): Promise<T> => {
-    const params = getFilters(req.query, user);
+    const data = dal(req.query);
 
     return prisma.types.findMany({
         select: {
@@ -17,7 +18,7 @@ export const getTypes = <T>(
         },
         where: {
             active: true,
-            // Bridge: { some: params },
+            WorkPieceTypeTypeBridge: { some: { workpieceTypeId: data.workpieceTypeId } },
         },
         orderBy: { type: 'asc' },
     }) as any;

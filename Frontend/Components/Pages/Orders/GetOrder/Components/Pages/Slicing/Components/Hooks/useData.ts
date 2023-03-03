@@ -21,7 +21,7 @@ export const useData = (
     const stateResult = useQuery(
         ['state', stateId],
         () => {
-            return getStates(stateId);
+            return getStates({ stateId });
         },
         {
             enabled: !!stateId,

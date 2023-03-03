@@ -57,7 +57,10 @@ export class ListsStore {
             this.errorStore.setError(err as iError);
         }
     });
-    getTypes = flow(function* (this: ListsStore, filters: iQueryFilters) {
+    getTypes = flow(function* (
+        this: ListsStore,
+        filters: Parameters<typeof api.getTypes>[0],
+    ) {
         try {
             this.types = yield api.getTypes(filters);
         } catch (err) {

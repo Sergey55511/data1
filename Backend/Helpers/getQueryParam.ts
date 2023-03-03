@@ -1,4 +1,3 @@
-import { NextApiRequest } from 'next';
 import { iQueryFilters, iUser } from '../../Shared/Types/interfaces';
 
 export const getQueryParam = (value?: number) => (value ? +value! : undefined);

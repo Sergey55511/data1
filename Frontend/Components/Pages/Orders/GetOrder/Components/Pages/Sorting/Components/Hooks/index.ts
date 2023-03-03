@@ -60,15 +60,10 @@ export const getRootLists = async (
     setGrade: (value: SetStateAction<iGrade[]>) => void,
     storeId?: number,
 ) => {
-    if (storeId)
-        listsStore.getTypes({
-            storeId,
-            operationId: OPERATIONS.sorting.id,
-        });
+    if (storeId) listsStore.getTypes({});
     const grade = await listsStore.getGrades({
         storeId,
         operationId: OPERATIONS.sorting.id,
-        // typeId: +state.typeId.value,
     });
 
     setGrade(grade);

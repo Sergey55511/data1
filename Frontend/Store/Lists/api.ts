@@ -128,12 +128,19 @@ export const getOperations = (
     }).then((res) => res.data as iOperation[]);
 };
 
-export const getStates = (stateId?: number[]) => {
+export const getStates = ({
+    stateId,
+    workpieceTypeId,
+}: {
+    stateId?: number[];
+    workpieceTypeId?: number | string;
+}) => {
     return axios({
         url: `/api/list/state`,
         method: 'GET',
         params: {
             stateId,
+            workpieceTypeId,
         },
     }).then((res) => res.data as iState[]);
 };
@@ -152,11 +159,11 @@ export const getGradesWorpieceType = (workpieceTypeId?: number) => {
         params: { workpieceTypeId },
     }).then((res) => res.data as iGrade[]);
 };
-export const getTypes = (filters: iQueryFilters) => {
-    const params = getQueryParams(filters);
+export const getTypes = (params: { workpieceTypeId?: string | number }) => {
     return axios({
-        url: `/api/list/types${params}`,
+        url: `/api/list/types`,
         method: 'GET',
+        params,
     }).then((res) => res.data as iType[]);
 };
 export const getColors = (filters: iQueryFilters) => {

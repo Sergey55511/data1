@@ -114,6 +114,8 @@ model Bridge {
   operationId     Int?
   WorkPieceType   WorkpieceType? @relation(fields: [workpieceTypeId], references: [id], onDelete: NoAction)
   workpieceTypeId Int?
+  State           State?         @relation(fields: [stateId], references: [id], onDelete: NoAction)
+  stateId         Int?
   Type            Types?         @relation(fields: [typeId], references: [id], onDelete: NoAction)
   typeId          Int?
   Grade           Grade?         @relation(fields: [gradeId], references: [id], onDelete: NoAction)
@@ -198,11 +200,12 @@ model StoreOperationsBridge {
 }
 
 model Types {
-  id     Int      @id @default(autoincrement())
-  type   String
-  active Boolean  @default(true)
-  Data   Data[]
-  Bridge Bridge[]
+  id                      Int                       @id @default(autoincrement())
+  type                    String
+  active                  Boolean                   @default(true)
+  Data                    Data[]
+  Bridge                  Bridge[]
+  WorkPieceTypeTypeBridge WorkPieceTypeTypeBridge[]
 }
 
 model Grade {
@@ -262,6 +265,15 @@ model OperationWorkPieceTypeBridge {
   active          Boolean        @default(true)
   workpieceTypeId Int?
   operationsId    Int?
+}
+
+model WorkPieceTypeTypeBridge {
+  id              Int            @id @default(autoincrement())
+  WorkpieceType   WorkpieceType? @relation(fields: [workpieceTypeId], references: [id], onDelete: NoAction)
+  workpieceTypeId Int?
+  Type            Types?         @relation(fields: [typeId], references: [id], onDelete: NoAction)
+  typeId          Int?
+  active          Boolean        @default(true)
 }
 
 model WorkPieceTypeGradeBridge {
@@ -341,6 +353,7 @@ model WorkpieceType {
   FullModels                   FullModels[]
   OperationWorkPieceTypeBridge OperationWorkPieceTypeBridge[]
   WorkPieceTypeGradeBridge     WorkPieceTypeGradeBridge[]
+  WorkPieceTypeTypeBridge      WorkPieceTypeTypeBridge[]
 }
 
 model Productions {
@@ -359,6 +372,7 @@ model State {
   Data                 Data[]
   StateOperationBridge StateOperationBridge[]
   DataProduct          DataProduct[]
+  Bridge               Bridge[]
 }
 
 model Channel {

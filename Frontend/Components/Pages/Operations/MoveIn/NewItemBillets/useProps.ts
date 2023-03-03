@@ -14,7 +14,6 @@ export interface iState {
     sizeRangeId: iField;
     widthIn: iField;
     widthInDocument: iField;
-    countItemsIn: iField;
     moneyIn: iField;
     lengthId: iField;
     channelId: iField;
@@ -66,11 +65,10 @@ export const useProps = () => {
                     true,
                     false,
                 ),
-                countItemsIn: new Field('countItemsIn', 'шт.', true, false),
                 moneyIn: new Field('moneyIn', 'Стоимость', true, false),
                 lengthId: new Field('lengthId', 'Длинна', true, true),
-                channelId: new Field('channelId', 'Канал', true, true),
-                typeId: new Field('typeId', 'Тип', true, true),
+                channelId: new Field('channelId', 'Канал', false, true),
+                typeId: new Field('typeId', 'Тип', false, true),
                 duplicate: false,
             };
             const res: iState[] = [...prev, newRow];

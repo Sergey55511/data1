@@ -114,17 +114,19 @@ export const useItems = () => {
     });
 
     const operationChildren = [];
-    if (!isMSC)
+    if (!isMSC) {
         operationChildren.push({
             label: 'Приход сырья',
             key: ROUTES.newItem,
             icon: <ImportOutlined />,
         });
-    operationChildren.push({
-        label: 'Приход заготовок',
-        key: ROUTES.newItemBillets,
-        icon: <ImportOutlined />,
-    });
+        operationChildren.push({
+            label: 'Приход заготовок',
+            key: ROUTES.newItemBillets,
+            icon: <ImportOutlined />,
+        });
+    }
+
     operationChildren.push({
         label: 'Отгрузка',
         key: ROUTES.moveout,
