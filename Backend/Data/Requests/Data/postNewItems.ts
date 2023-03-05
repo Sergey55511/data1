@@ -13,6 +13,7 @@ export const postNewItems = async <T>(
     const isSetArticleId = req.body.isSetArticleId;
     let pp: number | undefined;
     let articleId: number | undefined;
+
     if (isSetNewPP) {
         const queryMaxPP = await prisma.$queryRaw`SELECT max(pp) as maxpp FROM "Data";`;
         pp = Array.isArray(queryMaxPP) ? queryMaxPP[0]?.maxpp : 0;

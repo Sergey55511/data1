@@ -141,7 +141,7 @@ export const useProps = (props: iProps) => {
                 ...data,
             });
 
-        await OperationStore.moveToWork([data]);
+        await OperationStore.moveToWork([data], () => 1, true);
         if (loginStore.user.storeId) {
             if (operation != OPERATIONS.getOut.id)
                 await OperationStore.getOrders(loginStore.user.storeId!);

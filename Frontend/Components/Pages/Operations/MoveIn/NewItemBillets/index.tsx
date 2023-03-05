@@ -3,9 +3,7 @@ import { Title } from '../../../../Shared/Title';
 import { useProps } from './useProps';
 import { Wrapper } from './style';
 import { InputNumber } from '../../../../Shared/InputNumber';
-import { Row } from '../../../../Shared/Row';
 import { InputField } from '../../../../Shared/InputField';
-import { SelectField } from '../../../../Shared/SelectField';
 import { RowWrapper } from './RowWrapper';
 
 export const NewItemBillets = () => {

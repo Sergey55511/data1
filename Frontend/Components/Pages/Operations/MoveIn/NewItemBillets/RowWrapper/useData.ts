@@ -38,7 +38,7 @@ export const useData = ({
 
     const grade = useQuery(
         ['grade', index, storeId, workpieceTypeId],
-        () => api.getGrades({ storeId }),
+        () => api.getGrades({ storeId, workpieceTypeId: +workpieceTypeId }),
         {
             enabled: !!(storeId && workpieceTypeId),
         },
