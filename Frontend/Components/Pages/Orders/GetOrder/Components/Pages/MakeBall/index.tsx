@@ -33,6 +33,7 @@ export const MakeBall = observer((props: iProps) => {
                         sizeRange={params.sizeRange}
                         grades={params.grades}
                         removeRow={params.removeRow}
+                        keyArrowHandlers={params.keyArrowHandlers}
                     />
                 ))}
             </div>
