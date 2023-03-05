@@ -186,9 +186,7 @@ export const GetOrderSwitcher = ({
                 />
             );
         case OPERATIONS.grindingSuper.id:
-            return (
-                <OneToOne record={record} stateId={STATE.grindedSuper.id} isCheckLosses />
-            );
+            return <Formation record={record} stateId={STATE.grindedSuper.id} />;
         case OPERATIONS.polishing.id:
             return <OneToOne record={record} stateId={STATE.polished.id} isCheckLosses />;
         case OPERATIONS.slice.id:

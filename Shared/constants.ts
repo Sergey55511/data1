@@ -88,6 +88,7 @@ export const WORKPIECETYPE = {
     defect: { id: 4 },
     formated: { id: 8 }, //Кусанка
     cylinder: { id: 12 }, //цилиндр
+    grindingFormated: { id: 14 }, //Шлифовка кусанка
     bead: { id: 15 }, //бусина
     minaret: { id: 17 },
     prunes: { id: 23 }, //обрезки
