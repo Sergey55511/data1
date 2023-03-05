@@ -1,5 +1,6 @@
 import { OPERATIONS, STATE } from '../../../../../../Shared/constants';
 import { iData } from '../../../../../../Shared/Types/interfaces';
+import { Formation } from './Pages/Formation';
 import { MakeBall } from './Pages/MakeBall';
 import { MakeMinalets } from './Pages/makeMinalets';
 import { Slicing } from './Pages/Slicing';
@@ -162,7 +163,7 @@ export const GetOrderSwitcher = ({
                 />
             );
         case OPERATIONS.formation.id:
-            return <OneToOne record={record} stateId={STATE.formated.id} isCheckLosses />;
+            return <Formation record={record} stateId={STATE.formated.id} />;
         case OPERATIONS.turning.id:
             return <OneToOne record={record} stateId={STATE.turned.id} isCheckLosses />;
         case OPERATIONS.makeBall.id:

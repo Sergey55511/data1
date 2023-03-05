@@ -1,17 +1,15 @@
-import { iGrade, iSizeRange } from '../../../../../../../../../Shared/Types/interfaces';
 import { InputField } from '../../../../../../../Shared/InputField';
 import { InputNumber } from '../../../../../../../Shared/InputNumber';
 import { Row } from '../../../../../../../Shared/Row';
 import { SelectField } from '../../../../../../../Shared/SelectField';
 import { iState, useProps } from '../useProps';
+import { useData } from './useData';
 
 export const RowWrapper = ({
     state,
     index,
     isLoading,
     onChange,
-    sizeRange,
-    grades,
     removeRow,
     copyRow,
     keyArrowHandlers,
@@ -19,13 +17,12 @@ export const RowWrapper = ({
     state: iState;
     index: number;
     isLoading: boolean;
-    onChange: (v: string | number, index: number, fieldName: keyof iState) => void;
+    onChange: ReturnType<typeof useProps>['onChange'];
     copyRow: (index: number) => void;
-    sizeRange: iSizeRange[];
-    grades: iGrade[];
     removeRow: (index: number) => void;
     keyArrowHandlers: ReturnType<typeof useProps>['keyArrowHandlers'];
 }) => {
+    const { sizeRange } = useData();
     return (
         <Row
             key={index}
@@ -37,20 +34,9 @@ export const RowWrapper = ({
                         placeholder={state.sizeRange.placeholder}
                         value={+state.sizeRange.value || undefined}
                         onChange={(v) => onChange(v, index, 'sizeRange')}
-                        options={sizeRange?.map((item) => ({
+                        options={sizeRange.data?.map((item) => ({
                             value: item.id,
                             caption: item.sizeRange,
-                        }))}
-                    />
-                </InputField>,
-                <InputField key="grade" isError={state.grade.isError}>
-                    <SelectField
-                        placeholder={state.grade.placeholder}
-                        value={+state.grade.value || undefined}
-                        onChange={(v) => onChange(v, index, 'grade')}
-                        options={grades?.map((item) => ({
-                            value: item.id,
-                            caption: item.grade,
                         }))}
                     />
                 </InputField>,
@@ -68,6 +54,7 @@ export const RowWrapper = ({
                 </InputField>,
             ]}
             removeRow={() => removeRow(index)}
+            isDuplicate={state.duplicate}
         />
     );
 };

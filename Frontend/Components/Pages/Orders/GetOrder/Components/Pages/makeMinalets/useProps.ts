@@ -41,7 +41,6 @@ export const useProps = ({ record, stateId }: { record: iData; stateId: number }
     const router = useRouter();
 
     const getIdValue = (value: any) => (value ? +value : undefined);
-    const setNumber = (value: any) => (value ? +value : 0);
 
     useEffect(() => {}, [loginStore.user.storeId]);
 

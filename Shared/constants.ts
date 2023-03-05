@@ -86,6 +86,7 @@ export const WORKPIECETYPE = {
     losses: { id: 2 },
     garbage: { id: 3 },
     defect: { id: 4 },
+    formated: { id: 8 }, //Кусанка
     cylinder: { id: 12 }, //цилиндр
     bead: { id: 15 }, //бусина
     minaret: { id: 17 },
