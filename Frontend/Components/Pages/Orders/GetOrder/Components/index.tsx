@@ -1,6 +1,7 @@
 import { OPERATIONS, STATE } from '../../../../../../Shared/constants';
 import { iData } from '../../../../../../Shared/Types/interfaces';
 import { Formation } from './Pages/Formation';
+import { GrindingFormated } from './Pages/GrindingFormated';
 import { MakeBall } from './Pages/MakeBall';
 import { MakeMinalets } from './Pages/makeMinalets';
 import { Slicing } from './Pages/Slicing';
@@ -186,7 +187,7 @@ export const GetOrderSwitcher = ({
                 />
             );
         case OPERATIONS.grindingSuper.id:
-            return <Formation record={record} stateId={STATE.grindedSuper.id} />;
+            return <GrindingFormated record={record} stateId={STATE.grindedSuper.id} />;
         case OPERATIONS.polishing.id:
             return <OneToOne record={record} stateId={STATE.polished.id} isCheckLosses />;
         case OPERATIONS.slice.id:
