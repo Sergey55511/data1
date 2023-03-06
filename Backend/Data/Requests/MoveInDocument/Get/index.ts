@@ -13,8 +13,6 @@ export const getMoveInDocument = <T>(
 ): PrismaPromise<T> => {
     const data = dal(req.query);
 
-    console.log('date', moment(data.end).format('YYYY-MM-DD'));
-
     const storeId = +user.storeId;
     return prisma.data.groupBy({
         by: ['date', 'lot', 'numDocument'],
