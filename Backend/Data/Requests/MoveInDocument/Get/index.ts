@@ -24,5 +24,6 @@ export const getMoveInDocument = <T>(
             storeId,
             numDocument: { not: null },
         },
+        orderBy: { date: 'desc' },
     }) as any;
 };
