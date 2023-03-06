@@ -9,19 +9,18 @@ const prisma1 = new PrismaClient({
         },
     },
 });
-const prisma2 = new PrismaClient({
-    datasources: {
-        db: {
-            url: process.env.DATABASE_URL2,
-        },
-    },
-});
+// const prisma2 = new PrismaClient({
+//     datasources: {
+//         db: {
+//             url: process.env.DATABASE_URL2,
+//         },
+//     },
+// });
 
 export const createList = async (prisma: tPrisma, url = '') => {
-    const data = await prisma.data.findMany();
+    console.log('process.env.DATABASE_URL1', process.env.DATABASE_URL1);
+
     await workpieceType(prisma);
-    await prisma.data.deleteMany();
-    await prisma.data.createMany({ data });
     console.log(`url done`, url);
 };
 

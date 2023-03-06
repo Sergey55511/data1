@@ -1,14 +1,13 @@
 import { useQuery } from '@tanstack/react-query';
-import { useStores } from '../../../Store/useStores';
+import { useStores } from '../../../../Store/useStores';
 import { FilterValue } from 'antd/lib/table/interface';
 import { useState } from 'react';
-import { iData } from '../../../../Shared/Types/interfaces';
+import { iData } from '../../../../../Shared/Types/interfaces';
 import type { TableProps } from 'antd/es/table';
 import { useColumns } from './useСolumns';
-import moment, { Moment } from 'moment';
-import { tValue } from '../../Shared/InputNumber';
-import { getOperations } from '../../../Store/Lists/api';
-import * as api from '../../../../Frontend/Store/OperationStore/Api';
+import moment from 'moment';
+import { tValue } from '../../../Shared/InputNumber';
+import * as api from '../../../../Store/OperationStore/Api';
 
 export interface iFilterDate {
     start: moment.Moment | null;
@@ -23,8 +22,6 @@ export const useProps = () => {
         end: moment(),
     });
     const [lot, setLot] = useState<tValue>();
-    const [pp, setPP] = useState<tValue>();
-    const [operationId, setOperationId] = useState<number>();
     const getNumber = (v: any) => (v ? +v : undefined);
 
     const handleChange: TableProps<iData>['onChange'] = (
@@ -36,24 +33,17 @@ export const useProps = () => {
         // setSortedInfo(sorter as SorterResult<DataType>);
     };
 
-    const listOperations = useQuery(
+    const listMoveInDocuments = useQuery(
         ['listOperations', loginStore.user.storeId],
         () =>
-            api.listOperations({
+            api.listMoveInDocument({
                 start: filterDate.start!,
                 end: filterDate.end!,
                 lot: getNumber(lot),
-                pp: getNumber(pp),
-                operationId: getNumber(operationId),
             }),
         { enabled: !!loginStore.user.storeId },
     );
-    const operations = useQuery(
-        ['operations', loginStore.user.storeId],
-        () => getOperations(loginStore.user.storeId),
-        { enabled: !!loginStore.user.storeId },
-    );
-    const data = listOperations.data?.map((item, index) => ({
+    const data = listMoveInDocuments.data?.map((item, index) => ({
         ...item,
         key: index,
         date: moment(item.date).format('DD.MM.YYYY'),
@@ -61,7 +51,7 @@ export const useProps = () => {
     const { columns } = useColumns(filters, data);
 
     return {
-        listOperations,
+        listMoveInDocuments,
         handleChange,
         filters,
         setFilters,
@@ -71,10 +61,5 @@ export const useProps = () => {
         data,
         lot,
         setLot,
-        pp,
-        setPP,
-        operations,
-        operationId,
-        setOperationId,
     };
 };

@@ -8,8 +8,9 @@ import { MoveOut } from './Operations/MoveOut';
 import { MoveIn } from './Operations/MoveIn/SharedStoreItems';
 import { MoveInDetales } from './Operations/MoveIn/SharedStoreItems/MoveInDetales';
 import { Assemble } from './Assemble';
-import { ListOperations } from './ListOperations';
+import { ListOperations } from './Reports/ListOperations';
 import { NewItemBillets } from './Operations/MoveIn/NewItemBillets';
+import { MoveInDocument } from './Reports/MoveInDocuments';
 
 export const PageSwitcher = ({ page }: { page: tPages }) => {
     switch (page) {
@@ -17,6 +18,8 @@ export const PageSwitcher = ({ page }: { page: tPages }) => {
             return <NewItemBillets />;
         case pages.listOperations:
             return <ListOperations />;
+        case pages.moveInDocuments:
+            return <MoveInDocument />;
         case pages.products:
             return <Products />;
         case pages.leftover:

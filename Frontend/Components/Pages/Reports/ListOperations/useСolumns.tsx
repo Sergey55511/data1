@@ -1,11 +1,11 @@
 import { ColumnsType, FilterValue } from 'antd/es/table/interface';
 import moment from 'moment';
-import { STORES } from '../../../../Shared/constants';
-import { iData } from '../../../../Shared/Types/interfaces';
-import { useStores } from '../../../Store/useStores';
-import { KEYSLEFTOVERS } from '../../Shared/Table/constants';
-import { getColumnProps } from '../../Shared/Table/Helpers/getColumnProps';
-import { getFilteredleftovers } from '../../Shared/Table/Helpers/getFilteredleftovers';
+import { STORES } from '../../../../../Shared/constants';
+import { iData } from '../../../../../Shared/Types/interfaces';
+import { useStores } from '../../../../Store/useStores';
+import { KEYSLEFTOVERS } from '../../../Shared/Table/constants';
+import { getColumnProps } from '../../../Shared/Table/Helpers/getColumnProps';
+import { getFilteredleftovers } from '../../../Shared/Table/Helpers/getFilteredleftovers';
 
 export const useColumns = (
     filters: Record<string, FilterValue | null>,

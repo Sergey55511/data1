@@ -77,7 +77,9 @@ export const MoveIn = observer(() => {
                 onRow={(record, _rowIndex) => {
                     return {
                         onDoubleClick: (_event) => {
-                            router.push(`${ROUTES.movein}/${record.numDocument}`);
+                            router.push(
+                                `${ROUTES.movein}/${encodeURI(record.numDocument)}`,
+                            );
                         },
                     };
                 }}

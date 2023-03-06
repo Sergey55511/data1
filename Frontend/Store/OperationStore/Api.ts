@@ -22,7 +22,18 @@ export const listOperations = (params: {
     operationId?: number;
 }) => {
     return axios({
-        url: `/api/data/getListOperations`,
+        url: `/api/data/reports/listOperations`,
+        method: 'GET',
+        params,
+    }).then((res) => res.data as iData[]);
+};
+export const listMoveInDocument = (params: {
+    start: moment.Moment;
+    end: moment.Moment;
+    lot?: number;
+}) => {
+    return axios({
+        url: `/api/data/reports/moveInDocument`,
         method: 'GET',
         params,
     }).then((res) => res.data as iData[]);
