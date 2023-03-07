@@ -38,7 +38,7 @@ export const SelectRecipient = ({
         addRecipient,
         addRecipientHandler,
         numDocument,
-        setNumDocument,
+        setNumDocumentHandler,
     } = useProps(recipient, setRecipientId);
     return (
         <Modal open onCancel={onCancel} footer={false}>
@@ -48,7 +48,7 @@ export const SelectRecipient = ({
                     <div className="inputWrapper">
                         <Input
                             value={numDocument}
-                            onChange={(e) => setNumDocument(e.target.value)}
+                            onChange={setNumDocumentHandler}
                             allowClear
                             placeholder="№ документа"
                         />

@@ -4,6 +4,7 @@ import { Formation } from './Pages/Formation';
 import { GrindingFormated } from './Pages/GrindingFormated';
 import { MakeBall } from './Pages/MakeBall';
 import { MakeMinalets } from './Pages/makeMinalets';
+import { Patifon } from './Pages/Patifon';
 import { Slicing } from './Pages/Slicing';
 import { Sorting } from './Pages/Sorting';
 import { SortingElements } from './Pages/SortingElements';
@@ -165,6 +166,8 @@ export const GetOrderSwitcher = ({
             );
         case OPERATIONS.formation.id:
             return <Formation record={record} stateId={STATE.formated.id} />;
+        case OPERATIONS.patifon.id:
+            return <Patifon record={record} stateId={STATE.balled.id} />;
         case OPERATIONS.turning.id:
             return <OneToOne record={record} stateId={STATE.turned.id} isCheckLosses />;
         case OPERATIONS.makeBall.id:

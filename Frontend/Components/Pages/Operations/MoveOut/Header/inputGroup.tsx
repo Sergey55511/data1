@@ -48,7 +48,7 @@ export const InputGroup = ({
                 <div className="numShipment">
                     <Input
                         value={params.numDocument}
-                        onChange={(e) => params.setNumDocument(e.target.value)}
+                        onChange={params.setNumDocumentHandler}
                         placeholder="Номер документа"
                     />
                 </div>

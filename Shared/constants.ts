@@ -43,6 +43,7 @@ export const OPERATIONS = {
     resorting: { id: 43 }, //Пересорт
     getOut: { id: 44 }, //Выбытие
     inventory: { id: 45 }, //Инвернаризация
+    patifon: { id: 46 }, //Патифон
 };
 export const STATE = {
     washed: { id: 1 },
@@ -92,6 +93,7 @@ export const WORKPIECETYPE = {
     bead: { id: 15 }, //бусина
     minaret: { id: 17 },
     prunes: { id: 23 }, //обрезки
+    crumpledBall: { id: 24 }, //Мятый шар (МШ)
 };
 export const GRADE = {
     mix: { id: 1 },

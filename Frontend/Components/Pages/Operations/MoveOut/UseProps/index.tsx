@@ -1,11 +1,11 @@
-import { useEffect, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 import { iData } from '../../../../../../Shared/Types/interfaces';
 import { FilterValue } from 'antd/lib/table/interface';
 import { useStores } from '../../../../../Store/useStores';
 import { GRADE, OPERATIONS, STATE } from '../../../../../../Shared/constants';
 import { myModal } from '../../../../Shared/MyModal';
 import { ModalContent } from '../AddRecipient';
-import { notification } from 'antd';
+import { message, notification } from 'antd';
 import { prepareDataTable } from '../../../../Helpers';
 import { dataInventoryPrepare } from './dataInventoryPrepare';
 
@@ -240,6 +240,15 @@ export const useProps = ({ type }: iProps) => {
         selectedRowKeys: selectedRows,
     };
 
+    const setNumDocumentHandler = (e: ChangeEvent<HTMLInputElement>) => {
+        const value = e.target.value;
+        if (value.split('/').length > 1) {
+            message.error('Не допустим ввод символа /');
+            return;
+        }
+        setNumDocument(e.target.value);
+    };
+
     return {
         rowSelection,
         isMixing,
@@ -249,7 +258,7 @@ export const useProps = ({ type }: iProps) => {
         setRecipient,
         addRecipient,
         numDocument,
-        setNumDocument,
+        setNumDocumentHandler,
         buttonState,
         setButtonState,
         selectedRows,
