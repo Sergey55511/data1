@@ -7,15 +7,18 @@ export function TableApp<T extends object>(rest: TableProps<T>) {
     const [y, setY] = useState<number | undefined>(undefined);
 
     useLayoutEffect(() => {
-        console.log('hello');
-
         const getY = () => {
             if (!wrapperRef) return;
             const heightWrapper = wrapperRef.offsetHeight;
             const heightHeader =
                 wrapperRef.querySelector<HTMLElement>('.ant-table-thead')?.offsetHeight ||
                 0;
-            const height = heightWrapper - heightHeader;
+            const heightPagination =
+                wrapperRef.querySelector<HTMLElement>('.ant-pagination')?.offsetHeight ||
+                0;
+            const marginPagination = 32;
+            const height =
+                heightWrapper - heightHeader - heightPagination - marginPagination;
             setY(height);
         };
         getY();

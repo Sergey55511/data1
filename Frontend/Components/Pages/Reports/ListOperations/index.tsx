@@ -9,17 +9,19 @@ export const ListOperations = observer(() => {
     const props = useProps();
 
     return (
-        <Wrapper>
-            <MenuLeftovers
-                text="Лист операций:"
-                setFilters={props.setFilters}
-                content={<DateFilter {...props} />}
-            />
+        <>
+            <Wrapper>
+                <MenuLeftovers
+                    text="Лист операций:"
+                    setFilters={props.setFilters}
+                    content={<DateFilter {...props} />}
+                />
+            </Wrapper>
             <TableApp
                 columns={props.columns}
                 dataSource={props.data}
                 onChange={props.handleChange}
             />
-        </Wrapper>
+        </>
     );
 });
