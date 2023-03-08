@@ -16,11 +16,11 @@ export const Orders = observer(({ isGetOut }: { isGetOut?: boolean }) => {
 
     const title = isGetOut ? 'Выбытие:' : 'Задачи в работе:';
     return (
-        <Wrapper>
+        <>
             <div>
                 <Title text={title} />
             </div>
             <OrdersTable isGetOut={isGetOut} />
-        </Wrapper>
+        </>
     );
 });
