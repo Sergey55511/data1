@@ -4,7 +4,6 @@ import { Wrapper } from './style';
 
 export function TableApp<T extends object>(rest: TableProps<T>) {
     const [wrapperRef, setWrapperRef] = useState<HTMLElement>();
-    // const [wrapperRef, setWrapperRef] = useState<HTMLElement>();
     const [y, setY] = useState<number | undefined>(undefined);
 
     useLayoutEffect(() => {
