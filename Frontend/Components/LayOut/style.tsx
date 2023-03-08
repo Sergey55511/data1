@@ -16,6 +16,9 @@ export const Wrapper = styled.div`
             flex: 1;
             border-radius: 4px;
             padding: 24px;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
         }
     }
 `;

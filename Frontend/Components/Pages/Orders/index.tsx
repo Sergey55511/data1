@@ -20,9 +20,7 @@ export const Orders = observer(({ isGetOut }: { isGetOut?: boolean }) => {
             <div>
                 <Title text={title} />
             </div>
-            <div>
-                <OrdersTable isGetOut={isGetOut} />
-            </div>
+            <OrdersTable isGetOut={isGetOut} />
         </Wrapper>
     );
 });
