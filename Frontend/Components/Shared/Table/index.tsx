@@ -4,6 +4,7 @@ import { Wrapper } from './style';
 
 export function TableApp<T extends object>(rest: TableProps<T>) {
     const [wrapperRef, setWrapperRef] = useState<HTMLElement>();
+    // const [wrapperRef, setWrapperRef] = useState<HTMLElement>();
     const [y, setY] = useState<number | undefined>(undefined);
 
     useLayoutEffect(() => {
@@ -24,7 +25,7 @@ export function TableApp<T extends object>(rest: TableProps<T>) {
         getY();
         window.addEventListener('resize', getY);
         return () => window.removeEventListener('resize', getY);
-    }, [wrapperRef]);
+    }, [wrapperRef, rest.dataSource]);
 
     return (
         <Wrapper
