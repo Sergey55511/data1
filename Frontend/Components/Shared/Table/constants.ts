@@ -31,5 +31,5 @@ export const KEYSLEFTOVERS = {
     countItemsOut: { key: 'countItemsOut', title: 'Отгрузка шт.' },
     code: { key: 'code', title: '' },
     defect: { key: 'defect', title: '' },
-    userLogin: { key: 'userLogin ', title: 'Пользователь' },
+    userLogin: { key: 'userLogin', title: 'Пользователь' },
 };

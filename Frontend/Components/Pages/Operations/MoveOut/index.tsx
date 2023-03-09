@@ -13,7 +13,7 @@ export const MoveOut = observer((props: iProps) => {
         <Wrapper>
             <Header {...{ params, props }} />
             <ButtonGroup params={params} />
-            <div>
+            <div className="tableWrapper">
                 {params.buttonState == 'lefovers' && (
                     <TableLeftOvers
                         {...{

@@ -52,22 +52,10 @@ export const MoveIn = observer(() => {
         getColumnProps<iData>(dataIndex, filteredData, filters);
 
     const columns: ColumnsType<iShared> = [
-        {
-            ...getColumnPropsHoc(KEYSLEFTOVERS.date.key),
-            title: 'Дата',
-        },
-        {
-            ...getColumnPropsHoc(KEYSLEFTOVERS.userLogin.key),
-            title: 'Отправил',
-        },
-        {
-            ...getColumnPropsHoc(KEYSLEFTOVERS.store.key),
-            title: 'Отправитель',
-        },
-        {
-            ...getColumnPropsHoc(KEYSLEFTOVERS.numDocument.key),
-            title: 'Номер документа',
-        },
+        getColumnPropsHoc(KEYSLEFTOVERS.date.key),
+        getColumnPropsHoc(KEYSLEFTOVERS.userLogin.key),
+        getColumnPropsHoc(KEYSLEFTOVERS.store.key),
+        getColumnPropsHoc(KEYSLEFTOVERS.numDocument.key),
     ];
 
     return (
