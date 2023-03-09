@@ -1,7 +1,7 @@
 import { PrismaPromise } from '@prisma/client';
 import jwt from 'jsonwebtoken';
-import { KEY } from '../../../../Services/createJWT';
 import { NextApiRequest } from 'next';
+import { KEY } from '../../../../../../Configs/jwtKey';
 import { iCookies, iDataTable, iUser } from '../../../../../../Shared/Types/interfaces';
 import { tPrisma } from '../../../../../types';
 

@@ -1,10 +1,11 @@
 import { iCookies, iUser } from '../../../Shared/Types/interfaces';
 import jwt from 'jsonwebtoken';
 import { Prisma, PrismaClient } from '@prisma/client';
-import { createJWT, KEY } from './createJWT';
+import { createJWT } from './createJWT';
 import { NextApiRequest, NextApiResponse } from 'next';
 import { MyError } from '../../../Shared/Classes/error';
 import { createAtkn } from '../../../Shared/Helpers';
+import { KEY } from '../../../Configs/jwtKey';
 
 export const varifyJWT = async (
     req: NextApiRequest,

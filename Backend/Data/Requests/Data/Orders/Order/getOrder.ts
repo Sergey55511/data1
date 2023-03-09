@@ -2,8 +2,8 @@ import jwt from 'jsonwebtoken';
 import { PrismaPromise } from '@prisma/client';
 import { NextApiRequest } from 'next';
 import { iCookies, iUser } from '../../../../../../Shared/Types/interfaces';
-import { KEY } from '../../../../Services/createJWT';
 import { tPrisma } from '../../../../../types';
+import { KEY } from '../../../../../../Configs/jwtKey';
 
 export const getOrder = <T>(prisma: tPrisma, req: NextApiRequest): PrismaPromise<T> => {
     const cookies = req.cookies as iCookies;

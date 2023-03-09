@@ -5,8 +5,7 @@ import Cookies from 'cookies';
 import { NextApiRequest, NextApiResponse } from 'next';
 import { createAtkn } from '../../../Shared/Helpers';
 import { Prisma, PrismaClient } from '@prisma/client';
-
-export const KEY = 'fb9ae69cdc6f6a3c61b91c658e9cd2f2';
+import { KEY } from '../../../Configs/jwtKey';
 
 export const createJWT = async (
     req: NextApiRequest,
