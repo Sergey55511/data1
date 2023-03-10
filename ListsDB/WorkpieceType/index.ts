@@ -2,6 +2,9 @@ import { tPrisma } from '../../Backend/types';
 import { data } from './data';
 
 export const workpieceType = async (prisma: tPrisma) => {
-    await prisma.workpieceType.deleteMany();
-    await prisma.workpieceType.createMany({ data });
+    await Promise.all(
+        data.map((item) =>
+            prisma.workpieceType.update({ data: item, where: { id: item.id } }),
+        ),
+    );
 };

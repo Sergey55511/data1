@@ -18,8 +18,6 @@ const prisma1 = new PrismaClient({
 // });
 
 export const createList = async (prisma: tPrisma, url = '') => {
-    console.log('process.env.DATABASE_URL1', process.env.DATABASE_URL1);
-
     await workpieceType(prisma);
     console.log(`url done`, url);
 };

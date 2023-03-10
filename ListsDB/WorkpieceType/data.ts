@@ -1,6 +1,6 @@
 import { Prisma } from '@prisma/client';
-
-export const data: Prisma.Enumerable<Prisma.WorkpieceTypeCreateManyInput> = [
+// : Prisma.Enumerable<Prisma.WorkpieceTypeCreateManyInput>
+export const data = [
     { id: 1, workpieceType: 'Сырец', position: 1, active: true, isShow: true },
     { id: 2, workpieceType: 'Потеря', position: 2, active: true, isShow: false },
     { id: 3, workpieceType: 'Отход', position: 3, active: true, isShow: false },
@@ -86,4 +86,5 @@ export const data: Prisma.Enumerable<Prisma.WorkpieceTypeCreateManyInput> = [
         isMinaletGroup: true,
     },
     { id: 23, workpieceType: 'Обрезки', position: 23, active: true, isShow: true },
+    { id: 24, workpieceType: 'МШ', position: 24, active: true, isShow: true },
 ];
