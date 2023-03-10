@@ -1,6 +1,6 @@
 import { observer } from 'mobx-react-lite';
 import { Title } from '../../Shared/Title';
-import { Row } from './Components/Row';
+import { RowWrapper } from './Components/Row';
 import { Wrapper } from './style';
 import { iProps, useProps } from './useProps';
 
@@ -22,7 +22,7 @@ export const Sorting = observer((props: iProps) => {
             <div>
                 {params.state.map((item, index) => {
                     return (
-                        <Row
+                        <RowWrapper
                             key={index}
                             grade={params.grade}
                             index={index}
@@ -30,6 +30,8 @@ export const Sorting = observer((props: iProps) => {
                             setState={params.setState}
                             isLoading={params.isLoading}
                             removeRow={params.removeRow}
+                            copyRow={params.copyRow}
+                            arrowHandler={params.arrowHandler}
                         />
                     );
                 })}

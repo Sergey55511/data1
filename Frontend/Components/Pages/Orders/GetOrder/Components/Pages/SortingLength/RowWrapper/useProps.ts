@@ -1,7 +1,7 @@
 import { useStores } from '../../../../../../../../Store/useStores';
 import { iState } from '../useProps';
 import { useQuery } from '@tanstack/react-query';
-import { getGrades, getLength } from '../../../../../../../../Store/Lists/api';
+import { getColors, getGrades, getLength } from '../../../../../../../../Store/Lists/api';
 import { Dispatch, SetStateAction } from 'react';
 import { iData } from '../../../../../../../../../Shared/Types/interfaces';
 import { useKeyArrow } from '../../../Shared/Hooks/useKeyArrow';
@@ -14,14 +14,15 @@ export interface iProps {
     state: iState;
     setState: Dispatch<SetStateAction<iState[]>>;
     record: iData;
+    arrowHandler: ReturnType<typeof useKeyArrow>;
 }
 export const useProps = ({ record, setState }: iProps) => {
     const { loginStore } = useStores();
-    const { onKeyDown, onFocus, refHandler } = useKeyArrow();
     const workpieceTypeId = record.workpieceTypeId;
 
     const onChange = (v: string | number, index: number, fieldName: keyof iState) => {
         setState((prev) => {
+            if (fieldName == 'duplicate') return prev;
             prev[index][fieldName].value = v;
             return [...prev];
         });
@@ -49,5 +50,8 @@ export const useProps = ({ record, setState }: iProps) => {
             }),
         { enabled: !!(storeId && workpieceTypeId) },
     );
-    return { length, grade, onChange, onKeyDown, onFocus, refHandler };
+    const color = useQuery(['color', storeId], () => getColors({ storeId }), {
+        enabled: !!storeId,
+    });
+    return { length, grade, onChange, color };
 };

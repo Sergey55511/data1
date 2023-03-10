@@ -1,7 +1,6 @@
 import { notification } from 'antd';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import { OPERATIONS } from '../../../../../../../../Shared/constants';
 import {
     iData,
     iField,
@@ -10,6 +9,7 @@ import {
 import { useStores } from '../../../../../../../Store/useStores';
 import { tValue } from '../../../../../../Shared/InputNumber';
 import {
+    checkDuplicate,
     getCodeOneItem,
     getTotalSum,
     sendData,
@@ -18,11 +18,14 @@ import {
 import { Field } from '../../../../../../Helpers/classes';
 import { round } from '../../../../../../../../Shared/Helpers';
 import moment from 'moment';
+import { useKeyArrow } from '../../Shared/Hooks/useKeyArrow';
 
 export interface iState {
     length: iField;
     grade: iField;
+    color: iField;
     widthIn: iField;
+    duplicate?: boolean;
 }
 export interface iProps {
     record: iData;
@@ -30,7 +33,8 @@ export interface iProps {
 }
 
 export const useProps = ({ record, stateId }: iProps) => {
-    const { OperationStore, ListsStore, loginStore } = useStores();
+    const { OperationStore } = useStores();
+    const arrowHandler = useKeyArrow();
     const [state, setState] = useState<iState[]>([]);
     const [losses, setLosses] = useState<number>(0);
     const [date, setDate] = useState<moment.Moment | undefined>(moment());
@@ -52,8 +56,9 @@ export const useProps = ({ record, stateId }: iProps) => {
             const res: iState[] = [
                 ...prev,
                 {
-                    length: new Field('length', 'Длинна'),
-                    grade: new Field('grade', 'сорт'),
+                    length: new Field('length', 'Длинна', true, true),
+                    grade: new Field('grade', 'Сорт', true, true),
+                    color: new Field('color', 'Цвет', true, true),
                     widthIn: new Field('widthIn', 'Вес гр.'),
                 },
             ];
@@ -100,14 +105,17 @@ export const useProps = ({ record, stateId }: iProps) => {
             totalSum,
         });
 
+        const getNumber = (v: any) => (v ? +v : undefined);
+
         const data: iData[] = state.map((item) => ({
             ...record,
             date,
-            lengthId: item.length.value ? +item.length.value : undefined,
+            lengthId: getNumber(item.length.value),
             widthOut: undefined,
-            widthIn: +item.widthIn.value!,
+            widthIn: getNumber(item.widthIn.value),
             fractionId: undefined,
-            gradeId: item.grade.value ? +item.grade.value : undefined,
+            gradeId: getNumber(item.grade.value),
+            colorId: getNumber(item.color.value),
             workpieceType: undefined,
             productionId: undefined,
             stateId,
@@ -141,12 +149,13 @@ export const useProps = ({ record, stateId }: iProps) => {
         moveBack,
         losses,
         isLoading,
-        state,
+        state: checkDuplicate(state) as iState[],
         removeRow,
         copyRow,
         setState,
         record,
         date,
         setDate,
+        arrowHandler,
     };
 };

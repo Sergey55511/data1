@@ -6,6 +6,7 @@ import { round } from '../../../../../../../../Shared/Helpers';
 import { iData, iField, iGrade } from '../../../../../../../../Shared/Types/interfaces';
 import { useStores } from '../../../../../../../Store/useStores';
 import {
+    checkDuplicate,
     getCodeOneItem,
     getTotalSum,
     sendData,
@@ -13,6 +14,7 @@ import {
 } from '../../../../../../Helpers';
 import { Field } from '../../../../../../Helpers/classes';
 import { tValue } from '../../../../../../Shared/InputNumber';
+import { useKeyArrow } from '../../Shared/Hooks/useKeyArrow';
 import { getRootLists } from './Components/Hooks';
 
 export interface iState {
@@ -21,6 +23,7 @@ export interface iState {
     colorId: iField;
     sizeRangeId: iField;
     widthIn: iField;
+    duplicate?: boolean;
 }
 
 export interface iProps {
@@ -30,6 +33,7 @@ export interface iProps {
 
 export const useProps = ({ record, stateId }: iProps) => {
     const { ListsStore, OperationStore, loginStore } = useStores();
+    const arrowHandler = useKeyArrow();
     const [state, setState] = useState<iState[]>([]);
     const [grade, setGrade] = useState<iGrade[]>([]);
     const [moveBack, setMoveBack] = useState<tValue>(undefined);
@@ -69,6 +73,15 @@ export const useProps = ({ record, stateId }: iProps) => {
 
     const removeRow = (index: number) => {
         setState((prev) => prev.filter((_, i) => i != index));
+    };
+
+    const copyRow = (index: number) => {
+        setState((prev) => {
+            const elem: iState = JSON.parse(JSON.stringify(prev[index]));
+            elem.widthIn.value = '';
+            prev.splice(index + 1, 0, elem);
+            return [...prev];
+        });
     };
 
     const subbmitHandler = async () => {
@@ -138,9 +151,11 @@ export const useProps = ({ record, stateId }: iProps) => {
         isLoading,
         date,
         setDate,
-        state,
+        state: checkDuplicate(state) as iState[],
         grade,
         setState,
         removeRow,
+        copyRow,
+        arrowHandler,
     };
 };

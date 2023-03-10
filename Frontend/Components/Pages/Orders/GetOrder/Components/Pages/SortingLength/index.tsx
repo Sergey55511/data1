@@ -30,6 +30,7 @@ export const SortingLength = observer((props: iProps) => {
                         isLoading={params.isLoading}
                         record={params.record}
                         key={index}
+                        arrowHandler={params.arrowHandler}
                     />
                 ))}
             </div>

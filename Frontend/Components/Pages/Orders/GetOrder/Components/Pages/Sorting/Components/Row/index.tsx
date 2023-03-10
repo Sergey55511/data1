@@ -15,28 +15,33 @@ import {
 } from '../../../../../../../../../../Shared/Types/interfaces';
 import { iState } from '../../useProps';
 import { useKeyArrow } from '../../../../Shared/Hooks/useKeyArrow';
+import { Row } from '../../../../../../../../Shared/Row';
 
-export const Row = observer(
+export const RowWrapper = observer(
     ({
         state,
         index,
         isLoading,
         removeRow,
+        copyRow,
         setState,
         grade,
+        arrowHandler,
     }: {
         state: iState;
         index: number;
         isLoading?: boolean;
         removeRow: (index: number) => void;
+        copyRow: (index: number) => void;
         setState: Dispatch<SetStateAction<iState[]>>;
         grade: iGrade[];
+        arrowHandler: ReturnType<typeof useKeyArrow>;
     }) => {
         const { ListsStore, loginStore } = useStores();
-        const { onKeyDown, onFocus, refHandler } = useKeyArrow();
         const [sizeRange, setSizeRange] = useState<iSizeRange[]>([]);
         const onChange = (v: string | number, index: number, fieldName: keyof iState) => {
             setState((prev) => {
+                if (fieldName == 'duplicate') return prev;
                 prev[index][fieldName].value = v;
                 return [...prev];
             });
@@ -48,16 +53,13 @@ export const Row = observer(
         }, [storeId, WORKPIECETYPE.stone.id]);
 
         return (
-            <Wrapper>
-                <Tooltip title="Удалить строку">
-                    <Button
-                        shape="circle"
-                        icon={<MinusOutlined />}
-                        onClick={() => removeRow(index)}
-                        loading={isLoading}
-                    />
-                </Tooltip>
-                <div className="item">
+            <Row
+                key={index}
+                isLoading={isLoading}
+                removeRow={() => removeRow(index)}
+                copyRow={() => copyRow(index)}
+                isDuplicate={state.duplicate}
+                fields={[
                     <InputField isError={state.typeId.isError}>
                         <SelectField
                             placeholder={state.typeId.placeholder}
@@ -68,9 +70,7 @@ export const Row = observer(
                                 caption: item.type,
                             }))}
                         />
-                    </InputField>
-                </div>
-                <div className="item">
+                    </InputField>,
                     <InputField isError={state.gradeId.isError}>
                         <SelectField
                             placeholder={state.gradeId.placeholder}
@@ -81,9 +81,7 @@ export const Row = observer(
                                 caption: item.grade,
                             }))}
                         />
-                    </InputField>
-                </div>
-                <div className="item">
+                    </InputField>,
                     <InputField isError={state.colorId.isError}>
                         <SelectField
                             placeholder={state.colorId.placeholder}
@@ -94,9 +92,7 @@ export const Row = observer(
                                 caption: item.color,
                             }))}
                         />
-                    </InputField>
-                </div>
-                <div className="item">
+                    </InputField>,
                     <InputField isError={state.sizeRangeId.isError}>
                         <SelectField
                             placeholder={state.sizeRangeId.placeholder}
@@ -107,9 +103,7 @@ export const Row = observer(
                                 caption: item.sizeRange,
                             }))}
                         />
-                    </InputField>
-                </div>
-                <div className="item">
+                    </InputField>,
                     <InputField isError={state.widthIn.isError}>
                         <InputNumber
                             placeholder={state.widthIn.placeholder}
@@ -117,13 +111,13 @@ export const Row = observer(
                                 onChange(v!, index, 'widthIn');
                             }}
                             value={state.widthIn.value || ''}
-                            ref={(r) => refHandler(r, index)}
-                            onKeyDown={onKeyDown}
-                            onFocus={() => onFocus(index)}
+                            ref={(r) => arrowHandler.refHandler(r, index)}
+                            onKeyDown={arrowHandler.onKeyDown}
+                            onFocus={() => arrowHandler.onFocus(index)}
                         />
-                    </InputField>
-                </div>
-            </Wrapper>
+                    </InputField>,
+                ]}
+            />
         );
     },
 );

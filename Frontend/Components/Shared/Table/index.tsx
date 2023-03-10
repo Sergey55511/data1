@@ -35,7 +35,11 @@ export function TableApp<T extends object>(rest: TableProps<T>) {
             <Table
                 {...rest}
                 scroll={{ y }}
-                pagination={{ showSizeChanger: true, pageSizeOptions: [10, 20, 50, 100] }}
+                pagination={{
+                    showSizeChanger: true,
+                    pageSizeOptions: [10, 20, 50, 100],
+                    defaultPageSize: 20,
+                }}
             />
         </Wrapper>
     );

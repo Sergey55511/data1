@@ -14,6 +14,7 @@ export const RowWrapper = observer((props: iProps) => {
             isLoading={props.isLoading}
             removeRow={() => props.removeRow(props.index)}
             copyRow={() => props.copyRow(props.index)}
+            isDuplicate={props.state.duplicate}
             fields={[
                 <InputField key="length" isError={props.state.length.isError}>
                     <SelectField
@@ -45,6 +46,21 @@ export const RowWrapper = observer((props: iProps) => {
                         }}
                     />
                 </InputField>,
+                <InputField key="color" isError={props.state.color.isError}>
+                    <SelectField
+                        placeholder={props.state.color.placeholder}
+                        value={+props.state.color.value || undefined}
+                        onChange={(v) => params.onChange(v, props.index, 'color')}
+                        options={params.color.data?.map((item) => ({
+                            value: item.id,
+                            caption: item.color,
+                        }))}
+                        selectProps={{
+                            disabled: params.color.isLoading,
+                            loading: params.color.isFetching,
+                        }}
+                    />
+                </InputField>,
                 <InputField key="widthIn" isError={props.state.widthIn.isError}>
                     <InputNumber
                         placeholder={props.state.widthIn.placeholder}
@@ -52,9 +68,9 @@ export const RowWrapper = observer((props: iProps) => {
                             params.onChange(v!, props.index, 'widthIn');
                         }}
                         value={props.state.widthIn.value || ''}
-                        ref={(r) => params.refHandler(r, props.index)}
-                        onKeyDown={params.onKeyDown}
-                        onFocus={() => params.onFocus(props.index)}
+                        ref={(r) => props.arrowHandler.refHandler(r, props.index)}
+                        onKeyDown={props.arrowHandler.onKeyDown}
+                        onFocus={() => props.arrowHandler.onFocus(props.index)}
                     />
                 </InputField>,
             ]}
