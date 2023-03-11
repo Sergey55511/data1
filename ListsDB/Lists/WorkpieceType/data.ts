@@ -87,4 +87,5 @@ export const data = [
     },
     { id: 23, workpieceType: 'Обрезки', position: 23, active: true, isShow: true },
     { id: 24, workpieceType: 'МШ', position: 24, active: true, isShow: true },
+    { id: 25, workpieceType: 'new test', position: 25, active: false, isShow: true },
 ];
