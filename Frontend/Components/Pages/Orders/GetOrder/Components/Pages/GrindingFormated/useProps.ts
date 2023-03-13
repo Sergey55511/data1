@@ -104,10 +104,6 @@ export const useProps = ({ record, stateId }: iProps) => {
             errorNote();
             return;
         }
-        if (losses < 0) {
-            errorNote();
-            return;
-        }
 
         const codeOneItem = getCodeOneItem({
             recordCode: record.code,
