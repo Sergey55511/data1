@@ -51,10 +51,6 @@ export const useColumns = (
         title: 'Отправитель',
         width: 100,
     });
-    columns.push({
-        ...getColumnPropsHoc(KEYSLEFTOVERS.numDocument.key),
-        title: 'Номер документа',
-    });
     if (!isMSC) {
         columns.push(getColumnPropsHoc(KEYSLEFTOVERS.fraction.key));
         columns.push(getColumnPropsHoc(KEYSLEFTOVERS.materialGroup.key));
@@ -74,10 +70,6 @@ export const useColumns = (
         ...getColumnPropsHoc(KEYSLEFTOVERS.grade.key),
         width: 80,
     });
-    if (isMSC) {
-        columns.push(getColumnPropsHoc(KEYSLEFTOVERS.model.key));
-        columns.push(getColumnPropsHoc(KEYSLEFTOVERS.model.key));
-    }
     columns.push({
         ...getColumnPropsHoc(KEYSLEFTOVERS.lot.key),
         width: 80,

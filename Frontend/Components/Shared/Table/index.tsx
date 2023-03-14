@@ -1,12 +1,12 @@
 import { Table, TableProps } from 'antd';
-import { useLayoutEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Wrapper } from './style';
 
 export function TableApp<T extends object>(rest: TableProps<T>) {
     const [wrapperRef, setWrapperRef] = useState<HTMLElement>();
     const [y, setY] = useState<number | undefined>(undefined);
 
-    useLayoutEffect(() => {
+    useEffect(() => {
         const getY = () => {
             if (!wrapperRef) return;
             const heightWrapper = wrapperRef.offsetHeight;

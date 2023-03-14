@@ -39,12 +39,7 @@ export const MoveInDetales = observer(() => {
                     </div>
                 )}
             </div>
-            <TableApp
-                columns={columns}
-                dataSource={data}
-                onChange={handleChange}
-                // scroll={{ x: 2000 }}
-            />
+            <TableApp columns={columns} dataSource={data} onChange={handleChange} />
         </Wrapper>
     );
 });
