@@ -19,8 +19,8 @@ export const Title = ({
     setPruning,
     date,
     setDate,
-    workingHours,
-    setWorkingHours,
+    workingTimeFact,
+    setWorkingTimeFact,
 }: {
     subbmitHandler: () => void;
     addRowHandler: (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => void;
@@ -36,8 +36,8 @@ export const Title = ({
     isLoading?: boolean;
     date?: moment.Moment | undefined;
     setDate?: (value: moment.Moment | undefined) => void;
-    workingHours?: string;
-    setWorkingHours?: Dispatch<SetStateAction<string | undefined>>;
+    workingTimeFact?: string;
+    setWorkingTimeFact?: Dispatch<SetStateAction<string | undefined>>;
 }) => {
     const confirmSubbmit = () => {
         confirmAction({
@@ -58,14 +58,14 @@ export const Title = ({
                     />
                 </div>
             )}
-            {setWorkingHours && (
+            {setWorkingTimeFact && (
                 <div>
                     <InputNumber
                         className="input"
-                        value={workingHours ?? ''}
+                        value={workingTimeFact ?? ''}
                         placeholder="Время работы мин."
                         onChangeHandler={(v) => {
-                            if (setWorkingHours) setWorkingHours(v ? `${v}` : '');
+                            if (setWorkingTimeFact) setWorkingTimeFact(v ? `${v}` : '');
                         }}
                     />
                 </div>

@@ -15,13 +15,13 @@ export interface iProps {
     isCheckLosses?: boolean;
     defect?: boolean;
     pruning?: boolean;
-    isShowWorkingHours?: boolean;
+    isShowWorkingTimeFact?: boolean;
 }
 
 interface iState {
     date?: moment.Moment;
     widthIn?: number;
-    workingHours?: number;
+    workingTimeFact?: number;
     moveBack?: number;
     losses?: number;
     defect?: number;
@@ -34,7 +34,7 @@ export const useProps = ({
     isShowChannel,
     record,
     stateId,
-    isShowWorkingHours,
+    isShowWorkingTimeFact,
 }: iProps) => {
     const router = useRouter();
     const [isLoading, setIsLoading] = useState(false);
@@ -50,8 +50,8 @@ export const useProps = ({
 
     const isValid = (() => {
         if (!state.date || !state.widthIn) return false;
-        if (isShowWorkingHours) {
-            if (!state.workingHours) {
+        if (isShowWorkingTimeFact) {
+            if (!state.workingTimeFact) {
                 return false;
             }
         }
@@ -76,7 +76,7 @@ export const useProps = ({
         const data: iData[] = [
             {
                 ...record,
-                workingHours: state.workingHours,
+                workingTimeFact: state.workingTimeFact,
                 date: state.date,
                 widthOut: undefined,
                 widthIn: state.widthIn,

@@ -79,7 +79,8 @@ export interface iDataProduct extends iDataProductTable {
 export interface iDataTable {
     id?: number;
     lot?: number;
-    workingHours?: number;
+    workingTimeFact?: number;
+    workingTimePlan?: number;
     numDocument?: string;
     pp?: number;
     articleId?: number;
@@ -118,7 +119,10 @@ export interface iData extends iDataTable {
     key?: number;
     size?: number;
     userLogin?: string;
+    operation?: string;
     recipient?: string;
+    type?: string;
+    fraction?: string;
     fullModel?: string;
     fullModelTask?: string;
     managerLogin?: string;

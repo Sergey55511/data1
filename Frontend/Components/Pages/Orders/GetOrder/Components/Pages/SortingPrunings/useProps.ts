@@ -29,7 +29,7 @@ export interface iProps {
 
 export const useProps = ({ record, stateId }: iProps) => {
     const { OperationStore } = useStores();
-    const [workingHours, setWorkingHours] = useState<string | undefined>('');
+    const [workingTimeFact, setWorkingTimeFact] = useState<string | undefined>('');
     const [state, setState] = useState<iState[]>([]);
     const [losses, setLosses] = useState<number>(0);
     const [defect, setDefect] = useState<tValue>();
@@ -101,7 +101,7 @@ export const useProps = ({ record, stateId }: iProps) => {
             return;
         }
 
-        if (!workingHours) {
+        if (!workingTimeFact) {
             errorNote();
             return;
         }
@@ -118,7 +118,7 @@ export const useProps = ({ record, stateId }: iProps) => {
         const data: iData[] = state.map((item) => ({
             ...record,
             date,
-            workingHours: getValue(workingHours),
+            workingTimeFact: getValue(workingTimeFact),
             workpieceTypeId: WORKPIECETYPE.cylinder.id,
             sizeRangeId: getValue(item.sizeRange.value),
             lengthId: getValue(item.length.value),
@@ -169,7 +169,7 @@ export const useProps = ({ record, stateId }: iProps) => {
         setDate,
         defect,
         setDefect,
-        workingHours,
-        setWorkingHours,
+        workingTimeFact,
+        setWorkingTimeFact,
     };
 };

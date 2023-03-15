@@ -31,7 +31,7 @@ export const useProps = ({ record, stateId }: { record: iData; stateId: number }
     const { OperationStore, loginStore } = useStores();
     const [state, setState] = useState<iState[]>([]);
     const [losses, setLosses] = useState<number>(0);
-    const [workingHours, setWorkingHours] = useState<string | undefined>('');
+    const [workingTimeFact, setWorkingTimeFact] = useState<string | undefined>('');
     const [garbage, setGarbage] = useState<tValue>(undefined);
     const [date, setDate] = useState<moment.Moment | undefined>(moment());
     const [defect, setDefect] = useState<tValue>(undefined);
@@ -121,7 +121,7 @@ export const useProps = ({ record, stateId }: { record: iData; stateId: number }
             errorNote();
             return;
         }
-        if (!workingHours) {
+        if (!workingTimeFact) {
             errorNote();
             return;
         }
@@ -137,7 +137,7 @@ export const useProps = ({ record, stateId }: { record: iData; stateId: number }
         const data: iData[] = state.map((item) => ({
             ...record,
             date,
-            workingHours: getIdValue(workingHours),
+            workingTimeFact: getIdValue(workingTimeFact),
             widthOut: undefined,
             fractionId: undefined,
             stateId,
@@ -185,7 +185,7 @@ export const useProps = ({ record, stateId }: { record: iData; stateId: number }
         setDefect,
         date,
         setDate,
-        workingHours,
-        setWorkingHours,
+        workingTimeFact,
+        setWorkingTimeFact,
     };
 };

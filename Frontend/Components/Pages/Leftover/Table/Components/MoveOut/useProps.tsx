@@ -26,6 +26,7 @@ export const useProps = (props: iProps) => {
     const [managerId, setManagerId] = useState<number | undefined>(undefined);
     const [isLoading, setIsLoading] = useState(false);
     const [width, setWidth] = useState<tValue>(undefined);
+    const [workingTimePlan, setWorkingTimePlan] = useState<tValue>(undefined);
     const [count, setCount] = useState<tValue>(undefined);
     const [date, setDate] = useState<moment.Moment | null>(moment());
     const subbmitButton = useRef<HTMLElement>(null);
@@ -77,19 +78,7 @@ export const useProps = (props: iProps) => {
         setIsShowSetTask(true);
     };
 
-    const getValue = (v: string) => (isNaN(+v) ? undefined : +v);
-    const setValue = (v: tValue, set: (value: SetStateAction<tValue>) => void) => {
-        set((prev) => {
-            if (!v) return undefined;
-            v = `${v}`.replace(',', '.');
-            const regexp = /^\d+[.|,]\d+$|^\d+[.|,]$|^\d+$/;
-
-            if (regexp.test(v as string)) return v;
-
-            if (getValue(v as string) == undefined) return prev ? prev : '';
-            return v;
-        });
-    };
+    const getValue = (v: any) => (isNaN(+v) ? undefined : +v);
 
     const isValid = (() => {
         const test = (v: tValue) => /^\d+[.|,]$/.test(v as string);
@@ -125,8 +114,9 @@ export const useProps = (props: iProps) => {
         data.storeId = loginStore.user.storeId;
         data.managerId = managerId;
         data.date = date;
-        data.countItemsOut = count ? +count : undefined;
-        data.widthOut = width ? +width : undefined;
+        data.countItemsOut = getValue(count);
+        data.widthOut = getValue(width);
+        data.workingTimePlan = getValue(workingTimePlan);
         data.operationId = operation;
         data.productionId = numProd || +props.record.productionId! || undefined;
         data.task = task.id;
@@ -168,7 +158,6 @@ export const useProps = (props: iProps) => {
         setManagerId,
         width,
         setWidth,
-        setValue,
         count,
         setCount,
         setNumProduction,
@@ -188,5 +177,7 @@ export const useProps = (props: iProps) => {
         isNumProduction,
         setIsNumProduction,
         isShowTask,
+        setWorkingTimePlan,
+        workingTimePlan,
     };
 };

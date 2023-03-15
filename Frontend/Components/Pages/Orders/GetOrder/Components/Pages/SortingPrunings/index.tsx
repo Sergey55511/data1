@@ -20,8 +20,8 @@ export const SortingPrunings = observer((props: iProps) => {
                 setDate={params.setDate}
                 defect={params.defect}
                 setDefect={params.setDefect}
-                workingHours={params.workingHours}
-                setWorkingHours={params.setWorkingHours}
+                workingTimeFact={params.workingTimeFact}
+                setWorkingTimeFact={params.setWorkingTimeFact}
             />
             <div>
                 {params.state.map((item, index) => (

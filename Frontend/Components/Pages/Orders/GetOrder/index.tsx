@@ -1,11 +1,13 @@
 import { useRouter } from 'next/router';
 import { useCallback, useEffect, useState } from 'react';
-import { iData } from '../../../../../Shared/Types/interfaces';
+import { iData, iDataTable } from '../../../../../Shared/Types/interfaces';
 import { useStores } from '../../../../Store/useStores';
 import { Frame } from '../../../Shared/Frame';
 import { KEYSLEFTOVERS } from '../../../Shared/Table/constants';
 import { Title } from '../../../Shared/Title';
 import { GetOrderSwitcher } from './Components';
+import { Item } from './Item';
+import { Order } from './order';
 import { Wrapper } from './style';
 
 export const GetOrder = () => {
@@ -22,51 +24,13 @@ export const GetOrder = () => {
             })();
     }, [pp]);
 
-    const order = orders[0];
-    const Item = useCallback(
-        ({
-            keyObj,
-            title = KEYSLEFTOVERS[keyObj]?.title,
-        }: {
-            keyObj: keyof typeof KEYSLEFTOVERS;
-            title?: string;
-        }) => {
-            if (!order) return null;
-            return (
-                <div className="item">
-                    <h4>{title}:</h4>
-                    <div>{order[KEYSLEFTOVERS[keyObj].key as keyof iData]}</div>
-                </div>
-            );
-        },
-        [orders[0]],
-    );
+    const order: iData = orders[0];
+
     return (
         <Wrapper>
             <Title text="Принять работу:" />
             <div className="content">
-                <div className="order">
-                    <Frame legend="В работе">
-                        <div>
-                            <Item keyObj="operation" />
-                            <Item keyObj="userLogin" />
-                            <Item keyObj="manager" />
-                            <Item keyObj="lot" />
-                            <Item keyObj="productionId" />
-                            <Item keyObj="fraction" />
-                            <Item keyObj="workpieceType" />
-                            <Item keyObj="materialGroup" />
-                            <Item keyObj="grade" />
-                            <Item keyObj="type" />
-                            <Item keyObj="color" />
-                            <Item keyObj="length" />
-                            <Item keyObj="sizeRange" />
-                            <Item keyObj="state" />
-                            <Item keyObj="width" title="В работе гр." />
-                            <Item keyObj="count" title="В работе шт." />
-                        </div>
-                    </Frame>
-                </div>
+                <Order order={order} />
                 <div className="result">
                     <Frame legend="Результат">
                         <GetOrderSwitcher

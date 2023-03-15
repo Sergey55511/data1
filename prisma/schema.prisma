@@ -28,7 +28,8 @@ model Data {
   provider         String?
   countItemsIn     Int?
   countItemsOut    Int?
-  workingHours     Int?
+  workingTimeFact  Int?
+  workingTimePlan  Int?
   moneyIn          Float?
   moneyOut         Float?
   typeOfProcessing String?

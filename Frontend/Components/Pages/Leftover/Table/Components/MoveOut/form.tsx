@@ -1,5 +1,6 @@
 import { Button, DatePicker, Input } from 'antd';
 import { iData } from '../../../../../../../Shared/Types/interfaces';
+import { InputNumber } from '../../../../../Shared/InputNumber';
 import { SelectField } from '../../../../../Shared/SelectField';
 import { KEYSLEFTOVERS } from '../../../../../Shared/Table/constants';
 import { useProps } from './useProps';
@@ -62,14 +63,18 @@ export const Form = ({
             </div>
             <div className="flex">
                 <div className="item">
-                    <div>
-                        <Input
+                    <div className="inputWrapper">
+                        <InputNumber
                             placeholder="Выдать"
                             disabled={!record.width}
                             value={props.width}
-                            onChange={(e) =>
-                                props.setValue(e.target.value, props.setWidth)
-                            }
+                            onChangeHandler={(v) => props.setWidth(v)}
+                            onKeyDown={props.onPressEnterHandler}
+                        />
+                        <InputNumber
+                            placeholder="Плановое время"
+                            value={props.workingTimePlan}
+                            onChangeHandler={(v) => props.setWorkingTimePlan(v)}
                             onKeyDown={props.onPressEnterHandler}
                         />
                     </div>
@@ -77,13 +82,11 @@ export const Form = ({
                 {isShowCount && (
                     <div className="item">
                         <div>
-                            <Input
+                            <InputNumber
                                 placeholder="Выдать"
                                 disabled={!record.count}
                                 value={props.count}
-                                onChange={(e) =>
-                                    props.setValue(e.target.value, props.setCount)
-                                }
+                                onChangeHandler={(v) => props.setCount(v)}
                                 onKeyDown={props.onPressEnterHandler}
                             />
                         </div>

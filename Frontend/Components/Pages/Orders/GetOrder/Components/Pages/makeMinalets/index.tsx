@@ -23,8 +23,8 @@ export const MakeMinalets = observer((props: { record: iData; stateId: number })
                 setPruning={params.setPruning}
                 date={params.date}
                 setDate={params.setDate}
-                workingHours={params.workingHours}
-                setWorkingHours={params.setWorkingHours}
+                workingTimeFact={params.workingTimeFact}
+                setWorkingTimeFact={params.setWorkingTimeFact}
             />
             <div>
                 {params.state.map((item, index) => (

@@ -24,6 +24,13 @@ export const Wrapper = styled.div`
         }
     }
 
+    .item {
+        .inputWrapper {
+            display: flex;
+            column-gap: 8px;
+        }
+    }
+
     .selectButtons {
         display: flex;
         justify-content: space-between;

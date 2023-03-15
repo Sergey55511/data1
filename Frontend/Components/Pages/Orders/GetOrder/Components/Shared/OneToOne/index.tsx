@@ -33,13 +33,13 @@ export const OneToOne = (props: iProps) => {
                     }
                 />
             </Item>
-            {props.isShowWorkingHours && (
+            {props.isShowWorkingTimeFact && (
                 <Item title="Время работы мин.">
                     <InputNumber
                         placeholder="Введите данные"
-                        value={params.state.workingHours}
+                        value={params.state.workingTimeFact}
                         onChangeHandler={(v) => {
-                            params.onChangeInput('workingHours', v);
+                            params.onChangeInput('workingTimeFact', v);
                         }}
                     />
                 </Item>

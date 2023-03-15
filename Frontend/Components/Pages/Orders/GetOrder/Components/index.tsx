@@ -32,7 +32,7 @@ export const GetOrderSwitcher = ({
                     stateId={STATE.slicedBillets.id}
                     defect
                     pruning
-                    isShowWorkingHours
+                    isShowWorkingTimeFact
                     isCheckLosses
                 />
             );
@@ -43,7 +43,7 @@ export const GetOrderSwitcher = ({
                     stateId={STATE.drilledPill.id}
                     defect
                     isShowChannel
-                    isShowWorkingHours
+                    isShowWorkingTimeFact
                     isCheckLosses
                 />
             );
@@ -54,7 +54,7 @@ export const GetOrderSwitcher = ({
                     stateId={STATE.drilled.id}
                     defect
                     isShowChannel
-                    isShowWorkingHours
+                    isShowWorkingTimeFact
                     isCheckLosses
                 />
             );
@@ -65,7 +65,7 @@ export const GetOrderSwitcher = ({
                     stateId={STATE.waterDrilled.id}
                     defect
                     isShowChannel
-                    isShowWorkingHours
+                    isShowWorkingTimeFact
                     isCheckLosses
                 />
             );
@@ -75,7 +75,7 @@ export const GetOrderSwitcher = ({
                     record={record}
                     stateId={STATE.grindedMsc.id}
                     defect
-                    isShowWorkingHours
+                    isShowWorkingTimeFact
                     isCheckLosses
                 />
             );
@@ -85,7 +85,7 @@ export const GetOrderSwitcher = ({
                     record={record}
                     stateId={STATE.roughTumbled.id}
                     defect
-                    isShowWorkingHours
+                    isShowWorkingTimeFact
                     isCheckLosses
                 />
             );
@@ -95,7 +95,7 @@ export const GetOrderSwitcher = ({
                     record={record}
                     stateId={STATE.polishedMsc.id}
                     defect
-                    isShowWorkingHours
+                    isShowWorkingTimeFact
                     isCheckLosses
                 />
             );
@@ -105,7 +105,7 @@ export const GetOrderSwitcher = ({
                     record={record}
                     stateId={STATE.thermedOven.id}
                     defect
-                    isShowWorkingHours
+                    isShowWorkingTimeFact
                     isCheckLosses
                 />
             );
@@ -115,7 +115,7 @@ export const GetOrderSwitcher = ({
                     record={record}
                     stateId={STATE.thermedLamp.id}
                     defect
-                    isShowWorkingHours
+                    isShowWorkingTimeFact
                     isCheckLosses
                 />
             );
