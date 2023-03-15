@@ -7,9 +7,10 @@ export const getRecipient = <T>(
     req: NextApiRequest,
     user: iUser,
 ): Promise<T> => {
-    let storeId = user.storeId as number | undefined;
+    let storeId = req.query.storeId as number | undefined;
     storeId = storeId ? +storeId : undefined;
     let where: any = { storeId: null, active: true };
+
     if (storeId) {
         where = {
             AND: [

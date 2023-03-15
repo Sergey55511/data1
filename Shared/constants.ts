@@ -44,6 +44,7 @@ export const OPERATIONS = {
     getOut: { id: 44 }, //Выбытие
     inventory: { id: 45 }, //Инвернаризация
     patifon: { id: 46 }, //Патифон
+    grindingCrumpledBall: { id: 47 }, //Шлифование МШ
 };
 export const STATE = {
     washed: { id: 1 },
@@ -81,6 +82,8 @@ export const STATE = {
     mixed: { id: 34 },
     createdProduct: { id: 35 },
     prunings: { id: 37 },
+    grindedCrumpledBall: { id: 38 }, //Шлифованный МШ
+    calibratedFormated: { id: 39 }, //Калиброванный МШ
 };
 export const WORKPIECETYPE = {
     stone: { id: 1 },

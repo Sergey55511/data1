@@ -167,7 +167,7 @@ export const GetOrderSwitcher = ({
         case OPERATIONS.formation.id:
             return <Formation record={record} stateId={STATE.formated.id} />;
         case OPERATIONS.patifon.id:
-            return <Patifon record={record} stateId={STATE.balled.id} />;
+            return <Patifon record={record} stateId={STATE.calibratedFormated.id} />;
         case OPERATIONS.turning.id:
             return <OneToOne record={record} stateId={STATE.turned.id} isCheckLosses />;
         case OPERATIONS.makeBall.id:
@@ -191,6 +191,13 @@ export const GetOrderSwitcher = ({
             );
         case OPERATIONS.grindingSuper.id:
             return <GrindingFormated record={record} stateId={STATE.grindedSuper.id} />;
+        case OPERATIONS.grindingCrumpledBall.id:
+            return (
+                <GrindingFormated
+                    record={record}
+                    stateId={STATE.grindedCrumpledBall.id}
+                />
+            );
         case OPERATIONS.polishing.id:
             return <OneToOne record={record} stateId={STATE.polished.id} isCheckLosses />;
         case OPERATIONS.slice.id:
