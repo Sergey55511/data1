@@ -31,10 +31,12 @@ export const GetOrder = () => {
                 <Order order={order} />
                 <div className="result">
                     <Frame legend="Результат">
-                        <GetOrderSwitcher
-                            operationId={order?.operationId || 0}
-                            record={orders[0]}
-                        />
+                        <div className="resultWrapper">
+                            <GetOrderSwitcher
+                                operationId={order?.operationId || 0}
+                                record={orders[0]}
+                            />
+                        </div>
                     </Frame>
                 </div>
             </div>

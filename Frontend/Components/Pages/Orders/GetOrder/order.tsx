@@ -9,7 +9,7 @@ export const Order = ({ order }: { order?: iData }) => {
     return (
         <div className="order">
             <Frame legend="В работе">
-                <div>
+                <div className="frameBody">
                     <ItemHoc keysLeftover={KEYSLEFTOVERS.operation} order={order} />
                     <ItemHoc keysLeftover={KEYSLEFTOVERS.userLogin} order={order} />
                     <ItemHoc keysLeftover={KEYSLEFTOVERS.manager} order={order} />
@@ -24,6 +24,7 @@ export const Order = ({ order }: { order?: iData }) => {
                     <ItemHoc keysLeftover={KEYSLEFTOVERS.length} order={order} />
                     <ItemHoc keysLeftover={KEYSLEFTOVERS.sizeRange} order={order} />
                     <ItemHoc keysLeftover={KEYSLEFTOVERS.state} order={order} />
+                    <ItemHoc keysLeftover={KEYSLEFTOVERS.workingTimePlan} order={order} />
                     <ItemHoc keysLeftover={KEYSLEFTOVERS.width} order={order} />
                     <ItemHoc keysLeftover={KEYSLEFTOVERS.count} order={order} />
                 </div>
@@ -38,6 +39,4 @@ const ItemHoc = ({
 }: {
     keysLeftover: iKeysLeftoversObject;
     order: iData;
-}) => {
-    return <Item title={keysLeftover.title} value={order[keysLeftover.key]} />;
-};
+}) => <Item title={keysLeftover.title} value={order[keysLeftover.key]} />;

@@ -33,7 +33,8 @@ type tKeys =
     | 'countItemsOut'
     | 'code'
     | 'defect'
-    | 'userLogin';
+    | 'userLogin'
+    | 'workingTimePlan';
 
 export interface iKeysLeftoversObject {
     key: keyof iData;
@@ -73,4 +74,5 @@ export const KEYSLEFTOVERS: Record<tKeys, iKeysLeftoversObject> = {
     code: { key: 'code', title: '' },
     defect: { key: 'defect', title: '' },
     userLogin: { key: 'userLogin', title: 'Пользователь' },
+    workingTimePlan: { key: 'workingTimePlan', title: 'Плановое время' },
 };
