@@ -1,4 +1,45 @@
-export const KEYSLEFTOVERS = {
+import { iData } from '../../../../Shared/Types/interfaces';
+
+type tKeys =
+    | 'pp'
+    | 'date'
+    | 'store'
+    | 'manager'
+    | 'operation'
+    | 'workpieceType'
+    | 'fullModel'
+    | 'fullModelTask'
+    | 'numDocument'
+    | 'model'
+    | 'type'
+    | 'sizeRange'
+    | 'fraction'
+    | 'materialGroup'
+    | 'color'
+    | 'length'
+    | 'channel'
+    | 'grade'
+    | 'state'
+    | 'lot'
+    | 'productionId'
+    | 'production'
+    | 'numProduction'
+    | 'width'
+    | 'count'
+    | 'widthOut'
+    | 'widthIn'
+    | 'moneyIn'
+    | 'countItemsIn'
+    | 'countItemsOut'
+    | 'code'
+    | 'defect'
+    | 'userLogin';
+
+export interface iKeysLeftoversObject {
+    key: keyof iData;
+    title: string;
+}
+export const KEYSLEFTOVERS: Record<tKeys, iKeysLeftoversObject> = {
     pp: { key: 'pp', title: 'ПП' },
     date: { key: 'date', title: 'Дата' },
     store: { key: 'store', title: 'Выдал' },

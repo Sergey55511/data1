@@ -1,12 +1,10 @@
 import { useRouter } from 'next/router';
-import { useCallback, useEffect, useState } from 'react';
-import { iData, iDataTable } from '../../../../../Shared/Types/interfaces';
+import { useEffect, useState } from 'react';
+import { iData } from '../../../../../Shared/Types/interfaces';
 import { useStores } from '../../../../Store/useStores';
 import { Frame } from '../../../Shared/Frame';
-import { KEYSLEFTOVERS } from '../../../Shared/Table/constants';
 import { Title } from '../../../Shared/Title';
 import { GetOrderSwitcher } from './Components';
-import { Item } from './Item';
 import { Order } from './order';
 import { Wrapper } from './style';
 
