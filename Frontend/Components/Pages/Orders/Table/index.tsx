@@ -11,7 +11,7 @@ export const OrdersTable = observer(({ isGetOut }: { isGetOut?: boolean }) => {
             columns={columns}
             dataSource={data}
             onChange={handleChange}
-            xScroll={2100}
+            xScroll={1400}
         />
     );
 });

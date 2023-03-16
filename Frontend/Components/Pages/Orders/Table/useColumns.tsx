@@ -33,6 +33,7 @@ export const useColumns = (
     columns.push({
         ...getColumnPropsHoc(KEYSLEFTOVERS.pp.key),
         title: KEYSLEFTOVERS.pp.title,
+        width:55
     });
     if (isMSC)
         columns.push({
@@ -46,6 +47,7 @@ export const useColumns = (
     columns.push({
         ...getColumnPropsHoc(KEYSLEFTOVERS.userLogin.key),
         title: KEYSLEFTOVERS.userLogin.title,
+        width:105
     });
     columns.push({
         ...getColumnPropsHoc(KEYSLEFTOVERS.manager.key),
@@ -63,6 +65,7 @@ export const useColumns = (
         columns.push({
             ...getColumnPropsHoc(KEYSLEFTOVERS.fraction.key),
             title: KEYSLEFTOVERS.fraction.title,
+            width:75            
         });
     if (!isMSC)
         columns.push({
@@ -72,18 +75,22 @@ export const useColumns = (
     columns.push({
         ...getColumnPropsHoc(KEYSLEFTOVERS.color.key),
         title: KEYSLEFTOVERS.color.title,
+        width:65
     });
     columns.push({
         ...getColumnPropsHoc(KEYSLEFTOVERS.sizeRange.key),
         title: KEYSLEFTOVERS.sizeRange.title,
+        width:90
     });
     columns.push({
         ...getColumnPropsHoc(KEYSLEFTOVERS.length.key),
         title: KEYSLEFTOVERS.length.title,
+        width:80
     });
     columns.push({
         ...getColumnPropsHoc(KEYSLEFTOVERS.grade.key),
         title: KEYSLEFTOVERS.grade.title,
+        width:65
     });
     if (isMSC)
         columns.push({
@@ -94,10 +101,12 @@ export const useColumns = (
     columns.push({
         ...getColumnPropsHoc(KEYSLEFTOVERS.type.key),
         title: KEYSLEFTOVERS.type.title,
+        width:80
     });
     columns.push({
         ...getColumnPropsHoc(KEYSLEFTOVERS.lot.key),
         title: KEYSLEFTOVERS.lot.title,
+        width:65
     });
     if (isMSC)
         columns.push({
@@ -107,6 +116,7 @@ export const useColumns = (
     columns.push({
         ...getColumnPropsHoc(KEYSLEFTOVERS.width.key),
         title: 'В работе гр.',
+        width:75
     });
     if (isMSC)
         columns.push({

@@ -5,6 +5,7 @@ export const Wrapper = styled.div`
     overflow: hidden;
     .ant-table-cell {
         padding: 5px;
+        font-size:12px;
         .ant-table-filter-trigger {
             padding-right: 10px;
         }

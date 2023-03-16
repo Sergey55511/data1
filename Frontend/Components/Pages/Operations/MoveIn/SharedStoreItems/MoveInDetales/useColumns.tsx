@@ -77,7 +77,7 @@ export const useColumns = (
     columns.push({
         ...getColumnPropsHoc(KEYSLEFTOVERS.widthOut.key),
         title: 'Отгружено гр.',
-        width: 130,
+        width: 90,
     });
     columns.push({
         dataIndex: KEYSLEFTOVERS.widthIn.key,

@@ -21,7 +21,7 @@ export const ListOperations = observer(() => {
                 columns={props.columns}
                 dataSource={props.data}
                 onChange={props.handleChange}
-                xScroll={2000}
+                xScroll={1400}
             />
         </>
     );
