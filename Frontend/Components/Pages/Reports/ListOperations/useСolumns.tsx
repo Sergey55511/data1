@@ -97,12 +97,12 @@ export const useColumns = (
         columns.push({
             ...getColumnPropsHoc(KEYSLEFTOVERS.countItemsIn.key),
             title: KEYSLEFTOVERS.countItemsIn.title,
-            width: 50,
+            width: 100,
         });
         columns.push({
             ...getColumnPropsHoc(KEYSLEFTOVERS.countItemsOut.key),
             title: KEYSLEFTOVERS.countItemsOut.title,
-            width: 50,
+            width: 100,
         });
     }
 

@@ -2,7 +2,11 @@ import { Table, TableProps } from 'antd';
 import { useEffect, useState } from 'react';
 import { Wrapper } from './style';
 
-export function TableApp<T extends object>(rest: TableProps<T>) {
+interface iTable<T> extends TableProps<T> {
+    xScroll?: number;
+}
+
+export function TableApp<T extends object>(props: iTable<T>) {
     const [wrapperRef, setWrapperRef] = useState<HTMLElement>();
     const [y, setY] = useState<number | undefined>(undefined);
 
@@ -24,7 +28,7 @@ export function TableApp<T extends object>(rest: TableProps<T>) {
         getY();
         window.addEventListener('resize', getY);
         return () => window.removeEventListener('resize', getY);
-    }, [wrapperRef, rest.dataSource]);
+    }, [wrapperRef, props.dataSource]);
 
     return (
         <Wrapper
@@ -33,8 +37,8 @@ export function TableApp<T extends object>(rest: TableProps<T>) {
             }}
         >
             <Table
-                {...rest}
-                scroll={{ y }}
+                {...props}
+                scroll={{ y, x: props.xScroll }}
                 pagination={{
                     showSizeChanger: true,
                     pageSizeOptions: [10, 20, 50, 100],
