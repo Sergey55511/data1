@@ -1,9 +1,4 @@
-//Страница Логина на фронте
-
-import { MenuProps } from 'antd';
 import { Wrapper } from './style';
-import { useEffect, useState } from 'react';
-import { useStores } from '../../../Store/useStores';
 import { observer } from 'mobx-react-lite';
 import { Menu } from 'antd';
 import Login from './Components/Login';
@@ -11,31 +6,10 @@ import { Registration } from './Components/Registration';
 import amber from './Images/amber.png';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
-
-const items: MenuProps['items'] = [
-    {
-        label: 'Логин',
-        key: 'login',
-    },
-    {
-        label: 'Регистрация',
-        key: 'registration',
-    },
-];
+import { items, useProps } from './useProps';
 
 export default observer(() => {
-    const [current, setCurrent] = useState<'login' | 'registration'>('login');
-    const { loginStore, ErrorStore } = useStores();
-
-    const onClick: MenuProps['onClick'] = (e) => {
-        setCurrent(e.key as typeof current);
-    };
-    useEffect(() => {
-        ErrorStore.resetError();
-        loginStore.whoami();
-    }, []);
-
-    const isAdmin = loginStore.user.status == 'admin';
+    const { isAdmin, onClick, current, containerName } = useProps();
 
     return (
         <Wrapper>
@@ -46,6 +20,7 @@ export default observer(() => {
                     animate={{ opacity: 1 }}
                     transition={{ delay: 0.5, duration: 1 }}
                 >
+                    <h2>{containerName.data}</h2>
                     {isAdmin && (
                         <div className="menu">
                             <Menu

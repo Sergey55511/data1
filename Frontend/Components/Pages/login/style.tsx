@@ -23,10 +23,11 @@ export const Wrapper = styled.div`
                 padding: 32px; // отступ от края внутри блока
                 box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px; // тень окна
                 border-radius: 8px; // заругление углов
+                h2 {
+                    margin: 0;
+                }
                 .menu {
-                    /* margin-bottom: 16px; */
-                    position: relative;
-                    top: -24px;
+                    margin-bottom: 16px;
                 }
             }
         }

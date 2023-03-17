@@ -6,3 +6,10 @@ export const getVersion = () => {
         method: 'GET',
     }).then((res) => res.data);
 };
+
+export const getContainerName = () => {
+    return axios({
+        url: `/api/containerName`,
+        method: 'GET',
+    }).then((res) => res.data);
+};
