@@ -1,4 +1,5 @@
 import { PrismaClient } from '@prisma/client';
+import { bridge } from './Bridge';
 import { grade } from './Grade';
 import { workpieceType } from './WorkpieceType';
 
@@ -42,6 +43,10 @@ export const switcherUpdateList = async (foder: string) => {
             break;
         case 'Grade':
             await Promise.all(prismaList.map((prisma) => grade(prisma)));
+            logDone(foder);
+            break;
+        case 'Bridge':
+            await Promise.all(prismaList.map((prisma) => bridge(prisma)));
             logDone(foder);
             break;
     }
