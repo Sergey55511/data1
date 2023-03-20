@@ -60,18 +60,7 @@ export const RowWrapper = observer(
                 copyRow={() => copyRow(index)}
                 isDuplicate={state.duplicate}
                 fields={[
-                    <InputField isError={state.typeId.isError}>
-                        <SelectField
-                            placeholder={state.typeId.placeholder}
-                            value={+state.typeId.value || undefined}
-                            onChange={(v) => onChange(v, index, 'typeId')}
-                            options={ListsStore.types.map((item) => ({
-                                value: item.id,
-                                caption: item.type,
-                            }))}
-                        />
-                    </InputField>,
-                    <InputField isError={state.gradeId.isError}>
+                    <InputField isError={state.gradeId.isError} key="grade">
                         <SelectField
                             placeholder={state.gradeId.placeholder}
                             value={+state.gradeId.value || undefined}
@@ -82,7 +71,18 @@ export const RowWrapper = observer(
                             }))}
                         />
                     </InputField>,
-                    <InputField isError={state.colorId.isError}>
+                    <InputField isError={state.typeId.isError} key="type">
+                        <SelectField
+                            placeholder={state.typeId.placeholder}
+                            value={+state.typeId.value || undefined}
+                            onChange={(v) => onChange(v, index, 'typeId')}
+                            options={ListsStore.types.map((item) => ({
+                                value: item.id,
+                                caption: item.type,
+                            }))}
+                        />
+                    </InputField>,
+                    <InputField isError={state.colorId.isError} key="color">
                         <SelectField
                             placeholder={state.colorId.placeholder}
                             value={+state.colorId.value || undefined}
@@ -93,7 +93,7 @@ export const RowWrapper = observer(
                             }))}
                         />
                     </InputField>,
-                    <InputField isError={state.sizeRangeId.isError}>
+                    <InputField isError={state.sizeRangeId.isError} key="sizeRange">
                         <SelectField
                             placeholder={state.sizeRangeId.placeholder}
                             value={+state.sizeRangeId.value || undefined}
@@ -104,7 +104,7 @@ export const RowWrapper = observer(
                             }))}
                         />
                     </InputField>,
-                    <InputField isError={state.widthIn.isError}>
+                    <InputField isError={state.widthIn.isError} key="width">
                         <InputNumber
                             placeholder={state.widthIn.placeholder}
                             onChangeHandler={(v) => {
