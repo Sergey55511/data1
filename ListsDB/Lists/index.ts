@@ -9,13 +9,27 @@ const prismaList = [
             },
         },
     }),
-    // new PrismaClient({
-    //     datasources: {
-    //         db: {
-    //             url: process.env.DATABASE_URL2,
-    //         },
-    //     },
-    // }),
+    new PrismaClient({
+        datasources: {
+            db: {
+                url: process.env.DATABASE_URL2,
+            },
+        },
+    }),
+    new PrismaClient({
+        datasources: {
+            db: {
+                url: process.env.DATABASE_URL3,
+            },
+        },
+    }),
+    new PrismaClient({
+        datasources: {
+            db: {
+                url: process.env.DATABASE_URL4,
+            },
+        },
+    }),
 ];
 
 const logDone = (listName: string) => console.log(`done ${listName}`);
