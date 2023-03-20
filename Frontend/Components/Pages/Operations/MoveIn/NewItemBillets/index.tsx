@@ -18,6 +18,7 @@ export const NewItemBillets = () => {
                         <Tooltip
                             placement="top"
                             title={`Макс партия: ${props.data.maxLot.data || 0}`}
+                            open={props.isShowLot}
                         >
                             <InputField
                                 isError={props.isValidated && !props.lot}
@@ -29,6 +30,8 @@ export const NewItemBillets = () => {
                                     onChangeHandler={(v) => props.setLot(v)}
                                     width={300}
                                     allowClear
+                                    onFocus={() => props.setIsShowLot(true)}
+                                    onBlur={() => props.setIsShowLot(false)}
                                 />
                             </InputField>
                         </Tooltip>

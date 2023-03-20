@@ -27,15 +27,17 @@ export const useProps = () => {
     const [lot, setLot] = useState<tValue>('');
     const [numDocument, setNumDocument] = useState<tValue>('');
     const [isValidated, setIsValidated] = useState(false);
+    const [isShowLot, setIsShowLot] = useState(false);
 
     const resetState = () => {
+        setIsValidated(false);
         setState([]);
         setLot('');
         setNumDocument('');
     };
 
     const stateDuplicate: iState[] = checkDuplicate(state);
-    const data = useData(resetState, setIsValidated);
+    const data = useData(resetState, setIsValidated, lot, numDocument);
 
     const subbmitHandler = () => {
         data.submitMutation.mutate({
@@ -113,5 +115,7 @@ export const useProps = () => {
         onKeyDown,
         onFocus,
         refHandler,
+        isShowLot,
+        setIsShowLot,
     };
 };

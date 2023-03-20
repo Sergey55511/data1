@@ -8,11 +8,14 @@ import * as api from '../../../../../Store/Lists/api';
 import { getMaxLot, postNewItems } from '../../../../../Store/OperationStore/Api';
 import { useStores } from '../../../../../Store/useStores';
 import { getTotalSum, validation } from '../../../../Helpers';
+import { tValue } from '../../../../Shared/InputNumber';
 import { iState } from './useProps';
 
 export const useData = (
     resetState: () => void,
     setIsValidated: Dispatch<SetStateAction<boolean>>,
+    lot: tValue,
+    numDocument: tValue,
 ) => {
     const { loginStore, OperationStore } = useStores();
 
@@ -40,6 +43,14 @@ export const useData = (
                 errorNote();
                 throw { error: 'error count row' };
             }
+            if (!lot) {
+                errorNote();
+                throw { error: 'error lot' };
+            }
+            if (!numDocument) {
+                errorNote();
+                throw { error: 'error numDocument' };
+            }
 
             const isError = validation(setState);
 
@@ -57,6 +68,8 @@ export const useData = (
             const data: iData[] = state.map((item) => ({
                 date,
                 workpieceTypeId: getNumber(item.workpieceTypeId.value),
+                lot: getNumber(lot),
+                numDocument: numDocument ? `${numDocument}` : undefined,
                 gradeId: getNumber(item.gradeId.value),
                 colorId: getNumber(item.colorId.value),
                 sizeRangeId: getNumber(item.sizeRangeId.value),
