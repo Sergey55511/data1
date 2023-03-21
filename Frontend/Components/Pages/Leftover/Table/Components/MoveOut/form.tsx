@@ -30,6 +30,7 @@ export const Form = ({
                 onChange={(v) => props.setDate(v)}
                 allowClear
                 onKeyDown={props.onPressEnterHandler}
+                format="DD.MM.YYYY"
             />
             <SelectField
                 placeholder="Операция"

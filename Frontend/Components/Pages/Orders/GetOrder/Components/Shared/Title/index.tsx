@@ -55,6 +55,7 @@ export const Title = ({
                         className="input"
                         value={date}
                         onChange={(v) => setDate(v ?? undefined)}
+                        format="DD.MM.YYYY"
                     />
                 </div>
             )}

@@ -35,6 +35,7 @@ export const DateFilter = ({
                         end: null,
                     });
                 }}
+                format="DD.MM.YYYY"
             />
             <DatePicker
                 disabledDate={disabledDate}
@@ -43,6 +44,7 @@ export const DateFilter = ({
                 onChange={(value) => {
                     setFilterDate((state) => ({ ...state, end: value }));
                 }}
+                format="DD.MM.YYYY"
             />
             <InputNumber
                 placeholder="Партия"

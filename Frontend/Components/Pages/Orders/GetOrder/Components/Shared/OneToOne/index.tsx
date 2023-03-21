@@ -31,6 +31,7 @@ export const OneToOne = (props: iProps) => {
                     onChange={(v) =>
                         params.setState((prev) => ({ ...prev, date: v ?? undefined }))
                     }
+                    format="DD.MM.YYYY"
                 />
             </Item>
             {props.isShowWorkingTimeFact && (
