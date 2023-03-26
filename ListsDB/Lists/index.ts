@@ -40,35 +40,45 @@ const prismaList = [
 
 const logDone = (listName: string) => console.log(`done ${listName}`);
 export const switcherUpdateList = async (foder: string) => {
-    switch (foder) {
-        case 'WorkpieceType':
-            await Promise.all(prismaList.map((prisma) => workpieceType(prisma)));
-            logDone(foder);
-            break;
-        case 'Grade':
-            await Promise.all(prismaList.map((prisma) => grade(prisma)));
-            logDone(foder);
-            break;
-        case 'Bridge':
-            await Promise.all(prismaList.map((prisma) => bridge(prisma)));
-            logDone(foder);
-            break;
-        case 'State':
-            await Promise.all(prismaList.map((prisma) => state(prisma)));
-            logDone(foder);
-            break;
-        case 'Operation':
-            await Promise.all(prismaList.map((prisma) => operation(prisma)));
-            logDone(foder);
-            break;
-        case 'StoreOperationsBridge':
-            await Promise.all(prismaList.map((prisma) => storeOperationsBridge(prisma)));
-            logDone(foder);
-            break;
-        case 'StateOperationBridge':                        
-            await Promise.all(prismaList.map((prisma) => stateOperationBridge(prisma)));
-            logDone(foder);
-            break;
+    const disconnect = () => prismaList.forEach((prisma) => prisma.$disconnect());
+    try {
+        switch (foder) {
+            case 'WorkpieceType':
+                await Promise.all(prismaList.map((prisma) => workpieceType(prisma)));
+                logDone(foder);
+                break;
+            case 'Grade':
+                await Promise.all(prismaList.map((prisma) => grade(prisma)));
+                logDone(foder);
+                break;
+            case 'Bridge':
+                await Promise.all(prismaList.map((prisma) => bridge(prisma)));
+                logDone(foder);
+                break;
+            case 'State':
+                await Promise.all(prismaList.map((prisma) => state(prisma)));
+                logDone(foder);
+                break;
+            case 'Operation':
+                await Promise.all(prismaList.map((prisma) => operation(prisma)));
+                logDone(foder);
+                break;
+            case 'StoreOperationsBridge':
+                await Promise.all(
+                    prismaList.map((prisma) => storeOperationsBridge(prisma)),
+                );
+                logDone(foder);
+                break;
+            case 'StateOperationBridge':
+                await Promise.all(
+                    prismaList.map((prisma) => stateOperationBridge(prisma)),
+                );
+                logDone(foder);
+                break;
+        }
+    } catch (err) {
+        console.log('err', err);
+        disconnect();
     }
-    prismaList.forEach(prisma=>prisma.$disconnect())
+    disconnect();
 };
