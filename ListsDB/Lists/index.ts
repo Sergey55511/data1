@@ -2,6 +2,10 @@ import { PrismaClient } from '@prisma/client';
 import { bridge } from './Bridge';
 import { grade } from './Grade';
 import { workpieceType } from './WorkpieceType';
+import { state } from './State';
+import { operation } from './Operation';
+import { storeOperationsBridge } from './StoreOperationsBridge';
+import { stateOperationBridge } from './StateOperationBridge';
 
 const prismaList = [
     new PrismaClient({
@@ -49,5 +53,22 @@ export const switcherUpdateList = async (foder: string) => {
             await Promise.all(prismaList.map((prisma) => bridge(prisma)));
             logDone(foder);
             break;
+        case 'State':
+            await Promise.all(prismaList.map((prisma) => state(prisma)));
+            logDone(foder);
+            break;
+        case 'Operation':
+            await Promise.all(prismaList.map((prisma) => operation(prisma)));
+            logDone(foder);
+            break;
+        case 'StoreOperationsBridge':
+            await Promise.all(prismaList.map((prisma) => storeOperationsBridge(prisma)));
+            logDone(foder);
+            break;
+        case 'StateOperationBridge':                        
+            await Promise.all(prismaList.map((prisma) => stateOperationBridge(prisma)));
+            logDone(foder);
+            break;
     }
+    prismaList.forEach(prisma=>prisma.$disconnect())
 };
