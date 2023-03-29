@@ -25,6 +25,8 @@ export const GetOrderSwitcher = ({
             return <SortingInventory record={record} />;
         case OPERATIONS.wash.id:
             return <OneToOne record={record} stateId={STATE.washed.id} isCheckLosses />;
+        case OPERATIONS.wash2.id:
+            return <OneToOne record={record} stateId={STATE.washed2.id} isCheckLosses />;
         case OPERATIONS.slicingBillets.id:
             return (
                 <OneToOne
@@ -131,6 +133,14 @@ export const GetOrderSwitcher = ({
                 <OneToOne
                     record={record}
                     stateId={STATE.glued.id}
+                    isCheckLosses={false}
+                />
+            );
+        case OPERATIONS.glue2.id:
+            return (
+                <OneToOne
+                    record={record}
+                    stateId={STATE.glued2.id}
                     isCheckLosses={false}
                 />
             );
