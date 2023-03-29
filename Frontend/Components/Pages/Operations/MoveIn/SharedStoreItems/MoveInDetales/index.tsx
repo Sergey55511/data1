@@ -22,12 +22,7 @@ export const MoveInDetales = observer(() => {
         <Wrapper>
             <div className="header">
                 <Title text={`Принять перемещение №${numDocument}`} />
-                <Button
-                    onClick={submitHandler}
-                    type="primary"
-                    loading={isLoading}
-                    // disabled={!isValidCode}
-                >
+                <Button onClick={submitHandler} type="primary" loading={isLoading}>
                     Принять
                 </Button>
                 {isEditor && (
