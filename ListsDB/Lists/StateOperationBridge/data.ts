@@ -98,4 +98,13 @@ export const data = [
     { id: 97, stateId: 40, operationId: 9 },
     { id: 98, stateId: 40, operationId: 15 },
     { id: 99, stateId: 40, operationId: 23 },
+    { id: 100, stateId: 2, operationId: 48 },
+    { id: 101, stateId: 2, operationId: 49 },
+    { id: 102, stateId: 41, operationId: 6 },
+    { id: 103, stateId: 41, operationId: 7 },
+    { id: 104, stateId: 41, operationId: 8 },
+    { id: 105, stateId: 41, operationId: 9 },
+    { id: 106, stateId: 41, operationId: 15 },
+    { id: 107, stateId: 41, operationId: 23 },
+    { id: 108, stateId: 41, operationId: 48 },
 ];

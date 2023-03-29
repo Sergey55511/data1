@@ -50,5 +50,7 @@ export const data = [
     { id: 49, storeId: 3, operationId: 46 },
     { id: 50, storeId: 3, operationId: 47 }, 
     { id: 51, storeId: 2, operationId: 48 }, 
-    { id: 52, storeId: 3, operationId: 48 },    
+    { id: 52, storeId: 3, operationId: 48 },  
+    { id: 53, storeId: 2, operationId: 49 }, 
+    { id: 54, storeId: 3, operationId: 49 }, 
 ];
