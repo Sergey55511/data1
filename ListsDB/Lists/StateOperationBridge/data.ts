@@ -107,4 +107,9 @@ export const data = [
     { id: 106, stateId: 41, operationId: 15 },
     { id: 107, stateId: 41, operationId: 23 },
     { id: 108, stateId: 41, operationId: 48 },
+    { id: 109, stateId: 5, operationId: 15 },
+    { id: 110, stateId: 5, operationId: 8 },
+    { id: 111, stateId: 5, operationId: 44 },
+    { id: 112, stateId: 5, operationId: 9 },
+    { id: 113, stateId: 5, operationId: 23 },
 ];
