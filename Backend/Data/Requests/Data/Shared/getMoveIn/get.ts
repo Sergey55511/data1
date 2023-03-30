@@ -22,6 +22,8 @@ export const getMoveIn = <T>(
             "fraction",
             "colorId",
             "color",
+            "typeId",
+            type,
             "sizeRangeId",
             "sizeRange",
             "lengthId",
@@ -43,6 +45,7 @@ export const getMoveIn = <T>(
             LEFT JOIN "Stores" ON "Data"."storeId" = "Stores".id
             LEFT JOIN "Users" ON "Data"."userId" = "Users".id
             LEFT JOIN "WorkpieceType" on "Data"."workpieceTypeId"="WorkpieceType".id
+            LEFT JOIN "Types" on "Data"."typeId"="Types".id
             LEFT JOIN "Fraction" on "Data"."fractionId"="Fraction".id
             LEFT JOIN "MaterialGroup" on "Data"."materialGroupId"="MaterialGroup".id
             LEFT JOIN "Grade" on "Data"."gradeId"="Grade".id
