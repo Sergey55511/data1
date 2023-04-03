@@ -4,7 +4,7 @@ export const schema = {
         stateId: {
             type: 'array',
             items: {
-                type: 'string',
+                type: 'integer',
             },
         },
         workpieceTypeId: { type: 'integer' },
