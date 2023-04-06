@@ -6,12 +6,20 @@ interface iCount {
     count: number;
 }
 
-export const Counter = ({ data }: { data: iData[] }) => {
+export const Counter = ({
+    data,
+    widthKey = 'width',
+    countKey = 'count',
+}: {
+    data: iData[];
+    widthKey?: keyof iData;
+    countKey?: keyof iData;
+}) => {
     const getNumber = (v: any) => (v ? +v : 0);
     const count = data.reduce(
         (res: iCount, item) => {
-            res.width += getNumber(item.width);
-            res.count += getNumber(item.count);
+            res.width += getNumber(item[widthKey]);
+            res.count += getNumber(item[countKey]);
             return res;
         },
         { width: 0, count: 0 },

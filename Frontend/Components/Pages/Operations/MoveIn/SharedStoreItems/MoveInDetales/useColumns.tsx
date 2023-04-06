@@ -117,5 +117,5 @@ export const useColumns = (
         });
     }
 
-    return { columns };
+    return { columns, filteredData };
 };

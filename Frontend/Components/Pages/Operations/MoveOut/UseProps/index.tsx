@@ -233,13 +233,6 @@ export const useProps = ({ type }: iProps) => {
         }
     };
 
-    const rowSelection = {
-        onChange: (selectedRowKeys: React.Key[], selectedRows: iData[]) => {
-            setSelectedRows(selectedRowKeys.map((item) => +item));
-        },
-        selectedRowKeys: selectedRows,
-    };
-
     const setNumDocumentHandler = (e: ChangeEvent<HTMLInputElement>) => {
         const value = e.target.value;
         if (value.split('/').length > 1) {
@@ -250,7 +243,6 @@ export const useProps = ({ type }: iProps) => {
     };
 
     return {
-        rowSelection,
         isMixing,
         recipient,
         recipientList: ListsStore.recipient,

@@ -81,7 +81,7 @@ export const useProps = () => {
         setIsLoading(false);
     };
 
-    const { columns } = useColumns(data, setData, filters, isEditor);
+    const { columns, filteredData } = useColumns(data, setData, filters, isEditor);
 
     return {
         numDocument,
@@ -93,5 +93,6 @@ export const useProps = () => {
         isEditor,
         codeDifference,
         isValidCode,
+        filteredData,
     };
 };

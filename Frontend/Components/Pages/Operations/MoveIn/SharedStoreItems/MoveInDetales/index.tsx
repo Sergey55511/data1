@@ -1,5 +1,6 @@
 import { Button } from 'antd';
 import { observer } from 'mobx-react-lite';
+import { Counter } from '../../../../../Shared/Counter';
 import { TableApp } from '../../../../../Shared/Table';
 import { Title } from '../../../../../Shared/Title';
 import { Wrapper } from './style';
@@ -16,6 +17,7 @@ export const MoveInDetales = observer(() => {
         isEditor,
         codeDifference,
         isValidCode,
+        filteredData,
     } = useProps();
 
     return (
@@ -34,6 +36,7 @@ export const MoveInDetales = observer(() => {
                     </div>
                 )}
             </div>
+            <Counter data={filteredData} widthKey="widthIn" countKey="countItemsIn" />
             <TableApp columns={columns} dataSource={data} onChange={handleChange} />
         </Wrapper>
     );
