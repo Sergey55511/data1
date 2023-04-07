@@ -43,11 +43,17 @@ export const useProps = ({
             _selectedRows: iData[],
             target: { type: string },
         ) => {
-            if ((target.type = 'all')) {
+            if (target.type == 'all') {
                 if (selectedRowKeys.length) {
-                    setSelectedRows(
-                        filteredleftovers.map((item) => (item.index ? +item.index : 0)),
-                    );
+                    if (selectedRows.length == filteredleftovers.length) {
+                        setSelectedRows([]);
+                    } else {
+                        setSelectedRows(
+                            filteredleftovers.map((item) =>
+                                item.index ? +item.index : 0,
+                            ),
+                        );
+                    }
                     return;
                 }
             }
