@@ -6,6 +6,7 @@ import { state } from './State';
 import { operation } from './Operation';
 import { storeOperationsBridge } from './StoreOperationsBridge';
 import { stateOperationBridge } from './StateOperationBridge';
+import { length } from './Length';
 
 const prismaList = [
     new PrismaClient({
@@ -72,6 +73,12 @@ export const switcherUpdateList = async (foder: string) => {
             case 'StateOperationBridge':
                 await Promise.all(
                     prismaList.map((prisma) => stateOperationBridge(prisma)),
+                );
+                logDone(foder);
+                break;
+            case 'Length':
+                await Promise.all(
+                    prismaList.map((prisma) => length(prisma)),
                 );
                 logDone(foder);
                 break;
