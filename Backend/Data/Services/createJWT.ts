@@ -23,11 +23,7 @@ export const createJWT = async (
         expiresIn: 60 * 60,
     });
 
-    console.log('createJWT_atkn', atkn);
-
     const rtkn = jwt.sign({ login: user.login, key: refrashToken }, KEY);
-
-    console.log('createJWT_rtkn', atkn);
 
     try {
         await prisma.users.update({
@@ -50,7 +46,6 @@ export const createJWT = async (
             httpOnly: true,
         });
     } catch (err) {
-        console.log('createJWT error');
         throw err;
     }
 
