@@ -20,7 +20,7 @@ export const createJWT = async (
     const refrashToken = makeRandomString();
 
     const atkn = jwt.sign(createAtkn(user), KEY, {
-        expiresIn: 60 * 60,
+        expiresIn: 60 * 60 * 24,
     });
 
     const rtkn = jwt.sign({ login: user.login, key: refrashToken }, KEY);
