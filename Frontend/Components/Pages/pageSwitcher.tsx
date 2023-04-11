@@ -11,6 +11,7 @@ import { Assemble } from './Assemble';
 import { ListOperations } from './Reports/ListOperations';
 import { NewItemBillets } from './Operations/MoveIn/NewItemBillets';
 import { MoveInDocument } from './Reports/MoveInDocuments';
+import { PrintBlank } from './Print/Blank';
 
 export const PageSwitcher = ({ page }: { page: tPages }) => {
     switch (page) {
@@ -52,6 +53,8 @@ export const PageSwitcher = ({ page }: { page: tPages }) => {
             return <MoveInDetales />;
         case pages.assemble:
             return <Assemble />;
+        case pages.printBlank:
+            return <PrintBlank />;
     }
     return <></>;
 };
