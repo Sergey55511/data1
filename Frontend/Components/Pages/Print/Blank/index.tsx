@@ -1,3 +1,4 @@
+import { ROWDATA, SIGNROWDATA } from './constants';
 import { HeaderPrintBlank } from './Header';
 import { Wrapper } from './style';
 import { TableRow } from './TableRow';
@@ -52,118 +53,12 @@ export const PrintBlank = () => {
                             <div className="item">Вес, гр.</div>
                         </div>
                     </div>
-                    <TableRow
-                        data={{
-                            moveOut: [
-                                { value: '+6,6-7,59' },
-                                { value: 'от 15,0 до 24,99' },
-                                { value: '' },
-                                { value: '1076.3', class: 'gray' },
-                            ],
-                            moveIn: [
-                                { value: '+6,6-7,59' },
-                                { value: '15.0' },
-                                { value: '' },
-                                { value: '', class: 'gray' },
-                            ],
-                        }}
-                    />
-                    <TableRow
-                        data={{
-                            moveOut: [
-                                { value: '' },
-                                { value: 'от 15,0 до 24,99' },
-                                { value: '' },
-                                { value: '293.4', class: 'gray' },
-                            ],
-                            moveIn: [
-                                { value: 'Обрезки' },
-                                { value: '' },
-                                { value: '' },
-                                { value: '', class: 'gray' },
-                            ],
-                        }}
-                    />
-                    <TableRow
-                        data={{
-                            moveOut: [
-                                { value: '' },
-                                { value: '' },
-                                { value: '' },
-                                { value: '', class: 'gray' },
-                            ],
-                            moveIn: [
-                                { value: 'Брак' },
-                                { value: '' },
-                                { value: '' },
-                                { value: '', class: 'gray' },
-                            ],
-                        }}
-                    />
-                    <TableRow
-                        data={{
-                            moveOut: [
-                                { value: '' },
-                                { value: '' },
-                                { value: '' },
-                                { value: '', class: 'gray' },
-                            ],
-                            moveIn: [
-                                { value: 'Итого, кг:', class: 'gray' },
-                                { value: '', class: 'gray' },
-                                { value: '', class: 'gray' },
-                                { value: '', class: 'gray' },
-                            ],
-                        }}
-                    />
-                    <TableRow
-                        data={{
-                            moveOut: [
-                                { value: '' },
-                                { value: '' },
-                                { value: '' },
-                                { value: '', class: 'gray' },
-                            ],
-                            moveIn: [
-                                { value: 'Возврат', class: 'gray' },
-                                { value: '', class: 'gray' },
-                                { value: '' },
-                                { value: '' },
-                            ],
-                        }}
-                    />
-                    <TableRow
-                        data={{
-                            moveOut: [
-                                { value: '' },
-                                { value: '' },
-                                { value: '' },
-                                { value: '', class: 'gray' },
-                            ],
-                            moveIn: [
-                                { value: 'Фракция', class: 'gray' },
-                                { value: 'Вес, кг.', class: 'gray' },
-                                { value: '' },
-                                { value: '' },
-                            ],
-                        }}
-                    />
-                    <TableRow
-                        data={{
-                            moveOut: [
-                                { value: '' },
-                                { value: '' },
-                                { value: '' },
-                                { value: '', class: 'gray' },
-                            ],
-                            moveIn: [
-                                { value: '' },
-                                { value: '' },
-                                { value: '' },
-                                { value: '' },
-                            ],
-                        }}
-                    />
+                    {ROWDATA.map((item, index) => (
+                        <TableRow key={index} data={item} />
+                    ))}
+                    {SIGNROWDATA.map((item, index) => (
+                        <TableRow key={index} data={item} />
+                    ))}
                 </div>
             </Wrapper>
         </>

@@ -1,16 +1,24 @@
 import { Cell } from './cell';
 import { Wrapper } from './style';
 
-type tClass = 'gray';
+type tClass =
+    | 'gray'
+    | 'borderNone'
+    | 'borderLeft'
+    | 'borderRight'
+    | 'borderBottom'
+    | 'borderTop';
 export interface iValue {
     value: string;
     class?: tClass[] | tClass;
 }
+
+export interface iTableRowData {
+    moveOut: iValue[];
+    moveIn: iValue[];
+}
 export interface iProps {
-    data: {
-        moveOut: iValue[];
-        moveIn: iValue[];
-    };
+    data: iTableRowData;
 }
 
 export const TableRow = ({ data }: iProps) => (
