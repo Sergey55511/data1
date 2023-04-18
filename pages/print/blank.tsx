@@ -1,3 +1,3 @@
-import { PrintBlank } from '../../Frontend/Components/Pages/Print/Blank';
+import { Print } from '../../Frontend/Components/Pages/Print';
 
-export default () => <PrintBlank />;
+export default () => <Print />;

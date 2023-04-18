@@ -1,24 +1,21 @@
 import { Button } from 'antd';
-import { useState } from 'react';
 import { SelectField } from '../../../../Shared/SelectField';
 import { Wrapper } from './style';
+import { useProps } from './useProps';
 
 export const HeaderPrintBlank = () => {
-    const [production, setProduction] = useState<number>();
+    const props = useProps();
     return (
         <Wrapper>
             <div className="container">
                 <SelectField
                     placeholder="Номер производства"
-                    value={production}
-                    onChange={(v) => setProduction(v)}
-                    options={[
-                        { value: 1, caption: 'some text' },
-                        { value: 2, caption: 'some text2' },
-                        { value: 3, caption: 'some text3' },
-                    ]}
+                    value={props.production}
+                    onChange={(v) => props.setProduction(v)}
+                    options={props.options}
+                    selectProps={{ loading: props.productionList.isFetching }}
                 />
-                <Button disabled={!production}>Сформировать</Button>
+                <Button disabled={!props.production}>Сформировать</Button>
                 <Button type="primary">Распечатать</Button>
             </div>
         </Wrapper>
