@@ -1,66 +1,39 @@
-import { ROWDATA, SIGNROWDATA } from './constants';
+import { QueryClientProvider } from '@tanstack/react-query';
+import Link from 'next/link';
+import { useQueryClient } from '../../../LayOut/useQueryClient';
 import { HeaderPrintBlank } from './Header';
+import { CommonForm } from './Operations/CommonForm';
+import { Drilling } from './Operations/Drilling';
+import { Slicing } from './Operations/Sliсing';
 import { Wrapper } from './style';
-import { TableRow } from './TableRow';
 
 export const PrintBlank = () => {
+    const queryClient = useQueryClient();
     return (
-        <>
-            <HeaderPrintBlank />
+        <QueryClientProvider client={queryClient}>
             <Wrapper>
-                <div className="container">
-                    <div className="firstRow">
-                        <div className="firstRowItem">
-                            <div className="label">Модель:</div>
-                            <div className="value">TT_6</div>
-                        </div>
-                        <div className="firstRowItem">
-                            <div className="label">Длина, мм.:</div>
-                            <div className="value">15.0</div>
-                        </div>
-                        <div className="firstRowItem">
-                            <div className="label">Отверстие, мм.:</div>
-                            <div className="value">0.8</div>
-                        </div>
-                        <div className="firstRowItem">
-                            <div className="label">№</div>
-                            <div className="value">817</div>
-                        </div>
-                    </div>
-                    <div className="secondRow">
-                        <div className="numberPP">6208</div>
-                        <div className="operation">Распиливание</div>
-                        <div className="color">
-                            <div className="label">Цвет:</div>
-                            <div className="value">прозр.</div>
-                        </div>
-                    </div>
-                    <div className="firstTitleTable">
-                        <div className="moveOut">Что выдано</div>
-                        <div className="moveIn">Что сдано</div>
-                    </div>
-                    <div className="secondTitleTable">
-                        <div className="moveOut">
-                            <div className="item">Заготовка</div>
-                            <div className="item">Длина мм.</div>
-                            <div className="item">Цвет</div>
-                            <div className="item">Вес, гр.</div>
-                        </div>
-                        <div className="moveIn">
-                            <div className="item">распиленная</div>
-                            <div className="item">Длина мм.</div>
-                            <div className="item">Цвет</div>
-                            <div className="item">Вес, гр.</div>
-                        </div>
-                    </div>
-                    {ROWDATA.map((item, index) => (
-                        <TableRow key={index} data={item} />
-                    ))}
-                    {SIGNROWDATA.map((item, index) => (
-                        <TableRow key={index} data={item} />
-                    ))}
+                <div className="rootContainer">
+                    <Link href="/" className="link">
+                        Назад
+                    </Link>
+                    <HeaderPrintBlank />
+                    <Slicing />
+                    <CommonForm number={2} name="Подбор заготовок" state="Распиленная" />
+                    <CommonForm number={3} name="Сверление" state="Распиленная" />
+                    <CommonForm number={4} name="Шлифование" state="Просверленная" />
+                    <CommonForm number={5} name="Галтование" state="Шлифованная" />
+                    <Drilling
+                        number={6}
+                        name="Сверление водой"
+                        color="прозр."
+                        state="Галтованная"
+                    />
+                    <CommonForm number={7} name="Термообработка" state="Просверленная" />
+                    <CommonForm number={8} name="Печь" state="Термообработ." />
+                    <CommonForm number={9} name="Галтование" state="Запеченая" />
+                    <CommonForm number={10} name="Полировка" state="Галтованная" />
                 </div>
             </Wrapper>
-        </>
+        </QueryClientProvider>
     );
 };

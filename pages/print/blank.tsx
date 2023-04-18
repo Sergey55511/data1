@@ -1,3 +1,3 @@
-import { PageReduser } from '../../Frontend/Components/Pages';
+import { PrintBlank } from '../../Frontend/Components/Pages/Print/Blank';
 
-export default () => <PageReduser page="printBlank" />;
+export default () => <PrintBlank />;

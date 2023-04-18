@@ -20,7 +20,6 @@ export const pages = {
     assemble: 'assemble',
     products: 'products',
     inventory: 'inventory',
-    printBlank: 'printBlank',
 };
 
 export const ROUTES = {
