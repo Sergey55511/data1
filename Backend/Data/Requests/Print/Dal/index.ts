@@ -8,7 +8,7 @@ export interface iParams {
 
 export const dal = (params: { [key: string]: any }): iParams => {
     const data: iParams = {
-        productionId: params.productionId,
+        productionId: +params.productionId,
     };
 
     const ajv = new Ajv({ allErrors: true });

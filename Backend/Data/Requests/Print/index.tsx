@@ -9,7 +9,10 @@ export const PrintBlank = (prisma: tPrisma, user: iUser, req: NextApiRequest) =>
     return prisma.$queryRawUnsafe(`
     SELECT 
         "Data".id,
+        "Data"."operationId",
         "Data"."workpieceTypeId",
+		"Data"."channelId",
+		"Channel".channel,
         "WorkpieceType"."workpieceType",
         "SizeRange"."sizeRange",
         "Length".length,
@@ -17,7 +20,7 @@ export const PrintBlank = (prisma: tPrisma, user: iUser, req: NextApiRequest) =>
         "Data"."task",
         "Models".model,
         "Profile".profile,
-        "SizeRangeModel"."sizeRange" as "sizeRangeModel",
+        "SizeRangeM"."sizeRange" as "sizeRangeModel",
         "LengthModel".length as "lengthModel",
         "Data"."widthOut"
     FROM public."Data" LEFT JOIN "WorkpieceType" 
@@ -26,18 +29,21 @@ export const PrintBlank = (prisma: tPrisma, user: iUser, req: NextApiRequest) =>
             on "SizeRange".id="Data"."sizeRangeId"
         LEFT JOIN "Length" 
             on "Length".id="Data"."lengthId"
+		LEFT JOIN "Channel" 
+            on "Channel".id="Data"."channelId"
         LEFT JOIN "FullModels" 
             on "FullModels".id="Data"."task"
         LEFT JOIN "Models" 
             on "Models".id="FullModels"."modelId"
         LEFT JOIN "Profile" 
             on "Profile".id="FullModels"."profileId"
-        LEFT JOIN "SizeRangeModel" 
-            on "SizeRangeModel".id="FullModels"."sizeRangeModelId"
+        LEFT JOIN "SizeRange" "SizeRangeM"
+            on "SizeRangeM".id="FullModels"."sizeRangeModelId"
         LEFT JOIN "LengthModel" 
             on "LengthModel".id="FullModels"."lengthModelId"
     WHERE "productionId"=${+data.productionId}
         and "widthOut" IS NOT NULL
+        and "Data"."operationId"=26
         and "storeId" = ${storeId};
     `) as any;
 };

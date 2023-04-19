@@ -2,10 +2,10 @@ import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { getProductions } from '../../../../../Store/Lists/api';
 import { useStores } from '../../../../../Store/useStores';
+import { getPrintBlank } from '../../api';
 
 export const useProps = () => {
     const { loginStore } = useStores();
-    const [production, setProduction] = useState<number>();
     const user = loginStore.user;
     const productionList = useQuery(
         ['productionList', user.storeId],
@@ -23,8 +23,5 @@ export const useProps = () => {
         };
     });
 
-    const produstionData = useQuery(['produstionData', production], () => {}, {
-        enabled: !!production,
-    });
-    return { production, setProduction, productionList, options };
+    return { productionList, options };
 };

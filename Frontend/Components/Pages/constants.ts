@@ -33,6 +33,7 @@ export const ROUTES = {
         listOperations: '/reports/listOperations',
         moveInDocuments: '/reports/moveInDocuments',
     },
+    print: { blank: '/print/blank' },
     newItem: '/newItem',
     newItemBillets: '/newItemBillets',
     moveout: '/operations/moveout',

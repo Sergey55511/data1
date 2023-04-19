@@ -150,6 +150,23 @@ interface iList {
 export interface iMaterialGroup extends iList {
     materialGroup: string;
 }
+export interface iPrintBlank {
+    fullModelId?: number;
+    id: number;
+    operationId?: number;
+    channelId?: number;
+    channel?: string;
+    length?: string;
+    lengthModel?: string;
+    model?: string;
+    profile?: string;
+    sizeRange?: string;
+    sizeRangeModel?: string;
+    task?: number;
+    widthOut?: number;
+    workpieceType?: string;
+    workpieceTypeId?: number;
+}
 export interface iSizeRange extends iList {
     sizeRange: string;
     size: number;
