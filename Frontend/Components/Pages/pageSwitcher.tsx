@@ -53,8 +53,6 @@ export const PageSwitcher = ({ page }: { page: tPages }) => {
             return <MoveInDetales />;
         case pages.assemble:
             return <Assemble />;
-        case pages.printBlank:
-            return <PrintBlank />;
     }
     return <></>;
 };

@@ -20,7 +20,6 @@ export const pages = {
     assemble: 'assemble',
     products: 'products',
     inventory: 'inventory',
-    printBlank: 'printBlank',
 };
 
 export const ROUTES = {
@@ -34,6 +33,7 @@ export const ROUTES = {
         listOperations: '/reports/listOperations',
         moveInDocuments: '/reports/moveInDocuments',
     },
+    print: { blank: '/print/blank' },
     newItem: '/newItem',
     newItemBillets: '/newItemBillets',
     moveout: '/operations/moveout',

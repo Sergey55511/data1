@@ -1,25 +1,34 @@
 import { Button } from 'antd';
-import { useState } from 'react';
+import { SetStateAction } from 'react';
 import { SelectField } from '../../../../Shared/SelectField';
 import { Wrapper } from './style';
+import { useProps } from './useProps';
 
-export const HeaderPrintBlank = () => {
-    const [production, setProduction] = useState<number>();
+export const HeaderPrintBlank = ({
+    production,
+    setProduction,
+}: {
+    production?: number;
+    setProduction: (value: SetStateAction<number | undefined>) => void;
+}) => {
+    const props = useProps();
     return (
         <Wrapper>
             <div className="container">
                 <SelectField
                     placeholder="Номер производства"
                     value={production}
-                    onChange={(v) => setProduction(v)}
-                    options={[
-                        { value: 1, caption: 'some text' },
-                        { value: 2, caption: 'some text2' },
-                        { value: 3, caption: 'some text3' },
-                    ]}
+                    onChange={setProduction}
+                    options={props.options}
+                    selectProps={{ loading: props.productionList.isFetching }}
                 />
-                <Button disabled={!production}>Сформировать</Button>
-                <Button type="primary">Распечатать</Button>
+                <Button
+                    disabled={!production}
+                    type="primary"
+                    onClick={() => window.print()}
+                >
+                    Распечатать
+                </Button>
             </div>
         </Wrapper>
     );

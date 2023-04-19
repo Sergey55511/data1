@@ -13,6 +13,7 @@ import {
     DeploymentUnitOutlined,
     UnorderedListOutlined,
     FileDoneOutlined,
+    AuditOutlined,
 } from '@ant-design/icons';
 import { useStores } from '../../../../Store/useStores';
 import { ROUTES } from '../../../Pages/constants';
@@ -121,6 +122,11 @@ export const useItems = () => {
                 label: 'Закупки',
                 key: ROUTES.reports.moveInDocuments,
                 icon: <UnorderedListOutlined />,
+            },
+            {
+                label: 'Бланк',
+                key: ROUTES.print.blank,
+                icon: <AuditOutlined />,
             },
         ],
     });

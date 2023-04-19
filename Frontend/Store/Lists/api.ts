@@ -26,6 +26,7 @@ import {
     iType,
     iFraction,
     iMaterialGroup,
+    iProductions,
 } from '../../../Shared/Types/interfaces';
 
 export const getMaterialGroup = () => {
@@ -214,7 +215,7 @@ export const getProductions = (storeId: number) => {
     return axios({
         url: `/api/list/productions?storeId=${storeId}`,
         method: 'GET',
-    }).then((res) => res.data);
+    }).then((res) => res.data as iProductions[]);
 };
 export const getUsers = (storeId: number) => {
     return axios({
