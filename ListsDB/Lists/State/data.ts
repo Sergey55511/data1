@@ -40,4 +40,5 @@ export const data = [
     { id: 39, state: 'Калиброванный МШ', active: true },
     { id: 40, state: 'Клеенный 2', active: true },
     { id: 41, state: 'Мытый 2', active: true },
+    { id: 42, state: 'Галтованный', active: true },
 ];
