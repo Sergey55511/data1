@@ -121,7 +121,6 @@ export const GetOrderSwitcher = ({
                     isCheckLosses
                 />
             );
-
         case OPERATIONS.sorting.id:
             return <Sorting record={record} stateId={STATE.sorted.id} />;
         case OPERATIONS.sortingN.id:

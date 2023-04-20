@@ -11,7 +11,7 @@ export const TableLeftOvers = observer((props: iProps) => {
 
     return (
         <>
-            <Counter data={filteredleftovers} />
+            <Counter data={filteredleftovers} countKey="count" widthKey="width" />
             <TableApp
                 onRow={(record: iDataIndex, _rowIndex, ...rest) => {
                     return {

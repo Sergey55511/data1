@@ -1,4 +1,6 @@
 import { observer } from 'mobx-react-lite';
+import { getCounterDataHandler } from '../../../../../../Helpers';
+import { Counter } from '../../../../../../Shared/Counter';
 import { Title } from '../../Shared/Title';
 import { RowWrapper } from './RowWrapper';
 import { Wrapper } from './style';
@@ -21,6 +23,7 @@ export const Patifon = observer((props: iProps) => {
                 date={params.date}
                 setDate={params.setDate}
             />
+            <Counter data={getCounterDataHandler(params.state)} widthKey="widthIn" />
             <div>
                 {params.state.map((item, index) => (
                     <RowWrapper

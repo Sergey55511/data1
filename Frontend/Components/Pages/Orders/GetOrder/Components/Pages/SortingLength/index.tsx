@@ -3,6 +3,8 @@ import { RowWrapper } from './RowWrapper';
 import { Wrapper } from './style';
 import { Title } from '../../Shared/Title';
 import { iProps, useProps } from './useProps';
+import { Counter } from '../../../../../../Shared/Counter';
+import { getCounterDataHandler } from '../../../../../../Helpers';
 
 export const SortingLength = observer((props: iProps) => {
     const params = useProps(props);
@@ -19,6 +21,7 @@ export const SortingLength = observer((props: iProps) => {
                 date={params.date}
                 setDate={params.setDate}
             />
+            <Counter data={getCounterDataHandler(params.state)} widthKey="widthIn" />
             <div>
                 {params.state.map((item, index) => (
                     <RowWrapper

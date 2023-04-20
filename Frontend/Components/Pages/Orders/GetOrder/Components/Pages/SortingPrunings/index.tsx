@@ -3,6 +3,8 @@ import { RowWrapper } from './RowWrapper';
 import { Wrapper } from './style';
 import { Title } from '../../Shared/Title';
 import { iProps, useProps } from './useProps';
+import { Counter } from '../../../../../../Shared/Counter';
+import { getCounterDataHandler } from '../../../../../../Helpers';
 
 export const SortingPrunings = observer((props: iProps) => {
     const params = useProps(props);
@@ -23,6 +25,7 @@ export const SortingPrunings = observer((props: iProps) => {
                 workingTimeFact={params.workingTimeFact}
                 setWorkingTimeFact={params.setWorkingTimeFact}
             />
+            <Counter data={getCounterDataHandler(params.state)} widthKey="widthIn" />
             <div>
                 {params.state.map((item, index) => (
                     <RowWrapper

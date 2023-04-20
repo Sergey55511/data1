@@ -38,7 +38,7 @@ export const TableLeftOvers = observer(
                         onClose={() => setIsShowMoveOutSolo(false)}
                     />
                 )}
-                <Counter data={filteredleftovers} />
+                <Counter data={filteredleftovers} countKey="count" widthKey="width" />
                 <TableApp
                     onRow={(record) => {
                         return {

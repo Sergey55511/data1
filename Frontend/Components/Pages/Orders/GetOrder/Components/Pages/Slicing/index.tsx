@@ -3,9 +3,12 @@ import { Row } from './Components/Row';
 import { Wrapper } from './style';
 import { Title } from '../../Shared/Title';
 import { iProps, useProps } from './useProps';
+import { Counter } from '../../../../../../Shared/Counter';
+import { getCounterDataHandler } from '../../../../../../Helpers';
 
 export const Slicing = observer((props: iProps) => {
     const params = useProps(props);
+
     return (
         <Wrapper>
             <Title
@@ -22,6 +25,7 @@ export const Slicing = observer((props: iProps) => {
                 date={params.date}
                 setDate={params.setDate}
             />
+            <Counter data={getCounterDataHandler(params.data)} widthKey="widthIn" />
             <div>
                 {params.data.map((item, index) => (
                     <Row

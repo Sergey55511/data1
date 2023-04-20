@@ -3,6 +3,8 @@ import { RowWrapper } from './RowWrapper';
 import { Wrapper } from './style';
 import { Title } from '../../Shared/Title';
 import { iProps, useProps } from './useProps';
+import { Counter } from '../../../../../../Shared/Counter';
+import { getCounterDataHandler } from '../../../../../../Helpers';
 
 export const SortingInventory = observer((props: iProps) => {
     const params = useProps(props);
@@ -21,6 +23,7 @@ export const SortingInventory = observer((props: iProps) => {
                 defect={params.defect}
                 setDefect={params.setDefect}
             />
+            <Counter data={getCounterDataHandler(params.state)} widthKey="widthIn" />
             <div>
                 {params.state.map((item, index) => (
                     <RowWrapper

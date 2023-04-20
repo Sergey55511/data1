@@ -300,3 +300,6 @@ export const checkDuplicate = (state: any[]): any[] => {
         return { ...item };
     });
 };
+
+export const getCounterDataHandler = (data: any[]) =>
+    data.map((item) => ({ widthIn: item.widthIn.value }));
