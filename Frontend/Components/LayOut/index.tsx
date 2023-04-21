@@ -35,6 +35,8 @@ export const LayOut = observer(
     ({ children, page }: { children: JSX.Element; page: tPages }) => {
         const { loginStore, UIStore, OperationStore, SocketIo, ErrorStore } = useStores();
 
+        //hello
+
         const queryClient = useQueryClient();
 
         useEffect(() => {
