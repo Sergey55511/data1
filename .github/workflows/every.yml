@@ -1,5 +1,7 @@
-name: avery
-on: *
+name: every
+on:
+    push:
+        branches: '**'
 jobs:
     build:
         runs-on: ubuntu-latest
