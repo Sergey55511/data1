@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 1.10.37 (2023-04-21)
+
+
+### Bug Fixes
+
+* **print_blank:** number fixes ([1b07240](https://github.com/Sergey55511/data1/commit/1b07240c86e747cd8d2ae1921dd0f105cddf894d))
+
 ### 1.10.36 (2023-04-21)
 
 
