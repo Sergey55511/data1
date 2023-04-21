@@ -124,7 +124,7 @@ export const Row = observer(
                         />
                     </InputField>
                 </div>
-                <div className="item">
+                <div className="item" style={{ width: '100px' }}>
                     <InputField isError={state.colorId.isError}>
                         <SelectField
                             placeholder={state.colorId.placeholder}
@@ -138,7 +138,7 @@ export const Row = observer(
                         />
                     </InputField>
                 </div>
-                <div className="item">
+                <div className="item" style={{ width: '100px' }}>
                     <InputField isError={state.gradeId.isError}>
                         <SelectField
                             placeholder={state.gradeId.placeholder}
@@ -152,7 +152,7 @@ export const Row = observer(
                         />
                     </InputField>
                 </div>
-                <div className="item">
+                <div className="item" style={{ width: '100px' }}>
                     <InputField isError={state.widthIn.isError}>
                         <InputNumber
                             placeholder={state.widthIn.placeholder}
