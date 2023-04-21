@@ -1,6 +1,6 @@
 {
   "name": "data1",
-  "version": "1.10.37",
+  "version": "1.10.38",
   "private": true,
   "scripts": {
     "release": "standard-version",

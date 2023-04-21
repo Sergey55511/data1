@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.10.38](https://github.com/Sergey55511/data1/compare/v1.11.0...v1.10.38) (2023-04-21)
+
+
+### Bug Fixes
+
+* **print_blank:** number fixes ([1b07240](https://github.com/Sergey55511/data1/commit/1b07240c86e747cd8d2ae1921dd0f105cddf894d))
+* set start version ([b61e283](https://github.com/Sergey55511/data1/commit/b61e28339174daea0341734cd53808eafac61bd4))
+* test ci ([9a615b6](https://github.com/Sergey55511/data1/commit/9a615b69065b67b29f585204417855e6b37e82f6))
+* test ci ([52e9289](https://github.com/Sergey55511/data1/commit/52e9289b0a9399897d0f20b6ba85fa1f08378d8a))
+* test ci ([b08c5e9](https://github.com/Sergey55511/data1/commit/b08c5e93bf6bc022b0a10b9d0af63dbd1b9acf4d))
+
 ### 1.10.37 (2023-04-21)
 
 
