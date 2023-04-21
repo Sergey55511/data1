@@ -3,14 +3,14 @@ import { iTableRowData } from '../../Components/TableRow';
 export const ROWDATA: iTableRowData[] = [
     {
         moveOut: [
-            { value: '+6,6-7,59' },
-            { value: 'от 15,0 до 24,99' },
             { value: '' },
-            { value: '1076.3', class: 'gray' },
+            { value: '' },
+            { value: '' },
+            { value: '', class: 'gray' },
         ],
         moveIn: [
-            { value: '+6,6-7,59' },
-            { value: '15.0' },
+            { value: '' },
+            { value: '' },
             { value: '' },
             { value: '', class: 'gray' },
         ],
@@ -18,9 +18,9 @@ export const ROWDATA: iTableRowData[] = [
     {
         moveOut: [
             { value: '' },
-            { value: 'от 15,0 до 24,99' },
             { value: '' },
-            { value: '293.4', class: 'gray' },
+            { value: '' },
+            { value: '', class: 'gray' },
         ],
         moveIn: [
             { value: 'Обрезки' },
