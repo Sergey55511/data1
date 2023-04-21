@@ -108,27 +108,32 @@ export const useItems = () => {
         icon: <VerticalAlignBottomOutlined />,
     });
 
+    const reportChildrens = [
+        {
+            label: 'Записи',
+            key: ROUTES.reports.listOperations,
+            icon: <UnorderedListOutlined />,
+        },
+        {
+            label: 'Закупки',
+            key: ROUTES.reports.moveInDocuments,
+            icon: <UnorderedListOutlined />,
+        },
+    ];
+
+    if (isMSC) {
+        reportChildrens.push({
+            label: 'Бланк',
+            key: ROUTES.print.blank,
+            icon: <AuditOutlined />,
+        });
+    }
+
     items.push({
         label: 'Отчеты',
         key: 'reports',
         icon: <FileDoneOutlined />,
-        children: [
-            {
-                label: 'Записи',
-                key: ROUTES.reports.listOperations,
-                icon: <UnorderedListOutlined />,
-            },
-            {
-                label: 'Закупки',
-                key: ROUTES.reports.moveInDocuments,
-                icon: <UnorderedListOutlined />,
-            },
-            {
-                label: 'Бланк',
-                key: ROUTES.print.blank,
-                icon: <AuditOutlined />,
-            },
-        ],
+        children: reportChildrens,
     });
 
     const operationChildren = [];
