@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 1.11.1 (2023-04-21)
+
+
+### Bug Fixes
+
+* test ci ([9a615b6](https://github.com/Sergey55511/data1/commit/9a615b69065b67b29f585204417855e6b37e82f6))
+
 ## [1.11.0](https://github.com/Sergey55511/data1/compare/v1.10.35...v1.11.0) (2023-04-21)
 
 
