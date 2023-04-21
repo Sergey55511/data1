@@ -33,7 +33,7 @@ export const Slicing = ({ produstionData }: { produstionData?: iPrintBlank[] }) 
                     </div>
                 </div>
                 <div className="secondRow">
-                    <div className="numberPP">{produstionData![0]?.operationId}</div>
+                    <div className="numberPP">1</div>
                     <div className="operation">Распиливание</div>
                     {/* <div className="color">
                         <div className="label">Цвет:</div>
