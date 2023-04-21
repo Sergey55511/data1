@@ -2,6 +2,8 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 1.10.40 (2023-04-21)
+
 ### 1.10.39 (2023-04-21)
 
 ### [1.10.38](https://github.com/Sergey55511/data1/compare/v1.11.0...v1.10.38) (2023-04-21)
