@@ -17,5 +17,8 @@ jobs:
               with:
                   node-version: ${{ matrix.node-version }}
             - run: npm install --save-dev standard-version
-            - run: npm run release
+            - run: |
+                  git config --global user.email "ssp55511@gmail.com"
+                  git config --global user.name "Sergey55511"
+                  npm run release
             - run: git push
