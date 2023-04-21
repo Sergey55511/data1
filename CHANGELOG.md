@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 1.10.36 (2023-04-21)
+
+
+### Bug Fixes
+
+* set start version ([b61e283](https://github.com/Sergey55511/data1/commit/b61e28339174daea0341734cd53808eafac61bd4))
+
 ### 1.11.2 (2023-04-21)
 
 ### 1.11.1 (2023-04-21)
