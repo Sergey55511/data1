@@ -2,6 +2,7 @@ import { iPrintBlank } from '../../../../../../../Shared/Types/interfaces';
 import { iTableRowData, iValue } from '../../Components/TableRow';
 
 export const useRowData = (produstionData?: iPrintBlank[]): iTableRowData[] => {
+    const ttlSum = produstionData?.reduce((res, item) => (res += item.widthOut ?? 0), 0);
     const getString = (v: any) => v ?? '';
     const getMoveOut = (index: number): iValue[] => [
         { value: getString(produstionData![index]?.sizeRange) },
@@ -87,7 +88,7 @@ export const useRowData = (produstionData?: iPrintBlank[]): iTableRowData[] => {
                 { value: '', class: 'gray' },
                 { value: '', class: 'gray' },
                 { value: 'Итого, кг:', class: 'gray' },
-                { value: '1369.7', class: 'gray' },
+                { value: ttlSum?.toLocaleString() ?? '', class: 'gray' },
             ],
             moveIn: [
                 { value: 'Итого, кг:', class: 'gray' },

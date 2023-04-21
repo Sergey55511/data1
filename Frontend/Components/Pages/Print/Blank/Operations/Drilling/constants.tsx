@@ -113,7 +113,7 @@ export const ROWDATA: iTableRowData[] = [
             { value: '', class: 'gray' },
             { value: '', class: 'gray' },
             { value: 'Итого, кг:', class: 'gray' },
-            { value: '1369.7', class: 'gray' },
+            { value: '', class: 'gray' },
         ],
         moveIn: [
             { value: 'Итого, кг:', class: 'gray' },
