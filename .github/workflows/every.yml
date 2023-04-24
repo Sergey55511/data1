@@ -16,7 +16,10 @@ jobs:
             - name: Semantic release
               env:
                   GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
-              run: npx semantic-release
+              run: |
+                  npm i
+                  npx semantic-release
+
 # name: every
 # on:
 #     push:
