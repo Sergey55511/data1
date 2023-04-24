@@ -8,19 +8,15 @@ jobs:
     publish:
         runs-on: ubuntu-latest
         steps:
-            - name: Checkout
-                uses: actions/checkout@v3
-            - name: Semantic Release
-                uses: cycjimmy/semantic-release-action@v3
-                env:
-                GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
-        # steps:
-        #     - name: Checkout
-        #         uses: actions/checkout@v3
-        #     - name: Semantic Release
-        #         uses: cycjimmy/semantic-release-action@v3
-        #         env:
-        #             GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+            - uses: actions/checkout@v2
+            - name: Setup Node.js
+              uses: actions/setup-node@v1
+              with:
+                  node-version: 18
+            - name: Semantic release
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+              run: npx semantic-release
 # name: every
 # on:
 #     push:
