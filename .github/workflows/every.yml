@@ -19,6 +19,7 @@ jobs:
               run: |
                   npm i
                   npx semantic-release
+                  git push --tags
 
 # name: every
 # on:
