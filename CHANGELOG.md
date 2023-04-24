@@ -1,3 +1,10 @@
+## [1.11.1](https://github.com/Sergey55511/data1/compare/v1.11.0...v1.11.1) (2023-04-24)
+
+
+### Bug Fixes
+
+* semantic release action ([3860921](https://github.com/Sergey55511/data1/commit/386092148da4eb40aa40cf9a113254b1d8812399))
+
 # [1.11.0](https://github.com/Sergey55511/data1/compare/v1.10.38...v1.11.0) (2023-04-24)
 
 
