@@ -1,3 +1,20 @@
+# [1.11.0](https://github.com/Sergey55511/data1/compare/v1.10.38...v1.11.0) (2023-04-24)
+
+
+### Bug Fixes
+
+* semantic release action ([9cc102c](https://github.com/Sergey55511/data1/commit/9cc102c49d00e21143c3e2736bb8b9da07e52ee6))
+* test tag ([a29d9a8](https://github.com/Sergey55511/data1/commit/a29d9a8a215414ea1b4ca8a602f1bbcb266b2207))
+* test tag ([75f64dd](https://github.com/Sergey55511/data1/commit/75f64dd5f6b291e1d896d855f537560e82211a2f))
+* test tag ([b481487](https://github.com/Sergey55511/data1/commit/b481487bcd32fc5b28debd32988d517aa207fa24))
+
+
+### Features
+
+* add commitizen ([82f37fb](https://github.com/Sergey55511/data1/commit/82f37fb3417c4ccbf8c82f6a5e8cabe9c4088406))
+* add git lint ([1992c49](https://github.com/Sergey55511/data1/commit/1992c49f9f1604c899e0511ece26dabf25c9a94a))
+* add semantic release ([4206326](https://github.com/Sergey55511/data1/commit/42063268b647bc077ad984dc03b65ae08953cfda))
+
 # Changelog
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
