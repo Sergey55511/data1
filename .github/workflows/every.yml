@@ -1,24 +1,43 @@
-name: every
+name: Semantic release
+
 on:
     push:
-        branches: '**'
+        branches:
+            - dev
 jobs:
-    build:
+    publish:
         runs-on: ubuntu-latest
-
-        strategy:
-            matrix:
-                node-version: [16.x]
-
         steps:
-            - uses: actions/checkout@v3
-            - name: Use Node.js ${{ matrix.node-version }}
-              uses: actions/setup-node@v3
+            - uses: actions/checkout@v2
+            - name: Setup Node.js
+              uses: actions/setup-node@v1
               with:
-                  node-version: ${{ matrix.node-version }}
-            - run: npm install --save-dev standard-version
-            - run: |
-                  git config --global user.email "ssp55511@gmail.com"
-                  git config --global user.name "Sergey55511"
-                  npm run release
-            - run: git push
+                  node-version: 16
+            - name: Semantic release
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+              run: npx semantic-release
+# name: every
+# on:
+#     push:
+#         branches: '**'
+# jobs:
+#     build:
+#         runs-on: ubuntu-latest
+
+#         strategy:
+#             matrix:
+#                 node-version: [16.x]
+
+#         steps:
+#             - uses: actions/checkout@v3
+#             - name: Use Node.js ${{ matrix.node-version }}
+#               uses: actions/setup-node@v3
+#               with:
+#                   node-version: ${{ matrix.node-version }}
+#             - run: npm install --save-dev standard-version
+#             - run: |
+#                   git config --global user.email "ssp55511@gmail.com"
+#                   git config --global user.name "Sergey55511"
+#                   npm run release
+#             - run: git push
