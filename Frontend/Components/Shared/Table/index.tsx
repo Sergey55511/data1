@@ -20,7 +20,7 @@ export function TableApp<T extends object>(props: iTable<T>) {
             const heightPagination =
                 wrapperRef.querySelector<HTMLElement>('.ant-pagination')?.offsetHeight ||
                 0;
-            const marginPagination = 32;
+            const marginPagination = 36;
             const height =
                 heightWrapper - heightHeader - heightPagination - marginPagination;
             setY(height);
