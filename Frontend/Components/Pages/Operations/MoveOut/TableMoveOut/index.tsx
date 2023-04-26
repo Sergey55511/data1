@@ -23,7 +23,11 @@ export const TableMoveOut = observer(
 
         return (
             <>
-                <Counter data={filteredleftovers} countKey="count" widthKey="width" />
+                <Counter
+                    data={filteredleftovers}
+                    countKey="countItemsOut"
+                    widthKey="widthOut"
+                />
                 <TableApp
                     onRow={(record: iDataIndex, _rowIndex) => {
                         return {
