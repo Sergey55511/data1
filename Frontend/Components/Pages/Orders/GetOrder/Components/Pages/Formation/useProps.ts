@@ -118,6 +118,7 @@ export const useProps = ({ record, stateId }: iProps) => {
 
         const data: iData[] = state.map((item) => ({
             ...record,
+            typeId: undefined,
             date,
             workpieceTypeId: WORKPIECETYPE.formated.id,
             sizeRangeId: +item.sizeRange.value,

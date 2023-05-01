@@ -2,7 +2,6 @@ import { observer } from 'mobx-react-lite';
 import { Dispatch, SetStateAction } from 'react';
 import { FilterValue } from 'antd/es/table/interface';
 import { TableApp } from '../../../../Shared/Table';
-import { Wrapper } from './style';
 import { iDataIndex } from '../UseProps';
 import { useProps } from './useProps';
 import { Counter } from '../../../../Shared/Counter';
@@ -23,8 +22,12 @@ export const TableMoveOut = observer(
         const { columns, data, handleChange, filteredleftovers } = useProps(props);
 
         return (
-            <Wrapper>
-                <Counter data={filteredleftovers} countKey="count" widthKey="width" />
+            <>
+                <Counter
+                    data={filteredleftovers}
+                    countKey="countItemsOut"
+                    widthKey="widthOut"
+                />
                 <TableApp
                     onRow={(record: iDataIndex, _rowIndex) => {
                         return {
@@ -37,7 +40,7 @@ export const TableMoveOut = observer(
                     dataSource={data}
                     onChange={handleChange}
                 />
-            </Wrapper>
+            </>
         );
     },
 );
