@@ -24,7 +24,7 @@ export const useColumns = (filters: Record<string, FilterValue | null>) => {
     columns.push({
         ...getColumnPropsHoc(KEYSLEFTOVERS.workpieceType.key),
         title: KEYSLEFTOVERS.workpieceType.title,
-        width:150
+        width: 150,
     });
     if (isMSC)
         columns.push({
@@ -39,13 +39,13 @@ export const useColumns = (filters: Record<string, FilterValue | null>) => {
         columns.push({
             ...getColumnPropsHoc(KEYSLEFTOVERS.type.key),
             title: KEYSLEFTOVERS.type.title,
-            width:110
+            width: 110,
         });
     if (!isMSC)
         columns.push({
             ...getColumnPropsHoc(KEYSLEFTOVERS.fraction.key),
             title: KEYSLEFTOVERS.fraction.title,
-            width:100
+            width: 100,
         });
     if (!isMSC)
         columns.push({
@@ -56,31 +56,27 @@ export const useColumns = (filters: Record<string, FilterValue | null>) => {
     columns.push({
         ...getColumnPropsHoc(KEYSLEFTOVERS.color.key),
         title: KEYSLEFTOVERS.color.title,
-        width:85
+        width: 85,
     });
     columns.push({
         ...getColumnPropsHoc(KEYSLEFTOVERS.sizeRange.key),
         title: KEYSLEFTOVERS.sizeRange.title,
-        width:130
+        width: 130,
     });
     columns.push({
         ...getColumnPropsHoc(KEYSLEFTOVERS.length.key),
         title: KEYSLEFTOVERS.length.title,
-        width:110
+        width: 110,
     });
     columns.push({
         ...getColumnPropsHoc(KEYSLEFTOVERS.grade.key),
         title: KEYSLEFTOVERS.grade.title,
-        width:65
+        width: 65,
     });
     if (isMSC) {
         columns.push({
             ...getColumnPropsHoc(KEYSLEFTOVERS.channel.key),
             title: KEYSLEFTOVERS.channel.title,
-        });
-        columns.push({
-            ...getColumnPropsHoc(KEYSLEFTOVERS.model.key),
-            title: KEYSLEFTOVERS.model.title,
         });
         columns.push({
             ...getColumnPropsHoc(KEYSLEFTOVERS.type.key),
@@ -90,7 +86,7 @@ export const useColumns = (filters: Record<string, FilterValue | null>) => {
     columns.push({
         ...getColumnPropsHoc(KEYSLEFTOVERS.lot.key),
         title: KEYSLEFTOVERS.lot.title,
-        width:65
+        width: 65,
     });
     if (isMSC)
         columns.push({
@@ -101,7 +97,7 @@ export const useColumns = (filters: Record<string, FilterValue | null>) => {
     columns.push({
         ...getColumnPropsHoc(KEYSLEFTOVERS.width.key),
         title: KEYSLEFTOVERS.width.title,
-        width:80
+        width: 80,
     });
     if (isMSC)
         columns.push({

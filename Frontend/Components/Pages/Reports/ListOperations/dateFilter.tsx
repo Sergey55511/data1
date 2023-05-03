@@ -1,5 +1,5 @@
 import { useProps } from './useProps';
-import { Button, DatePicker, Select } from 'antd';
+import { Button, DatePicker, Input, Select } from 'antd';
 import type { RangePickerProps } from 'antd/es/date-picker';
 import moment from 'moment';
 import { InputNumber } from '../../../Shared/InputNumber';
@@ -17,6 +17,8 @@ export const DateFilter = ({
     operations,
     operationId,
     setOperationId,
+    numDocument,
+    setNumDocument,
 }: ReturnType<typeof useProps>) => {
     const disabledDate: RangePickerProps['disabledDate'] = (current) => {
         if (current > moment().endOf('day')) return true;
@@ -68,6 +70,13 @@ export const DateFilter = ({
                 onChangeHandler={(v) => setPP(v)}
                 style={{ width: '100px' }}
                 value={pp}
+                allowClear
+            />
+            <Input
+                placeholder="Номер документа"
+                onChange={(v) => setNumDocument(v.target.value)}
+                style={{ width: '200px' }}
+                value={numDocument}
                 allowClear
             />
             <Button

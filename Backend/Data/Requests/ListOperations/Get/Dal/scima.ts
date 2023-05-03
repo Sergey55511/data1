@@ -6,6 +6,7 @@ export const schema = {
         lot: { type: 'number' },
         pp: { type: 'number' },
         operationId: { type: 'number' },
+        numDocument: { type: 'string' },
     },
     required: ['start', 'end'],
     additionalProperties: false,

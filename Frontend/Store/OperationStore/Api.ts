@@ -20,6 +20,7 @@ export const listOperations = (params: {
     lot?: number;
     pp?: number;
     operationId?: number;
+    numDocument?: string;
 }) => {
     return axios({
         url: `/api/data/reports/listOperations`,
