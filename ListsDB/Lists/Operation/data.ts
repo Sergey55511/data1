@@ -49,4 +49,5 @@ export const data = [
     { id: 48, operation: 'Клей сырья2', activ: true },
     { id: 49, operation: 'Мойка 2', activ: true },
     { id: 50, operation: 'Галтование', activ: true },
+    { id: 51, operation: 'Кастрюля', activ: true },
 ];
