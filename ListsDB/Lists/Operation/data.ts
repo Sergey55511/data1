@@ -50,4 +50,5 @@ export const data = [
     { id: 49, operation: 'Мойка 2', activ: true },
     { id: 50, operation: 'Галтование', activ: true },
     { id: 51, operation: 'Кастрюля', activ: true },
+    { id: 52, operation: 'Пресс', activ: true },
 ];
