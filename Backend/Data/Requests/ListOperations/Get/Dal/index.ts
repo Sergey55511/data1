@@ -10,6 +10,7 @@ export interface iParams {
     lot?: number;
     pp?: number;
     operationId?: number;
+    numDocument?: string;
 }
 
 export const dal = (params: { [key: string]: any }): iParams => {
@@ -24,6 +25,7 @@ export const dal = (params: { [key: string]: any }): iParams => {
         lot: getNumber(params.lot),
         pp: getNumber(params.pp),
         operationId: getNumber(params.operationId),
+        numDocument: params.numDocument,
     };
     return checkSchema(data, schema);
 };

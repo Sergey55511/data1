@@ -27,6 +27,7 @@ export const Order = ({ order }: { order?: iData }) => {
                     <ItemHoc keysLeftover={KEYSLEFTOVERS.workingTimePlan} order={order} />
                     <ItemHoc keysLeftover={KEYSLEFTOVERS.width} order={order} />
                     <ItemHoc keysLeftover={KEYSLEFTOVERS.count} order={order} />
+                    <ItemHoc keysLeftover={KEYSLEFTOVERS.fullModelTask} order={order} />
                 </div>
             </Frame>
         </div>

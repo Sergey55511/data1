@@ -24,6 +24,7 @@ export const useProps = () => {
     });
     const [lot, setLot] = useState<tValue>();
     const [pp, setPP] = useState<tValue>();
+    const [numDocument, setNumDocument] = useState<string | undefined>();
     const [operationId, setOperationId] = useState<number>();
     const getNumber = (v: any) => (v ? +v : undefined);
 
@@ -45,6 +46,7 @@ export const useProps = () => {
                 lot: getNumber(lot),
                 pp: getNumber(pp),
                 operationId: getNumber(operationId),
+                numDocument: numDocument,
             }),
         { enabled: !!loginStore.user.storeId },
     );
@@ -58,9 +60,10 @@ export const useProps = () => {
         key: index,
         date: moment(item.date).format('DD.MM.YYYY'),
     }));
-    const { columns } = useColumns(filters, data);
+    const { columns, filteredleftovers } = useColumns(filters, data);
 
     return {
+        filteredleftovers,
         listOperations,
         handleChange,
         filters,
@@ -76,5 +79,7 @@ export const useProps = () => {
         operations,
         operationId,
         setOperationId,
+        numDocument,
+        setNumDocument,
     };
 };

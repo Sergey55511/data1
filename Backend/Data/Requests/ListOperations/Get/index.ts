@@ -1,5 +1,7 @@
 import { PrismaPromise } from '@prisma/client';
+import moment from 'moment';
 import { NextApiRequest } from 'next';
+import { MyError } from '../../../../../Shared/Classes/error';
 import { iUser } from '../../../../../Shared/Types/interfaces';
 import { tPrisma } from '../../../../types';
 import { fullModelSQL } from '../../Data/constants';
@@ -11,11 +13,19 @@ export const getListOperations = <T>(
     user: iUser,
 ): PrismaPromise<T> => {
     const data = dal(req.query);
+    if (!moment(data.start).isValid()) {
+        throw new MyError(400, 'invalid date start');
+    }
+    if (!moment(data.end).isValid()) {
+        throw new MyError(400, 'invalid date end');
+    }
 
     const storeId = +user.storeId;
-    return prisma.$queryRawUnsafe(`
+    return prisma.$queryRawUnsafe(
+        `
         SELECT 
             "Data".id,
+            "Data"."numDocument",
             "Data"."workpieceTypeId",
             "managerId",
             "Managers".name as "managerLogin",
@@ -69,12 +79,21 @@ export const getListOperations = <T>(
             left join "SizeRange" on "Data"."sizeRangeId"="SizeRange".id
             LEFT JOIN "Operations" on "Data"."operationId"="Operations".id
             LEFT JOIN "Managers" on "Data"."managerId"="Managers".id
-        WHERE "Data"."storeId"=${storeId} 
-            AND date>='${data.start}' 
-            AND date<='${data.end}'
-            ${data.pp ? `AND pp='${data.pp}'` : ''}
-            ${data.lot ? `AND lot='${data.lot}'` : ''}
-            ${data.operationId ? `AND "operationId"='${data.operationId}'` : ''}
+        WHERE "Data"."storeId"=$1 
+            AND date>=$2 
+            AND date<=$3
+            ${data.pp ? `AND pp=$4` : ''}
+            ${data.lot ? `AND lot=$5` : ''}
+            ${data.operationId ? `AND "operationId"=$6` : ''}
+            ${data.numDocument ? `AND "numDocument" ILIKE $7` : ''}
         ORDER BY "Data".id ASC
-    `) as any;
+    `,
+        storeId,
+        new Date(data.start),
+        new Date(data.end),
+        data.pp ?? 0,
+        data.lot ?? 0,
+        data.operationId ?? 0,
+        data.numDocument ? `%${data.numDocument}%` : '',
+    ) as any;
 };
