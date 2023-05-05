@@ -2,7 +2,7 @@ import { InputField } from '../../../../../../../Shared/InputField';
 import { SelectField } from '../../../../../../../Shared/SelectField';
 import { InputNumber } from '../../../../../../../Shared/InputNumber';
 import { useStores } from '../../../../../../../../Store/useStores';
-import { Dispatch, SetStateAction, useState } from 'react';
+import { Dispatch, SetStateAction } from 'react';
 import { observer } from 'mobx-react-lite';
 import { iData } from '../../../../../../../../../Shared/Types/interfaces';
 import { iState } from '../useProps';
@@ -20,7 +20,6 @@ export const RowWrapper = observer(
         record: iData;
     }) => {
         const { loginStore } = useStores();
-        const [isLoadinglength, setIsLoadinglength] = useState<boolean>(false);
 
         const onChange = (v: string | number, index: number, fieldName: keyof iState) => {
             props.setState((prev) => {
@@ -31,7 +30,7 @@ export const RowWrapper = observer(
 
         const storeId = loginStore.user.storeId;
 
-        const params = useProps(storeId);
+        const params = useProps(storeId, props.record);
 
         return (
             <Row
@@ -50,8 +49,8 @@ export const RowWrapper = observer(
                                 caption: item.color,
                             }))}
                             selectProps={{
-                                disabled: isLoadinglength,
-                                loading: isLoadinglength,
+                                disabled: !params.data.color.isFetched,
+                                loading: !params.data.color.isFetched,
                             }}
                         />
                     </InputField>,
@@ -65,8 +64,8 @@ export const RowWrapper = observer(
                                 caption: item.grade,
                             }))}
                             selectProps={{
-                                disabled: isLoadinglength,
-                                loading: isLoadinglength,
+                                disabled: !params.data.grade.isFetched,
+                                loading: !params.data.grade.isFetched,
                             }}
                         />
                     </InputField>,
