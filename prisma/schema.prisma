@@ -227,13 +227,14 @@ model Fraction {
 }
 
 model Color {
-  id      Int      @id @default(autoincrement())
-  color   String   @unique
-  for     String?
-  variant Int
-  activ   Boolean  @default(true)
-  Data    Data[]
-  Bridge  Bridge[]
+  id               Int                @id @default(autoincrement())
+  color            String             @unique
+  for              String?
+  variant          Int
+  activ            Boolean            @default(true)
+  Data             Data[]
+  Bridge           Bridge[]
+  BijouterieBridge BijouterieBridge[]
 }
 
 model FullModels {
@@ -306,15 +307,16 @@ model Models {
 }
 
 model SizeRange {
-  id              Int          @id @default(autoincrement())
-  sizeRange       String
-  size            Int          @default(0)
-  nextSizeRangeId Int?
-  position        Int          @default(autoincrement())
-  active          Boolean      @default(true)
-  Data            Data[]
-  Bridge          Bridge[]
-  FullModels      FullModels[]
+  id               Int                @id @default(autoincrement())
+  sizeRange        String
+  size             Int                @default(0)
+  nextSizeRangeId  Int?
+  position         Int                @default(autoincrement())
+  active           Boolean            @default(true)
+  Data             Data[]
+  Bridge           Bridge[]
+  FullModels       FullModels[]
+  BijouterieBridge BijouterieBridge[]
 }
 
 model Length {
@@ -355,6 +357,7 @@ model WorkpieceType {
   OperationWorkPieceTypeBridge OperationWorkPieceTypeBridge[]
   WorkPieceTypeGradeBridge     WorkPieceTypeGradeBridge[]
   WorkPieceTypeTypeBridge      WorkPieceTypeTypeBridge[]
+  BijouterieBridge             BijouterieBridge[]
 }
 
 model Productions {
@@ -413,9 +416,11 @@ model ColorsAssemble {
 }
 
 model YarnsAssemble {
-  id           Int     @id @default(autoincrement())
-  yarnAssemble String
-  active       Boolean @default(true)
+  id               Int                @id @default(autoincrement())
+  yarnAssemble     String
+  width            Int?
+  active           Boolean            @default(true)
+  BijouterieBridge BijouterieBridge[]
 }
 
 model GradesAssemble {
@@ -426,8 +431,45 @@ model GradesAssemble {
 }
 
 model ResultsAssemble {
-  id             Int           @id @default(autoincrement())
-  resultAssemble String
-  active         Boolean       @default(true)
-  DataProduct    DataProduct[]
+  id                 Int                  @id @default(autoincrement())
+  resultAssemble     String
+  active             Boolean              @default(true)
+  DataProduct        DataProduct[]
+  BijouterieArticles BijouterieArticles[]
+}
+
+model BijouterieArticles {
+  id                Int                @id @default(autoincrement())
+  article           String
+  resultsAssembleId Int?
+  resultsAssemble   ResultsAssemble?   @relation(fields: [resultsAssembleId], references: [id], onDelete: NoAction)
+  variant           String
+  length            Int
+  typeAssemble      String
+  BijouterieBridge  BijouterieBridge[]
+}
+
+model Locks {
+  id               Int                @id @default(autoincrement())
+  material         String
+  size             Decimal            @db.Decimal(10, 2)
+  type             String
+  color            String
+  BijouterieBridge BijouterieBridge[]
+}
+
+model BijouterieBridge {
+  id                   Int                @id @default(autoincrement())
+  bijouterieArticles   BijouterieArticles @relation(fields: [bijouterieArticlesId], references: [id])
+  bijouterieArticlesId Int
+  workpieceType        WorkpieceType      @relation(fields: [workpieceTypeId], references: [id])
+  workpieceTypeId      Int
+  sizeRange            SizeRange          @relation(fields: [sizeRangeId], references: [id])
+  sizeRangeId          Int
+  color                Color              @relation(fields: [colorId], references: [id])
+  colorId              Int
+  locks                Locks              @relation(fields: [locksId], references: [id])
+  locksId              Int
+  yarnsAssemble        YarnsAssemble      @relation(fields: [yarnsAssembleId], references: [id])
+  yarnsAssembleId      Int
 }
