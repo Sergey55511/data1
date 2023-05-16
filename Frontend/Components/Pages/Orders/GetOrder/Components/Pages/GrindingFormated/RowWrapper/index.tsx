@@ -13,6 +13,7 @@ export const RowWrapper = ({
     removeRow,
     copyRow,
     keyArrowHandlers,
+    workpieceTypeId,
 }: {
     state: iState;
     index: number;
@@ -21,8 +22,9 @@ export const RowWrapper = ({
     copyRow: (index: number) => void;
     removeRow: (index: number) => void;
     keyArrowHandlers: ReturnType<typeof useProps>['keyArrowHandlers'];
+    workpieceTypeId: number;
 }) => {
-    const { sizeRange } = useData();
+    const { sizeRange } = useData(workpieceTypeId);
     return (
         <Row
             key={index}

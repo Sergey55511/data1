@@ -25,9 +25,10 @@ export interface iState {
 export interface iProps {
     record: iData;
     stateId: number;
+    workpiecetypeId: number;
 }
 
-export const useProps = ({ record, stateId }: iProps) => {
+export const useProps = ({ record, stateId, workpiecetypeId }: iProps) => {
     const [moveBack, setMoveBack] = useState<tValue>(undefined);
     const { OperationStore } = useStores();
     const [date, setDate] = useState<moment.Moment | undefined>(moment());
@@ -115,7 +116,7 @@ export const useProps = ({ record, stateId }: iProps) => {
         const data: iData[] = state.map((item) => ({
             ...record,
             date,
-            workpieceTypeId: WORKPIECETYPE.grindingFormated.id,
+            workpieceTypeId: workpiecetypeId,
             sizeRangeId: +item.sizeRange.value,
             widthOut: undefined,
             widthIn: +item.widthIn.value!,
