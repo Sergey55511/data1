@@ -13,6 +13,8 @@ export const PrintBlank = (prisma: tPrisma, user: iUser, req: NextApiRequest) =>
         "Data"."workpieceTypeId",
 		"Data"."channelId",
 		"Channel".channel,
+		"Data"."typeId",
+		"Types"."type",
         "WorkpieceType"."workpieceType",
         "SizeRange"."sizeRange",
         "Length".length,
@@ -31,6 +33,8 @@ export const PrintBlank = (prisma: tPrisma, user: iUser, req: NextApiRequest) =>
             on "Length".id="Data"."lengthId"
 		LEFT JOIN "Channel" 
             on "Channel".id="Data"."channelId"
+		LEFT JOIN "Types" 
+            on "Types".id="Data"."typeId"
         LEFT JOIN "FullModels" 
             on "FullModels".id="Data"."task"
         LEFT JOIN "Models" 
@@ -44,6 +48,6 @@ export const PrintBlank = (prisma: tPrisma, user: iUser, req: NextApiRequest) =>
     WHERE "productionId"=${+data.productionId}
         and "widthOut" IS NOT NULL
         and "Data"."operationId"=26
-        and "storeId" = ${storeId};
+        and "storeId" = ${+storeId};
     `) as any;
 };

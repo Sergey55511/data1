@@ -1,17 +1,7 @@
-import { useQuery } from '@tanstack/react-query';
-import { getProductions } from '../../../../../Store/Lists/api';
-import { useStores } from '../../../../../Store/useStores';
+import { useGetProductionList } from '../useGetProductionList';
 
 export const useProps = () => {
-    const { loginStore } = useStores();
-    const user = loginStore.user;
-    const productionList = useQuery(
-        ['productionList', user.storeId],
-        () => getProductions(user.storeId),
-        {
-            enabled: !!user.storeId,
-        },
-    );
+    const productionList = useGetProductionList();
 
     const options = productionList.data?.map((item) => {
         const fullModal = item.fullModel ? ` (${item.fullModel})` : '';
