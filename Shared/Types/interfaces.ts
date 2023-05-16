@@ -153,6 +153,8 @@ export interface iMaterialGroup extends iList {
 export interface iPrintBlank {
     fullModelId?: number;
     id: number;
+    typeId?: number;
+    type?: string;
     operationId?: number;
     channelId?: number;
     channel?: string;
@@ -166,6 +168,8 @@ export interface iPrintBlank {
     widthOut?: number;
     workpieceType?: string;
     workpieceTypeId?: number;
+    productionId?: number;
+    production: string;
 }
 export interface iSizeRange extends iList {
     sizeRange: string;

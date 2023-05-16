@@ -4,13 +4,32 @@ import { TableRow } from '../../Components/TableRow';
 import { HeaderForm } from '../../Components/HeaderForm';
 import { iPrintBlank } from '../../../../../../../Shared/Types/interfaces';
 import { useRowData } from './useRowData';
+import { useGetProductionList } from '../../useGetProductionList';
 
-export const Slicing = ({ produstionData }: { produstionData?: iPrintBlank[] }) => {
+export const Slicing = ({
+    produstionData,
+    produstionId,
+}: {
+    produstionData?: iPrintBlank[];
+    produstionId?: number;
+}) => {
+    const productionList = useGetProductionList();
+    const production = productionList.data?.find((item) => item.id == produstionId);
     const ROWDATA = useRowData(produstionData);
     return (
         <Wrapper>
             <div className="container">
                 <div className="firstRow">
+                    <div className="firstRowItem">
+                        <div className="label">#пр-ва:</div>
+                        <div className="value">{`${production?.id ?? ''}_${
+                            production?.fullModel ?? ''
+                        }`}</div>
+                    </div>
+                    <div className="firstRowItem">
+                        <div className="label">Тип:</div>
+                        <div className="value">{produstionData![0]?.type}</div>
+                    </div>
                     <div className="firstRowItem">
                         <div className="label">Модель:</div>
                         <div className="value">{produstionData![0]?.model}</div>

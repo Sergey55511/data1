@@ -47,6 +47,7 @@ export const OPERATIONS = {
     grindingCrumpledBall: { id: 47 }, //Шлифование МШ
     glue2: { id: 48 }, //Клей сырья2,
     wash2: { id: 49 }, //мойка
+    pot: { id: 51 }, //Кастрюля
 };
 export const STATE = {
     washed: { id: 1 },

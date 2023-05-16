@@ -35,6 +35,7 @@ export const GrindingFormated = observer((props: iProps) => {
                         copyRow={params.copyRow}
                         removeRow={params.removeRow}
                         keyArrowHandlers={params.keyArrowHandlers}
+                        workpieceTypeId={props.workpiecetypeId}
                     />
                 ))}
             </div>

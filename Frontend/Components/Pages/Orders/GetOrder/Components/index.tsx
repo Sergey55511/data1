@@ -1,4 +1,4 @@
-import { OPERATIONS, STATE } from '../../../../../../Shared/constants';
+import { OPERATIONS, STATE, WORKPIECETYPE } from '../../../../../../Shared/constants';
 import { iData } from '../../../../../../Shared/Types/interfaces';
 import { Formation } from './Pages/Formation';
 import { GrindingFormated } from './Pages/GrindingFormated';
@@ -199,12 +199,27 @@ export const GetOrderSwitcher = ({
                 />
             );
         case OPERATIONS.grindingSuper.id:
-            return <GrindingFormated record={record} stateId={STATE.grindedSuper.id} />;
+            return (
+                <GrindingFormated
+                    record={record}
+                    stateId={STATE.grindedSuper.id}
+                    workpiecetypeId={WORKPIECETYPE.grindingFormated.id}
+                />
+            );
         case OPERATIONS.grindingCrumpledBall.id:
             return (
                 <GrindingFormated
                     record={record}
                     stateId={STATE.grindedCrumpledBall.id}
+                    workpiecetypeId={WORKPIECETYPE.grindingFormated.id}
+                />
+            );
+        case OPERATIONS.pot.id:
+            return (
+                <GrindingFormated
+                    record={record}
+                    stateId={STATE.grindedMsc.id}
+                    workpiecetypeId={WORKPIECETYPE.crumpledBall.id}
                 />
             );
         case OPERATIONS.polishing.id:

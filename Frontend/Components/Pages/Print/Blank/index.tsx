@@ -22,7 +22,10 @@ export const PrintBlank = observer(() => {
                         {params.produstionData.isFetching ? (
                             <>Загрузка...</>
                         ) : (
-                            <Report produstionData={params.produstionData.data} />
+                            <Report
+                                produstionData={params.produstionData.data}
+                                produstionId={params.production}
+                            />
                         )}
                     </>
                 )}
