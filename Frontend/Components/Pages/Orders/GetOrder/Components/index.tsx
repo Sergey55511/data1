@@ -207,6 +207,8 @@ export const GetOrderSwitcher = ({
                     stateId={STATE.grindedCrumpledBall.id}
                 />
             );
+        case OPERATIONS.pot.id:
+            return <GrindingFormated record={record} stateId={STATE.grindedMsc.id} />;
         case OPERATIONS.polishing.id:
             return <OneToOne record={record} stateId={STATE.polished.id} isCheckLosses />;
         case OPERATIONS.slice.id:
