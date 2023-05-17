@@ -5,6 +5,7 @@ import { HeaderForm } from '../../Components/HeaderForm';
 import { iPrintBlank } from '../../../../../../../Shared/Types/interfaces';
 import { useRowData } from './useRowData';
 import { useGetProductionList } from '../../useGetProductionList';
+import { NameForm } from '../../Components/NameForm';
 
 export const Slicing = ({
     produstionData,
@@ -22,9 +23,7 @@ export const Slicing = ({
                 <div className="firstRow">
                     <div className="firstRowItem">
                         <div className="label">#пр-ва:</div>
-                        <div className="value">{`${production?.id ?? ''}_${
-                            production?.fullModel ?? ''
-                        }`}</div>
+                        <div className="value">{production?.id}</div>
                     </div>
                     <div className="firstRowItem">
                         <div className="label">Тип:</div>
@@ -51,14 +50,7 @@ export const Slicing = ({
                         <div className="value">{produstionData![0]?.channel}</div>
                     </div>
                 </div>
-                <div className="secondRow">
-                    <div className="numberPP">1</div>
-                    <div className="operation">Распиливание</div>
-                    {/* <div className="color">
-                        <div className="label">Цвет:</div>
-                        <div className="value">прозр.</div>
-                    </div> */}
-                </div>
+                <NameForm number={1} name="Распиливание" />
                 <HeaderForm state="Заготовка" />
                 {ROWDATA.map((item, index) => (
                     <TableRow key={index} data={item} />
