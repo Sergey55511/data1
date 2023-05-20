@@ -96,6 +96,11 @@ export const useItems = () => {
             key: ROUTES.assemble,
             icon: <DeploymentUnitOutlined />,
         });
+        items.push({
+            label: 'Сборка бижутерия',
+            key: ROUTES.assembleBijouterie,
+            icon: <DeploymentUnitOutlined />,
+        });
     }
 
     items.push({

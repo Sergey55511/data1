@@ -18,6 +18,7 @@ export const pages = {
     moveIn: 'moveIn',
     moveInDetales: 'moveInDetales',
     assemble: 'assemble',
+    assembleBijouterie: 'assembleBijouterie',
     products: 'products',
     inventory: 'inventory',
 };
@@ -45,4 +46,5 @@ export const ROUTES = {
     inventory: '/operations/inventory',
     getOrder: '/orders/getOrder',
     assemble: '/assemble',
+    assembleBijouterie: '/assemble/bijouterie',
 };

@@ -298,3 +298,19 @@ export interface iField {
     isError: boolean;
     isReqired: boolean;
 }
+export interface iBijouterieArticles {
+    id: number;
+    article: string;
+    resultsAssembleId: number;
+    resultAssemble: string;
+    variant: string;
+    length: number;
+    typeAssemble: string;
+}
+export interface iLock {
+    color: string;
+    id: number;
+    material: string;
+    size: string;
+    type: string;
+}

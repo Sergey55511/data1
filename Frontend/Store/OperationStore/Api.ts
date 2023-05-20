@@ -1,10 +1,12 @@
 import axios from 'axios';
 import {
     iAssembleTakeApartData,
+    iBijouterieArticles,
     iData,
     iDataProduct,
     iDataProductTable,
     iDataTable,
+    iLock,
 } from '../../../Shared/Types/interfaces';
 import { tValue } from '../../Components/Shared/InputNumber';
 
@@ -38,6 +40,20 @@ export const listMoveInDocument = (params: {
         method: 'GET',
         params,
     }).then((res) => res.data as iData[]);
+};
+
+export const getBijouterieArticles = () => {
+    return axios({
+        url: `/api/data/bijouterie/articles`,
+        method: 'GET',
+    }).then((res) => res.data as iBijouterieArticles[]);
+};
+export const getLocks = (params: { id: number }) => {
+    return axios({
+        url: `/api/data/bijouterie/locks`,
+        method: 'GET',
+        params,
+    }).then((res) => res.data as iLock[]);
 };
 
 export const leftoversAssemble = (storeId: number) => {

@@ -286,12 +286,6 @@ model WorkPieceTypeGradeBridge {
   gradeId         Int?
 }
 
-model SizeRangeModel {
-  id        Int     @id @default(autoincrement())
-  sizeRange Int
-  active    Boolean @default(true)
-}
-
 model Profile {
   id         Int          @id @default(autoincrement())
   profile    String
