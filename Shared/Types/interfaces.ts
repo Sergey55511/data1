@@ -236,6 +236,7 @@ export interface iVariantAssemble {
 export interface iYarnAssemble {
     id: number;
     yarnAssemble: string;
+    width?: number;
 }
 export interface iProduction {
     id: number;
@@ -313,4 +314,12 @@ export interface iLock {
     material: string;
     size: string;
     type: string;
+}
+export interface iBigouterueBridje {
+    id: number;
+    workpieceType: { id: number; workpieceType: string };
+    sizeRange: { id: number; sizeRange: string };
+    color: { id: number; color: string };
+    locks: iLock;
+    yarnsAssemble: iYarnAssemble;
 }

@@ -14,4 +14,10 @@ export const Wrapper = styled.div`
             flex: 1;
         }
     }
+    .itemsWrapper {
+        .rowWrapper {
+            display: flex;
+            column-gap: 16px;
+        }
+    }
 `;

@@ -1,6 +1,7 @@
 import axios from 'axios';
 import {
     iAssembleTakeApartData,
+    iBigouterueBridje,
     iBijouterieArticles,
     iData,
     iDataProduct,
@@ -54,6 +55,13 @@ export const getLocks = (params: { id: number }) => {
         method: 'GET',
         params,
     }).then((res) => res.data as iLock[]);
+};
+export const getBigouterieBridge = (params: { articleId: number }) => {
+    return axios({
+        url: `/api/data/bijouterie/bridge`,
+        method: 'GET',
+        params,
+    }).then((res) => res.data as iBigouterueBridje[]);
 };
 
 export const leftoversAssemble = (storeId: number) => {
