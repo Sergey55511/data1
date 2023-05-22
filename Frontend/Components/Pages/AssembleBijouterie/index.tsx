@@ -1,9 +1,9 @@
 import { observer } from 'mobx-react-lite';
 import { InputNumber } from '../../Shared/InputNumber';
 import { SelectField } from '../../Shared/SelectField';
+import { ItemsTable } from './ItemsTable';
 import { LockDescription } from './lockDescription';
 import { ProductDescription } from './productDescription';
-import { Row } from './Row';
 import { Wrapper } from './style';
 import { useProps } from './useProps';
 import { YarnDescription } from './yarnDescription';
@@ -56,16 +56,12 @@ export const AssembleBijouterie = observer(() => {
                 <LockDescription lock={lock} />
                 <YarnDescription yarn={yarnsAssemble} />
             </div>
-            <div className="itemsWrapper">
-                <h3>Составляющие</h3>
-                {bijouterieBridge.data?.map((item) => (
-                    <div key={item.id} className="rowWrapper">
-                        <div>{item.workpieceType.workpieceType}</div>
-                        <div>{item.sizeRange.sizeRange}</div>
-                        <div>{item.color.color}</div>
-                    </div>
-                ))}
-            </div>
+            {!!bijouterieBridge.data && (
+                <div className="itemsWrapper">
+                    <h3>Составляющие</h3>
+                    <ItemsTable data={bijouterieBridge.data} />
+                </div>
+            )}
         </Wrapper>
     );
 });

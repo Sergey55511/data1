@@ -49,6 +49,17 @@ export const getBijouterieArticles = () => {
         method: 'GET',
     }).then((res) => res.data as iBijouterieArticles[]);
 };
+export const getBijouterieLeftovers = (params: {
+    workpieceTypeId?: string | number;
+    sizeRangeId?: string | number;
+    colorId?: string | number;
+}) => {
+    return axios({
+        url: `/api/data/bijouterie/leftovers`,
+        method: 'GET',
+        params,
+    }).then((res) => res.data as iDataTable[]);
+};
 export const getLocks = (params: { id: number }) => {
     return axios({
         url: `/api/data/bijouterie/locks`,
