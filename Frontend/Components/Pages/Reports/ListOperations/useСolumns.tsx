@@ -35,6 +35,11 @@ export const useColumns = (
         title: KEYSLEFTOVERS.manager.title,
     });
     columns.push({
+        ...getColumnPropsHoc(KEYSLEFTOVERS.fraction.key),
+        title: KEYSLEFTOVERS.fraction.title,
+        width: 100,
+    });
+    columns.push({
         ...getColumnPropsHoc(KEYSLEFTOVERS.lot.key),
         title: KEYSLEFTOVERS.lot.title,
         width: 70,
