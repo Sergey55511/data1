@@ -207,6 +207,7 @@ model Types {
   Data                    Data[]
   Bridge                  Bridge[]
   WorkPieceTypeTypeBridge WorkPieceTypeTypeBridge[]
+  BijouterieBridge        BijouterieBridge[]
 }
 
 model Grade {
@@ -216,6 +217,7 @@ model Grade {
   Data                     Data[]
   Bridge                   Bridge[]
   WorkPieceTypeGradeBridge WorkPieceTypeGradeBridge[]
+  BijouterieBridge         BijouterieBridge[]
 }
 
 model Fraction {
@@ -238,19 +240,20 @@ model Color {
 }
 
 model FullModels {
-  id               Int            @id @default(autoincrement())
-  WorkpieceType    WorkpieceType? @relation(fields: [workpieceTypeId], references: [id], onDelete: NoAction)
+  id               Int                @id @default(autoincrement())
+  WorkpieceType    WorkpieceType?     @relation(fields: [workpieceTypeId], references: [id], onDelete: NoAction)
   workpieceTypeId  Int?
-  Models           Models?        @relation(fields: [modelId], references: [id], onDelete: NoAction)
+  Models           Models?            @relation(fields: [modelId], references: [id], onDelete: NoAction)
   modelId          Int?
-  Profile          Profile?       @relation(fields: [profileId], references: [id], onDelete: NoAction)
+  Profile          Profile?           @relation(fields: [profileId], references: [id], onDelete: NoAction)
   profileId        Int?
-  SizeRangeModel   SizeRange?     @relation(fields: [sizeRangeModelId], references: [id], onDelete: NoAction)
+  SizeRangeModel   SizeRange?         @relation(fields: [sizeRangeModelId], references: [id], onDelete: NoAction)
   sizeRangeModelId Int?
-  LengthModel      LengthModel?   @relation(fields: [lengthModelId], references: [id], onDelete: NoAction)
+  LengthModel      LengthModel?       @relation(fields: [lengthModelId], references: [id], onDelete: NoAction)
   lengthModelId    Int?
   Data             Data[]
-  active           Boolean        @default(true)
+  active           Boolean            @default(true)
+  BijouterieBridge BijouterieBridge[]
 }
 
 model LengthModel {
@@ -371,13 +374,15 @@ model State {
   StateOperationBridge StateOperationBridge[]
   DataProduct          DataProduct[]
   Bridge               Bridge[]
+  BijouterieBridge     BijouterieBridge[]
 }
 
 model Channel {
-  id      Int     @id @default(autoincrement())
-  channel Float
-  active  Boolean @default(true)
-  Data    Data[]
+  id               Int                @id @default(autoincrement())
+  channel          Float
+  active           Boolean            @default(true)
+  Data             Data[]
+  BijouterieBridge BijouterieBridge[]
 }
 
 model Recipients {
@@ -456,6 +461,8 @@ model BijouterieBridge {
   id                   Int                @id @default(autoincrement())
   bijouterieArticles   BijouterieArticles @relation(fields: [bijouterieArticlesId], references: [id])
   bijouterieArticlesId Int
+  fullModelsId         Int?
+  fullModel            FullModels?        @relation(fields: [fullModelsId], references: [id])
   workpieceType        WorkpieceType      @relation(fields: [workpieceTypeId], references: [id])
   workpieceTypeId      Int
   sizeRange            SizeRange          @relation(fields: [sizeRangeId], references: [id])
@@ -466,4 +473,12 @@ model BijouterieBridge {
   locksId              Int
   yarnsAssemble        YarnsAssemble      @relation(fields: [yarnsAssembleId], references: [id])
   yarnsAssembleId      Int
+  state                State?             @relation(fields: [stateId], references: [id])
+  stateId              Int?
+  grade                Grade?             @relation(fields: [gradeId], references: [id])
+  gradeId              Int?
+  type                 Types?             @relation(fields: [typesId], references: [id])
+  typesId              Int?
+  cannel               Channel?           @relation(fields: [channelId], references: [id])
+  channelId            Int?
 }
