@@ -1,4 +1,4 @@
-const getfullModelSQL = (idField = 'fullModelId', name = 'fullModel') => `(
+export const getfullModelSQL = (idField = 'fullModelId', name = 'fullModel') => `(
     SELECT  
         concat(
             "model",

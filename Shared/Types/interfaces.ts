@@ -234,8 +234,8 @@ export interface iVariantAssemble {
     variantAssemble: string;
 }
 export interface iYarnAssemble {
-    id: number;
-    yarnAssemble: string;
+    id?: number;
+    yarnAssemble?: string;
     width?: number;
 }
 export interface iProduction {
@@ -309,17 +309,41 @@ export interface iBijouterieArticles {
     typeAssemble: string;
 }
 export interface iLock {
-    color: string;
-    id: number;
-    material: string;
-    size: string;
-    type: string;
+    color?: string;
+    id?: number;
+    material?: string;
+    size?: string;
+    type?: string;
 }
 export interface iBigouterueBridje {
     id: number;
-    workpieceType: { id: number; workpieceType: string };
-    sizeRange: { id: number; sizeRange: string };
-    color: { id: number; color: string };
-    locks: iLock;
-    yarnsAssemble: iYarnAssemble;
+    bijouterieArticlesId: number;
+    bijouterieArticle: string;
+    workpieceTypeId: number;
+    workpieceType: string;
+    sizeRangeId: number;
+    sizeRange: string;
+    colorId: number;
+    color: string;
+    locksId: number;
+    lockMaterial: string;
+    lockColor: string;
+    lockSize: string;
+    lockType: string;
+    yarnsAssembleId: number;
+    yarnAssemble: string;
+    yarnAssembleWidth: number;
+    channelId: number;
+    channel: string;
+    fullModelsId: number;
+    fullModels: string;
+    gradeId: number;
+    grade: string;
+    stateId: number;
+    state: string;
+    typesId: number;
+    type: string;
+    width: number;
+    count: number;
+    code: number;
 }

@@ -4,8 +4,8 @@ import { useColumns } from './useColumns';
 import { useData } from './useData';
 
 export const ItemsTable = ({ data }: { data?: iBigouterueBridje[] }) => {
-    const { dataSource } = useData(data);
+    const { dataSource, setDataSource } = useData(data);
 
-    const { columns } = useColumns();
+    const { columns } = useColumns(setDataSource);
     return <Table dataSource={dataSource} columns={columns} />;
 };

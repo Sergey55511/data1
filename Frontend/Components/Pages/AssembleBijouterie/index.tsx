@@ -21,6 +21,8 @@ export const AssembleBijouterie = observer(() => {
         widthItems,
         setWidthItems,
         bijouterieBridge,
+        countLocks,
+        setCountLocks,
     } = useProps();
 
     return (
@@ -48,6 +50,13 @@ export const AssembleBijouterie = observer(() => {
                         value={widthItems}
                         placeholder="общий вес"
                         onChangeHandler={setWidthItems}
+                    />
+                </div>
+                <div>
+                    <InputNumber
+                        value={countLocks}
+                        placeholder="Кол-во замков"
+                        onChangeHandler={setCountLocks}
                     />
                 </div>
             </div>

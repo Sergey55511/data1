@@ -1,6 +1,11 @@
 import { useQuery } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 import {
+    iBigouterueBridje,
+    iLock,
+    iYarnAssemble,
+} from '../../../../Shared/Types/interfaces';
+import {
     getBigouterieBridge,
     getBijouterieArticles,
     getLocks,
@@ -13,6 +18,7 @@ export const useProps = () => {
     const [bijouterieId, setBijouterieId] = useState<number>();
     const [countItems, setCountItems] = useState<tValue>();
     const [widthItems, setWidthItems] = useState<tValue>();
+    const [countLocks, setCountLocks] = useState<tValue>();
     const storeId = loginStore.user.storeId;
 
     useEffect(() => {
@@ -33,10 +39,23 @@ export const useProps = () => {
     );
 
     const selectedBijouterie = bijouterie.data?.find((item) => item.id == bijouterieId);
-    const lock = bijouterieBridge.data ? bijouterieBridge.data[0]?.locks : undefined;
-    const yarnsAssemble = bijouterieBridge.data
-        ? bijouterieBridge.data[0]?.yarnsAssemble
-        : undefined;
+    const getData = <Key extends keyof iBigouterueBridje>(
+        key: Key,
+    ): iBigouterueBridje[Key] | undefined =>
+        bijouterieBridge.data ? bijouterieBridge.data[0][key] : undefined;
+    const lock: iLock = {
+        color: getData('lockColor'),
+        id: getData('locksId'),
+        material: getData('lockMaterial'),
+        size: getData('lockSize'),
+        type: getData('lockType'),
+    };
+
+    const yarnsAssemble: iYarnAssemble = {
+        id: getData('yarnsAssembleId'),
+        yarnAssemble: getData('yarnAssemble'),
+        width: getData('yarnAssembleWidth'),
+    };
 
     return {
         bijouterieId,
@@ -50,5 +69,7 @@ export const useProps = () => {
         widthItems,
         setWidthItems,
         bijouterieBridge,
+        countLocks,
+        setCountLocks,
     };
 };
