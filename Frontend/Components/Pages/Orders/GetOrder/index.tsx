@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { iData } from '../../../../../Shared/Types/interfaces';
 import { useStores } from '../../../../Store/useStores';
 import { Frame } from '../../../Shared/Frame';
+import { OrderLayout } from '../../../Shared/OrderLayout';
 import { Title } from '../../../Shared/Title';
 import { GetOrderSwitcher } from './Components';
 import { Order } from './order';
@@ -25,21 +26,17 @@ export const GetOrder = () => {
     const order: iData = orders[0];
 
     return (
-        <Wrapper>
-            <Title text="Принять работу:" />
-            <div className="content">
-                <Order order={order} />
-                <div className="result">
-                    <Frame legend="Результат">
-                        <div className="resultWrapper">
-                            <GetOrderSwitcher
-                                operationId={order?.operationId || 0}
-                                record={orders[0]}
-                            />
-                        </div>
-                    </Frame>
-                </div>
-            </div>
-        </Wrapper>
+        <OrderLayout
+            title="Принять работу:"
+            leftChildren={<Order order={order} />}
+            rightChildren={
+                <Frame legend="Результат">
+                    <GetOrderSwitcher
+                        operationId={order?.operationId || 0}
+                        record={orders[0]}
+                    />
+                </Frame>
+            }
+        />
     );
 };

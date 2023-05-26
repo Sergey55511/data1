@@ -6,6 +6,7 @@ export const FrameWrapper = styled.fieldset`
     padding: 5px;
     padding-top: 0;
     margin-bottom: 8px;
+    overflow-y: auto;
     legend {
         font-size: 14px;
         margin-left: 16px;
@@ -13,5 +14,22 @@ export const FrameWrapper = styled.fieldset`
         padding-left: 5px;
         padding-right: 5px;
         margin-bottom: 0;
+    }
+    .frameBody {
+        height: 100%;
+        width: 100%;
+        .item {
+            margin-bottom: 4px;
+            display: flex;
+            column-gap: 16px;
+            border-bottom: 1px solid rgb(250, 250, 250);
+            h4 {
+                flex: 0 0 120px;
+                margin-bottom: 4px;
+            }
+            div {
+                min-height: 22px;
+            }
+        }
     }
 `;

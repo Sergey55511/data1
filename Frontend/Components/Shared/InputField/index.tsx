@@ -2,7 +2,7 @@ export const InputField = ({
     isError,
     errorMsg = 'Обязательное поле',
     children,
-    width = 'auto',
+    width = '100%',
 }: {
     isError?: boolean;
     errorMsg?: string;

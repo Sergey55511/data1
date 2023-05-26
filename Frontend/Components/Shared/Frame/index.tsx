@@ -10,7 +10,7 @@ export const Frame = ({
     return (
         <FrameWrapper>
             <legend>{legend}</legend>
-            {children}
+            <div className="frameBody">{children}</div>
         </FrameWrapper>
     );
 };

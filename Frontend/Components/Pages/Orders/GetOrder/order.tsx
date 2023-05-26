@@ -1,7 +1,7 @@
 import { iData } from '../../../../../Shared/Types/interfaces';
 import { Frame } from '../../../Shared/Frame';
-import { iKeysLeftoversObject, KEYSLEFTOVERS } from '../../../Shared/Table/constants';
-import { Item } from './Item';
+import { KEYSLEFTOVERS } from '../../../Shared/Table/constants';
+import { ItemHoc } from './itemHoc';
 
 export const Order = ({ order }: { order?: iData }) => {
     if (!order) return null;
@@ -9,7 +9,7 @@ export const Order = ({ order }: { order?: iData }) => {
     return (
         <div className="order">
             <Frame legend="В работе">
-                <div className="frameBody">
+                <>
                     <ItemHoc keysLeftover={KEYSLEFTOVERS.operation} order={order} />
                     <ItemHoc keysLeftover={KEYSLEFTOVERS.userLogin} order={order} />
                     <ItemHoc keysLeftover={KEYSLEFTOVERS.manager} order={order} />
@@ -28,16 +28,8 @@ export const Order = ({ order }: { order?: iData }) => {
                     <ItemHoc keysLeftover={KEYSLEFTOVERS.width} order={order} />
                     <ItemHoc keysLeftover={KEYSLEFTOVERS.count} order={order} />
                     <ItemHoc keysLeftover={KEYSLEFTOVERS.fullModelTask} order={order} />
-                </div>
+                </>
             </Frame>
         </div>
     );
 };
-
-const ItemHoc = ({
-    keysLeftover,
-    order,
-}: {
-    keysLeftover: iKeysLeftoversObject;
-    order: iData;
-}) => <Item title={keysLeftover.title} value={order[keysLeftover.key]} />;
