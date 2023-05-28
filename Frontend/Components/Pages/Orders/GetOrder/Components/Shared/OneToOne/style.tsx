@@ -8,14 +8,19 @@ export const Wrapper = styled.div`
             color: red;
         }
     }
-    .item {
+    .itemGet {
+        display: flex;
         margin-bottom: 4px;
-        width: 250px;
+        width: 350px;
+        border-bottom: none;
         h4 {
-            margin-bottom: 4px;
+            flex: 1;
         }
-        .input {
-            width: 250px;
+        .inputWrapper {
+            flex: 1;
+            .input {
+                width: 100%;
+            }
         }
         .error {
             color: red;

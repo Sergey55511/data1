@@ -1,8 +1,8 @@
 export const Item = ({ title, children }: { title: string; children: JSX.Element }) => {
     return (
-        <div className="item">
+        <div className="itemGet">
             <h4>{title}</h4>
-            {children}
+            <div className="inputWrapper">{children}</div>
         </div>
     );
 };
