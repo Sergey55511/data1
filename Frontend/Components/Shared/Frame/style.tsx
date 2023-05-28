@@ -7,6 +7,7 @@ export const FrameWrapper = styled.fieldset`
     padding-top: 0;
     margin-bottom: 8px;
     overflow-y: auto;
+    overflow-x: hidden;
     legend {
         font-size: 14px;
         margin-left: 16px;
@@ -18,6 +19,9 @@ export const FrameWrapper = styled.fieldset`
     .frameBody {
         height: 100%;
         width: 100%;
+        overflow-y: auto;
+        overflow-x: hidden;
+        padding-right: 8px;
         .item {
             margin-bottom: 4px;
             display: flex;

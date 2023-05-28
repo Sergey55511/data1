@@ -20,7 +20,7 @@ export const useColumns = (
             if (!state) return state;
             state[index][key] = getNumber(v);
 
-            return [...state];
+            return JSON.parse(JSON.stringify(state));
         });
     };
 

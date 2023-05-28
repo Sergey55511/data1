@@ -2,12 +2,9 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { iData } from '../../../../../Shared/Types/interfaces';
 import { useStores } from '../../../../Store/useStores';
-import { Frame } from '../../../Shared/Frame';
 import { OrderLayout } from '../../../Shared/OrderLayout';
-import { Title } from '../../../Shared/Title';
 import { GetOrderSwitcher } from './Components';
 import { Order } from './order';
-import { Wrapper } from './style';
 
 export const GetOrder = () => {
     const { OperationStore } = useStores();
@@ -30,12 +27,10 @@ export const GetOrder = () => {
             title="Принять работу:"
             leftChildren={<Order order={order} />}
             rightChildren={
-                <Frame legend="Результат">
-                    <GetOrderSwitcher
-                        operationId={order?.operationId || 0}
-                        record={orders[0]}
-                    />
-                </Frame>
+                <GetOrderSwitcher
+                    operationId={order?.operationId || 0}
+                    record={orders[0]}
+                />
             }
         />
     );

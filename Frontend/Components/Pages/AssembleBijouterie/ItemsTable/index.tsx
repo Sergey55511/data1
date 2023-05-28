@@ -1,11 +1,16 @@
 import { Table } from 'antd';
-import { iBigouterueBridje } from '../../../../../Shared/Types/interfaces';
+import { Dispatch, SetStateAction } from 'react';
 import { useColumns } from './useColumns';
-import { useData } from './useData';
+import { tDataSource } from './useData';
 
-export const ItemsTable = ({ data }: { data?: iBigouterueBridje[] }) => {
-    const { dataSource, setDataSource } = useData(data);
-
+export const ItemsTable = ({
+    dataSource,
+    setDataSource,
+}: {
+    dataSource?: tDataSource[];
+    setDataSource: Dispatch<SetStateAction<tDataSource[] | undefined>>;
+}) => {
     const { columns } = useColumns(setDataSource);
+
     return <Table dataSource={dataSource} columns={columns} />;
 };

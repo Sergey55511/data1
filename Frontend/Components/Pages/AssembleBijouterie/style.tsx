@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
 export const Wrapper = styled.div`
+    flex: 1;
     .header {
         h3 {
             white-space: nowrap;
@@ -9,10 +10,13 @@ export const Wrapper = styled.div`
         column-gap: 16px;
     }
     .bodyBijouterie {
-        display: flex;
+        width: 250px;
+        /* overflow: hidden;
         > div {
-            flex: 1;
-        }
+            padding-bottom: 8px;
+            border-bottom: 1px solid rgba(128, 128, 128, 0.5);
+            margin-bottom: 8px;
+        } */
     }
     .itemsWrapper {
         .rowWrapper {
