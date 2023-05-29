@@ -12,5 +12,12 @@ export const ItemsTable = ({
 }) => {
     const { columns } = useColumns(setDataSource);
 
-    return <Table dataSource={dataSource} columns={columns} />;
+    return (
+        <Table
+            dataSource={dataSource}
+            columns={columns}
+            size="small"
+            pagination={false}
+        />
+    );
 };
