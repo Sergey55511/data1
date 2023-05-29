@@ -97,8 +97,8 @@ export const Form = ({ selectedRows, state, setState, model, setModel }: iProps)
                                 loading: data.results.isLoading,
                             }}
                             options={data.yarns.data?.map((item) => ({
-                                caption: item.yarnAssemble,
-                                value: item.id,
+                                caption: item.yarnAssemble ?? '',
+                                value: item.id ?? 0,
                             }))}
                         />
                     </Row>
