@@ -34,7 +34,7 @@ export const Assemble = ({
     bijouterie: UseQueryResult<iBijouterieArticles[], unknown>;
     bijouterieBridge: UseQueryResult<iBigouterueBridje[], unknown>;
 }) => {
-    const { dataSource, setDataSource, disabledSubmit } = useData({
+    const { dataSource, setDataSource, disabledSubmit, submit, submitHandler } = useData({
         data: bijouterieBridge.data,
         bijouterieId,
         countItems,
@@ -75,7 +75,12 @@ export const Assemble = ({
                     />
                 </div>
                 <div>
-                    <Button type="primary" disabled={disabledSubmit}>
+                    <Button
+                        type="primary"
+                        disabled={disabledSubmit}
+                        onClick={submitHandler}
+                        loading={submit.isLoading}
+                    >
                         Сохранить
                     </Button>
                 </div>

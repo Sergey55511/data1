@@ -175,6 +175,7 @@ model Stores {
   Brige                 Bridge[]
   DataProduct           DataProduct[]
   pathKey               String?
+  MinorAccessoryData    MinorAccessoryData[]
 }
 
 model Operations {
@@ -449,12 +450,13 @@ model BijouterieArticles {
 }
 
 model Locks {
-  id               Int                @id @default(autoincrement())
-  material         String
-  size             Decimal            @db.Decimal(10, 2)
-  type             String
-  color            String
-  BijouterieBridge BijouterieBridge[]
+  id                   Int                  @id @default(autoincrement())
+  material             String
+  size                 Decimal              @db.Decimal(10, 2)
+  type                 String
+  color                String
+  BijouterieBridge     BijouterieBridge[]
+  MinorAccessoriesData MinorAccessoryData[]
 }
 
 model BijouterieBridge {
@@ -481,4 +483,14 @@ model BijouterieBridge {
   typesId              Int?
   cannel               Channel?           @relation(fields: [channelId], references: [id])
   channelId            Int?
+}
+
+model MinorAccessoryData {
+  id          Int     @id @default(autoincrement())
+  accessory   Locks   @relation(fields: [idAccessory], references: [id])
+  idAccessory Int
+  storeId     Int?
+  store       Stores? @relation(fields: [storeId], references: [id])
+  countIn     Int?
+  countOut    Int?
 }

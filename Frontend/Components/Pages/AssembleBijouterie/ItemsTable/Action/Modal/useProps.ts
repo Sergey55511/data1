@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { getBijouterieLeftovers } from '../../../../../../Store/OperationStore/Api';
+import { getBijouterieLeftovers } from '../../../api';
 import { tDataSource } from '../../useData';
 
 export const useProps = (item: tDataSource) => {

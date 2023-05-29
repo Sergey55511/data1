@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { iBigouterueBridje } from '../../../../../Shared/Types/interfaces';
 import { tValue } from '../../../Shared/InputNumber';
+import { useSubmit } from './useSubmit';
 
 export interface tDataSource extends iBigouterueBridje {
     index: number;
@@ -49,6 +50,14 @@ export const useData = ({
         if (isTrueData) return true;
         return false;
     })();
+    const { submit } = useSubmit();
 
-    return { dataSource, setDataSource, disabledSubmit };
+    const submitHandler = () => {
+        if (!data) return;
+        if (!countLocks) return;
+        submit.mutate({
+            accessoriesData: { idAccessory: data[0].locksId, countOut: +countLocks },
+        });
+    };
+    return { dataSource, setDataSource, disabledSubmit, submitHandler, submit };
 };

@@ -1,9 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
-import {
-    getBigouterieBridge,
-    getBijouterieArticles,
-} from '../../../Store/OperationStore/Api';
+import { getBigouterieBridge, getBijouterieArticles } from './api';
 import { useStores } from '../../../Store/useStores';
 import { tValue } from '../../Shared/InputNumber';
 

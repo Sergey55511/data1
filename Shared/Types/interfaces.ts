@@ -308,12 +308,21 @@ export interface iBijouterieArticles {
     length: number;
     typeAssemble: string;
 }
+export interface iAccessoryDana {
+    idAccessory: number;
+    material: string;
+    color: string;
+    size: string;
+    type: string;
+    count: number;
+}
 export interface iLock {
     color?: string;
     id?: number;
     material?: string;
     size?: string;
     type?: string;
+    count: number;
 }
 export interface iBigouterueBridje {
     id: number;
