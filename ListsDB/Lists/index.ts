@@ -8,6 +8,7 @@ import { storeOperationsBridge } from './StoreOperationsBridge';
 import { stateOperationBridge } from './StateOperationBridge';
 import { length } from './Length';
 import { users } from './Users';
+import { color } from './Color';
 
 const prismaList = [
     new PrismaClient({
@@ -83,6 +84,10 @@ export const switcherUpdateList = async (foder: string) => {
                 break;
             case 'Users':
                 await Promise.all(prismaList.map((prisma) => users(prisma)));
+                logDone(foder);
+                break;
+            case 'Color':
+                await Promise.all(prismaList.map((prisma) => color(prisma)));
                 logDone(foder);
                 break;
         }
