@@ -29,8 +29,8 @@ export const useData = ({
             ...item,
             index,
             key: item.id,
-            widthOut: item.width,
-            countItemsOut: item.count,
+            widthOut: 0,
+            countItemsOut: 0,
         }));
         setDataSource(dataSource);
     }, [data]);
@@ -57,6 +57,7 @@ export const useData = ({
         if (!countLocks) return;
         submit.mutate({
             accessoriesData: { idAccessory: data[0].locksId, countOut: +countLocks },
+            dataSource: dataSource ?? [],
         });
     };
     return { dataSource, setDataSource, disabledSubmit, submitHandler, submit };

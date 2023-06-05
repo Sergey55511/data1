@@ -12,6 +12,8 @@ export const leftoversBijouterie = <T>(
 ): PrismaPromise<T> => {
     const storeId = user.storeId;
     const data = dal(req.query);
+    console.log('hello leftoversBijouterie');
+
     return prisma.$queryRawUnsafe(
         `
       SELECT 

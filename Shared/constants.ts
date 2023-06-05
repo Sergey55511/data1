@@ -48,6 +48,7 @@ export const OPERATIONS = {
     glue2: { id: 48 }, //Клей сырья2,
     wash2: { id: 49 }, //мойка
     pot: { id: 51 }, //Кастрюля
+    assembleBijouterie: { id: 53 }, //Сборка Бижутерия
 };
 export const STATE = {
     washed: { id: 1 },

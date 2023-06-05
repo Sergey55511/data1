@@ -4,11 +4,7 @@ import { iUser } from '../../../../../../../Shared/Types/interfaces';
 import { tPrisma } from '../../../../../../types';
 import { dal } from './Dal';
 
-export const postMinorAccessoryLeftovers = (
-    prisma: tPrisma,
-    req: NextApiRequest,
-    user: iUser,
-) => {
+export const postMinorAccessory = (prisma: tPrisma, req: NextApiRequest, user: iUser) => {
     if (user.storeId != STORES.Moscow.id) return [] as any;
     const data = dal(req.query);
     return prisma.minorAccessoryData.createMany({

@@ -15,18 +15,18 @@ export const getBijouterieArticles = () => {
 };
 export const getMinorAccessoryLeftovers = (idAccessory: number) => {
     return axios({
-        url: `/api/data/bijouterie/minorAccessoryLeftovers`,
+        url: `/api/data/bijouterie/minorAccessory`,
         method: 'GET',
         params: { idAccessory },
     }).then((res) => res.data as iAccessoryDana[]);
 };
-export const postMinorAccessoryLeftovers = (data: {
+export const postMinorAccessory = (data: {
     idAccessory: number;
     countIn?: number;
     countOut?: number;
 }) => {
     return axios({
-        url: `/api/data/bijouterie/minorAccessoryLeftovers`,
+        url: `/api/data/bijouterie/minorAccessory`,
         method: 'POST',
         data,
     }).then((res) => res.data as iAccessoryDana[]);

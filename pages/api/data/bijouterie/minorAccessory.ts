@@ -2,7 +2,7 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 import { fetchService } from '../../../../Backend/Data/Services/fetch';
 import { iData } from '../../../../Shared/Types/interfaces';
 import { getMinorAccessoryLeftovers } from '../../../../Backend/Data/Requests/Data/Bijouterie/MinorAccessoryLeftovers/Get';
-import { postMinorAccessoryLeftovers } from '../../../../Backend/Data/Requests/Data/Bijouterie/MinorAccessoryLeftovers/Post';
+import { postMinorAccessory } from '../../../../Backend/Data/Requests/Data/Bijouterie/MinorAccessoryLeftovers/Post';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     switch (req.method) {
@@ -17,7 +17,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             await fetchService<iData>({
                 req,
                 res,
-                fetch: (prisma, user) => postMinorAccessoryLeftovers(prisma, req, user),
+                fetch: (prisma, user) => postMinorAccessory(prisma, req, user),
             });
             break;
         default:

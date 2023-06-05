@@ -12,6 +12,25 @@ export const getBijouterieBridge = (
 ) => {
     if (user.storeId != STORES.Moscow.id) return [] as any;
     const data = dal(req.query);
+    const calculationRequest = (
+        firstField: string,
+        seccondField: string,
+        name: string,
+    ) => `
+    (
+        SELECT COALESCE(round(sum("${firstField}")::numeric,2),0)-COALESCE(round(coalesce(sum("${seccondField}"),0)::numeric,2),0)
+        FROM  "Data"
+        WHERE 
+            COALESCE("Data"."workpieceTypeId",0)=COALESCE("BijouterieBridge"."workpieceTypeId",0) AND
+            COALESCE("Data"."sizeRangeId",0)=COALESCE("BijouterieBridge"."sizeRangeId",0) AND
+            COALESCE("Data"."colorId",0)=COALESCE("BijouterieBridge"."colorId",0) AND
+            COALESCE("Data"."channelId",0)=COALESCE("BijouterieBridge"."channelId",0) AND
+            COALESCE("Data"."fullModelId",0)=COALESCE("BijouterieBridge"."fullModelsId",0) AND
+            COALESCE("Data"."gradeId",0)=COALESCE("BijouterieBridge"."gradeId",0) AND
+            COALESCE("Data"."stateId",0)=COALESCE("BijouterieBridge"."stateId",0) AND
+            COALESCE("Data"."typeId",0)=COALESCE("BijouterieBridge"."typesId",0)
+    ) as "${name}"
+    `;
     return prisma.$queryRawUnsafe(
         `
     SELECT 
@@ -42,45 +61,9 @@ export const getBijouterieBridge = (
         "State".state,
         "BijouterieBridge"."typesId",
         "Types"."type",
-        (
-            SELECT COALESCE(round(sum("widthIn")::numeric,2),0)-COALESCE(round(coalesce(sum("widthOut"),0)::numeric,2),0)
-            FROM  "Data"
-            WHERE 
-                "Data"."workpieceTypeId"="BijouterieBridge"."workpieceTypeId" AND
-                "Data"."sizeRangeId"="BijouterieBridge"."sizeRangeId" AND
-                "Data"."colorId"="BijouterieBridge"."colorId" AND
-                "Data"."channelId"="BijouterieBridge"."channelId" AND
-                "Data"."fullModelId"="BijouterieBridge"."fullModelsId" AND
-                "Data"."gradeId"="BijouterieBridge"."gradeId" AND
-                "Data"."stateId"="BijouterieBridge"."stateId" AND
-                "Data"."typeId"="BijouterieBridge"."typesId"
-        ) as "width",
-        (
-            SELECT COALESCE(round(sum("countItemsIn")::numeric,2),0)-COALESCE(round(sum("countItemsOut")::numeric,2),0)
-            FROM  "Data"
-            WHERE 
-                "Data"."workpieceTypeId"="BijouterieBridge"."workpieceTypeId" AND
-                "Data"."sizeRangeId"="BijouterieBridge"."sizeRangeId" AND
-                "Data"."colorId"="BijouterieBridge"."colorId" AND
-                "Data"."channelId"="BijouterieBridge"."channelId" AND
-                "Data"."fullModelId"="BijouterieBridge"."fullModelsId" AND
-                "Data"."gradeId"="BijouterieBridge"."gradeId" AND
-                "Data"."stateId"="BijouterieBridge"."stateId" AND
-                "Data"."typeId"="BijouterieBridge"."typesId"
-        ) as "count",
-        (
-            SELECT COALESCE(sum("moneyIn")::numeric,0)-COALESCE(sum("moneyOut")::numeric,0)
-            FROM  "Data" 			
-            WHERE 
-                "Data"."workpieceTypeId"="BijouterieBridge"."workpieceTypeId" AND
-                "Data"."sizeRangeId"="BijouterieBridge"."sizeRangeId" AND
-                "Data"."colorId"="BijouterieBridge"."colorId" AND
-                "Data"."channelId"="BijouterieBridge"."channelId" AND
-                "Data"."fullModelId"="BijouterieBridge"."fullModelsId" AND
-                "Data"."gradeId"="BijouterieBridge"."gradeId" AND
-                "Data"."stateId"="BijouterieBridge"."stateId" AND
-                "Data"."typeId"="BijouterieBridge"."typesId"
-        ) as "code"
+        ${calculationRequest('widthIn', 'widthOut', 'width')},
+        ${calculationRequest('countItemsIn', 'countItemsOut', 'count')},
+        ${calculationRequest('moneyIn', 'moneyOut', 'code')}
     FROM public."BijouterieBridge"
         LEFT JOIN "WorkpieceType" ON
             "WorkpieceType".id="BijouterieBridge"."workpieceTypeId"
