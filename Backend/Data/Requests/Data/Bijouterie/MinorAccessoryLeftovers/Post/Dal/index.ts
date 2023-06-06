@@ -9,6 +9,7 @@ export interface iParams {
 
 export const dal = (params: { [key: string]: any }): iParams => {
     const getNumber = (v: any) => (v ? +v : undefined);
+
     const data: iParams = {
         idAccessory: +params.idAccessory,
         countIn: getNumber(params.countIn),

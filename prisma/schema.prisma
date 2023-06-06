@@ -71,6 +71,24 @@ model Data {
   task             Int?
 }
 
+model DataBijouterie {
+  id                  Int                 @id @default(autoincrement())
+  date                DateTime?           @default(now()) @db.Date()
+  storeId             Int
+  Stores              Stores              @relation(fields: [storeId], references: [id], onDelete: NoAction)
+  userId              Int
+  Users               Users               @relation(fields: [userId], references: [id], onDelete: NoAction)
+  bijouterieArticleId Int?
+  BijouterieArticles  BijouterieArticles? @relation(fields: [bijouterieArticleId], references: [id], onDelete: NoAction)
+  widthIn             Float?
+  widthOut            Float?
+  moneyIn             Float?
+  moneyOut            Float?
+  countItemsIn        Int?
+  countItemsOut       Int?
+  active              Boolean             @default(true)
+}
+
 model DataProduct {
   id              Int             @id @default(autoincrement())
   dateSystem      DateTime?       @default(now()) @db.Date()
@@ -150,17 +168,18 @@ model ManagerOperations {
 }
 
 model Users {
-  id          Int           @id @default(autoincrement())
-  login       String        @unique
-  password    String
-  key         String?
-  status      String?
-  role        String?
-  store       Stores?       @relation(fields: [storeId], references: [id], onDelete: NoAction)
-  activ       Boolean       @default(true)
-  storeId     Int?          @map("storesId")
-  Data        Data[]
-  DataProduct DataProduct[]
+  id             Int              @id @default(autoincrement())
+  login          String           @unique
+  password       String
+  key            String?
+  status         String?
+  role           String?
+  store          Stores?          @relation(fields: [storeId], references: [id], onDelete: NoAction)
+  activ          Boolean          @default(true)
+  storeId        Int?             @map("storesId")
+  Data           Data[]
+  DataProduct    DataProduct[]
+  DataBijouterie DataBijouterie[]
 }
 
 model Stores {
@@ -176,6 +195,7 @@ model Stores {
   DataProduct           DataProduct[]
   pathKey               String?
   MinorAccessoryData    MinorAccessoryData[]
+  DataBijouterie        DataBijouterie[]
 }
 
 model Operations {
@@ -447,6 +467,7 @@ model BijouterieArticles {
   length            Int
   typeAssemble      String
   BijouterieBridge  BijouterieBridge[]
+  DataBijouterie    DataBijouterie[]
 }
 
 model Locks {

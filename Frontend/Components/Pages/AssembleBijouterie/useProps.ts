@@ -15,6 +15,7 @@ export const useProps = () => {
     useEffect(() => {
         setCountItems(undefined);
         setWidthItems(undefined);
+        setCountLocks(undefined);
     }, [bijouterieId]);
 
     const bijouterie = useQuery(['bijouterie', storeId], getBijouterieArticles, {

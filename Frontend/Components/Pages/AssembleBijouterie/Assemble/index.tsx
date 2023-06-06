@@ -40,6 +40,7 @@ export const Assemble = ({
         countItems,
         widthItems,
         countLocks,
+        setBijouterieId,
     });
     return (
         <Wrapper>

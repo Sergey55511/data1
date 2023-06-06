@@ -93,13 +93,20 @@ export const useItems = () => {
     if (isMSC) {
         items.push({
             label: 'Сборка',
-            key: ROUTES.assemble,
+            key: 'assembleRoot',
             icon: <DeploymentUnitOutlined />,
-        });
-        items.push({
-            label: 'Сборка бижутерия',
-            key: ROUTES.assembleBijouterie,
-            icon: <DeploymentUnitOutlined />,
+            children: [
+                {
+                    label: 'Сборка',
+                    key: ROUTES.assemble,
+                    icon: <DeploymentUnitOutlined />,
+                },
+                {
+                    label: 'Сборка бижутерия',
+                    key: ROUTES.assembleBijouterie,
+                    icon: <DeploymentUnitOutlined />,
+                },
+            ],
         });
     }
 

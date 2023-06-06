@@ -42,6 +42,21 @@ export const getBijouterieLeftovers = (params: {
         params,
     }).then((res) => res.data as iDataTable[]);
 };
+export const postDataBijouterie = (data: {
+    bijouterieArticleId: number;
+    widthIn?: number;
+    widthOut?: number;
+    moneyIn?: number;
+    moneyOut?: number;
+    countItemsIn?: number;
+    countItemsOut?: number;
+}) => {
+    return axios({
+        url: `/api/data/bijouterie/dataBijouterie`,
+        method: 'POST',
+        data,
+    }).then((res) => res.data as iDataTable[]);
+};
 export const getLocks = (params: { id: number }) => {
     return axios({
         url: `/api/data/bijouterie/locks`,
