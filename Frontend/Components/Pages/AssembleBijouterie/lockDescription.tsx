@@ -8,7 +8,7 @@ export const LockDescription = ({ lock }: { lock?: iLock }) => {
             <h3>Замок:</h3>
             <Row label="Материал замка" value={lock.material} />
             <Row label="Диаметр замка (мм)" value={lock.size} />
-            <Row label="Вид замка" value={lock.material} />
+            <Row label="Вид замка" value={lock.type} />
             <Row label="Цвет замка" value={lock.color} />
             <Row label="Остаток" value={lock.count} />
         </div>

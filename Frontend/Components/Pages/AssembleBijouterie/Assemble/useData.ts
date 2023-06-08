@@ -42,6 +42,7 @@ export const useData = ({
         if (!countItems) return true;
         if (!widthItems) return true;
         if (!countLocks) return true;
+        if (+countLocks < +countItems) return true;
         const isTrueData = dataSource?.some((item) => {
             if ((item.widthOut ?? 0) > +item.width) return true;
             if ((item.countItemsOut ?? 0) > +item.count) return true;
