@@ -12,6 +12,7 @@ import { ListOperations } from './Reports/ListOperations';
 import { NewItemBillets } from './Operations/MoveIn/NewItemBillets';
 import { MoveInDocument } from './Reports/MoveInDocuments';
 import { AssembleBijouterie } from './AssembleBijouterie';
+import { Bijouterie } from './Bijouterie';
 
 export const PageSwitcher = ({ page }: { page: tPages }) => {
     switch (page) {
@@ -24,7 +25,7 @@ export const PageSwitcher = ({ page }: { page: tPages }) => {
         case pages.products:
             return <Products />;
         case pages.bijouterie:
-            return <Products />;
+            return <Bijouterie />;
         case pages.leftover:
             return <Leftover />;
         case pages.newItem:

@@ -76,6 +76,18 @@ export interface iDataProduct extends iDataProductTable {
     count: number;
     code: number;
 }
+
+export interface iBijouterie {
+    bijouterieArticleId: number;
+    length: number;
+    typeAssemble: string;
+    variant: string;
+    id: number;
+    resultAssemble: string;
+    width: number;
+    count: number;
+    code: number;
+}
 export interface iDataTable {
     id?: number;
     lot?: number;

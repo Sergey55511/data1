@@ -2,6 +2,7 @@ import axios from 'axios';
 import {
     iAccessoryDana,
     iBigouterueBridje,
+    iBijouterie,
     iBijouterieArticles,
     iDataTable,
     iLock,
@@ -58,6 +59,13 @@ export const postDataBijouterie = (data: {
         method: 'POST',
         data,
     }).then((res) => res.data as iDataTable[]);
+};
+
+export const getDataBijouterie = () => {
+    return axios({
+        url: `/api/data/bijouterie/dataBijouterie`,
+        method: 'GET',
+    }).then((res) => res.data as iBijouterie[]);
 };
 export const getLocks = (params: { id: number }) => {
     return axios({
