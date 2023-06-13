@@ -1,10 +1,11 @@
-import { iData } from '../../../../../Shared/Types/interfaces';
+import { iData } from '../../../../../../Shared/Types/interfaces';
 import type { ColumnsType } from 'antd/es/table';
 import { FilterValue } from 'antd/es/table/interface';
-import { getColumnProps } from '../../../Shared/Table/Helpers/getColumnProps';
-import { KEYSLEFTOVERS } from '../../../Shared/Table/constants';
-import { getFilteredleftovers } from '../../../Shared/Table/Helpers/getFilteredleftovers';
-import { InputNumber, tValue } from '../../../Shared/InputNumber';
+import { getColumnProps } from '../../../../Shared/Table/Helpers/getColumnProps';
+import { KEYSLEFTOVERS } from '../../../../Shared/Table/constants';
+import { getFilteredleftovers } from '../../../../Shared/Table/Helpers/getFilteredleftovers';
+import { InputNumber, tValue } from '../../../../Shared/InputNumber';
+import { InputWrapper } from './inputWrapper';
 
 export const useColumns = ({
     data,
@@ -74,14 +75,17 @@ export const useColumns = ({
             width: 100,
             render: (value, row, index) => {
                 return (
-                    <InputNumber
-                        value={value}
-                        onChangeHandler={(v) =>
-                            setValueHandler(index, KEYSLEFTOVERS.widthOut.key, v, row)
-                        }
-                        style={{ width: '100px' }}
-                        placeholder="Выдать гр."
-                    />
+                    <InputWrapper>
+                        <InputNumber
+                            value={value}
+                            onChangeHandler={(v) =>
+                                setValueHandler(index, KEYSLEFTOVERS.widthOut.key, v, row)
+                            }
+                            style={{ width: '90px' }}
+                            placeholder="Выдать гр."
+                            size="small"
+                        />
+                    </InputWrapper>
                 );
             },
         },
@@ -91,19 +95,22 @@ export const useColumns = ({
             width: 100,
             render: (value, row, index) => {
                 return (
-                    <InputNumber
-                        value={value}
-                        onChangeHandler={(v) =>
-                            setValueHandler(
-                                index,
-                                KEYSLEFTOVERS.countItemsOut.key,
-                                v,
-                                row,
-                            )
-                        }
-                        style={{ width: '100px' }}
-                        placeholder="Выдать шт."
-                    />
+                    <InputWrapper>
+                        <InputNumber
+                            value={value}
+                            onChangeHandler={(v) =>
+                                setValueHandler(
+                                    index,
+                                    KEYSLEFTOVERS.countItemsOut.key,
+                                    v,
+                                    row,
+                                )
+                            }
+                            style={{ width: '90px' }}
+                            placeholder="Выдать шт."
+                            size="small"
+                        />
+                    </InputWrapper>
                 );
             },
         },
@@ -113,14 +120,17 @@ export const useColumns = ({
             width: 100,
             render: (value, row, index) => {
                 return (
-                    <InputNumber
-                        value={value}
-                        onChangeHandler={(v) =>
-                            setValueHandler(index, KEYSLEFTOVERS.defect.key, v, row)
-                        }
-                        style={{ width: '100px' }}
-                        placeholder="Брак"
-                    />
+                    <InputWrapper>
+                        <InputNumber
+                            value={value}
+                            onChangeHandler={(v) =>
+                                setValueHandler(index, KEYSLEFTOVERS.defect.key, v, row)
+                            }
+                            style={{ width: '90px' }}
+                            placeholder="Брак"
+                            size="small"
+                        />
+                    </InputWrapper>
                 );
             },
         },

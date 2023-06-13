@@ -51,7 +51,7 @@ export const Assemble = () => {
                     </Badge>
                 )}
             </div>
-            <div>
+            <div className="tableWrapperLeftovers">
                 {params.stateButton == 'assembleCreate' && (
                     <AssembleCreate
                         filters={params.filters}

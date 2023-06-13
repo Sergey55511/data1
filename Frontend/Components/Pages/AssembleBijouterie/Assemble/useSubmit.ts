@@ -4,7 +4,7 @@ import moment from 'moment';
 import { Dispatch, SetStateAction } from 'react';
 import { OPERATIONS } from '../../../../../Shared/constants';
 import { iDataTable } from '../../../../../Shared/Types/interfaces';
-import { postOrderResult } from '../../../../Store/OperationStore/Api';
+import { getMaxPP, postOrderResult } from '../../../../Store/OperationStore/Api';
 import { useStores } from '../../../../Store/useStores';
 import { tValue } from '../../../Shared/InputNumber';
 import * as api from '../api';
@@ -27,8 +27,13 @@ export const useSubmit = (
             bijouterie: { id?: number; width: tValue; count: tValue };
         }) => {
             if (!data.bijouterie.id) return;
+            //TODO: fix get pp
+            //get pp
+            const maxPP = await getMaxPP();
+            const newPP = maxPP ? maxPP + 1 : undefined;
+
             //first step
-            await api.postMinorAccessory(data.accessoriesData);
+            await api.postMinorAccessory({ ...data.accessoriesData, pp: newPP });
             //seccond step
             const date = moment();
             let totalCode = 0;
@@ -49,6 +54,7 @@ export const useSubmit = (
                     widthOut: getNumber(item.widthOut),
                     moneyOut: code,
                     date,
+                    pp: newPP,
                 };
             });
 
@@ -61,6 +67,7 @@ export const useSubmit = (
                 widthIn: getNumber(data.bijouterie.width),
                 countItemsIn: getNumber(data.bijouterie.count),
                 moneyIn: totalCode,
+                pp: newPP,
             });
         },
         {

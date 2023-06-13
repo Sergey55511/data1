@@ -4,6 +4,7 @@ export const schema = {
         idAccessory: { type: 'number' },
         countIn: { type: 'number' },
         countOut: { type: 'number' },
+        pp: { type: 'number' },
     },
     required: ['idAccessory'],
     additionalProperties: false,

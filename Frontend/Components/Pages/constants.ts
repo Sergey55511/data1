@@ -20,12 +20,14 @@ export const pages = {
     assemble: 'assemble',
     assembleBijouterie: 'assembleBijouterie',
     products: 'products',
+    bijouterie: 'bijouterie',
     inventory: 'inventory',
 };
 
 export const ROUTES = {
     root: '/',
     products: '/products',
+    bijouterie: '/bijouterie',
     login: '/login',
     orders: '/orders',
     ordersGetOut: '/orders/getOut',

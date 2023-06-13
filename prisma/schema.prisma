@@ -74,6 +74,7 @@ model Data {
 model DataBijouterie {
   id                  Int                 @id @default(autoincrement())
   date                DateTime?           @default(now()) @db.Date()
+  pp                  Int?
   storeId             Int
   Stores              Stores              @relation(fields: [storeId], references: [id], onDelete: NoAction)
   userId              Int
@@ -508,6 +509,7 @@ model BijouterieBridge {
 
 model MinorAccessoryData {
   id          Int     @id @default(autoincrement())
+  pp          Int?
   accessory   Locks   @relation(fields: [idAccessory], references: [id])
   idAccessory Int
   storeId     Int?

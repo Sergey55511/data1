@@ -19,7 +19,7 @@ import { useStores } from '../../../../Store/useStores';
 import { ROUTES } from '../../../Pages/constants';
 import { MODALFLAGS } from '../../constants';
 import { STORES } from '../../../../../Shared/constants';
-import { ItemType } from 'antd/lib/menu/hooks/useItems';
+import { ItemType, SubMenuType } from 'antd/lib/menu/hooks/useItems';
 
 export const useItems = () => {
     const { loginStore, OperationStore } = useStores();
@@ -54,7 +54,8 @@ export const useItems = () => {
                   icon: <FullscreenExitOutlined />,
               },
           ];
-    const items: ItemType[] = [
+
+    const leftoversChildren = [
         {
             label: 'Остатки',
             key: ROUTES.root,
@@ -63,12 +64,26 @@ export const useItems = () => {
     ];
 
     if (isMSC) {
-        items.push({
+        leftoversChildren.push({
             label: 'Остатки изделия',
             key: ROUTES.products,
             icon: <DatabaseOutlined />,
         });
+        leftoversChildren.push({
+            label: 'Остатки бижутерия',
+            key: ROUTES.bijouterie,
+            icon: <DatabaseOutlined />,
+        });
     }
+
+    const items: ItemType[] = [
+        {
+            label: 'Остатки',
+            key: ROUTES.root,
+            icon: <DatabaseOutlined />,
+            children: leftoversChildren,
+        },
+    ];
 
     items.push({
         label: (

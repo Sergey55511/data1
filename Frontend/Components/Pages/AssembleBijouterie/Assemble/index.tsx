@@ -45,15 +45,17 @@ export const Assemble = ({
     return (
         <Wrapper>
             <div className="header">
-                <SelectField
-                    placeholder="Выберите изделие"
-                    value={bijouterieId}
-                    onChange={setBijouterieId}
-                    options={bijouterie.data?.map((item) => ({
-                        value: item.id,
-                        caption: item.article,
-                    }))}
-                />
+                <div className="selectBijouterieWrapper">
+                    <SelectField
+                        placeholder="Выберите изделие"
+                        value={bijouterieId}
+                        onChange={setBijouterieId}
+                        options={bijouterie.data?.map((item) => ({
+                            value: item.id,
+                            caption: item.article,
+                        }))}
+                    />
+                </div>
                 <div>
                     <InputNumber
                         value={countItems}

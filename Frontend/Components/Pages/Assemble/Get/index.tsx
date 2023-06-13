@@ -10,6 +10,8 @@ export const AssembleGet = (props: iProps) => {
             <Form {...props} />
             <div>
                 <div className="title">Детализация</div>
+            </div>
+            <div style={{ flex: 1 }}>
                 <TableApp
                     columns={params.columns}
                     dataSource={props.selectedRows}

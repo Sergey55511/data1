@@ -23,6 +23,8 @@ export const PageSwitcher = ({ page }: { page: tPages }) => {
             return <MoveInDocument />;
         case pages.products:
             return <Products />;
+        case pages.bijouterie:
+            return <Products />;
         case pages.leftover:
             return <Leftover />;
         case pages.newItem:

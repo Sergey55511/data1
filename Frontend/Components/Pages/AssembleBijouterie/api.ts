@@ -24,6 +24,7 @@ export const postMinorAccessory = (data: {
     idAccessory: number;
     countIn?: number;
     countOut?: number;
+    pp?: number;
 }) => {
     return axios({
         url: `/api/data/bijouterie/minorAccessory`,
@@ -50,6 +51,7 @@ export const postDataBijouterie = (data: {
     moneyOut?: number;
     countItemsIn?: number;
     countItemsOut?: number;
+    pp?: number;
 }) => {
     return axios({
         url: `/api/data/bijouterie/dataBijouterie`,

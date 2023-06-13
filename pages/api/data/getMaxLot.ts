@@ -7,6 +7,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     await fetchService<{ lot: number }>({
         req,
         res,
-        fetch: (prisma:tPrisma) => getMaxLot(prisma),
+        fetch: (prisma: tPrisma) => getMaxLot(prisma),
     });
 }

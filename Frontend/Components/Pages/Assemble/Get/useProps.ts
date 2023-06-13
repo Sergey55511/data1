@@ -4,7 +4,7 @@ import { Dispatch, SetStateAction, useState } from 'react';
 import { iData } from '../../../../../Shared/Types/interfaces';
 import { tValue } from '../../../Shared/InputNumber';
 import { State } from '../useProps';
-import { useColumns } from './useColumns';
+import { useColumns } from './UseColumn/useColumns';
 
 export interface iProps {
     selectedRows: iData[];

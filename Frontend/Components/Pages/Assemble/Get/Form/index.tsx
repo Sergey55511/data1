@@ -64,6 +64,8 @@ export const Form = ({ selectedRows, state, setState, model, setModel }: iProps)
                             }))}
                         />
                     </Row>
+                </div>
+                <div className="column">
                     <Row label={'Тип сборки'}>
                         <SelectField
                             {...getSelectProps('typeAssemble')}
@@ -123,6 +125,8 @@ export const Form = ({ selectedRows, state, setState, model, setModel }: iProps)
                             value={state.length.value}
                         />
                     </Row>
+                </div>
+                <div className="column">
                     <Row label={'Принято гр'}>
                         <InputNumber
                             placeholder={state.widthIn.placeholder}

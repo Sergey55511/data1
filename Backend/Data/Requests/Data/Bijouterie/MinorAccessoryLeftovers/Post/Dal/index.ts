@@ -5,6 +5,7 @@ export interface iParams {
     idAccessory: number;
     countIn?: number;
     countOut?: number;
+    pp?: number;
 }
 
 export const dal = (params: { [key: string]: any }): iParams => {
@@ -14,6 +15,7 @@ export const dal = (params: { [key: string]: any }): iParams => {
         idAccessory: +params.idAccessory,
         countIn: getNumber(params.countIn),
         countOut: getNumber(params.countOut),
+        pp: getNumber(params.countOut),
     };
     return checkSchema(data, schema);
 };

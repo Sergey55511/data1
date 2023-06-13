@@ -85,6 +85,12 @@ export const getMaxId = (storeId: number) => {
         method: 'GET',
     }).then((res) => res.data);
 };
+export const getMaxPP = () => {
+    return axios({
+        url: `/api/data/getMaxPP`,
+        method: 'GET',
+    }).then((res) => res.data as number | undefined);
+};
 
 export const getShared = (storeId: number) => {
     return axios({
