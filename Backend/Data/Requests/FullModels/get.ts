@@ -20,6 +20,7 @@ export const getFullModels = async <T>(
             LengthModel: { select: { id: true, length: true } },
         },
         where: {
+            id: data.id,
             workpieceTypeId: data.workpieceTypeId,
             profileId: data.profileId,
             sizeRangeModelId: data.sizeRangeModelId,

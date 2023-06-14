@@ -306,6 +306,7 @@ export const getSizeRangeModel = (params: {
     }).then((res) => res.data as iSizeRangeModel[]);
 };
 export const getFullModels = (params: {
+    id?: number;
     workpieceTypeId?: number;
     profileId?: number;
     sizeRangeModelId?: number;

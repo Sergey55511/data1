@@ -9,6 +9,7 @@ import { Slicing } from './Pages/Slicing';
 import { Sorting } from './Pages/Sorting';
 import { SortingElements } from './Pages/SortingElements';
 import { SortingInventory } from './Pages/SortingInventory';
+import { SortingInventoryElements } from './Pages/SortingInventoryElements';
 import { SortingLength } from './Pages/SortingLength';
 import { SortingPrunings } from './Pages/SortingPrunings';
 import { OneToOne } from './Shared/OneToOne';
@@ -23,6 +24,8 @@ export const GetOrderSwitcher = ({
     switch (operationId) {
         case OPERATIONS.resorting.id:
             return <SortingInventory record={record} />;
+        case OPERATIONS.resortingElements.id:
+            return <SortingInventoryElements record={record} />;
         case OPERATIONS.wash.id:
             return <OneToOne record={record} stateId={STATE.washed.id} isCheckLosses />;
         case OPERATIONS.wash2.id:

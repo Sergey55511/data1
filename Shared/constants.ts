@@ -49,6 +49,7 @@ export const OPERATIONS = {
     wash2: { id: 49 }, //мойка
     pot: { id: 51 }, //Кастрюля
     assembleBijouterie: { id: 53 }, //Сборка Бижутерия
+    resortingElements: { id: 54 }, //Пересорт элементов
 };
 export const STATE = {
     washed: { id: 1 },
