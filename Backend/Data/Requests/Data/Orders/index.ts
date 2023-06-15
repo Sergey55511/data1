@@ -69,6 +69,7 @@ export const orders = <T>(prisma: tPrisma, user: iUser): PrismaPromise<T> => {
 			) 
             and "operationId" <> ${+OPERATIONS.assemble.id} 
             and "operationId" <> ${+OPERATIONS.getOut.id}
+            and "operationId" <> ${+OPERATIONS.assembleBijouterie.id}
         GROUP BY 
 			pp,
             "productionId",

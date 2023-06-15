@@ -72,7 +72,7 @@ export const useProps = ({
 
     const subbmitHandler = async () => {
         const code = getCode(record.code, record.width, state.moveBack, state.pruning);
-
+        const channelId = state.channel ? state.channel : record.channelId;
         const data: iData[] = [
             {
                 ...record,
@@ -82,7 +82,7 @@ export const useProps = ({
                 widthIn: state.widthIn,
                 stateId: stateId,
                 moneyIn: code,
-                channelId: state.channel,
+                channelId,
             },
         ];
 

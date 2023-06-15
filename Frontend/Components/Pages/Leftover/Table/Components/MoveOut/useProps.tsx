@@ -89,8 +89,10 @@ export const useProps = (props: iProps) => {
         if (test(width)) return false;
         if (test(count)) return false;
         if (isMinus(props.record.width!, width)) return false;
-        if (count) if ((props.record.count ?? 0 - +count) < 0) return false;
-
+        if (count) if ((props.record.count ?? 0) - +count < 0) return false;
+        if (props.isShowCount) {
+            if (!count) return false;
+        }
         if (![OPERATIONS.resorting.id, OPERATIONS.getOut.id].includes(operation || 0)) {
             if (props.validationFields?.numProduction) {
                 if (!numProd) return false;

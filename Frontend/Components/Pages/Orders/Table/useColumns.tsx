@@ -94,8 +94,8 @@ export const useColumns = (
     });
     if (isMSC)
         columns.push({
-            ...getColumnPropsHoc(KEYSLEFTOVERS.model.key),
-            title: KEYSLEFTOVERS.model.title,
+            ...getColumnPropsHoc(KEYSLEFTOVERS.fullModel.key),
+            title: KEYSLEFTOVERS.fullModel.title,
         });
 
     columns.push({

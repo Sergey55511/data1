@@ -72,6 +72,15 @@ export const RowWrapper = observer((props: iProps) => {
                         onFocus={() => params.onFocus(props.index)}
                     />
                 </InputField>,
+                <InputField key="countItemsIn" isError={props.state.countItemsIn.isError}>
+                    <InputNumber
+                        placeholder={props.state.countItemsIn.placeholder}
+                        onChangeHandler={(v) => {
+                            params.onChange(v!, props.index, 'countItemsIn');
+                        }}
+                        value={props.state.countItemsIn.value || ''}
+                    />
+                </InputField>,
             ]}
         />
     );

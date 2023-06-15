@@ -56,10 +56,13 @@ export const Form = ({
                     <p>{record.width}</p>
                 </div>
                 {isShowCount && (
-                    <div className="item">
-                        <h3>{KEYSLEFTOVERS.count.title}</h3>
-                        <p>{record.count}</p>
-                    </div>
+                    <>
+                        <div className="item"></div>
+                        <div className="item">
+                            <h3>{KEYSLEFTOVERS.count.title}</h3>
+                            <p>{record.count}</p>
+                        </div>
+                    </>
                 )}
             </div>
             <div className="flex">
@@ -78,11 +81,7 @@ export const Form = ({
                             onChangeHandler={(v) => props.setWorkingTimePlan(v)}
                             onKeyDown={props.onPressEnterHandler}
                         />
-                    </div>
-                </div>
-                {isShowCount && (
-                    <div className="item">
-                        <div>
+                        {isShowCount && (
                             <InputNumber
                                 placeholder="Выдать"
                                 disabled={!record.count}
@@ -90,9 +89,9 @@ export const Form = ({
                                 onChangeHandler={(v) => props.setCount(v)}
                                 onKeyDown={props.onPressEnterHandler}
                             />
-                        </div>
+                        )}
                     </div>
-                )}
+                </div>
             </div>
             <div>
                 <div className="selectButtons">

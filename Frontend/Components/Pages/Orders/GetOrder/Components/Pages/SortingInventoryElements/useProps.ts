@@ -21,6 +21,7 @@ export interface iState {
     grade: iField;
     color: iField;
     widthIn: iField;
+    countItemsIn: iField;
 }
 export interface iProps {
     record: iData;
@@ -60,6 +61,7 @@ export const useProps = ({ record }: iProps) => {
                     grade: new Field('grade', 'сорт'),
                     color: new Field('color', 'цвет'),
                     widthIn: new Field('widthIn', 'Вес гр.'),
+                    countItemsIn: new Field('countItemsIn', 'шт.'),
                 },
             ];
             return res;
@@ -127,6 +129,7 @@ export const useProps = ({ record }: iProps) => {
                 fullModelId: getValue(newFullModel?.id),
                 widthOut: undefined,
                 widthIn: getValue(item.widthIn.value),
+                countItemsIn: getValue(item.countItemsIn.value),
                 fractionId: undefined,
                 colorId: getValue(item.color.value),
                 gradeId: getValue(item.grade.value),

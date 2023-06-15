@@ -63,27 +63,32 @@ export const useItems = () => {
         },
     ];
 
-    if (isMSC) {
-        leftoversChildren.push({
-            label: 'Остатки изделия',
-            key: ROUTES.products,
-            icon: <DatabaseOutlined />,
-        });
-        leftoversChildren.push({
-            label: 'Остатки бижутерия',
-            key: ROUTES.bijouterie,
-            icon: <DatabaseOutlined />,
-        });
-    }
-
     const items: ItemType[] = [
         {
             label: 'Остатки',
             key: ROUTES.root,
             icon: <DatabaseOutlined />,
-            children: leftoversChildren,
         },
     ];
+    if (isMSC) {
+        items.push({
+            label: 'Остатки изделий',
+            key: 'leftoversElementsRoot',
+            icon: <DatabaseOutlined />,
+            children: [
+                {
+                    label: 'Остатки изделия',
+                    key: ROUTES.products,
+                    icon: <DatabaseOutlined />,
+                },
+                {
+                    label: 'Остатки бижутерия',
+                    key: ROUTES.bijouterie,
+                    icon: <DatabaseOutlined />,
+                },
+            ],
+        });
+    }
 
     items.push({
         label: (
