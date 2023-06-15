@@ -12,6 +12,7 @@ import {
 import { Dispatch, SetStateAction, useEffect, useRef } from 'react';
 import { iData, iFullModel } from '../../../../../../../../../Shared/Types/interfaces';
 import { useKeyArrow } from '../../../Shared/Hooks/useKeyArrow';
+import { OPERATIONS } from '../../../../../../../../../Shared/constants';
 
 export interface iProps {
     isLoading?: boolean;
@@ -60,7 +61,11 @@ export const useProps = ({ setState, state, index, record }: iProps) => {
 
     const grade = useQuery(
         ['grade', record.workpieceTypeId],
-        () => getGrades({ workpieceTypeId: record.workpieceTypeId }),
+        () =>
+            getGrades({
+                workpieceTypeId: record.workpieceTypeId,
+                operationId: OPERATIONS.resortingElements.id,
+            }),
         {
             enabled: !!record.workpieceTypeId,
         },

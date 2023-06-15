@@ -11,7 +11,11 @@ export const getGrades = <T>(
 ): Promise<T> => {
     const params = getFilters(req.query, user);
 
-    if (params.operationId == OPERATIONS.sortingElements.id) {
+    if (
+        [OPERATIONS.sortingElements.id, OPERATIONS.resortingElements.id].includes(
+            params.operationId || 0,
+        )
+    ) {
         return prisma.grade.findMany({
             select: {
                 id: true,
