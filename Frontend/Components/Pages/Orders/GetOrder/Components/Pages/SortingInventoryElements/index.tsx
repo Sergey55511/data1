@@ -39,6 +39,7 @@ export const SortingInventoryElements = observer((props: iProps) => {
                         isLoading={params.isLoading}
                         record={params.record}
                         key={index}
+                        isMinaret={params.isMinaret}
                     />
                 ))}
             </div>

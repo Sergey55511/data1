@@ -118,13 +118,14 @@ export const useProps = ({ record }: iProps) => {
         const data: iData[] = state.map((item) => {
             const newFullModel = fullModels.find((itemFM) => {
                 return (
-                    itemFM.Models?.id == getValue(item.model) &&
+                    itemFM.Models?.id == getValue(item.model.value) &&
                     itemFM.WorkpieceType.id == getValue(record.workpieceTypeId) &&
                     itemFM.Profile.id == getValue(currentFulModel?.Profile.id) &&
                     itemFM.SizeRangeModel.id ==
                         getValue(currentFulModel?.SizeRangeModel.id)
                 );
             });
+
             return {
                 ...record,
                 date,
@@ -177,5 +178,6 @@ export const useProps = ({ record }: iProps) => {
         setDate,
         defect,
         setDefect,
+        isMinaret,
     };
 };

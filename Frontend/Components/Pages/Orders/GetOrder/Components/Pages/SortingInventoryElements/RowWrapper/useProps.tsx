@@ -5,14 +5,14 @@ import {
     getColors,
     getFullModels,
     getGrades,
-    getLength,
     getModels,
-    getSizeRange,
 } from '../../../../../../../../Store/Lists/api';
-import { Dispatch, SetStateAction, useEffect, useRef } from 'react';
-import { iData, iFullModel } from '../../../../../../../../../Shared/Types/interfaces';
+import { Dispatch, SetStateAction, useRef } from 'react';
+import { iData } from '../../../../../../../../../Shared/Types/interfaces';
 import { useKeyArrow } from '../../../Shared/Hooks/useKeyArrow';
 import { OPERATIONS } from '../../../../../../../../../Shared/constants';
+import { InputField } from '../../../../../../../Shared/InputField';
+import { InputNumber } from '../../../../../../../Shared/InputNumber';
 
 export interface iProps {
     isLoading?: boolean;
@@ -22,17 +22,15 @@ export interface iProps {
     state: iState;
     setState: Dispatch<SetStateAction<iState[]>>;
     record: iData;
+    isMinaret?: boolean;
 }
 export const useProps = ({ setState, state, index, record }: iProps) => {
-    const isFirstRender = useRef(true);
     const { loginStore } = useStores();
     const { onKeyDown, onFocus, refHandler } = useKeyArrow();
 
-    const getValue = (v: any) => (v ? +v : undefined);
-
     const onChange = (v: string | number, index: number, fieldName: keyof iState) => {
         setState((prev) => {
-            prev[index][fieldName].value = v;
+            prev[index][fieldName]!.value = v;
             return [...prev];
         });
     };
