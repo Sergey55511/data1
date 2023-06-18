@@ -23,7 +23,11 @@ export const SortingInventoryElements = observer((props: iProps) => {
                 defect={params.defect}
                 setDefect={params.setDefect}
             />
-            <Counter data={getCounterDataHandler(params.state)} widthKey="widthIn" />
+            <Counter
+                data={getCounterDataHandler(params.state)}
+                widthKey="widthIn"
+                countKey="countItemsIn"
+            />
             <div>
                 {params.state.map((item, index) => (
                     <RowWrapper

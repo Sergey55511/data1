@@ -21,7 +21,7 @@ export interface iState {
     grade: iField;
     color: iField;
     widthIn: iField;
-    countItemsIn: iField;
+    countItemsIn?: iField;
 }
 export interface iProps {
     record: iData;
@@ -36,7 +36,7 @@ export const useProps = ({ record }: iProps) => {
     const [moveBack, setMoveBack] = useState<tValue>(undefined);
     const [isLoading, setIsLoading] = useState(false);
     const router = useRouter();
-
+    const isMinaret = record.workpieceTypeId == WORKPIECETYPE.minaret.id;
     const getNumber = (v: any) => (v ? +v : 0);
 
     useEffect(() => {
@@ -61,7 +61,9 @@ export const useProps = ({ record }: iProps) => {
                     grade: new Field('grade', 'сорт'),
                     color: new Field('color', 'цвет'),
                     widthIn: new Field('widthIn', 'Вес гр.'),
-                    countItemsIn: new Field('countItemsIn', 'шт.'),
+                    countItemsIn: isMinaret
+                        ? new Field('countItemsIn', 'шт.')
+                        : undefined,
                 },
             ];
             return res;
@@ -129,7 +131,7 @@ export const useProps = ({ record }: iProps) => {
                 fullModelId: getValue(newFullModel?.id),
                 widthOut: undefined,
                 widthIn: getValue(item.widthIn.value),
-                countItemsIn: getValue(item.countItemsIn.value),
+                countItemsIn: getValue(item.countItemsIn?.value),
                 fractionId: undefined,
                 colorId: getValue(item.color.value),
                 gradeId: getValue(item.grade.value),

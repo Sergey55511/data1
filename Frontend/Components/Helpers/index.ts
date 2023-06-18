@@ -302,4 +302,7 @@ export const checkDuplicate = (state: any[]): any[] => {
 };
 
 export const getCounterDataHandler = (data: any[]) =>
-    data.map((item) => ({ widthIn: item.widthIn.value }));
+    data.map((item) => ({
+        widthIn: item.widthIn.value,
+        countItemsIn: item.countItemsIn.value,
+    }));
