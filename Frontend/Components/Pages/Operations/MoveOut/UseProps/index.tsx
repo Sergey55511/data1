@@ -8,6 +8,7 @@ import { ModalContent } from '../AddRecipient';
 import { message, notification } from 'antd';
 import { prepareDataTable } from '../../../../Helpers';
 import { dataInventoryPrepare } from './dataInventoryPrepare';
+import moment from 'moment';
 
 export interface iDataIndex extends iData {
     index?: number;
@@ -27,6 +28,7 @@ export interface iProps {
 export const useProps = ({ type }: iProps) => {
     const [isRecipientLoading, setIsRecipientLoading] = useState(false);
     const [numDocument, setNumDocument] = useState('');
+    const [date, setDate] = useState<moment.Moment | null>(null);
     const [isSubmitLoading, setIsSubmitLoading] = useState(false);
     const [recipient, setRecipient] = useState<number | undefined>(undefined);
     const [data, setData] = useState<iDataIndex[]>([]);
@@ -81,6 +83,12 @@ export const useProps = ({ type }: iProps) => {
             );
         }
     }, [loginStore.user.storeId]);
+
+    useEffect(() => {
+        if (!date) {
+            setDate(moment());
+        }
+    }, []);
 
     const onChange = (
         record: iDataIndex,
@@ -169,6 +177,11 @@ export const useProps = ({ type }: iProps) => {
             return (getNum(data.code) / getNum(data.width)) * getNum(data.widthOut);
         };
 
+        if (!date) {
+            notification.error({ message: 'Не введена дата операции' });
+            return;
+        }
+
         const dataSendPrepared = dataSend.map((item) => {
             if (item.widthOut) item.widthOut = +item.widthOut;
             if (item.countItemsOut) item.countItemsOut = +item.countItemsOut;
@@ -178,6 +191,7 @@ export const useProps = ({ type }: iProps) => {
             item.userId = loginStore.user.id;
             item.storeId = loginStore.user.storeId;
             item.moneyOut = getMoney(item);
+            item.date = date;
             return prepareDataTable(item);
         });
         setIsSubmitLoading(true);
@@ -265,5 +279,7 @@ export const useProps = ({ type }: iProps) => {
         setSelectedRows,
         data,
         isInventory,
+        date,
+        setDate,
     };
 };

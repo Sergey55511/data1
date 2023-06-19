@@ -36,7 +36,7 @@ export const useColumns = ({
     columns.push({
         ...getColumnPropsHoc(KEYSLEFTOVERS.workpieceType.key),
         title: KEYSLEFTOVERS.workpieceType.title,
-        width:120
+        width: 120,
     });
     columns.push({
         ...getColumnPropsHoc(KEYSLEFTOVERS.state.key),
@@ -47,12 +47,12 @@ export const useColumns = ({
         columns.push({
             ...getColumnPropsHoc(KEYSLEFTOVERS.type.key),
             title: KEYSLEFTOVERS.type.title,
-            width:100
+            width: 100,
         });
         columns.push({
             ...getColumnPropsHoc(KEYSLEFTOVERS.fraction.key),
             title: KEYSLEFTOVERS.fraction.title,
-            width:95
+            width: 95,
         });
         columns.push({
             ...getColumnPropsHoc(KEYSLEFTOVERS.materialGroup.key),
@@ -63,40 +63,40 @@ export const useColumns = ({
     columns.push({
         ...getColumnPropsHoc(KEYSLEFTOVERS.color.key),
         title: KEYSLEFTOVERS.color.title,
-        width:80
+        width: 80,
     });
     columns.push({
         ...getColumnPropsHoc(KEYSLEFTOVERS.length.key),
         title: KEYSLEFTOVERS.length.title,
-        width:90
+        width: 90,
     });
     columns.push({
         ...getColumnPropsHoc(KEYSLEFTOVERS.sizeRange.key),
         title: KEYSLEFTOVERS.sizeRange.title,
-        width:130
+        width: 130,
     });
     columns.push({
         ...getColumnPropsHoc(KEYSLEFTOVERS.grade.key),
         title: KEYSLEFTOVERS.grade.title,
-        width:75
+        width: 75,
     });
 
     if (isMSC) {
         columns.push({
-            ...getColumnPropsHoc(KEYSLEFTOVERS.model.key),
-            title: KEYSLEFTOVERS.model.title,
+            ...getColumnPropsHoc(KEYSLEFTOVERS.fullModel.key),
+            title: KEYSLEFTOVERS.fullModel.title,
         });
         columns.push({
             ...getColumnPropsHoc(KEYSLEFTOVERS.type.key),
             title: KEYSLEFTOVERS.type.title,
-            width:80
+            width: 80,
         });
     }
 
     columns.push({
         ...getColumnPropsHoc(KEYSLEFTOVERS.lot.key),
         title: KEYSLEFTOVERS.lot.title,
-        width:80
+        width: 80,
     });
 
     if (isMSC)
@@ -107,7 +107,7 @@ export const useColumns = ({
     columns.push({
         ...getColumnPropsHoc(KEYSLEFTOVERS.width.key),
         title: KEYSLEFTOVERS.width.title,
-        width:90
+        width: 90,
     });
     if (isMSC)
         columns.push({

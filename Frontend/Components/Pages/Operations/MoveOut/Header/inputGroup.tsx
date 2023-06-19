@@ -1,4 +1,4 @@
-import { Input } from 'antd';
+import { DatePicker, Input } from 'antd';
 import { InputField } from '../../../../Shared/InputField';
 import { SelectField } from '../../../../Shared/SelectField';
 import { iProps, useProps } from '../UseProps';
@@ -45,13 +45,25 @@ export const InputGroup = ({
                 </div>
             )}
             {!params.isMixing && (
-                <div className="numShipment">
-                    <Input
-                        value={params.numDocument}
-                        onChange={params.setNumDocumentHandler}
-                        placeholder="Номер документа"
-                    />
-                </div>
+                <>
+                    <div className="numShipment">
+                        <Input
+                            value={params.numDocument}
+                            onChange={params.setNumDocumentHandler}
+                            placeholder="Номер документа"
+                        />
+                    </div>
+                    <div className="numShipment">
+                        <DatePicker
+                            value={params.date}
+                            onChange={(value) => {
+                                params.setDate(value);
+                            }}
+                            format="DD.MM.YYYY"
+                            placeholder="Дата отгрузки"
+                        />
+                    </div>
+                </>
             )}
         </>
     );

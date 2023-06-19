@@ -31,7 +31,7 @@ export const useProps = ({ bijouterie, bijouterieId, bijouterieBridge }: iProps)
         material: getData('lockMaterial'),
         size: getData('lockSize'),
         type: getData('lockType'),
-        count: locksLeftovers.data ? locksLeftovers.data[0].count : 0,
+        count: locksLeftovers.data ? locksLeftovers.data[0]?.count || 0 : 0,
     };
 
     const yarnsAssemble: iYarnAssemble = {
