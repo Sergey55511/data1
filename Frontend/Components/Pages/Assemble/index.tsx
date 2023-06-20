@@ -31,6 +31,11 @@ export const Assemble = () => {
                         <div>Потери: {params.state.losses.value}</div>
                     )}
                 </div>
+                {params.stateButton == 'assembleCreate' && (
+                    <Button type="link" onClick={() => params.setFilters({})}>
+                        Очистить фильтры
+                    </Button>
+                )}
                 {params.stateButton == 'assembleGet' && (
                     <Badge count={params.errorText ? '!' : ''}>
                         <Popover

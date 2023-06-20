@@ -37,10 +37,16 @@ export const useData = ({
         setDataSource(dataSource);
     }, [data]);
 
+    const getNumber = (v: any) => (v ? +v : 0);
+
+    const ttlWidth =
+        dataSource?.reduce((res, item) => res + getNumber(item.widthOut), 0) ?? 0;
+
     const disabledSubmit = (() => {
         if (bijouterieId == undefined) return true;
         if (!countItems) return true;
         if (!widthItems) return true;
+        if (ttlWidth < widthItems) return true;
         if (!countLocks) return true;
         if (+countLocks < +countItems) return true;
         const isTrueData = dataSource?.some((item) => {

@@ -75,14 +75,17 @@ export const useProps = ({ record }: iProps) => {
     };
 
     const subbmitHandler = async () => {
-        const errorNote = () => {
+        const errorNote = (
+            description = 'Не верно заполнены поля!',
+            message = 'Ошибка!',
+        ) => {
             notification.error({
-                message: 'Ошибка!',
-                description: 'Не верно заполнены поля!',
+                message,
+                description,
             });
         };
         if (!state.length) {
-            errorNote();
+            errorNote('Не указана длинна изделия');
             return;
         }
 
@@ -93,6 +96,15 @@ export const useProps = ({ record }: iProps) => {
         }
 
         const totalSum = getTotalSum(state);
+        const ttlCount = state.reduce((res, item) => {
+            if (!item) return res;
+            return (res += getNumber(item.countItemsIn?.value));
+        }, 0);
+
+        if (ttlCount + getNumber(record.count) != 0) {
+            errorNote('Количество выдано не совпадает с количеством принмято');
+            return;
+        }
         if (!totalSum) {
             errorNote();
             return;

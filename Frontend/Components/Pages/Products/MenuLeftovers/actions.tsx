@@ -1,4 +1,4 @@
-import { Button, Dropdown, Menu } from 'antd';
+import { Badge, Button, Dropdown, Menu } from 'antd';
 import { ExportOutlined, CarOutlined, DeploymentUnitOutlined } from '@ant-design/icons';
 import { iProps, useProps } from './useProps';
 import { SelectUser } from './SelectUser';
@@ -60,9 +60,11 @@ export const Actions = (props: iProps) => {
                     isShowNumDocument={params.isShowNumDocument}
                 />
             )}
-            <Dropdown overlay={menu} disabled={!props.selectedRows.length}>
-                <Button>Действия</Button>
-            </Dropdown>
+            <Badge count={props.selectedRows.length}>
+                <Dropdown overlay={menu} disabled={!props.selectedRows.length}>
+                    <Button>Действия</Button>
+                </Dropdown>
+            </Badge>
         </>
     );
 };
