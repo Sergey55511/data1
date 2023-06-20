@@ -106,7 +106,7 @@ model DataProduct {
   workpieceType   ResultsAssemble @relation(fields: [workpieceTypeId], references: [id], onDelete: NoAction)
   colorId         Int
   color           ColorsAssemble  @relation(fields: [colorId], references: [id], onDelete: NoAction)
-  length          Int
+  length          Float
   gradeId         Int
   grade           GradesAssemble  @relation(fields: [gradeId], references: [id], onDelete: NoAction)
   stateId         Int

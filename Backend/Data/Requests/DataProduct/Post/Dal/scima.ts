@@ -8,7 +8,7 @@ export const schema = {
         managerId: { type: 'integer' },
         workpieceTypeId: { type: 'integer' },
         colorId: { type: 'integer' },
-        length: { type: 'integer' },
+        length: { type: 'number' },
         gradeId: { type: 'integer' },
         stateId: { type: 'integer' },
         articleId: { type: 'integer' },
