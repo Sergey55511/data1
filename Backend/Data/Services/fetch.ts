@@ -12,12 +12,14 @@ export const fetchService = async <T>({
     fetch,
     validation,
     isSendUsersNewMaxId,
+    responseHandler = (res, result) => res.status(200).json(result),
 }: {
     req: NextApiRequest;
     res: NextApiResponse;
     fetch: (prisma: tPrisma, user: iUser) => Promise<T>;
     validation?: (prisma: tPrisma, user: iUser) => void;
     isSendUsersNewMaxId?: boolean;
+    responseHandler?: (res: NextApiResponse, result: any) => void;
 }) => {
     try {
         const user = await varifyJWT(req, res, prisma);
@@ -29,7 +31,7 @@ export const fetchService = async <T>({
         }
 
         if (result) {
-            res.status(200).json(result);
+            responseHandler(res, result);
             return;
         }
         res.status(204).json('no content');

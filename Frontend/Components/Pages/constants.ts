@@ -35,6 +35,8 @@ export const ROUTES = {
     reports: {
         listOperations: '/reports/listOperations',
         moveInDocuments: '/reports/moveInDocuments',
+        moveOut: '/api/data/reports/moveOutExcelReport',
+        // moveOut: '/reports/moveOut',
     },
     print: { blank: '/print/blank' },
     newItem: '/newItem',
