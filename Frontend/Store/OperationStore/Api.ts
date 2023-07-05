@@ -31,6 +31,21 @@ export const listOperations = (params: {
         params,
     }).then((res) => res.data as iData[]);
 };
+export const listOperationsExcel = (params: {
+    start: moment.Moment;
+    end: moment.Moment;
+    lot?: number;
+    pp?: number;
+    operationId?: number;
+    numDocument?: string;
+}) => {
+    return axios({
+        url: `/api/data/reports/listOperationsExcel`,
+        method: 'GET',
+        responseType: 'blob',
+        params,
+    }).then((res) => res.data);
+};
 export const listMoveInDocument = (params: {
     start: moment.Moment;
     end: moment.Moment;

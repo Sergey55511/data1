@@ -4,6 +4,7 @@ import type { RangePickerProps } from 'antd/es/date-picker';
 import moment from 'moment';
 import { InputNumber } from '../../../Shared/InputNumber';
 import { SelectField } from '../../../Shared/SelectField';
+import * as api from '../../../../Store/OperationStore/Api';
 const { RangePicker } = DatePicker;
 
 export const DateFilter = ({
@@ -19,6 +20,7 @@ export const DateFilter = ({
     setOperationId,
     numDocument,
     setNumDocument,
+    listOperationsExcel,
 }: ReturnType<typeof useProps>) => {
     const disabledDate: RangePickerProps['disabledDate'] = (current) => {
         if (current > moment().endOf('day')) return true;
@@ -86,6 +88,16 @@ export const DateFilter = ({
                 loading={listOperations.isFetching}
             >
                 Выгрузить
+            </Button>
+            <Button
+                disabled={!(filterDate.start && filterDate.end)}
+                type="primary"
+                onClick={() => {
+                    listOperationsExcel.mutate();
+                }}
+                loading={listOperationsExcel.isLoading}
+            >
+                Скачать Excel
             </Button>
         </div>
     );

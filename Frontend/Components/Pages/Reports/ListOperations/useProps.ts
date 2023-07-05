@@ -1,4 +1,4 @@
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import { useStores } from '../../../../Store/useStores';
 import { FilterValue } from 'antd/lib/table/interface';
 import { useState } from 'react';
@@ -9,6 +9,7 @@ import moment, { Moment } from 'moment';
 import { tValue } from '../../../Shared/InputNumber';
 import { getOperations } from '../../../../Store/Lists/api';
 import * as api from '../../../../Store/OperationStore/Api';
+import fileDownload from 'js-file-download';
 
 export interface iFilterDate {
     start: moment.Moment | null;
@@ -50,6 +51,18 @@ export const useProps = () => {
             }),
         { enabled: !!loginStore.user.storeId },
     );
+    const listOperationsExcel = useMutation(async () => {
+        const data = await api.listOperationsExcel({
+            start: filterDate.start!,
+            end: filterDate.end!,
+            lot: getNumber(lot),
+            pp: getNumber(pp),
+            operationId: getNumber(operationId),
+            numDocument: numDocument,
+        });
+
+        fileDownload(data, `Отчет лист операции.xlsx`);
+    });
     const operations = useQuery(
         ['operations', loginStore.user.storeId],
         () => getOperations(loginStore.user.storeId),
@@ -81,5 +94,6 @@ export const useProps = () => {
         setOperationId,
         numDocument,
         setNumDocument,
+        listOperationsExcel,
     };
 };

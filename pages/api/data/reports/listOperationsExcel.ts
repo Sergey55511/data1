@@ -1,8 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
+import { getMoveOutExcelReport } from '../../../../Backend/Data/Requests/ListOperations/Excel/get';
 import { fetchService } from '../../../../Backend/Data/Services/fetch';
-import { getListOperations } from '../../../../Backend/Data/Requests/ListOperations/Get';
-import { getMoveOutExcelReport } from '../../../../Backend/Data/Requests/Data/MoveOutExcelReport/get';
-import { result } from 'lodash';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     switch (req.method) {
@@ -15,6 +13,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                     res.setHeader(
                         'Content-Type',
                         'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+                    );
+                    res.setHeader(
+                        'Content-disposition',
+                        'attachment;filename=listOperations.xlsx',
                     );
                     res.send(result);
                 },

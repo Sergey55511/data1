@@ -1,6 +1,4 @@
-import Ajv from 'ajv';
 import moment from 'moment';
-import { MyError } from '../../../../../../Shared/Classes/error';
 import { checkSchema } from '../../../../../Helpers/checkSchema';
 import { schema } from './scima';
 

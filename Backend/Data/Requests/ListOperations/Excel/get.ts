@@ -1,15 +1,21 @@
 import { NextApiRequest } from 'next';
-import { iUser } from '../../../../../Shared/Types/interfaces';
+import { iData, iUser } from '../../../../../Shared/Types/interfaces';
 import { tPrisma } from '../../../../types';
 import ExcelJS from 'exceljs';
+import { getListOperations } from '../Get';
+import { prepareData } from './prepareData';
 
 export const getMoveOutExcelReport = async (
     prisma: tPrisma,
     req: NextApiRequest,
     user: iUser,
 ) => {
+    const reportData = await getListOperations<iData[]>(prisma, req, user);
+
+    const { rows, columns } = prepareData(reportData);
+
     const workbook = new ExcelJS.Workbook();
-    workbook.title = 'hello';
+
     const sheet = workbook.addWorksheet('Отчет');
     sheet.addTable({
         name: 'MyTable',
@@ -17,19 +23,14 @@ export const getMoveOutExcelReport = async (
         headerRow: true,
         totalsRow: true,
         style: {
-            theme: 'TableStyleDark3',
+            theme: 'TableStyleLight14',
             showRowStripes: true,
         },
-        columns: [
-            { name: 'Date', totalsRowLabel: 'Totals:', filterButton: true },
-            { name: 'Amount', totalsRowFunction: 'sum', filterButton: false },
-        ],
-        rows: [
-            [new Date('2019-07-20'), 70.1],
-            [new Date('2019-07-21'), 70.6],
-            [new Date('2019-07-22'), 70.1],
-        ],
+        columns,
+        rows,
     });
+
+    sheet.columns[0].width = 15;
 
     const buffer = await workbook.xlsx.writeBuffer();
     return buffer as any;

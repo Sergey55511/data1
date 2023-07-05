@@ -151,11 +151,6 @@ export const useItems = () => {
             key: ROUTES.reports.moveInDocuments,
             icon: <UnorderedListOutlined />,
         },
-        {
-            label: 'Отчет отгрузки',
-            key: ROUTES.reports.moveOut,
-            icon: <UnorderedListOutlined />,
-        },
     ];
 
     if (isMSC) {
