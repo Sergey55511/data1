@@ -12,6 +12,8 @@ export const getLeftoversAssemble = (prisma: tPrisma, user: iUser) => {
 			${fullModelSQL},
 			"sizeRangeId",
             "sizeRange",
+			"typeId",
+            type,
 			"colorId",
             "color",
 			"lengthId",
@@ -38,6 +40,7 @@ export const getLeftoversAssemble = (prisma: tPrisma, user: iUser) => {
 			left join "Productions" on "Data"."productionId"="Productions".id
             left join "State" on "Data"."stateId"="State".id
             left join "SizeRange" on "Data"."sizeRangeId"="SizeRange".id
+			left join "Types" on "Data"."typeId"="Types".id
 		WHERE "Data"."storeId"=${+storeId} AND "WorkpieceType"."isShow"=true and "stateId" in (30, 32, 36) and "Data"."workpieceTypeId" != ${
         WORKPIECETYPE.prunes.id
     }
@@ -48,6 +51,8 @@ export const getLeftoversAssemble = (prisma: tPrisma, user: iUser) => {
 			${fullModelSQL},
 			"sizeRangeId",
             "sizeRange",
+			"typeId",
+            type,
 			"colorId",
             "color",
 			"lengthId",
