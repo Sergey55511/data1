@@ -100,7 +100,7 @@ export const useProps = ({ record, stateId }: iProps) => {
         }
 
         const totalSum = getTotalSum(state);
-        if (!totalSum) {
+        if (!state.length) {
             errorNote();
             return;
         }
