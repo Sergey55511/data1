@@ -11,7 +11,7 @@ export const OPERATIONS = {
     turning: { id: 10 }, //обточка
     makeBall: { id: 11 }, //шарокрут
     makeSuperBall: { id: 12 }, //Докат
-    grindingSuper: { id: 13 }, //Шлифование
+    grindingSuper: { id: 13 }, //Шлифовака
     polishing: { id: 14 }, //Полировка
     slice: { id: 15 }, //Распил
     sale: { id: 16 }, //Отгрузка
