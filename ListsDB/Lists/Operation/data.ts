@@ -51,4 +51,6 @@ export const data = [
     { id: 50, operation: 'Галтование', activ: true },
     { id: 51, operation: 'Кастрюля', activ: true },
     { id: 52, operation: 'Пресс', activ: true },
+    { id: 53, operation: 'Сборка бижутерия', activ: true },
+    { id: 54, operation: 'Пересорт элементов', activ: true },
 ];

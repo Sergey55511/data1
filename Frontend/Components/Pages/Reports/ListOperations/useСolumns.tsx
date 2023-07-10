@@ -23,36 +23,39 @@ export const useColumns = (
     columns.push({
         ...getColumnPropsHoc(KEYSLEFTOVERS.date.key),
         title: KEYSLEFTOVERS.date.title,
-        width: 80,
+        width: 70,
     });
     columns.push({
         ...getColumnPropsHoc(KEYSLEFTOVERS.numDocument.key),
         title: KEYSLEFTOVERS.numDocument.title,
-        width: 150,
+        width: 110,
     });
     columns.push({
         ...getColumnPropsHoc(KEYSLEFTOVERS.manager.key),
         title: KEYSLEFTOVERS.manager.title,
     });
-    columns.push({
-        ...getColumnPropsHoc(KEYSLEFTOVERS.fraction.key),
-        title: KEYSLEFTOVERS.fraction.title,
-        width: 100,
-    });
+    
+    if (!isMSC)
+        columns.push({
+            ...getColumnPropsHoc(KEYSLEFTOVERS.fraction.key),
+            title: KEYSLEFTOVERS.fraction.title,
+            width: 100,
+        });
     columns.push({
         ...getColumnPropsHoc(KEYSLEFTOVERS.lot.key),
         title: KEYSLEFTOVERS.lot.title,
-        width: 70,
+        width: 65,
     });
     if (isMSC)
         columns.push({
             ...getColumnPropsHoc(KEYSLEFTOVERS.numProduction.key),
             title: KEYSLEFTOVERS.numProduction.title,
+            width: 50,
         });
     columns.push({
         ...getColumnPropsHoc(KEYSLEFTOVERS.pp.key),
         title: KEYSLEFTOVERS.pp.title,
-        width: 65,
+        width: 60,
     });
     columns.push({
         ...getColumnPropsHoc(KEYSLEFTOVERS.workpieceType.key),
@@ -74,7 +77,7 @@ export const useColumns = (
     columns.push({
         ...getColumnPropsHoc(KEYSLEFTOVERS.type.key),
         title: KEYSLEFTOVERS.type.title,
-        width: 90,
+        width: 80,
     });
     columns.push({
         ...getColumnPropsHoc(KEYSLEFTOVERS.color.key),
@@ -84,7 +87,7 @@ export const useColumns = (
     columns.push({
         ...getColumnPropsHoc(KEYSLEFTOVERS.grade.key),
         title: KEYSLEFTOVERS.grade.title,
-        width: 75,
+        width: 65,
     });
     columns.push({
         ...getColumnPropsHoc(KEYSLEFTOVERS.sizeRange.key),
@@ -99,28 +102,29 @@ export const useColumns = (
         columns.push({
             ...getColumnPropsHoc(KEYSLEFTOVERS.channel.key),
             title: KEYSLEFTOVERS.channel.title,
+            width: 40,
         });
 
     columns.push({
         ...getColumnPropsHoc(KEYSLEFTOVERS.widthIn.key),
         title: KEYSLEFTOVERS.widthIn.title,
-        width: 80,
+        width: 75,
     });
     columns.push({
         ...getColumnPropsHoc(KEYSLEFTOVERS.widthOut.key),
         title: KEYSLEFTOVERS.widthOut.title,
-        width: 80,
+        width: 75,
     });
     if (isMSC) {
         columns.push({
             ...getColumnPropsHoc(KEYSLEFTOVERS.countItemsIn.key),
             title: KEYSLEFTOVERS.countItemsIn.title,
-            width: 100,
+            width: 40,
         });
         columns.push({
             ...getColumnPropsHoc(KEYSLEFTOVERS.countItemsOut.key),
             title: KEYSLEFTOVERS.countItemsOut.title,
-            width: 100,
+            width: 40,
         });
     }
 
