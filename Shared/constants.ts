@@ -108,6 +108,10 @@ export const WORKPIECETYPE = {
 export const GRADE = {
     mix: { id: 1 },
 };
+export const TYPES = {
+    PRESS: { id: 8 }, //пресс
+    INTENSE: { id: 9 }, //Насыщенный
+};
 export const STORES = {
     Moscow: { id: 1 },
 };

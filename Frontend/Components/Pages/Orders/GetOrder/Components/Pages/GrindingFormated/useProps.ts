@@ -2,7 +2,7 @@ import { notification } from 'antd';
 import moment from 'moment';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import { WORKPIECETYPE } from '../../../../../../../../Shared/constants';
+import { TYPES, WORKPIECETYPE } from '../../../../../../../../Shared/constants';
 import { round } from '../../../../../../../../Shared/Helpers';
 import { iData, iField } from '../../../../../../../../Shared/Types/interfaces';
 import { useStores } from '../../../../../../../Store/useStores';
@@ -113,9 +113,19 @@ export const useProps = ({ record, stateId, workpiecetypeId }: iProps) => {
             totalSum,
         });
 
+        const typeId = (() => {
+            switch (record.typeId) {
+                case TYPES.PRESS.id:
+                    return record.typeId;
+                case TYPES.INTENSE.id:
+                    return record.typeId;
+            }
+            return undefined;
+        })();
         const data: iData[] = state.map((item) => ({
             ...record,
             date,
+            typeId,
             fractionId: undefined,
             materialGroupId: undefined,
             workpieceTypeId: workpiecetypeId,
