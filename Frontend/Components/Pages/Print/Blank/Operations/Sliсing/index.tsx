@@ -31,9 +31,9 @@ export const Slicing = ({
                     </div>
                     <div className="firstRowItem">
                         <div className="label">Модель:</div>
-                        <div className="value">{produstionData![0]?.model}</div>
+                        <div className="value">{produstionData![0]?.fullModelTask}</div>
                     </div>
-                    <div className="firstRowItem">
+                    {/* <div className="firstRowItem">
                         <div className="label">Профиль</div>
                         <div className="value">{produstionData![0]?.profile}</div>
                     </div>
@@ -44,11 +44,11 @@ export const Slicing = ({
                     <div className="firstRowItem">
                         <div className="label">Длина, мм.:</div>
                         <div className="value">{produstionData![0]?.lengthModel}</div>
-                    </div>
+                    </div> 
                     <div className="firstRowItem">
                         <div className="label">Отверстие, мм.:</div>
                         <div className="value">{produstionData![0]?.channel}</div>
-                    </div>
+                    </div> */}
                 </div>
                 <NameForm number={1} name="Распиливание" />
                 <HeaderForm state="Заготовка" />

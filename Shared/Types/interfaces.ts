@@ -177,6 +177,7 @@ export interface iPrintBlank {
     sizeRange?: string;
     sizeRangeModel?: string;
     task?: number;
+    fullModelTask?: string;
     widthOut?: number;
     workpieceType?: string;
     workpieceTypeId?: number;
