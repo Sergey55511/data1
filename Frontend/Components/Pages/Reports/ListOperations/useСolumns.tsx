@@ -34,7 +34,7 @@ export const useColumns = (
         ...getColumnPropsHoc(KEYSLEFTOVERS.manager.key),
         title: KEYSLEFTOVERS.manager.title,
     });
-    
+
     if (!isMSC)
         columns.push({
             ...getColumnPropsHoc(KEYSLEFTOVERS.fraction.key),
@@ -48,8 +48,8 @@ export const useColumns = (
     });
     if (isMSC)
         columns.push({
-            ...getColumnPropsHoc(KEYSLEFTOVERS.numProduction.key),
-            title: KEYSLEFTOVERS.numProduction.title,
+            ...getColumnPropsHoc(KEYSLEFTOVERS.productionId.key),
+            title: KEYSLEFTOVERS.productionId.title,
             width: 50,
         });
     columns.push({

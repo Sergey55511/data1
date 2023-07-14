@@ -9,11 +9,7 @@ export const Record = ({ keys, record }: { keys: string[]; record: iData }) => {
                 .filter((key) => {
                     const field = KEYSLEFTOVERS[key as tConstKeys]?.key;
                     if (
-                        [
-                            KEYSLEFTOVERS.width.key,
-                            KEYSLEFTOVERS.count.key,
-                            KEYSLEFTOVERS.numProduction.key,
-                        ].includes(field)
+                        [KEYSLEFTOVERS.width.key, KEYSLEFTOVERS.count.key].includes(field)
                     )
                         return false;
                     return KEYSLEFTOVERS[key as tConstKeys]?.title;

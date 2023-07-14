@@ -23,7 +23,6 @@ type tKeys =
     | 'lot'
     | 'productionId'
     | 'production'
-    | 'numProduction'
     | 'width'
     | 'count'
     | 'widthOut'
@@ -63,7 +62,6 @@ export const KEYSLEFTOVERS: Record<tKeys, iKeysLeftoversObject> = {
     lot: { key: 'lot', title: 'Лот' },
     productionId: { key: 'productionId', title: '№ пр-ва.' },
     production: { key: 'production', title: 'Производство' },
-    numProduction: { key: 'numProduction', title: '№ пр-ва' },
     width: { key: 'width', title: 'Остаток гр.' },
     count: { key: 'count', title: 'Шт.' },
     widthOut: { key: 'widthOut', title: 'Отг. гр.' },
