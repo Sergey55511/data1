@@ -2,7 +2,6 @@ import { PrismaPromise } from '@prisma/client';
 import { OPERATIONS } from '../../../../../Shared/constants';
 import { iUser } from '../../../../../Shared/Types/interfaces';
 import { tPrisma } from '../../../../types';
-import { fullModelSQL, fullModelSQLTask } from '../constants';
 
 export const getGetOut = <T>(prisma: tPrisma, user: iUser): PrismaPromise<T> => {
     const storeId = user.storeId;
@@ -20,9 +19,9 @@ export const getGetOut = <T>(prisma: tPrisma, user: iUser): PrismaPromise<T> => 
             "sizeRange",
 			"operationId",
 			"operation",
-			"workpieceTypeId",
+			"Data"."workpieceTypeId",
             "workpieceType",
-            ${fullModelSQL},
+            "FullModels"."fullModel",
             "fractionId",
             "fraction",
 			"colorId",
@@ -39,7 +38,7 @@ export const getGetOut = <T>(prisma: tPrisma, user: iUser): PrismaPromise<T> => 
             state,
             lot,
             task,
-            ${fullModelSQLTask},
+            fmt."fullModel",
             "widthOut",
             ABS(COALESCE(round(sum("widthIn")::numeric,2),0)-COALESCE(round(coalesce(sum("widthOut"),0)::numeric,2),0)) as "width",
             ABS(COALESCE(round(sum("countItemsIn")::numeric,2),0)-COALESCE(round(sum("countItemsOut")::numeric,2),0)) as "count",
@@ -47,6 +46,8 @@ export const getGetOut = <T>(prisma: tPrisma, user: iUser): PrismaPromise<T> => 
         FROM 
             public."Data" left join "WorkpieceType" on "Data"."workpieceTypeId"="WorkpieceType".id
             left join "Fraction" on "Data"."fractionId"="Fraction".id
+            left join "FullModels" on "Data"."fullModelId"="FullModels".id
+            left join "FullModels" fmt on "Data"."task"="FullModels".id
             left join "MaterialGroup" on "Data"."materialGroupId"="MaterialGroup".id
 			left join "Grade" on "Data"."gradeId"="Grade".id
 			left join "Color" on "Data"."colorId"="Color".id
@@ -81,9 +82,9 @@ export const getGetOut = <T>(prisma: tPrisma, user: iUser): PrismaPromise<T> => 
             "sizeRange",
 			"operationId",
 			"operation",
-            "workpieceTypeId",
+            "Data"."workpieceTypeId",
             "workpieceType",
-            ${fullModelSQL},
+            "FullModels"."fullModel",
             "fractionId",
             "fraction",
             "colorId",
@@ -100,7 +101,7 @@ export const getGetOut = <T>(prisma: tPrisma, user: iUser): PrismaPromise<T> => 
             state,
             lot,
             task,
-            ${fullModelSQLTask},
+            fmt."fullModel",
             "widthOut"
         HAVING 
             pp is not null 

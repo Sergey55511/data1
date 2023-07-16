@@ -2,7 +2,6 @@ import { PrismaPromise } from '@prisma/client';
 import { NextApiRequest } from 'next/types';
 import { iUser } from '../../../../../../Shared/Types/interfaces';
 import { tPrisma } from '../../../../../types';
-import { fullModelSQL } from '../../constants';
 import { dal } from './Dal';
 
 export const leftoversBijouterie = <T>(
@@ -12,7 +11,6 @@ export const leftoversBijouterie = <T>(
 ): PrismaPromise<T> => {
     const storeId = user.storeId;
     const data = dal(req.query);
-    console.log('hello leftoversBijouterie');
 
     return prisma.$queryRawUnsafe(
         `
@@ -27,7 +25,7 @@ export const leftoversBijouterie = <T>(
 			"productionId",
 			"Productions".description as "production",
             "fullModelId",
-			${fullModelSQL},
+			"FullModels"."fullModel",
             "fractionId",
             "fraction",
 			"colorId",
@@ -75,7 +73,7 @@ export const leftoversBijouterie = <T>(
 			"productionId",
 			"Productions".description,
 			"fullModelId",
-			${fullModelSQL},
+			"FullModels"."fullModel",
             "fractionId",
             "fraction",
             "colorId",

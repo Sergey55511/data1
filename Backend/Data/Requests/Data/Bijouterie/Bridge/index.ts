@@ -2,7 +2,6 @@ import { NextApiRequest } from 'next';
 import { STORES } from '../../../../../../Shared/constants';
 import { iUser } from '../../../../../../Shared/Types/interfaces';
 import { tPrisma } from '../../../../../types';
-import { fullModelSQL, getfullModelSQL } from '../../constants';
 import { dal } from './Dal';
 
 export const getBijouterieBridge = (
@@ -54,7 +53,7 @@ export const getBijouterieBridge = (
         "BijouterieBridge"."channelId",
         "Channel".channel,
         "BijouterieBridge"."fullModelsId",
-        ${getfullModelSQL('fullModelsId')},
+        "FullModels"."fullModel",,
         "BijouterieBridge"."gradeId",
         "Grade".grade,
         "BijouterieBridge"."stateId",

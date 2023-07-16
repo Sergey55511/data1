@@ -1,7 +1,6 @@
 import { PrismaPromise } from '@prisma/client';
 import { iUser } from '../../../../../Shared/Types/interfaces';
 import { tPrisma } from '../../../../types';
-import { fullModelSQL } from '../constants';
 
 export const leftovers = <T>(prisma: tPrisma, user: iUser): PrismaPromise<T> => {
     const storeId = user.storeId;
@@ -18,7 +17,7 @@ export const leftovers = <T>(prisma: tPrisma, user: iUser): PrismaPromise<T> => 
 			"productionId",
 			"Productions".description as "production",
             "fullModelId",
-			${fullModelSQL},
+			"FullModels"."fullModel",
             "fractionId",
             "fraction",
 			"colorId",
@@ -62,7 +61,7 @@ export const leftovers = <T>(prisma: tPrisma, user: iUser): PrismaPromise<T> => 
 			"productionId",
 			"Productions".description,
 			"fullModelId",
-			${fullModelSQL},
+			"FullModels"."fullModel",
             "fractionId",
             "fraction",
             "colorId",

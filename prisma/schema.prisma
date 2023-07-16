@@ -276,6 +276,7 @@ model FullModels {
   Data             Data[]
   active           Boolean            @default(true)
   BijouterieBridge BijouterieBridge[]
+  fullModel        String?
 }
 
 model LengthModel {

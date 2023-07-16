@@ -4,7 +4,6 @@ import { NextApiRequest } from 'next';
 import { iCookies, iUser } from '../../../../../../Shared/Types/interfaces';
 import { tPrisma } from '../../../../../types';
 import { KEY } from '../../../../../../Configs/jwtKey';
-import { fullModelSQLTask } from '../../constants';
 
 export const getOrder = <T>(prisma: tPrisma, req: NextApiRequest): PrismaPromise<T> => {
     const cookies = req.cookies as iCookies;
@@ -47,7 +46,7 @@ export const getOrder = <T>(prisma: tPrisma, req: NextApiRequest): PrismaPromise
             state,
             lot,
             task,
-            ${fullModelSQLTask},
+            "FullModels"."fullModel",
             "widthOut",
             COALESCE(round(sum("widthIn")::numeric,2),0)-COALESCE(round(coalesce(sum("widthOut"),0)::numeric,2),0) as "width",
             COALESCE(round(sum("countItemsIn")::numeric,2),0)-COALESCE(round(sum("countItemsOut")::numeric,2),0) as "count",
@@ -55,6 +54,7 @@ export const getOrder = <T>(prisma: tPrisma, req: NextApiRequest): PrismaPromise
         FROM 
             public."Data" left join "WorkpieceType" on "Data"."workpieceTypeId"="WorkpieceType".id
             left join "Fraction" on "Data"."fractionId"="Fraction".id
+            LEFT JOIN "FullModels" on "FullModels".id="Data"."task"
             left join "MaterialGroup" on "Data"."materialGroupId"="MaterialGroup".id
 			left join "Grade" on "Data"."gradeId"="Grade".id
 			left join "Color" on "Data"."colorId"="Color".id

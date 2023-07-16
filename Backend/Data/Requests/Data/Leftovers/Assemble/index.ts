@@ -1,7 +1,6 @@
 import { WORKPIECETYPE } from '../../../../../../Shared/constants';
 import { iUser } from '../../../../../../Shared/Types/interfaces';
 import { tPrisma } from '../../../../../types';
-import { fullModelSQL } from '../../constants';
 
 export const getLeftoversAssemble = (prisma: tPrisma, user: iUser) => {
     const storeId = user.storeId;
@@ -9,7 +8,7 @@ export const getLeftoversAssemble = (prisma: tPrisma, user: iUser) => {
             "Data"."workpieceTypeId",
             "workpieceType",
 			"fullModelId",
-			${fullModelSQL},
+			"FullModels"."fullModel",
 			"sizeRangeId",
             "sizeRange",
 			"typeId",
@@ -48,7 +47,7 @@ export const getLeftoversAssemble = (prisma: tPrisma, user: iUser) => {
             "Data"."workpieceTypeId",
             "workpieceType",
 			"fullModelId",
-			${fullModelSQL},
+			"FullModels"."fullModel",
 			"sizeRangeId",
             "sizeRange",
 			"typeId",
