@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
 export const FrameWrapper = styled.fieldset`
+    flex: 0 0 300px;
     border: 1px solid lightgray;
     border-radius: 5px;
     padding: 5px;

@@ -26,7 +26,7 @@ export const getOrder = <T>(prisma: tPrisma, req: NextApiRequest): PrismaPromise
             size,
 			"operationId",
 			"operation",
-			"workpieceTypeId",
+			"Data"."workpieceTypeId",
             "workpieceType",
             "workingTimePlan",
             "fullModelId",
@@ -81,7 +81,7 @@ export const getOrder = <T>(prisma: tPrisma, req: NextApiRequest): PrismaPromise
             size,
 			"operationId",
 			"operation",
-            "workpieceTypeId",
+            "Data"."workpieceTypeId",
             "workpieceType",
             "workingTimePlan",
 			"fullModelId",
@@ -101,6 +101,7 @@ export const getOrder = <T>(prisma: tPrisma, req: NextApiRequest): PrismaPromise
             state,
             lot,
             task,
+            "FullModels"."fullModel",
             "widthOut"
         HAVING pp is not null and 
 		COALESCE(round(sum("widthIn")::numeric,2),0)-COALESCE(round(coalesce(sum("widthOut"),0)::numeric,2),0)<>0
