@@ -20,7 +20,7 @@ export const useProps = () => {
     const { loginStore } = useStores();
     const [filters, setFilters] = useState<Record<string, FilterValue | null>>({});
     const [filterDate, setFilterDate] = useState<iFilterDate>({
-        start: moment().subtract(10, 'days'),
+        start: moment().subtract(2, 'days'),
         end: moment(),
     });
     const [lot, setLot] = useState<tValue>();
