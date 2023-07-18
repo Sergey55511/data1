@@ -17,28 +17,25 @@ export const leftovers = (storeId: number) => {
         method: 'GET',
     }).then((res) => res.data as iData[]);
 };
-export const listOperations = (params: {
+
+interface iPropsListOperation {
     start: moment.Moment;
     end: moment.Moment;
     lot?: number;
     pp?: number;
     operationId?: number;
     numDocument?: string;
-}) => {
+    productionId?: number;
+}
+
+export const listOperations = (params: iPropsListOperation) => {
     return axios({
         url: `/api/data/reports/listOperations`,
         method: 'GET',
         params,
     }).then((res) => res.data as iData[]);
 };
-export const listOperationsExcel = (params: {
-    start: moment.Moment;
-    end: moment.Moment;
-    lot?: number;
-    pp?: number;
-    operationId?: number;
-    numDocument?: string;
-}) => {
+export const listOperationsExcel = (params: iPropsListOperation) => {
     return axios({
         url: `/api/data/reports/listOperationsExcel`,
         method: 'GET',

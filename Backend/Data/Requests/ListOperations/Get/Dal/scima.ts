@@ -6,8 +6,8 @@ export const schema = {
         lot: { type: 'number' },
         pp: { type: 'number' },
         operationId: { type: 'number' },
+        productionId: { type: 'number' },
         numDocument: { type: 'string' },
     },
-    required: ['start', 'end'],
     additionalProperties: false,
 };

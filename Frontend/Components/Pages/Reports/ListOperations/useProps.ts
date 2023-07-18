@@ -24,6 +24,7 @@ export const useProps = () => {
         end: moment(),
     });
     const [lot, setLot] = useState<tValue>();
+    const [productionId, setProductionId] = useState<tValue>();
     const [pp, setPP] = useState<tValue>();
     const [numDocument, setNumDocument] = useState<string | undefined>();
     const [operationId, setOperationId] = useState<number>();
@@ -48,6 +49,7 @@ export const useProps = () => {
                 pp: getNumber(pp),
                 operationId: getNumber(operationId),
                 numDocument: numDocument,
+                productionId: getNumber(productionId),
             }),
         { enabled: !!loginStore.user.storeId },
     );
@@ -58,7 +60,8 @@ export const useProps = () => {
             lot: getNumber(lot),
             pp: getNumber(pp),
             operationId: getNumber(operationId),
-            numDocument: numDocument,
+            numDocument,
+            productionId: getNumber(productionId),
         });
 
         fileDownload(data, `Отчет лист операции.xlsx`);
@@ -74,6 +77,13 @@ export const useProps = () => {
         date: moment(item.date).format('DD.MM.YYYY'),
     }));
     const { columns, filteredleftovers } = useColumns(filters, data);
+
+    const disabledSubmit = (() => {
+        if (productionId) return false;
+        if (pp) return false;
+
+        return !(filterDate.start && filterDate.end);
+    })();
 
     return {
         filteredleftovers,
@@ -95,5 +105,8 @@ export const useProps = () => {
         numDocument,
         setNumDocument,
         listOperationsExcel,
+        productionId,
+        setProductionId,
+        disabledSubmit,
     };
 };

@@ -21,6 +21,9 @@ export const DateFilter = ({
     numDocument,
     setNumDocument,
     listOperationsExcel,
+    productionId,
+    setProductionId,
+    disabledSubmit,
 }: ReturnType<typeof useProps>) => {
     const disabledDate: RangePickerProps['disabledDate'] = (current) => {
         if (current > moment().endOf('day')) return true;
@@ -57,6 +60,13 @@ export const DateFilter = ({
                 value={lot}
                 allowClear
             />
+            <InputNumber
+                placeholder="№ пр-ва"
+                onChangeHandler={(v) => setProductionId(v)}
+                style={{ width: '100px' }}
+                value={productionId}
+                allowClear
+            />
             <SelectField
                 placeholder="Операция"
                 value={operationId}
@@ -82,7 +92,7 @@ export const DateFilter = ({
                 allowClear
             />
             <Button
-                disabled={!(filterDate.start && filterDate.end)}
+                disabled={disabledSubmit}
                 type="primary"
                 onClick={() => listOperations.refetch()}
                 loading={listOperations.isFetching}
@@ -90,7 +100,7 @@ export const DateFilter = ({
                 Выгрузить
             </Button>
             <Button
-                disabled={!(filterDate.start && filterDate.end)}
+                disabled={disabledSubmit}
                 type="primary"
                 onClick={() => {
                     listOperationsExcel.mutate();

@@ -13,14 +13,8 @@ export const getListOperations = <T>(
     user: iUser,
 ): PrismaPromise<T> => {
     const data = dal(req.query);
-    if (!moment(data.start).isValid()) {
-        throw new MyError(400, 'invalid date start');
-    }
-    if (!moment(data.end).isValid()) {
-        throw new MyError(400, 'invalid date end');
-    }
-
     const storeId = +user.storeId;
+
     return prisma.$queryRawUnsafe(
         `
         SELECT 
@@ -80,20 +74,22 @@ export const getListOperations = <T>(
             LEFT JOIN "Operations" on "Data"."operationId"="Operations".id
             LEFT JOIN "Managers" on "Data"."managerId"="Managers".id
         WHERE "Data"."storeId"=$1 
-            AND date>=$2 
-            AND date<=$3
+            ${data.start ? `AND date>=$2` : ''}
+            ${data.end ? `AND date>=$3` : ''}
             ${data.pp ? `AND pp=$4` : ''}
             ${data.lot ? `AND lot=$5` : ''}
             ${data.operationId ? `AND "operationId"=$6` : ''}
             ${data.numDocument ? `AND "numDocument" ILIKE $7` : ''}
+            ${data.productionId ? `AND "productionId" =$8` : ''}
         ORDER BY "Data".id ASC
     `,
         storeId,
-        new Date(data.start),
-        new Date(data.end),
+        data.start ? new Date(data.start) : '',
+        data.end ? new Date(data.end) : '',
         data.pp ?? 0,
         data.lot ?? 0,
         data.operationId ?? 0,
         data.numDocument ? `%${data.numDocument}%` : '',
+        data.productionId ?? 0,
     ) as any;
 };
