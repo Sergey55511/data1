@@ -1,6 +1,7 @@
 import type { NextApiRequest } from 'next';
 import { iUser } from '../../../../Shared/Types/interfaces';
 import { tPrisma } from '../../../types';
+import { fullModelSQLTask } from '../Data/constants';
 import { dal } from './Dal';
 
 export const PrintBlank = (prisma: tPrisma, user: iUser, req: NextApiRequest) => {
@@ -20,7 +21,7 @@ export const PrintBlank = (prisma: tPrisma, user: iUser, req: NextApiRequest) =>
         "Length".length,
         "Data"."fullModelId",
         "Data"."task",
-        "FullModels"."fullModel",
+        ${fullModelSQLTask},
         "Models".model,
         "Profile".profile,
         "SizeRangeM"."sizeRange" as "sizeRangeModel",
