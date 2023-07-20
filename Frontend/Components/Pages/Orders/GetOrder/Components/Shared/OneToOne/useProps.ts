@@ -1,6 +1,7 @@
 import moment from 'moment';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
+import { GRADE, OPERATIONS } from '../../../../../../../../Shared/constants';
 import { round } from '../../../../../../../../Shared/Helpers';
 import { iData } from '../../../../../../../../Shared/Types/interfaces';
 import { useStores } from '../../../../../../../Store/useStores';
@@ -73,6 +74,11 @@ export const useProps = ({
     const subbmitHandler = async () => {
         const code = getCode(record.code, record.width, state.moveBack, state.pruning);
         const channelId = state.channel ? state.channel : record.channelId;
+        const gradeId = (() => {
+            const isResetGradeId = record.operationId == OPERATIONS.slicingBillets.id;
+            return isResetGradeId ? GRADE.mix.id : record.gradeId;
+        })();
+
         const data: iData[] = [
             {
                 ...record,
@@ -83,6 +89,7 @@ export const useProps = ({
                 stateId: stateId,
                 moneyIn: code,
                 channelId,
+                gradeId,
             },
         ];
 
