@@ -5,6 +5,7 @@ import { iData, iDataProductTable } from '../../../../Shared/Types/interfaces';
 import { moveToWork, postDataProduct } from '../../../Store/OperationStore/Api';
 import { useStores } from '../../../Store/useStores';
 import { getLosseObject, prepareDataTable } from '../../Helpers';
+import { printTicket } from './printTicket';
 import { State } from './useProps';
 
 export const useData = (state: State, model: string, resetState: () => void) => {
@@ -184,6 +185,12 @@ export const useData = (state: State, model: string, resetState: () => void) => 
 
     const submitHandler = useMutation(submitHandlerFoo, {
         onSuccess: (res) => {
+            printTicket({
+                articleId: res.articleId,
+                length: getValue(state.length.value) ?? 0,
+                model,
+                width: getValue(state.widthIn.value) ?? 0,
+            });
             resetState();
             notification.success({
                 message: 'Успешно',
