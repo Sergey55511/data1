@@ -1,7 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { getMoveOutExcelReport } from '../../../../Backend/Data/Requests/ListOperations/Excel/get';
-import { fetchService } from '../../../../Backend/Data/Services/fetch';
-import { responseHandlerExcel } from '../../../../Backend/Helpers/responseHandlerExcel';
+import { fetchService } from '../../../Backend/Data/Services/fetch';
+import { responseHandlerExcel } from '../../../Backend/Helpers/responseHandlerExcel';
+import { getDataProductExcel } from '../../../Backend/Data/Requests/DataProduct/Excel/get';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     switch (req.method) {
@@ -9,7 +9,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             await fetchService<{ lot: number }>({
                 req,
                 res,
-                fetch: (prisma, user) => getMoveOutExcelReport(prisma, req, user),
+                fetch: (prisma, user) => getDataProductExcel(prisma, req, user),
                 responseHandler: responseHandlerExcel,
             });
             break;

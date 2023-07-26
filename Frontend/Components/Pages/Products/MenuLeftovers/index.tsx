@@ -5,7 +5,10 @@ import { observer } from 'mobx-react-lite';
 import { FilterValue } from 'antd/es/table/interface';
 import { Actions } from './actions';
 import { iDataProduct } from '../../../../../Shared/Types/interfaces';
-import { UseQueryResult } from '@tanstack/react-query';
+import { useMutation, UseQueryResult } from '@tanstack/react-query';
+import { Button } from 'antd';
+import { getDataProductExcel } from '../../../../Store/OperationStore/Api';
+import fileDownload from 'js-file-download';
 
 export const MenuLeftovers = observer(
     ({
@@ -24,6 +27,11 @@ export const MenuLeftovers = observer(
             setFilters({});
         };
 
+        const downloadHandler = useMutation(async () => {
+            const data = await getDataProductExcel();
+            fileDownload(data, `Остатки изделий.xlsx`);
+        });
+
         return (
             <Wrapper>
                 <div className="params">
@@ -36,6 +44,13 @@ export const MenuLeftovers = observer(
                         />
                     </div>
                     <div className="settings">
+                        <Button
+                            type="primary"
+                            onClick={() => downloadHandler.mutate()}
+                            loading={downloadHandler.isLoading}
+                        >
+                            Выгрузить
+                        </Button>
                         <a href="#" onClick={cliarFiltersHandler}>
                             Очистить фильтры
                         </a>
