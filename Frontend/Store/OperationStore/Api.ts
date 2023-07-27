@@ -221,6 +221,14 @@ export const getDataProduct = (storeId: number) => {
     }).then((res) => res.data as iDataProduct[]);
 };
 
+export const getDataProductExcel = () => {
+    return axios({
+        url: `/api/dataproduct/excel`,
+        responseType: 'blob',
+        method: 'GET',
+    }).then((res) => res.data);
+};
+
 export const postDataProduct = (data: iDataProductTable[]) => {
     return axios({
         url: `/api/dataproduct`,

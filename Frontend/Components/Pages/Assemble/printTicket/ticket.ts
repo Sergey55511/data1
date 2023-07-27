@@ -19,12 +19,12 @@ export const getHTMLTicket = (data: iTocketProps) => {
         
         <body>
             <div
-                style="padding: 4px; width: 167px; height: 117px; font-family: Arial, Helvetica, sans-serif; font-weight: 700; font-size: 14px;">
-                <div style="margin-bottom: 40px;">№ ${data.articleId}</div>
-                <div style="margin-bottom: 40px;">${data.model}</div>
+                style="width: 167px; height: 117px; font-family: Arial, Helvetica, sans-serif; font-weight: 700; font-size: 12px;">
+                <div style="margin-bottom: 20px;">№ ${data.articleId}</div>
+                <div style="margin-bottom: 20px;">${data.model}</div>
                 <div style="width: 100%;">
-                    <div style="width: 49%; display: inline-block;">${data.length} см.</div>
-                    <div style="width: 49%; display: inline-block; text-align: end;">${data.width} гр.</div>
+                    <div style="width: 48%; display: inline-block;">${data.length} см.</div>
+                    <div style="width: 48%; display: inline-block; text-align: end;">${data.width} гр.</div>
                 </div>
             </div>
         </body>
