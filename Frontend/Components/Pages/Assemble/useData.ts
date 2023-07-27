@@ -5,7 +5,7 @@ import { iData, iDataProductTable } from '../../../../Shared/Types/interfaces';
 import { moveToWork, postDataProduct } from '../../../Store/OperationStore/Api';
 import { useStores } from '../../../Store/useStores';
 import { getLosseObject, prepareDataTable } from '../../Helpers';
-import { printTicket } from './printTicket';
+import { printTicket } from '../../Shared/printTicket';
 import { State } from './useProps';
 
 export const useData = (state: State, model: string, resetState: () => void) => {

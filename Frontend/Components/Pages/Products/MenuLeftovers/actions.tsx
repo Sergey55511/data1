@@ -1,5 +1,10 @@
 import { Badge, Button, Dropdown, Menu } from 'antd';
-import { ExportOutlined, CarOutlined, DeploymentUnitOutlined } from '@ant-design/icons';
+import {
+    ExportOutlined,
+    CarOutlined,
+    DeploymentUnitOutlined,
+    PrinterOutlined,
+} from '@ant-design/icons';
 import { iProps, useProps } from './useProps';
 import { SelectUser } from './SelectUser';
 import { SelectRecipient } from './SelectRecipient';
@@ -27,6 +32,12 @@ export const Actions = (props: iProps) => {
                     label: 'Перемещение',
                     icon: <CarOutlined />,
                     onClick: () => params.setRecipientType('recipientsInternal'),
+                },
+                {
+                    key: '4',
+                    label: 'Распечатать',
+                    icon: <PrinterOutlined />,
+                    onClick: () => params.print(),
                 },
             ]}
         />

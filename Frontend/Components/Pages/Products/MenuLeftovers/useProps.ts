@@ -4,6 +4,8 @@ import { SetStateAction, useState } from 'react';
 import { tRecipientType, useData } from './useData';
 import { useStores } from '../../../../Store/useStores';
 import { OPERATIONS } from '../../../../../Shared/constants';
+import { printTicket } from '../../../Shared/printTicket';
+import { notification } from 'antd';
 
 export interface iProps {
     selectedRows: iDataProduct[];
@@ -27,6 +29,25 @@ export const useProps = (props: iProps) => {
             articles,
             managerId: params.managerId!,
         });
+    };
+    const getValue = (v: any) => (v ? +v : 0);
+
+    const print = () => {
+        if (props.selectedRows.length > 1) {
+            notification.error({
+                message: 'Можно распечатать только одну этикетру за раз',
+            });
+        } else {
+            const item = props.selectedRows[0];
+            setTimeout(() =>
+                printTicket({
+                    articleId: getValue(item.articleId),
+                    length: getValue(item.length),
+                    model: item.model ?? '',
+                    width: getValue(item.width),
+                }),
+            );
+        }
     };
 
     const moveOutAssembleHandler = async () => {
@@ -56,6 +77,7 @@ export const useProps = (props: iProps) => {
         recipientType,
         setRecipientType,
         isShowRecipient,
+        print,
         ...params,
     };
 };
