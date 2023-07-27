@@ -516,4 +516,6 @@ model MinorAccessoryData {
   store       Stores? @relation(fields: [storeId], references: [id])
   countIn     Int?
   countOut    Int?
+  moneyIn     Float?
+  moneyOut    Float?
 }
