@@ -21,6 +21,8 @@ export const schema = {
         moneyOut: { type: 'number' },
         countItemsIn: { type: 'integer' },
         countItemsOut: { type: 'integer' },
+        typeAssembleId: { type: 'integer' },
+        fullModelId: { type: 'integer' },
     },
     required: [
         'model',

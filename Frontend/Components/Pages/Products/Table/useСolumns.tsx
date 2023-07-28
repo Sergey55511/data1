@@ -47,6 +47,14 @@ export const useColumns = (
         title: 'Длинна',
     });
     columns.push({
+        ...getColumnPropsHoc('profile'),
+        title: 'Профиль',
+    });
+    columns.push({
+        ...getColumnPropsHoc('sizeRange'),
+        title: 'Размер бусины',
+    });
+    columns.push({
         ...getColumnPropsHoc('width'),
         title: 'Остаток гр.',
     });

@@ -27,6 +27,8 @@ export const dal = (params: { [key: string]: any }): iParams => {
         moneyOut: getNumber(params.moneyOut),
         countItemsIn: getNumber(params.countItemsIn),
         countItemsOut: getNumber(params.countItemsOut),
+        typeAssembleId: getNumber(params.typeAssembleId),
+        fullModelId: getNumber(params.fullModelId),
     };
 
     return checkSchema(data, schema);

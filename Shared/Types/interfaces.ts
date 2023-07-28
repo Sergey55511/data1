@@ -77,6 +77,8 @@ export interface iDataProduct extends iDataProductTable {
     width: number;
     count: number;
     code: number;
+    profile?: string;
+    sizeRange?: string;
 }
 
 export interface iBijouterie {

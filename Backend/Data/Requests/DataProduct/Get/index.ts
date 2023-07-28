@@ -7,7 +7,7 @@ export const getDataProduct = async <T>(prisma: tPrisma, user: iUser): Promise<T
     return (await prisma.$queryRaw`
         SELECT 
             model,
-            "workpieceTypeId",
+            "DataProduct"."workpieceTypeId",
             "ResultsAssemble"."resultAssemble" as "workpieceType",
             "colorId",
             "ColorsAssemble"."colorAssemble" as color,
@@ -17,6 +17,9 @@ export const getDataProduct = async <T>(prisma: tPrisma, user: iUser): Promise<T
             "stateId",
             "State".state,
             "articleId",
+            "typeAssemble"."typeAssemble",
+            "Profile".profile,
+            "SizeRange"."sizeRange",
             COALESCE(round(sum("widthIn")::numeric,2),0)-COALESCE(round(coalesce(sum("widthOut"),0)::numeric,2),0) as "width",
             COALESCE(round(sum("countItemsIn")::numeric,2),0)-COALESCE(round(sum("countItemsOut")::numeric,2),0) as "count",
             COALESCE(sum("moneyIn")::numeric,0)-COALESCE(sum("moneyOut")::numeric,0) as "code"
@@ -30,11 +33,19 @@ export const getDataProduct = async <T>(prisma: tPrisma, user: iUser): Promise<T
                     ON "GradesAssemble".id = "DataProduct"."gradeId"
                 LEFT JOIN public."State" 
                     ON "State".id = "DataProduct"."stateId"		
+                LEFT JOIN public."typeAssemble" 
+                    ON "typeAssemble".id = "DataProduct"."typeAssembleId"		
+                LEFT JOIN public."FullModels" 
+                    ON "FullModels".id = "DataProduct"."fullModelId"		
+                LEFT JOIN public."Profile" 
+                    ON "Profile".id = "FullModels"."profileId"		
+                LEFT JOIN public."SizeRange" 
+                    ON "SizeRange".id = "FullModels"."sizeRangeModelId"		
         WHERE public."DataProduct"."storeId"=${+storeId} 
             and public."DataProduct"."active"=true
         GROUP BY 
             model,
-            "workpieceTypeId",
+            "DataProduct"."workpieceTypeId",
             "ResultsAssemble"."resultAssemble",
             "colorId",
             "ColorsAssemble"."colorAssemble",
@@ -43,7 +54,10 @@ export const getDataProduct = async <T>(prisma: tPrisma, user: iUser): Promise<T
             "GradesAssemble"."gradeAssemble",
             "stateId",
             "State".state,
-            "articleId"
+            "articleId",
+            "typeAssemble"."typeAssemble",
+            "Profile".profile,
+            "SizeRange"."sizeRange"
         HAVING 
             COALESCE(round(sum("widthIn")::numeric,2),0)-COALESCE(round(coalesce(sum("widthOut"),0)::numeric,2),0)>0
                 AND
