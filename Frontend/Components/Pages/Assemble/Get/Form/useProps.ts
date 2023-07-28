@@ -76,8 +76,17 @@ export const useProps = (
             }
 
             if (bead) {
-                res += bead.Profile.profile ?? ''; //взять из профиля бусины
-                res += bead.SizeRangeModel.sizeRange ?? ''; //взять из размера бусины
+                const profile = bead.Profile.profile ?? '';
+                const sizeRange = bead.SizeRangeModel.sizeRange ?? '';
+                res += profile; //взять из профиля бусины
+                res += (() => {
+                    if (profile) {
+                        if (sizeRange) return `-${sizeRange}`;
+                    } else {
+                        if (sizeRange) return sizeRange;
+                    }
+                    return '';
+                })(); //взять из размера бусины
                 res += 'x';
                 res += bead.LengthModel.length ?? ''; //взять из размера бусины
             }
