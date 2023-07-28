@@ -8,6 +8,12 @@ import { getLosseObject, prepareDataTable } from '../../Helpers';
 import { printTicket } from '../../Shared/printTicket';
 import { State } from './useProps';
 
+export interface iPropsSubmit {
+    rows: iData[];
+    pp?: number;
+    articleId?: number;
+    fullModelId?: number;
+}
 export const useData = (state: State, model: string, resetState: () => void) => {
     const { loginStore, OperationStore } = useStores();
     const storeId = loginStore.user.storeId;
@@ -27,6 +33,21 @@ export const useData = (state: State, model: string, resetState: () => void) => 
     };
 
     const submitHandlerFoo = async (rows: iData[]) => {
+        const fullModetItem = rows.filter(
+            (item) =>
+                item.workpieceTypeId == WORKPIECETYPE.bead.id ||
+                item.workpieceTypeId == WORKPIECETYPE.ball.id,
+        );
+        if ((fullModetItem?.length ?? 0) > 1) {
+            const error = {
+                message: 'Недопустима сборка из бусины и шара в одном изделие',
+            };
+            notification.error(error);
+            throw error;
+        }
+
+        const fullModelId = fullModetItem![0].fullModelId;
+
         const dataProfit = rows.map((item) => {
             const res = prepareDataTable(item);
             const moneyOut = getCode(item);
@@ -49,10 +70,11 @@ export const useData = (state: State, model: string, resetState: () => void) => 
             isSetArticleId: true,
         });
 
-        const props = {
+        const props: iPropsSubmit = {
             rows,
             pp: moveToWorkRes.pp,
             articleId: moveToWorkRes.articleId || 0,
+            fullModelId,
         };
 
         await moveOutDefectHandler(props);
@@ -62,15 +84,7 @@ export const useData = (state: State, model: string, resetState: () => void) => 
         return props;
     };
 
-    const moveOutDefectHandler = async ({
-        rows,
-        pp,
-        articleId,
-    }: {
-        rows: iData[];
-        pp?: number;
-        articleId?: number;
-    }) => {
+    const moveOutDefectHandler = async ({ rows, pp, articleId }: iPropsSubmit) => {
         const dataDefect = rows
             .filter((item) => item.defect)
             .map((item) => {
@@ -103,14 +117,10 @@ export const useData = (state: State, model: string, resetState: () => void) => 
         rows,
         pp,
         articleId,
-    }: {
-        rows: iData[];
-        pp?: number;
-        articleId?: number;
-    }) => {
+        fullModelId,
+    }: iPropsSubmit) => {
         const code = rows.reduce((res, item) => (res += getCode(item)), 0);
 
-        const bead = rows.find((item) => item.workpieceTypeId == WORKPIECETYPE.bead.id);
         const data: iDataProductTable[] = [
             {
                 storeId: loginStore.user.storeId,
@@ -129,22 +139,14 @@ export const useData = (state: State, model: string, resetState: () => void) => 
                 length: getValue(state.length.value),
                 gradeId: getValue(state.grade.value),
                 typeAssembleId: getValue(state.typeAssemble.value),
-                fullModelId: getValue(bead?.fullModelId),
+                fullModelId: getValue(fullModelId),
             },
         ];
 
         return await postDataProduct(data);
     };
 
-    const getResultDefects = async ({
-        rows,
-        pp,
-        articleId,
-    }: {
-        rows: iData[];
-        pp?: number;
-        articleId?: number;
-    }) => {
+    const getResultDefects = async ({ rows, pp, articleId }: iPropsSubmit) => {
         const defectValue = rows.reduce(
             (res, item) => (res += getValue(item.defect) ?? 0),
             0,
@@ -189,7 +191,7 @@ export const useData = (state: State, model: string, resetState: () => void) => 
     const submitHandler = useMutation(submitHandlerFoo, {
         onSuccess: (res) => {
             printTicket({
-                articleId: res.articleId,
+                articleId: res.articleId ?? 0,
                 length: getValue(state.length.value) ?? 0,
                 model,
                 width: getValue(state.widthIn.value) ?? 0,
