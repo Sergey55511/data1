@@ -67,11 +67,11 @@ export const useProps = (
 
             const setProfile = (profile: string, sizeRange: string) => {
                 if (profile) {
-                    if (sizeRange) return `-${sizeRange}`;
+                    if (sizeRange) return `${profile}-${sizeRange}`;
                 } else {
                     if (sizeRange) return sizeRange;
                 }
-                return '';
+                return `${profile}${sizeRange}`;
             };
 
             if (minaret) {
@@ -90,7 +90,6 @@ export const useProps = (
             if (bead) {
                 const profile = bead.Profile.profile ?? '';
                 const sizeRange = bead.SizeRangeModel.sizeRange ?? '';
-                res += profile; //взять из профиля бусины
                 res += setProfile(profile, sizeRange); //взять из размера бусины
                 res += 'x';
                 res += bead.LengthModel.length ?? ''; //взять из размера бусины
