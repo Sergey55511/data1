@@ -110,6 +110,7 @@ export const useData = (state: State, model: string, resetState: () => void) => 
     }) => {
         const code = rows.reduce((res, item) => (res += getCode(item)), 0);
 
+        const bead = rows.find((item) => item.workpieceTypeId == WORKPIECETYPE.bead.id);
         const data: iDataProductTable[] = [
             {
                 storeId: loginStore.user.storeId,
@@ -127,6 +128,8 @@ export const useData = (state: State, model: string, resetState: () => void) => 
                 colorId: getValue(state.color.value),
                 length: getValue(state.length.value),
                 gradeId: getValue(state.grade.value),
+                typeAssembleId: getValue(state.typeAssemble),
+                fullModelId: getValue(bead?.fullModelId),
             },
         ];
 

@@ -65,6 +65,8 @@ export interface iDataProductTable {
     moneyOut?: number;
     countItemsIn?: number;
     countItemsOut?: number;
+    fullModelId?: number;
+    typeAssembleId?: number;
 }
 
 export interface iDataProduct extends iDataProductTable {
@@ -75,6 +77,8 @@ export interface iDataProduct extends iDataProductTable {
     width: number;
     count: number;
     code: number;
+    profile?: string;
+    sizeRange?: string;
 }
 
 export interface iBijouterie {

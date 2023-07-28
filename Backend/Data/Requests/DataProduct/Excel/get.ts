@@ -22,6 +22,7 @@ export const getDataProductExcel = async (
             sheet.columns[3].width = 20;
             sheet.columns[7].width = 15;
             sheet.columns[8].width = 15;
+            sheet.columns[10].width = 20;
         },
     });
     return buffer as any;

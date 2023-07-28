@@ -10,6 +10,8 @@ export const prepareData = (reportData: iDataProduct[]) => {
         { name: 'Сорт', filterButton: true },
         { name: 'Цвет', filterButton: true },
         { name: 'Длинна', filterButton: true },
+        { name: 'Профиль', filterButton: true },
+        { name: 'Размер бусины', filterButton: true },
         { name: 'Остаток гр.', filterButton: true, totalsRowFunction: 'sum' },
         { name: 'Остаток шт.', filterButton: true, totalsRowFunction: 'sum' },
     ];
@@ -22,6 +24,8 @@ export const prepareData = (reportData: iDataProduct[]) => {
         item.grade,
         item.color,
         item.length,
+        item.profile,
+        item.sizeRange,
         +item.width,
         +item.count,
     ]);

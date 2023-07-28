@@ -17,11 +17,11 @@ export const getHTMLTicket = (data: iTocketProps) => {
             <title>Document</title>
         </head>
         
-        <body>
+        <body style="margin: 0;">
             <div
-                style="width: 167px; height: 117px; font-family: Arial, Helvetica, sans-serif; font-weight: 700; font-size: 12px;">
-                <div style="margin-bottom: 20px;">№ ${data.articleId}</div>
-                <div style="margin-bottom: 20px;">${data.model}</div>
+                style="font-family: Arial, Helvetica, sans-serif; font-weight: 700; font-size: 12px;">
+                <div style="margin-bottom: 10px;">№ ${data.articleId}</div>
+                <div style="margin-bottom: 10px; height: 24px;display: flex; align-items: center;">${data.model}</div>
                 <div style="width: 100%;">
                     <div style="width: 48%; display: inline-block;">${data.length} см.</div>
                     <div style="width: 48%; display: inline-block; text-align: end;">${data.width} гр.</div>
