@@ -128,7 +128,7 @@ export const useData = (state: State, model: string, resetState: () => void) => 
                 colorId: getValue(state.color.value),
                 length: getValue(state.length.value),
                 gradeId: getValue(state.grade.value),
-                typeAssembleId: getValue(state.typeAssemble),
+                typeAssembleId: getValue(state.typeAssemble.value),
                 fullModelId: getValue(bead?.fullModelId),
             },
         ];
