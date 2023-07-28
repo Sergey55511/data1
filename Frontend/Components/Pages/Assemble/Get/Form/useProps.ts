@@ -65,9 +65,21 @@ export const useProps = (
             const minaret = data.fullModel.data?.find((item) => item.id == minaretId);
             const bead = data.fullModel.data?.find((item) => item.id == beadId);
 
+            const setProfile = (profile: string, sizeRange: string) => {
+                if (profile) {
+                    if (sizeRange) return `-${sizeRange}`;
+                } else {
+                    if (sizeRange) return sizeRange;
+                }
+                return '';
+            };
+
             if (minaret) {
+                const profile = minaret.Profile.profile ?? '';
+                const sizeRange = minaret.SizeRangeModel.sizeRange ?? '';
+
                 const model = minaret
-                    ? `${minaret.Models.model}${minaret.Profile.profile}${minaret.SizeRangeModel.sizeRange}`
+                    ? `${minaret.Models.model}${setProfile(profile, sizeRange)}`
                     : '';
 
                 res = 'TM';
@@ -79,14 +91,7 @@ export const useProps = (
                 const profile = bead.Profile.profile ?? '';
                 const sizeRange = bead.SizeRangeModel.sizeRange ?? '';
                 res += profile; //взять из профиля бусины
-                res += (() => {
-                    if (profile) {
-                        if (sizeRange) return `-${sizeRange}`;
-                    } else {
-                        if (sizeRange) return sizeRange;
-                    }
-                    return '';
-                })(); //взять из размера бусины
+                res += setProfile(profile, sizeRange); //взять из размера бусины
                 res += 'x';
                 res += bead.LengthModel.length ?? ''; //взять из размера бусины
             }
