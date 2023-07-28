@@ -65,6 +65,8 @@ export interface iDataProductTable {
     moneyOut?: number;
     countItemsIn?: number;
     countItemsOut?: number;
+    fullModelId?: number;
+    typeAssembleId?: number;
 }
 
 export interface iDataProduct extends iDataProductTable {

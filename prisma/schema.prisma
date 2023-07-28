@@ -124,6 +124,10 @@ model DataProduct {
   countItemsIn    Int?
   countItemsOut   Int?
   active          Boolean         @default(true)
+  fullModelId     Int?
+  fullModel       FullModels?     @relation(fields: [fullModelId], references: [id], onDelete: NoAction)
+  typeAssembleId  Int?
+  typeAssemble    typeAssemble?   @relation(fields: [typeAssembleId], references: [id], onDelete: NoAction)
 }
 
 model Bridge {
@@ -276,6 +280,7 @@ model FullModels {
   Data             Data[]
   active           Boolean            @default(true)
   BijouterieBridge BijouterieBridge[]
+  DataProduct      DataProduct[]
 }
 
 model LengthModel {
@@ -424,9 +429,10 @@ model VariantsAssemble {
 }
 
 model typeAssemble {
-  id           Int     @id @default(autoincrement())
+  id           Int           @id @default(autoincrement())
   typeAssemble String
-  active       Boolean @default(true)
+  active       Boolean       @default(true)
+  DataProduct  DataProduct[]
 }
 
 model ColorsAssemble {
