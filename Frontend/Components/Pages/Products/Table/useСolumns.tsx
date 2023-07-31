@@ -23,6 +23,10 @@ export const useColumns = (
         title: 'Тип изделия',
     });
     columns.push({
+        ...getColumnPropsHoc('typeAssemble'),
+        title: 'Тип сборки',
+    });
+    columns.push({
         ...getColumnPropsHoc('model'),
         title: 'Модель',
     });

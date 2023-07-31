@@ -11,7 +11,6 @@ export const dal = (params: { [key: string]: any }): iParams => {
         managerId: params.managerId ? +params.managerId : params.managerId,
         articles: params.articles,
     };
-    console.log('data', data);
 
     return checkSchema(data, schema);
 };

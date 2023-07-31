@@ -71,6 +71,7 @@ export interface iDataProductTable {
 
 export interface iDataProduct extends iDataProductTable {
     workpieceType?: string;
+    typeAssemble?: string;
     color?: string;
     grade?: string;
     state?: string;

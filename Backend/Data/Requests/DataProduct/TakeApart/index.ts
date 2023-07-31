@@ -27,6 +27,8 @@ export const takeApart = async <T>(
             widthOut: true,
             moneyIn: true,
             countItemsIn: true,
+            fullModelId: true,
+            typeAssembleId: true,
         },
         where: { articleId: { in: data.articles }, active: true, storeId: user.storeId },
     });

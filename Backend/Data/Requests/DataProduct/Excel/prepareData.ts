@@ -4,6 +4,7 @@ import ExcelJS from 'exceljs';
 export const prepareData = (reportData: iDataProduct[]) => {
     const columns: ExcelJS.TableColumnProperties[] = [
         { name: 'Тип изделия', filterButton: true },
+        { name: 'Тип сборки', filterButton: true },
         { name: 'Модель', filterButton: true },
         { name: 'Номер изделия', filterButton: true },
         { name: 'Состояние', filterButton: true },
@@ -18,6 +19,7 @@ export const prepareData = (reportData: iDataProduct[]) => {
 
     const rows: any[][] = reportData.map((item) => [
         item.workpieceType,
+        item.typeAssemble,
         item.model,
         item.articleId,
         item.state,
