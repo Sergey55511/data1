@@ -39,14 +39,13 @@ export const useProps = (props: iProps) => {
             });
         } else {
             const item = props.selectedRows[0];
-            setTimeout(() =>
-                printTicket({
-                    articleId: getValue(item.articleId),
-                    length: getValue(item.length),
-                    model: item.model ?? '',
-                    width: getValue(item.width),
-                }),
-            );
+            printTicket({
+                articleId: getValue(item.articleId),
+                length: getValue(item.length),
+                model: item.model ?? '',
+                width: getValue(item.width),
+            }),
+                props.setSelectedRows([]);
         }
     };
 

@@ -11,6 +11,7 @@ import { SelectRecipient } from './SelectRecipient';
 
 export const Actions = (props: iProps) => {
     const params = useProps(props);
+    props.setSelectedRows;
 
     const menu = (
         <Menu
@@ -37,7 +38,7 @@ export const Actions = (props: iProps) => {
                     key: '4',
                     label: 'Распечатать',
                     icon: <PrinterOutlined />,
-                    onClick: () => params.print(),
+                    onClick: params.print,
                 },
             ]}
         />
@@ -76,6 +77,13 @@ export const Actions = (props: iProps) => {
                     <Button>Действия</Button>
                 </Dropdown>
             </Badge>
+            <Button
+                icon={<PrinterOutlined />}
+                onClick={params.print}
+                disabled={!props.selectedRows.length}
+            >
+                Печать
+            </Button>
         </>
     );
 };

@@ -61,6 +61,8 @@ export const getDataProduct = async <T>(prisma: tPrisma, user: iUser): Promise<T
         HAVING 
             COALESCE(round(sum("widthIn")::numeric,2),0)-COALESCE(round(coalesce(sum("widthOut"),0)::numeric,2),0)>0
                 AND
-            COALESCE(round(sum("countItemsIn")::numeric,2),0)-COALESCE(round(coalesce(sum("countItemsOut"),0)::numeric,2),0)>0;
+            COALESCE(round(sum("countItemsIn")::numeric,2),0)-COALESCE(round(coalesce(sum("countItemsOut"),0)::numeric,2),0)>0
+        ORDER BY "articleId" asc    
+            ;
     `) as any;
 };
