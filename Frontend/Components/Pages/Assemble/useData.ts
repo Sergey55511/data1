@@ -39,11 +39,27 @@ export const useData = (state: State, model: string, resetState: () => void) => 
                 item.workpieceTypeId == WORKPIECETYPE.ball.id,
         );
         if ((fullModetItem?.length ?? 0) > 1) {
-            const error = {
-                message: 'Недопустима сборка из бусины и шара в одном изделие',
-            };
-            notification.error(error);
-            throw error;
+            const arrId: number[] = [];
+            const isDuplicate = fullModetItem.some((item) => {
+                if (item.fullModelId) {
+                    if (!arrId.length) {
+                        arrId.push(item.fullModelId);
+                        return false;
+                    }
+                    if (arrId.includes(item.fullModelId)) {
+                        return false;
+                    } else {
+                        return true;
+                    }
+                }
+            });
+            if (isDuplicate) {
+                const error = {
+                    message: 'Недопустима сборка из разных моделей',
+                };
+                notification.error(error);
+                throw error;
+            }
         }
 
         const fullModelId = fullModetItem![0].fullModelId;
