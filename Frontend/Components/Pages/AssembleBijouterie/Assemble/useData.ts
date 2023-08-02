@@ -65,7 +65,11 @@ export const useData = ({
         if (!data) return;
         if (!countLocks) return;
         submit.mutate({
-            accessoriesData: { idAccessory: data[0].locksId, countOut: +countLocks },
+            accessoriesData: {
+                idAccessory: data[0].locksId,
+                countOut: +countLocks,
+                moneyOut: 0,
+            },
             dataSource: dataSource ?? [],
             bijouterie: { id: bijouterieId, count: countItems, width: widthItems },
         });

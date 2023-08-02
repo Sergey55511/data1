@@ -25,6 +25,8 @@ export const postMinorAccessory = (data: {
     idAccessory: number;
     countIn?: number;
     countOut?: number;
+    moneyIn?: number;
+    moneyOut?: number;
     pp?: number;
 }) => {
     return axios({

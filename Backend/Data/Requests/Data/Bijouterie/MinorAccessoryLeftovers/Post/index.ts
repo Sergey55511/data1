@@ -13,6 +13,8 @@ export const postMinorAccessory = (prisma: tPrisma, req: NextApiRequest, user: i
             countIn: data.countIn,
             countOut: data.countOut,
             storeId: user.storeId,
+            moneyIn: data.moneyIn,
+            moneyOut: data.moneyOut,
         },
     }) as any;
 };

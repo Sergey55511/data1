@@ -22,6 +22,7 @@ export const useSubmit = (
             accessoriesData: {
                 idAccessory: number;
                 countOut: number;
+                moneyOut: number;
             };
             dataSource: tDataSource[];
             bijouterie: { id?: number; width: tValue; count: tValue };

@@ -19,7 +19,8 @@ export const getMinorAccessoryLeftovers = (
                 "Locks".color,
                 "Locks".size,
                 "Locks"."type",
-                COALESCE(round(sum("countIn")::numeric,2),0)-COALESCE(round(coalesce(sum("countOut"),0)::numeric,2),0) as "count"
+                COALESCE(round(sum("countIn")::numeric,2),0)-COALESCE(round(coalesce(sum("countOut"),0)::numeric,2),0) as "count",
+                COALESCE(round(sum("moneyIn")::numeric,2),0)-COALESCE(round(coalesce(sum("moneyOut"),0)::numeric,2),0) as "code"
             FROM public."MinorAccessoryData"
                 LEFT JOIN "Locks"
                     ON "Locks".id = "MinorAccessoryData"."idAccessory"

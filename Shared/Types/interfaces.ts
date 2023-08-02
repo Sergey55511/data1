@@ -333,6 +333,7 @@ export interface iAccessoryDana {
     size: string;
     type: string;
     count: number;
+    code: number;
 }
 export interface iLock {
     color?: string;
