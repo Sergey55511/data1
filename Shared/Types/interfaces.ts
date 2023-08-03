@@ -342,6 +342,7 @@ export interface iLock {
     size?: string;
     type?: string;
     count: number;
+    code: number;
 }
 export interface iBigouterueBridje {
     id: number;

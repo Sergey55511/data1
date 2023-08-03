@@ -16,6 +16,7 @@ export const AssembleBijouterie = observer(() => {
         bijouterieBridge,
         countLocks,
         setCountLocks,
+        lock,
     } = useProps();
 
     return (
@@ -28,6 +29,7 @@ export const AssembleBijouterie = observer(() => {
                     bijouterieBridge={bijouterieBridge.data}
                     bijouterie={bijouterie.data}
                     bijouterieId={bijouterieId}
+                    lock={lock}
                 />
             }
             rightChildren={
@@ -43,6 +45,7 @@ export const AssembleBijouterie = observer(() => {
                         setCountLocks,
                         bijouterie,
                         bijouterieBridge,
+                        lock,
                     }}
                 />
             }

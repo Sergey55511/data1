@@ -4,6 +4,7 @@ import { Dispatch, SetStateAction } from 'react';
 import {
     iBigouterueBridje,
     iBijouterieArticles,
+    iLock,
 } from '../../../../../Shared/Types/interfaces';
 import { InputNumber, tValue } from '../../../Shared/InputNumber';
 import { SelectField } from '../../../Shared/SelectField';
@@ -22,6 +23,7 @@ export const Assemble = ({
     setCountLocks,
     bijouterie,
     bijouterieBridge,
+    lock,
 }: {
     bijouterieId?: number;
     setBijouterieId: Dispatch<SetStateAction<number | undefined>>;
@@ -33,6 +35,7 @@ export const Assemble = ({
     setCountLocks: Dispatch<SetStateAction<tValue>>;
     bijouterie: UseQueryResult<iBijouterieArticles[], unknown>;
     bijouterieBridge: UseQueryResult<iBigouterueBridje[], unknown>;
+    lock: iLock;
 }) => {
     const { dataSource, setDataSource, disabledSubmit, submit, submitHandler } = useData({
         data: bijouterieBridge.data,
@@ -41,6 +44,7 @@ export const Assemble = ({
         widthItems,
         countLocks,
         setBijouterieId,
+        lock,
     });
     return (
         <Wrapper>

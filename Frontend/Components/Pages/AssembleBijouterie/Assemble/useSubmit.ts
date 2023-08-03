@@ -62,7 +62,7 @@ export const useSubmit = (
             await postOrderResult(dataSubmit);
 
             //third step
-
+            totalCode += data.accessoriesData.moneyOut;
             return postDataBijouterie({
                 bijouterieArticleId: data.bijouterie.id,
                 widthIn: getNumber(data.bijouterie.width),

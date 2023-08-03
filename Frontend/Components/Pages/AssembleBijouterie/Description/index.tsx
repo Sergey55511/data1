@@ -5,7 +5,7 @@ import { YarnDescription } from '../yarnDescription';
 import { Wrapper } from './style';
 
 export const Description = (props: iProps) => {
-    const { selectedBijouterie, lock, yarnsAssemble } = useProps(props);
+    const { selectedBijouterie, yarnsAssemble } = useProps(props);
     return (
         <Wrapper>
             {props.bijouterieId == undefined ? (
@@ -13,7 +13,7 @@ export const Description = (props: iProps) => {
             ) : (
                 <>
                     <ProductDescription selectedBijouterie={selectedBijouterie} />
-                    <LockDescription lock={lock} />
+                    <LockDescription lock={props.lock} />
                     <YarnDescription yarn={yarnsAssemble} />
                 </>
             )}

@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
-import { iBigouterueBridje } from '../../../../../Shared/Types/interfaces';
+import { iBigouterueBridje, iLock } from '../../../../../Shared/Types/interfaces';
 import { tValue } from '../../../Shared/InputNumber';
 import { useSubmit } from './useSubmit';
 
@@ -17,6 +17,7 @@ export const useData = ({
     widthItems,
     countLocks,
     setBijouterieId,
+    lock,
 }: {
     data?: iBigouterueBridje[];
     bijouterieId?: number;
@@ -24,6 +25,7 @@ export const useData = ({
     widthItems: tValue;
     countLocks: tValue;
     setBijouterieId: Dispatch<SetStateAction<number | undefined>>;
+    lock: iLock;
 }) => {
     const [dataSource, setDataSource] = useState<tDataSource[]>();
     useEffect(() => {
@@ -64,11 +66,13 @@ export const useData = ({
     const submitHandler = () => {
         if (!data) return;
         if (!countLocks) return;
+        const moneyOneItem = lock.code / lock.count;
+        const moneyOut = moneyOneItem * +countLocks;
         submit.mutate({
             accessoriesData: {
                 idAccessory: data[0].locksId,
                 countOut: +countLocks,
-                moneyOut: 0,
+                moneyOut,
             },
             dataSource: dataSource ?? [],
             bijouterie: { id: bijouterieId, count: countItems, width: widthItems },
