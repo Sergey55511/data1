@@ -54,8 +54,10 @@ export const useProps = (
                 (item) => item.workpieceTypeId == WORKPIECETYPE.minaret.id,
             );
 
-            const beadItem = selectedRows.find(
-                (item) => item.workpieceTypeId == WORKPIECETYPE.bead.id,
+            const beadItem = selectedRows.find((item) =>
+                [WORKPIECETYPE.bead.id, WORKPIECETYPE.ball.id].includes(
+                    item.workpieceTypeId ?? 0,
+                ),
             );
 
             const beadId = beadItem?.fullModelId;
