@@ -94,7 +94,7 @@ export const useProps = (
                 const sizeRange = bead.SizeRangeModel.sizeRange ?? '';
                 res += setProfile(profile, sizeRange); //взять из размера бусины
                 res += 'x';
-                res += bead.LengthModel.length ?? ''; //взять из размера бусины
+                res += bead.LengthModel?.length ?? ''; //взять из размера бусины
             }
 
             if (state.typeAssemble.value) {
