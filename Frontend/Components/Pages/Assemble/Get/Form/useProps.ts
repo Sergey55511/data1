@@ -90,9 +90,10 @@ export const useProps = (
             if (bead) {
                 const profile = bead.Profile.profile ?? '';
                 const sizeRange = bead.SizeRangeModel.sizeRange ?? '';
+                const length = bead.LengthModel?.length ?? '';
                 res += setProfile(profile, sizeRange); //взять из размера бусины
-                res += 'x';
-                res += bead.LengthModel.length ?? ''; //взять из размера бусины
+                res += length ? 'x' : '';
+                res += length; //взять из размера бусины
             }
 
             if (state.typeAssemble.value) {
