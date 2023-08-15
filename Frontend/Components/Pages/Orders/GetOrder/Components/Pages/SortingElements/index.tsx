@@ -23,6 +23,7 @@ export const SortingElements = observer((props: { record: iData; stateId: number
                 setDate={params.setDate}
                 workingTimeFact={params.workingTimeFact}
                 setWorkingTimeFact={params.setWorkingTimeFact}
+                record={props.record}
             />
             <Counter data={getCounterDataHandler(params.state)} widthKey="widthIn" />
             <div>

@@ -2,6 +2,7 @@ import { Button, DatePicker } from 'antd';
 import { InputField } from '../../../../../../Shared/InputField';
 import { InputNumber } from '../../../../../../Shared/InputNumber';
 import { SelectField } from '../../../../../../Shared/SelectField';
+import { FullReturn } from '../FullReturn';
 import { Item } from './item';
 import { Wrapper } from './style';
 import { iProps, useProps } from './useProps';
@@ -15,14 +16,17 @@ export const OneToOne = (props: iProps) => {
                 <div className={params.isShowLosses ? 'red' : ''}>
                     Потеря: {params.state.losses?.toFixed(2) ?? props.record.widthOut}
                 </div>
-                <Button
-                    loading={params.isLoading}
-                    type="primary"
-                    disabled={!params.isValid}
-                    onClick={params.confirmSubbmit}
-                >
-                    Сохранить
-                </Button>
+                <div>
+                    <FullReturn record={props.record} />
+                    <Button
+                        loading={params.isLoading}
+                        type="primary"
+                        disabled={!params.isValid}
+                        onClick={params.confirmSubbmit}
+                    >
+                        Сохранить
+                    </Button>
+                </div>
             </div>
             <Item title="Дата">
                 <DatePicker

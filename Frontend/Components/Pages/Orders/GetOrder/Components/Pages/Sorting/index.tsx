@@ -19,6 +19,7 @@ export const Sorting = observer((props: iProps) => {
                 isLoading={params.isLoading}
                 date={params.date}
                 setDate={params.setDate}
+                record={props.record}
             />
             <Counter data={getCounterDataHandler(params.state)} widthKey="widthIn" />
             <div>

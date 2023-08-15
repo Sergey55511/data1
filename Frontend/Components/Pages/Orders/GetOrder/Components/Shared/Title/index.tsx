@@ -3,6 +3,8 @@ import { InputNumber, tValue } from '../../../../../../Shared/InputNumber';
 import { Wrapper } from './style';
 import { confirmAction } from '../../../../../../Shared/ConfirmSubbmit';
 import { Dispatch, SetStateAction } from 'react';
+import { FullReturn } from '../FullReturn';
+import { iData } from '../../../../../../../../Shared/Types/interfaces';
 
 export const Title = ({
     subbmitHandler,
@@ -21,6 +23,7 @@ export const Title = ({
     setDate,
     workingTimeFact,
     setWorkingTimeFact,
+    record,
 }: {
     subbmitHandler: () => void;
     addRowHandler: (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => void;
@@ -38,6 +41,7 @@ export const Title = ({
     setDate?: (value: moment.Moment | undefined) => void;
     workingTimeFact?: string;
     setWorkingTimeFact?: Dispatch<SetStateAction<string | undefined>>;
+    record: iData;
 }) => {
     const confirmSubbmit = () => {
         confirmAction({
@@ -116,14 +120,12 @@ export const Title = ({
                 </div>
             )}
             <div className={(losses || 0) < 0 ? 'red' : ''}>потеря: {losses}</div>
-            <Button
-                type="primary"
-                onClick={confirmSubbmit}
-                loading={isLoading}
-                style={{ marginLeft: 'auto' }}
-            >
-                Сохранить
-            </Button>
+            <div style={{ marginLeft: 'auto' }}>
+                <FullReturn record={record} />
+                <Button type="primary" onClick={confirmSubbmit} loading={isLoading}>
+                    Сохранить
+                </Button>
+            </div>
         </Wrapper>
     );
 };

@@ -22,6 +22,7 @@ export const SortingInventoryElements = observer((props: iProps) => {
                 setDate={params.setDate}
                 defect={params.defect}
                 setDefect={params.setDefect}
+                record={props.record}
             />
             <Counter
                 data={getCounterDataHandler(params.state)}

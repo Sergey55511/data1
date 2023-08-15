@@ -24,6 +24,7 @@ export const Slicing = observer((props: iProps) => {
                 isLoading={params.postData?.isLoading}
                 date={params.date}
                 setDate={params.setDate}
+                record={props.record}
             />
             <Counter data={getCounterDataHandler(params.data)} widthKey="widthIn" />
             <div>

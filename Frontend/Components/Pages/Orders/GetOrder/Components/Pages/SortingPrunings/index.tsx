@@ -24,6 +24,7 @@ export const SortingPrunings = observer((props: iProps) => {
                 setDefect={params.setDefect}
                 workingTimeFact={params.workingTimeFact}
                 setWorkingTimeFact={params.setWorkingTimeFact}
+                record={props.record}
             />
             <Counter data={getCounterDataHandler(params.state)} widthKey="widthIn" />
             <div>
