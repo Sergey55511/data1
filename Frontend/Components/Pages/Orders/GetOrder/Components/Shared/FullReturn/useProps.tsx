@@ -1,25 +1,40 @@
 import { useMutation } from '@tanstack/react-query';
-import { notification } from 'antd';
+import { Modal, notification } from 'antd';
 import { useRouter } from 'next/router';
 import { iData, iDataTable } from '../../../../../../../../Shared/Types/interfaces';
 import { postOrderResult } from '../../../../../../../Store/OperationStore/Api';
 import { ROUTES } from '../../../../../constants';
+import { ExclamationCircleOutlined } from '@ant-design/icons';
 
+const { confirm } = Modal;
 export interface iProps {
     record: iData;
 }
 export const useProps = ({ record }: iProps) => {
     const router = useRouter();
 
-    const onClickHandler = () => {
+    const onOk = () => {
+        const getNumber = (v: any) => (v ? Math.abs(+v) : 0);
         const preparedRecord: iDataTable = {
             ...record,
-            widthIn: record.width,
-            moneyIn: record.code,
-            countItemsIn: record.count,
+            widthOut: undefined,
+            moneyOut: undefined,
+            countItemsOut: undefined,
+            widthIn: getNumber(record.width),
+            moneyIn: getNumber(record.code),
+            countItemsIn: getNumber(record.count),
         };
         returnHandler.mutate([preparedRecord]);
     };
+    const onClickHandler = () => {
+        confirm({
+            title: 'Вы увеврены, провести 100% возврат?',
+            icon: <ExclamationCircleOutlined />,
+            content: 'Отменить возврата будет невозможно',
+            onOk,
+        });
+    };
+
     const returnHandler = useMutation(postOrderResult, {
         onSuccess: () => {
             notification.success({
