@@ -20,6 +20,7 @@ export const GrindingCrumpledBall = observer((props: iProps) => {
                 isLoading={params.isLoading}
                 date={params.date}
                 setDate={params.setDate}
+                record={props.record}
             />
             <div>
                 {params.state.map((item, index) => (
