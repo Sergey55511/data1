@@ -78,6 +78,7 @@ export const leftovers = <T>(prisma: tPrisma, user: iUser): PrismaPromise<T> => 
             "stateId",
             state,
             lot
-        HAVING COALESCE(round(sum("widthIn")::numeric,2),0)-COALESCE(round(coalesce(sum("widthOut"),0)::numeric,2),0)>0;
+        HAVING COALESCE(round(sum("widthIn")::numeric,2),0)-COALESCE(round(coalesce(sum("widthOut"),0)::numeric,2),0)>0
+        ORDER BY ${fullModelSQL} asc;
     `);
 };
