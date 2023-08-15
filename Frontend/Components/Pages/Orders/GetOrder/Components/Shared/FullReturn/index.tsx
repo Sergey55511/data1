@@ -10,7 +10,7 @@ export const FullReturn = (props: iProps) => {
             onClick={onClickHandler}
             style={{ marginRight: '16px' }}
         >
-            100 возврат
+            100% возврат
         </Button>
     );
 };
