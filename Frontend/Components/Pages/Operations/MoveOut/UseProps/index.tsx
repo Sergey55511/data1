@@ -45,6 +45,8 @@ export const useProps = ({ type }: iProps) => {
         'mixingProduction',
     ].includes(type || '');
 
+    const getNum = (v: any) => (v ? +v : 0);
+
     const isInventory = type == 'inventory';
 
     useEffect(() => {
@@ -120,6 +122,10 @@ export const useProps = ({ type }: iProps) => {
         });
     };
 
+    const dataSend = data.filter((item) => {
+        return item.widthOut || item.countItemsOut;
+    });
+
     const isDisabled = (() => {
         let res = false;
         if (!(isMixing || isInventory)) {
@@ -138,14 +144,19 @@ export const useProps = ({ type }: iProps) => {
             )
                 res = true;
 
+        if (
+            dataSend.some((item) => {
+                if (getNum(item.count)) {
+                    if (!getNum(item.countItemsOut)) return true;
+                }
+            })
+        )
+            res = true;
+
         return res;
     })();
 
     const submitData = async () => {
-        const dataSend = data.filter((item) => {
-            return item.widthOut || item.countItemsOut;
-        });
-
         let nDocUniq = `${numDocument}_(${Date.now()})`;
 
         let operationId = OPERATIONS.sale.id;
@@ -173,7 +184,6 @@ export const useProps = ({ type }: iProps) => {
         }
 
         const getMoney = (data: iData) => {
-            const getNum = (v: any) => (v ? +v : 0);
             return (getNum(data.code) / getNum(data.width)) * getNum(data.widthOut);
         };
 
