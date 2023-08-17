@@ -20,6 +20,8 @@ export const getDataProduct = async <T>(prisma: tPrisma, user: iUser): Promise<T
             "typeAssemble"."typeAssemble",
             "Profile".profile,
             "SizeRange"."sizeRange",
+            "fullModelId",
+            "typeAssembleId",
             COALESCE(round(sum("widthIn")::numeric,2),0)-COALESCE(round(coalesce(sum("widthOut"),0)::numeric,2),0) as "width",
             COALESCE(round(sum("countItemsIn")::numeric,2),0)-COALESCE(round(sum("countItemsOut")::numeric,2),0) as "count",
             COALESCE(sum("moneyIn")::numeric,0)-COALESCE(sum("moneyOut")::numeric,0) as "code"
@@ -57,7 +59,9 @@ export const getDataProduct = async <T>(prisma: tPrisma, user: iUser): Promise<T
             "articleId",
             "typeAssemble"."typeAssemble",
             "Profile".profile,
-            "SizeRange"."sizeRange"
+            "SizeRange"."sizeRange",
+            "fullModelId",
+            "typeAssembleId"
         HAVING 
             COALESCE(round(sum("widthIn")::numeric,2),0)-COALESCE(round(coalesce(sum("widthOut"),0)::numeric,2),0)>0
                 AND
