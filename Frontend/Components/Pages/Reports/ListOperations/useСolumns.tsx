@@ -35,23 +35,29 @@ export const useColumns = (
         title: KEYSLEFTOVERS.manager.title,
     });
 
-    if (!isMSC)
+    if (!isMSC) {
         columns.push({
             ...getColumnPropsHoc(KEYSLEFTOVERS.fraction.key),
             title: KEYSLEFTOVERS.fraction.title,
             width: 100,
         });
+        columns.push({
+            ...getColumnPropsHoc(KEYSLEFTOVERS.materialGroup.key),
+            title: KEYSLEFTOVERS.materialGroup.title,
+            width: 100,
+        });
+    }
     columns.push({
         ...getColumnPropsHoc(KEYSLEFTOVERS.lot.key),
         title: KEYSLEFTOVERS.lot.title,
         width: 65,
     });
-    if (isMSC)
-        columns.push({
-            ...getColumnPropsHoc(KEYSLEFTOVERS.productionId.key),
-            title: KEYSLEFTOVERS.productionId.title,
-            width: 50,
-        });
+    columns.push({
+        ...getColumnPropsHoc(KEYSLEFTOVERS.productionId.key),
+        title: KEYSLEFTOVERS.productionId.title,
+        width: 50,
+    });
+
     columns.push({
         ...getColumnPropsHoc(KEYSLEFTOVERS.pp.key),
         title: KEYSLEFTOVERS.pp.title,
