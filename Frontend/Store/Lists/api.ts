@@ -29,10 +29,11 @@ import {
     iProductions,
 } from '../../../Shared/Types/interfaces';
 
-export const getMaterialGroup = () => {
+export const getMaterialGroup = (forSorting?: boolean) => {
     return axios({
         url: '/api/list/materialGroup',
         method: 'GET',
+        params: { forSorting },
     }).then((res) => res.data as iMaterialGroup[]);
 };
 

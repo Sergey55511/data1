@@ -136,9 +136,13 @@ export const NewItem = observer(() => {
 
     const storeId = loginStore.user.storeId;
     const fraction = useQuery(['fraction', storeId], getFraction, { enabled: !!storeId });
-    const materialGroup = useQuery(['getMaterialGroup', storeId], getMaterialGroup, {
-        enabled: !!storeId,
-    });
+    const materialGroup = useQuery(
+        ['getMaterialGroup', storeId],
+        () => getMaterialGroup(),
+        {
+            enabled: !!storeId,
+        },
+    );
 
     const stateDuplicate: iState[] = checkDuplicate(data);
 

@@ -20,6 +20,7 @@ import { getRootLists } from './Components/Hooks';
 export interface iState {
     typeId: iField;
     gradeId: iField;
+    materialGroupId: iField;
     colorId: iField;
     sizeRangeId: iField;
     widthIn: iField;
@@ -29,9 +30,10 @@ export interface iState {
 export interface iProps {
     record: iData;
     stateId: number;
+    isMaterialGroup?: boolean;
 }
 
-export const useProps = ({ record, stateId }: iProps) => {
+export const useProps = ({ record, stateId, isMaterialGroup }: iProps) => {
     const { ListsStore, OperationStore, loginStore } = useStores();
     const arrowHandler = useKeyArrow();
     const [state, setState] = useState<iState[]>([]);
@@ -60,6 +62,11 @@ export const useProps = ({ record, stateId }: iProps) => {
             const res: iState[] = [
                 ...prev,
                 {
+                    materialGroupId: new Field(
+                        'materialGroupId',
+                        'Группа сырья',
+                        isMaterialGroup,
+                    ),
                     typeId: new Field('typeId', 'Тип'),
                     gradeId: new Field('gradeId', 'Сорт'),
                     colorId: new Field('colorId', 'Цвет'),
@@ -130,6 +137,7 @@ export const useProps = ({ record, stateId }: iProps) => {
             widthOut: undefined,
             widthIn: +item.widthIn.value!,
             stateId,
+            materialGroupId: +item.materialGroupId.value!,
             moneyIn: item.widthIn.value ? codeOneItem * +item.widthIn.value : 0,
         }));
         sendData({

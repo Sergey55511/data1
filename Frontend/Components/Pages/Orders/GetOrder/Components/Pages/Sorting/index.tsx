@@ -35,6 +35,7 @@ export const Sorting = observer((props: iProps) => {
                             removeRow={params.removeRow}
                             copyRow={params.copyRow}
                             arrowHandler={params.arrowHandler}
+                            isMaterialGroup={props.isMaterialGroup}
                         />
                     );
                 })}

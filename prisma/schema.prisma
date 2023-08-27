@@ -364,6 +364,7 @@ model MaterialGroup {
   materialGroup String
   position      Int     @default(autoincrement())
   active        Boolean @default(true)
+  forSorting    Boolean @default(false)
   Data          Data[]
 }
 
