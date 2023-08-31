@@ -88,12 +88,11 @@ export const useColumns = (filters: Record<string, FilterValue | null>) => {
         title: KEYSLEFTOVERS.lot.title,
         width: 65,
     });
-    if (isMSC)
-        columns.push({
-            ...getColumnPropsHoc(KEYSLEFTOVERS.productionId.key),
-            title: KEYSLEFTOVERS.productionId.title,
-            width: 100,
-        });
+    columns.push({
+        ...getColumnPropsHoc(KEYSLEFTOVERS.productionId.key),
+        title: KEYSLEFTOVERS.productionId.title,
+        width: 100,
+    });
     columns.push({
         ...getColumnPropsHoc(KEYSLEFTOVERS.width.key),
         title: KEYSLEFTOVERS.width.title,

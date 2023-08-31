@@ -107,6 +107,11 @@ export const useProps = (props: iProps) => {
                 }
             }
         }
+        if (operation == OPERATIONS.changeProduction.id) {
+            if (!numProd) {
+                return false;
+            }
+        }
         return operation && date && managerId && (width || count) ? true : false;
     })();
 
@@ -124,6 +129,14 @@ export const useProps = (props: iProps) => {
         data.productionId = numProd || +props.record.productionId! || undefined;
         data.task = task.id;
 
+        const end = async () => {
+            setIsLoading(false);
+            UIStore.setIsLoading(true);
+            if (props.onClose) props.onClose();
+            await OperationStore.getLeftovers(loginStore.user.storeId);
+            UIStore.setIsLoading(false);
+        };
+
         const code = props.record.code || 0;
         const moneyOut = (code / (props.record.width || code)) * (data.widthOut || 0);
 
@@ -133,7 +146,7 @@ export const useProps = (props: iProps) => {
             await OperationStore.changeNumProduction({
                 ...data,
             });
-            if (operation == OPERATIONS.changeProduction.id) return;
+            if (operation == OPERATIONS.changeProduction.id) return end();
         }
 
         await OperationStore.moveToWork([data], () => 1, true);
@@ -143,14 +156,9 @@ export const useProps = (props: iProps) => {
             if (operation == OPERATIONS.getOut.id)
                 await OperationStore.getOrdersGetOut(loginStore.user.storeId!);
         }
-
-        setIsLoading(false);
-
-        UIStore.setIsLoading(true);
-        if (props.onClose) props.onClose();
-        await OperationStore.getLeftovers(loginStore.user.storeId);
-        UIStore.setIsLoading(false);
+        end();
     };
+
     return {
         isShowSetTask,
         setIsShowSetTask,
