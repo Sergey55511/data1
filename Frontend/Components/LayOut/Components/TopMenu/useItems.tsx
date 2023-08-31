@@ -29,31 +29,34 @@ export const useItems = () => {
 
     const isMSC = loginStore.user.storeId == STORES.Moscow.id;
 
-    const mixingChildrens = isMSC
-        ? [
-              {
-                  label: 'Смешивание партия',
-                  key: ROUTES.mixingLot,
-                  icon: <FullscreenExitOutlined />,
-              },
-              {
-                  label: 'Смешивание производства',
-                  key: ROUTES.mixingProduction,
-                  icon: <FullscreenExitOutlined />,
-              },
-          ]
-        : [
-              {
-                  label: 'Смешивание сорт',
-                  key: ROUTES.mixingGrade,
-                  icon: <FullscreenExitOutlined />,
-              },
-              {
-                  label: 'Смешивание размеров',
-                  key: ROUTES.mixingSize,
-                  icon: <FullscreenExitOutlined />,
-              },
-          ];
+    let mixingChildrens = [
+        {
+            label: 'Смешивание партия',
+            key: ROUTES.mixingLot,
+            icon: <FullscreenExitOutlined />,
+        },
+        {
+            label: 'Смешивание производства',
+            key: ROUTES.mixingProduction,
+            icon: <FullscreenExitOutlined />,
+        },
+    ];
+
+    if (!isMSC) {
+        mixingChildrens = [
+            ...mixingChildrens,
+            {
+                label: 'Смешивание сорт',
+                key: ROUTES.mixingGrade,
+                icon: <FullscreenExitOutlined />,
+            },
+            {
+                label: 'Смешивание размеров',
+                key: ROUTES.mixingSize,
+                icon: <FullscreenExitOutlined />,
+            },
+        ];
+    }
 
     const leftoversChildren = [
         {

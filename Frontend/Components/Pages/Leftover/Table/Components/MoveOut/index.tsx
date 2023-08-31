@@ -16,7 +16,10 @@ export interface iProps {
 
 export const MoveOutSoloHoc = (props: iProps) => {
     const isShowCount = props.record.workpieceTypeId == WORKPIECETYPE.minaret.id;
-    if ([STATE.sortedLength.id].includes(props.record?.stateId || 0)) {
+    const isSetProduction = [STATE.sortedLength.id, STATE.sorted.id].includes(
+        props.record?.stateId as number,
+    );
+    if (isSetProduction) {
         return (
             <MoveOutSolo
                 {...{

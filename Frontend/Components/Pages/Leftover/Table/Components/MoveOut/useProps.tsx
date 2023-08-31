@@ -40,6 +40,7 @@ export const useProps = (props: iProps) => {
             OPERATIONS.makingMinalets.id,
             OPERATIONS.resorting.id,
             OPERATIONS.getOut.id,
+            OPERATIONS.changeProduction.id,
         ].includes(operation ?? 0);
         setIsShowTask(!!(props.isShowTask && isOperation));
     }, [props.isShowTask, operation]);
@@ -128,10 +129,12 @@ export const useProps = (props: iProps) => {
 
         data.moneyOut = moneyOut;
 
-        if (isNewProductionId.current)
+        if (isNewProductionId.current) {
             await OperationStore.changeNumProduction({
                 ...data,
             });
+            if (operation == OPERATIONS.changeProduction.id) return;
+        }
 
         await OperationStore.moveToWork([data], () => 1, true);
         if (loginStore.user.storeId) {

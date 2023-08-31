@@ -11,7 +11,7 @@ export const Wrapper = styled.div`
         flex-wrap: wrap;
         column-gap: 8px;
         .item {
-            flex: 1;
+            flex: 0 0 49%;
             > * {
                 margin-bottom: 0;
             }
