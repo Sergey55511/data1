@@ -99,11 +99,10 @@ export const useColumns = ({
         width: 80,
     });
 
-    if (isMSC)
-        columns.push({
-            ...getColumnPropsHoc(KEYSLEFTOVERS.productionId.key),
-            title: KEYSLEFTOVERS.productionId.title,
-        });
+    columns.push({
+        ...getColumnPropsHoc(KEYSLEFTOVERS.productionId.key),
+        title: KEYSLEFTOVERS.productionId.title,
+    });
     columns.push({
         ...getColumnPropsHoc(KEYSLEFTOVERS.width.key),
         title: KEYSLEFTOVERS.width.title,

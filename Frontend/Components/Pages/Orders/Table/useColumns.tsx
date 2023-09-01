@@ -35,11 +35,10 @@ export const useColumns = (
         title: KEYSLEFTOVERS.pp.title,
         width: 55,
     });
-    if (isMSC)
-        columns.push({
-            ...getColumnPropsHoc(KEYSLEFTOVERS.productionId.key),
-            title: KEYSLEFTOVERS.productionId.title,
-        });
+    columns.push({
+        ...getColumnPropsHoc(KEYSLEFTOVERS.productionId.key),
+        title: KEYSLEFTOVERS.productionId.title,
+    });
     columns.push({
         ...getColumnPropsHoc(KEYSLEFTOVERS.operation.key),
         title: KEYSLEFTOVERS.operation.title,
