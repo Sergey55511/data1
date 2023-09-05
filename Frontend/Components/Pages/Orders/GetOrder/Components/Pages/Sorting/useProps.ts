@@ -21,6 +21,7 @@ export interface iState {
     typeId: iField;
     gradeId: iField;
     materialGroupId: iField;
+    fractionId: iField;
     colorId: iField;
     sizeRangeId: iField;
     widthIn: iField;
@@ -30,10 +31,11 @@ export interface iState {
 export interface iProps {
     record: iData;
     stateId: number;
+    isFraction?: boolean;
     isMaterialGroup?: boolean;
 }
 
-export const useProps = ({ record, stateId, isMaterialGroup }: iProps) => {
+export const useProps = ({ record, stateId, isMaterialGroup, isFraction }: iProps) => {
     const { ListsStore, OperationStore, loginStore } = useStores();
     const arrowHandler = useKeyArrow();
     const [state, setState] = useState<iState[]>([]);
@@ -67,6 +69,7 @@ export const useProps = ({ record, stateId, isMaterialGroup }: iProps) => {
                         'Группа сырья',
                         isMaterialGroup,
                     ),
+                    fractionId: new Field('fractionId', 'Фракция', isFraction),
                     typeId: new Field('typeId', 'Тип'),
                     gradeId: new Field('gradeId', 'Сорт'),
                     colorId: new Field('colorId', 'Цвет'),
@@ -127,17 +130,19 @@ export const useProps = ({ record, stateId, isMaterialGroup }: iProps) => {
             totalSum,
         });
 
+        const getNumber = (v: any) => (v ? +v : undefined);
         const data: iData[] = state.map((item) => ({
             ...record,
             date,
-            typeId: +item.typeId.value,
-            gradeId: +item.gradeId.value,
-            colorId: +item.colorId.value,
-            sizeRangeId: +item.sizeRangeId.value,
+            typeId: getNumber(item.typeId.value),
+            gradeId: getNumber(item.gradeId.value),
+            colorId: getNumber(item.colorId.value),
+            sizeRangeId: getNumber(item.sizeRangeId.value),
             widthOut: undefined,
-            widthIn: +item.widthIn.value!,
+            widthIn: getNumber(item.widthIn.value),
             stateId,
-            materialGroupId: +item.materialGroupId.value!,
+            materialGroupId: getNumber(item.materialGroupId.value),
+            fractionId: getNumber(item.fractionId.value),
             moneyIn: item.widthIn.value ? codeOneItem * +item.widthIn.value : 0,
         }));
         sendData({

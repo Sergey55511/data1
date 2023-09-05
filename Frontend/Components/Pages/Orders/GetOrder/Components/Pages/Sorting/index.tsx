@@ -36,6 +36,8 @@ export const Sorting = observer((props: iProps) => {
                             copyRow={params.copyRow}
                             arrowHandler={params.arrowHandler}
                             isMaterialGroup={props.isMaterialGroup}
+                            isFraction={props.isFraction}
+                            record={props.record}
                         />
                     );
                 })}

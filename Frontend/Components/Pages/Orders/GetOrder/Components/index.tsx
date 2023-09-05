@@ -125,7 +125,14 @@ export const GetOrderSwitcher = ({
                 />
             );
         case OPERATIONS.sorting.id:
-            return <Sorting record={record} stateId={STATE.sorted.id} isMaterialGroup />;
+            return (
+                <Sorting
+                    record={record}
+                    stateId={STATE.sorted.id}
+                    isMaterialGroup
+                    isFraction
+                />
+            );
         case OPERATIONS.sortingN.id:
             return <Sorting record={record} stateId={STATE.sortedN.id} />;
         case OPERATIONS.sortingA.id:

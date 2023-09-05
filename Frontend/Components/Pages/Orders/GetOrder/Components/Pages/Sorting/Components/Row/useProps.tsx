@@ -12,9 +12,12 @@ import {
 import { iState } from '../../useProps';
 import { useKeyArrow } from '../../../../Shared/Hooks/useKeyArrow';
 import { useQuery } from '@tanstack/react-query';
-import { getMaterialGroup } from '../../../../../../../../../Store/Lists/api';
-
-export interface iProps {
+import {
+    getFraction,
+    getMaterialGroup,
+} from '../../../../../../../../../Store/Lists/api';
+import { iProps as iRootProps } from '../../useProps';
+export interface iProps extends Omit<iRootProps, 'stateId'> {
     state: iState;
     index: number;
     isLoading?: boolean;
@@ -23,7 +26,6 @@ export interface iProps {
     setState: Dispatch<SetStateAction<iState[]>>;
     grade: iGrade[];
     arrowHandler: ReturnType<typeof useKeyArrow>;
-    isMaterialGroup?: boolean;
 }
 export const useProps = ({
     state,
@@ -32,6 +34,8 @@ export const useProps = ({
     grade,
     arrowHandler,
     isMaterialGroup,
+    isFraction,
+    record,
 }: iProps) => {
     const { ListsStore, loginStore } = useStores();
     const [sizeRange, setSizeRange] = useState<iSizeRange[]>([]);
@@ -45,12 +49,20 @@ export const useProps = ({
 
     const storeId = loginStore.user.storeId;
     useEffect(() => {
+        if (record.fractionId) onChange(record.fractionId, index, 'fractionId');
+    }, []);
+
+    useEffect(() => {
         getSizeRange(ListsStore, setState, setSizeRange, index, storeId);
     }, [storeId, WORKPIECETYPE.stone.id]);
 
     const materialGroup = useQuery(['getMaterialGroup'], () => getMaterialGroup(true), {
         refetchOnMount: false,
         enabled: isMaterialGroup,
+    });
+    const fraction = useQuery(['fraction'], () => getFraction(), {
+        refetchOnMount: false,
+        enabled: isFraction,
     });
 
     const fields = [
@@ -114,7 +126,7 @@ export const useProps = ({
 
     if (isMaterialGroup)
         fields.unshift(
-            <InputField isError={state.materialGroupId.isError} key="grade">
+            <InputField isError={state.materialGroupId.isError} key="materialGroup">
                 <SelectField
                     placeholder={state.materialGroupId.placeholder}
                     value={+state.materialGroupId.value || undefined}
@@ -124,6 +136,25 @@ export const useProps = ({
                         caption: item.materialGroup,
                     }))}
                     selectProps={{ loading: materialGroup.isFetching }}
+                />
+            </InputField>,
+        );
+    if (isFraction)
+        fields.unshift(
+            <InputField isError={state.fractionId.isError} key="fraction">
+                <SelectField
+                    placeholder={state.fractionId.placeholder}
+                    value={
+                        fraction.isFetching
+                            ? undefined
+                            : +state.fractionId.value || undefined
+                    }
+                    onChange={(v) => onChange(v, index, 'fractionId')}
+                    options={fraction.data?.map((item) => ({
+                        value: item.id,
+                        caption: item.fraction,
+                    }))}
+                    selectProps={{ loading: fraction.isFetching }}
                 />
             </InputField>,
         );
