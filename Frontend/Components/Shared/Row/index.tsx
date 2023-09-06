@@ -2,6 +2,15 @@ import { Button, Tooltip } from 'antd';
 import { MinusOutlined, CopyOutlined } from '@ant-design/icons';
 import { Wrapper } from './style';
 
+export interface iPropsRow {
+    isLoading?: boolean;
+    removeRow: () => void;
+    copyRow: () => void;
+    fields: JSX.Element[];
+    width?: Array<string | undefined>;
+    isDuplicate?: boolean;
+}
+
 export const Row = ({
     isLoading,
     removeRow,
@@ -9,14 +18,7 @@ export const Row = ({
     fields,
     width,
     isDuplicate,
-}: {
-    isLoading?: boolean;
-    removeRow: () => void;
-    copyRow: () => void;
-    fields: JSX.Element[];
-    width?: Array<string | undefined>;
-    isDuplicate?: boolean;
-}) => {
+}: iPropsRow) => {
     return (
         <Wrapper className={isDuplicate ? 'duplicate' : ''}>
             <Tooltip title="Удалить строку">

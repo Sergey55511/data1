@@ -3,7 +3,7 @@ import { Row } from '../../../../../../../../Shared/Row';
 import { iProps, useProps } from './useProps';
 
 export const RowWrapper = observer((props: iProps) => {
-    const { fields } = useProps(props);
+    const { fields, width } = useProps(props);
 
     return (
         <Row
@@ -13,6 +13,7 @@ export const RowWrapper = observer((props: iProps) => {
             copyRow={() => props.copyRow(props.index)}
             isDuplicate={props.state.duplicate}
             fields={fields}
+            width={width}
         />
     );
 });
