@@ -2,7 +2,7 @@ import { NextApiRequest } from 'next';
 import { encrypt } from '../../../Helpers/Crypto/encript';
 import { dal } from '../../Dal';
 import { MyError } from '../../../../Shared/Classes/error';
-import { PrismaClient } from '@prisma/client';
+import { prisma } from '../../Services/prisma';
 
 export const moveIn = async (req: NextApiRequest) => {
     const data = dal(req);
@@ -13,7 +13,6 @@ export const moveIn = async (req: NextApiRequest) => {
 
     if (value != valueEqual) throw new MyError(401, 'not allowed');
 
-    const prisma = new PrismaClient();
     try {
         const cryptoKeyDb = await prisma.crypto.findFirst({
             select: { key: true },

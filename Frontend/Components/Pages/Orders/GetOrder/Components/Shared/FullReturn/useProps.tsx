@@ -12,11 +12,11 @@ export interface iProps {
 }
 export const useProps = ({ record }: iProps) => {
     const router = useRouter();
-
     const onOk = () => {
         const getNumber = (v: any) => (v ? Math.abs(+v) : 0);
         const preparedRecord: iDataTable = {
             ...record,
+            task: undefined,
             widthOut: undefined,
             moneyOut: undefined,
             countItemsOut: undefined,
