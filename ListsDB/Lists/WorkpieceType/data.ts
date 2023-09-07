@@ -90,4 +90,5 @@ export const data = [
     { id: 27, workpieceType: 'ОвД', position: 27, active: true, isShow: true },
     { id: 28, workpieceType: 'ЦД', position: 28, active: true, isShow: true },
     { id: 29, workpieceType: 'ОлД', position: 29, active: true, isShow: true },
+    { id: 30, workpieceType: 'Бочка', position: 30, active: true, isShow: true },
 ];

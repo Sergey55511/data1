@@ -13,6 +13,7 @@ export const RowWrapper = observer((props: iProps) => {
             copyRow={() => props.copyRow(props.index)}
             isDuplicate={props.state.duplicate}
             fields={fields}
+            width={["100px"]}
         />
     );
 });

@@ -66,7 +66,7 @@ export const useProps = ({
     });
 
     const fields = [
-        <InputField isError={state.gradeId.isError} key="grade">
+        <InputField width="150px" isError={state.gradeId.isError} key="grade">
             <SelectField
                 placeholder={state.gradeId.placeholder}
                 value={+state.gradeId.value || undefined}
@@ -75,6 +75,7 @@ export const useProps = ({
                     value: item.id,
                     caption: item.grade,
                 }))}
+                
             />
         </InputField>,
         <InputField isError={state.typeId.isError} key="type">

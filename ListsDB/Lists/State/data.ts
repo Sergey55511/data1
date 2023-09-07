@@ -27,7 +27,7 @@ export const data = [
     { id: 26, state: 'Галтованный (грубо)', active: true },
     { id: 27, state: 'Термообр-ный (лампы)', active: true },
     { id: 28, state: 'Термообр-ный (печь)', active: true },
-    { id: 29, state: 'Полированный', active: true },
+    { id: 29, state: 'Полированная заготовка', active: true },
     { id: 30, state: 'Сортированный элемент', active: true },
     { id: 31, state: 'Шлифованный дакат', active: true },
     { id: 32, state: 'Готовый элемент мин.группы', active: true },
