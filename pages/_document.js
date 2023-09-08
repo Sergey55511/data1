@@ -1,6 +1,5 @@
 import { Html, Head, Main, NextScript } from 'next/document';
-import { StoreContext } from '../Store/storeContext';
-import { createGlobalStyle } from 'styled-components';
+import { StoreContext } from '../Frontend/Store/storeContext';
 
 export default function Document() {
     return (

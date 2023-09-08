@@ -7,53 +7,522 @@ datasource db {
   provider = "postgresql"
 }
 
+model Crypto {
+  id  Int    @id @default(autoincrement())
+  key String
+}
+
+model Data {
+  id               Int            @id @default(autoincrement())
+  dateSystem       DateTime       @default(now()) @db.Date()
+  date             DateTime       @default(now()) @db.Date()
+  lot              Float?
+  numDocument      String?
+  pp               Int?
+  sizeRange        SizeRange?     @relation(fields: [sizeRangeId], references: [id], onDelete: NoAction)
+  sizeRangeId      Int?
+  widthInDocument  Float?
+  widthIn          Float?
+  widthOut         Float?
+  tareWidth        Float?
+  provider         String?
+  countItemsIn     Int?
+  countItemsOut    Int?
+  workingTimeFact  Int?
+  workingTimePlan  Int?
+  moneyIn          Float?
+  moneyOut         Float?
+  typeOfProcessing String?
+  materialGroup    MaterialGroup? @relation(fields: [materialGroupId], references: [id], onDelete: NoAction)
+  materialGroupId  Int?
+  WorkpieceType    WorkpieceType? @relation(fields: [workpieceTypeId], references: [id], onDelete: NoAction)
+  workpieceTypeId  Int?
+  Operations       Operations?    @relation(fields: [operationId], references: [id], onDelete: NoAction)
+  operationId      Int?
+  userId           Int?
+  managerId        Int?
+  Stores           Stores?        @relation(fields: [storeId], references: [id], onDelete: NoAction)
+  storeId          Int?
+  Grade            Grade?         @relation(fields: [gradeId], references: [id], onDelete: NoAction)
+  gradeId          Int?
+  active           Boolean        @default(true)
+  Productions      Productions?   @relation(fields: [productionId], references: [id], onDelete: NoAction)
+  productionId     Int?
+  articleId        Int?
+  Color            Color?         @relation(fields: [colorId], references: [id], onDelete: NoAction)
+  colorId          Int?
+  Length           Length?        @relation(fields: [lengthId], references: [id], onDelete: NoAction)
+  lengthId         Int?
+  State            State?         @relation(fields: [stateId], references: [id], onDelete: NoAction)
+  stateId          Int?
+  Channel          Channel?       @relation(fields: [channelId], references: [id], onDelete: NoAction)
+  channelId        Int?
+  Users            Users?         @relation(fields: [userId], references: [id], onDelete: NoAction)
+  Managers         Managers?      @relation(fields: [managerId], references: [id], onDelete: NoAction)
+  Fraction         Fraction?      @relation(fields: [fractionId], references: [id], onDelete: NoAction)
+  fractionId       Int?
+  Types            Types?         @relation(fields: [typeId], references: [id], onDelete: NoAction)
+  typeId           Int?
+  Recipient        Recipients?    @relation(fields: [recipientId], references: [id], onDelete: NoAction)
+  recipientId      Int?
+  FullModels       FullModels?    @relation(fields: [fullModelId], references: [id], onDelete: NoAction)
+  fullModelId      Int?
+  model            String?
+  task             Int?
+}
+
+model DataBijouterie {
+  id                  Int                 @id @default(autoincrement())
+  date                DateTime?           @default(now()) @db.Date()
+  pp                  Int?
+  storeId             Int
+  Stores              Stores              @relation(fields: [storeId], references: [id], onDelete: NoAction)
+  userId              Int
+  Users               Users               @relation(fields: [userId], references: [id], onDelete: NoAction)
+  bijouterieArticleId Int?
+  BijouterieArticles  BijouterieArticles? @relation(fields: [bijouterieArticleId], references: [id], onDelete: NoAction)
+  widthIn             Float?
+  widthOut            Float?
+  moneyIn             Float?
+  moneyOut            Float?
+  countItemsIn        Int?
+  countItemsOut       Int?
+  active              Boolean             @default(true)
+}
+
+model DataProduct {
+  id              Int             @id @default(autoincrement())
+  dateSystem      DateTime?       @default(now()) @db.Date()
+  date            DateTime?       @default(now()) @db.Date()
+  pp              Int?
+  storeId         Int?
+  Stores          Stores?         @relation(fields: [storeId], references: [id], onDelete: NoAction)
+  model           String
+  userId          Int
+  Users           Users           @relation(fields: [userId], references: [id], onDelete: NoAction)
+  managerId       Int?
+  Managers        Managers?       @relation(fields: [managerId], references: [id], onDelete: NoAction)
+  workpieceTypeId Int
+  workpieceType   ResultsAssemble @relation(fields: [workpieceTypeId], references: [id], onDelete: NoAction)
+  colorId         Int
+  color           ColorsAssemble  @relation(fields: [colorId], references: [id], onDelete: NoAction)
+  length          Float
+  gradeId         Int
+  grade           GradesAssemble  @relation(fields: [gradeId], references: [id], onDelete: NoAction)
+  stateId         Int
+  State           State           @relation(fields: [stateId], references: [id], onDelete: NoAction)
+  articleId       Int
+  recipientId     Int?
+  Recipient       Recipients?     @relation(fields: [recipientId], references: [id], onDelete: NoAction)
+  operationId     Int?
+  Operations      Operations?     @relation(fields: [operationId], references: [id], onDelete: NoAction)
+  numDocument     String?
+  widthIn         Float?
+  widthOut        Float?
+  moneyIn         Float?
+  moneyOut        Float?
+  countItemsIn    Int?
+  countItemsOut   Int?
+  active          Boolean         @default(true)
+  fullModelId     Int?
+  fullModel       FullModels?     @relation(fields: [fullModelId], references: [id], onDelete: NoAction)
+  typeAssembleId  Int?
+  typeAssemble    typeAssemble?   @relation(fields: [typeAssembleId], references: [id], onDelete: NoAction)
+}
+
+model Bridge {
+  id              Int            @id @default(autoincrement())
+  Store           Stores?        @relation(fields: [storeId], references: [id], onDelete: NoAction)
+  storeId         Int?
+  Operation       Operations?    @relation(fields: [operationId], references: [id], onDelete: NoAction)
+  operationId     Int?
+  WorkPieceType   WorkpieceType? @relation(fields: [workpieceTypeId], references: [id], onDelete: NoAction)
+  workpieceTypeId Int?
+  State           State?         @relation(fields: [stateId], references: [id], onDelete: NoAction)
+  stateId         Int?
+  Type            Types?         @relation(fields: [typeId], references: [id], onDelete: NoAction)
+  typeId          Int?
+  Grade           Grade?         @relation(fields: [gradeId], references: [id], onDelete: NoAction)
+  gradeId         Int?
+  Color           Color?         @relation(fields: [colorId], references: [id], onDelete: NoAction)
+  colorId         Int?
+  SizeRange       SizeRange?     @relation(fields: [sizeRangeId], references: [id], onDelete: NoAction)
+  sizeRangeId     Int?
+  Length          Length?        @relation(fields: [lengthId], references: [id], onDelete: NoAction)
+  lengthId        Int?
+}
+
+model Managers {
+  id                Int                 @id @default(autoincrement())
+  name              String
+  store             Stores?             @relation(fields: [storeId], references: [id], onDelete: NoAction)
+  storeId           Int?
+  active            Boolean             @default(true)
+  Data              Data[]
+  ManagerOperations ManagerOperations[]
+  DataProduct       DataProduct[]
+}
+
+model ManagerOperations {
+  id          Int         @id @default(autoincrement())
+  manager     Managers?   @relation(fields: [managerId], references: [id], onDelete: NoAction)
+  managerId   Int?
+  Operation   Operations? @relation(fields: [operationId], references: [id], onDelete: NoAction)
+  operationId Int?
+  active      Boolean     @default(true)
+}
+
 model Users {
-  id       Int     @id @default(autoincrement())
-  login    String  @unique
-  password String
-  key      String?
-  status   String?
-  store    Stores? @relation(fields: [storesId], references: [id])
-  activ    Boolean @default(true)
-  storesId Int?
+  id             Int              @id @default(autoincrement())
+  login          String           @unique
+  password       String
+  key            String?
+  status         String?
+  role           String?
+  store          Stores?          @relation(fields: [storeId], references: [id], onDelete: NoAction)
+  activ          Boolean          @default(true)
+  storeId        Int?             @map("storesId")
+  Data           Data[]
+  DataProduct    DataProduct[]
+  DataBijouterie DataBijouterie[]
 }
 
 model Stores {
-  id             Int               @id @default(autoincrement())
-  name           String
-  Users          Users[]
-  StoreOperation StoreOperations[]
+  id                    Int                     @id @default(autoincrement())
+  name                  String
+  Data                  Data[]
+  Users                 Users[]
+  StoreOperationsBridge StoreOperationsBridge[]
+  Productions           Productions[]
+  Managers              Managers[]
+  Recipients            Recipients[]
+  Brige                 Bridge[]
+  DataProduct           DataProduct[]
+  pathKey               String?
+  MinorAccessoryData    MinorAccessoryData[]
+  DataBijouterie        DataBijouterie[]
 }
 
-model Opereytion {
-  id                Int              @id @default(autoincrement())
-  opereytion        String           @unique
-  result            String?
-  sborka            Int?
-  activ             Boolean          @default(true)
-  StoreOperations   StoreOperations? @relation(fields: [storeOperationsId], references: [id])
-  storeOperationsId Int?
+model Operations {
+  id                           Int                            @id @default(autoincrement())
+  operation                    String                         @unique
+  result                       String?
+  sborka                       Int?
+  activ                        Boolean                        @default(true)
+  StoreOperationsBridge        StoreOperationsBridge[]
+  Data                         Data[]
+  ManagerOperations            ManagerOperations[]
+  StateOperationBridge         StateOperationBridge[]
+  Brige                        Bridge[]
+  OperationWorkPieceTypeBridge OperationWorkPieceTypeBridge[]
+  DataProduct                  DataProduct[]
 }
 
-model StoreOperations {
-  id         Int          @id @default(autoincrement())
-  store      Stores?      @relation(fields: [storesId], references: [id])
-  storesId   Int?
-  Opereytion Opereytion[]
+model StoreOperationsBridge {
+  id          Int         @id @default(autoincrement())
+  store       Stores?     @relation(fields: [storeId], references: [id], onDelete: NoAction)
+  storeId     Int?        @map("storesId")
+  Operations  Operations? @relation(fields: [operationId], references: [id], onDelete: NoAction)
+  operationId Int?
+}
+
+model Types {
+  id                      Int                       @id @default(autoincrement())
+  type                    String
+  active                  Boolean                   @default(true)
+  Data                    Data[]
+  Bridge                  Bridge[]
+  WorkPieceTypeTypeBridge WorkPieceTypeTypeBridge[]
+  BijouterieBridge        BijouterieBridge[]
 }
 
 model Grade {
-  id      Int     @id @default(autoincrement())
-  grade   String  @unique
-  for     String?
-  variant Int
-  activ   Boolean @default(true)
+  id                       Int                        @id @default(autoincrement())
+  grade                    String                     @unique
+  activ                    Boolean                    @default(true)
+  Data                     Data[]
+  Bridge                   Bridge[]
+  WorkPieceTypeGradeBridge WorkPieceTypeGradeBridge[]
+  BijouterieBridge         BijouterieBridge[]
 }
 
-model Collor {
-  id      Int     @id @default(autoincrement())
-  collor  String  @unique
-  for     String?
-  variant Int
-  activ   Boolean @default(true)
+model Fraction {
+  id       Int     @id @default(autoincrement())
+  fraction String  @unique
+  position Int     @default(autoincrement())
+  active   Boolean @default(true)
+  Data     Data[]
+}
+
+model Color {
+  id               Int                @id @default(autoincrement())
+  color            String             @unique
+  for              String?
+  variant          Int
+  activ            Boolean            @default(true)
+  Data             Data[]
+  Bridge           Bridge[]
+  BijouterieBridge BijouterieBridge[]
+}
+
+model FullModels {
+  id               Int                @id @default(autoincrement())
+  WorkpieceType    WorkpieceType?     @relation(fields: [workpieceTypeId], references: [id], onDelete: NoAction)
+  workpieceTypeId  Int?
+  Models           Models?            @relation(fields: [modelId], references: [id], onDelete: NoAction)
+  modelId          Int?
+  Profile          Profile?           @relation(fields: [profileId], references: [id], onDelete: NoAction)
+  profileId        Int?
+  SizeRangeModel   SizeRange?         @relation(fields: [sizeRangeModelId], references: [id], onDelete: NoAction)
+  sizeRangeModelId Int?
+  LengthModel      LengthModel?       @relation(fields: [lengthModelId], references: [id], onDelete: NoAction)
+  lengthModelId    Int?
+  Data             Data[]
+  active           Boolean            @default(true)
+  BijouterieBridge BijouterieBridge[]
+  DataProduct      DataProduct[]
+}
+
+model LengthModel {
+  id         Int          @id @default(autoincrement())
+  length     Decimal      @db.Decimal(10, 2)
+  active     Boolean      @default(true)
+  FullModels FullModels[]
+}
+
+model OperationWorkPieceTypeBridge {
+  id              Int            @id @default(autoincrement())
+  WorkpieceType   WorkpieceType? @relation(fields: [workpieceTypeId], references: [id], onDelete: NoAction)
+  Operation       Operations?    @relation(fields: [operationsId], references: [id], onDelete: NoAction)
+  active          Boolean        @default(true)
+  workpieceTypeId Int?
+  operationsId    Int?
+}
+
+model WorkPieceTypeTypeBridge {
+  id              Int            @id @default(autoincrement())
+  WorkpieceType   WorkpieceType? @relation(fields: [workpieceTypeId], references: [id], onDelete: NoAction)
+  workpieceTypeId Int?
+  Type            Types?         @relation(fields: [typeId], references: [id], onDelete: NoAction)
+  typeId          Int?
+  active          Boolean        @default(true)
+}
+
+model WorkPieceTypeGradeBridge {
+  id              Int            @id @default(autoincrement())
+  WorkpieceType   WorkpieceType? @relation(fields: [workpieceTypeId], references: [id], onDelete: NoAction)
+  Grade           Grade?         @relation(fields: [gradeId], references: [id], onDelete: NoAction)
+  workpieceTypeId Int?
+  gradeId         Int?
+}
+
+model Profile {
+  id         Int          @id @default(autoincrement())
+  profile    String
+  active     Boolean      @default(true)
+  FullModels FullModels[]
+}
+
+model Models {
+  id         Int          @id @default(autoincrement())
+  model      String
+  active     Boolean      @default(true)
+  FullModels FullModels[]
+}
+
+model SizeRange {
+  id               Int                @id @default(autoincrement())
+  sizeRange        String
+  size             Int                @default(0)
+  nextSizeRangeId  Int?
+  position         Int                @default(autoincrement())
+  active           Boolean            @default(true)
+  Data             Data[]
+  Bridge           Bridge[]
+  FullModels       FullModels[]
+  BijouterieBridge BijouterieBridge[]
+}
+
+model Length {
+  id     Int      @id @default(autoincrement())
+  length String
+  active Boolean  @default(true)
+  Data   Data[]
+  Bridge Bridge[]
+}
+
+model StateOperationBridge {
+  id          Int         @id @default(autoincrement())
+  State       State?      @relation(fields: [stateId], references: [id], onDelete: NoAction)
+  stateId     Int?
+  Operation   Operations? @relation(fields: [operationId], references: [id], onDelete: NoAction)
+  operationId Int?
+}
+
+model MaterialGroup {
+  id            Int     @id @default(autoincrement())
+  materialGroup String
+  position      Int     @default(autoincrement())
+  active        Boolean @default(true)
+  forSorting    Boolean @default(false)
+  Data          Data[]
+}
+
+model WorkpieceType {
+  id                           Int                            @id @default(autoincrement())
+  workpieceType                String
+  nextTypeId                   Int?
+  position                     Int                            @default(autoincrement())
+  active                       Boolean                        @default(true)
+  isShow                       Boolean                        @default(true)
+  isMinaletGroup               Boolean?
+  Data                         Data[]
+  Brige                        Bridge[]
+  FullModels                   FullModels[]
+  OperationWorkPieceTypeBridge OperationWorkPieceTypeBridge[]
+  WorkPieceTypeGradeBridge     WorkPieceTypeGradeBridge[]
+  WorkPieceTypeTypeBridge      WorkPieceTypeTypeBridge[]
+  BijouterieBridge             BijouterieBridge[]
+}
+
+model Productions {
+  id          Int     @id @default(autoincrement())
+  description String
+  Stores      Stores? @relation(fields: [storeId], references: [id], onDelete: NoAction)
+  storeId     Int?
+  active      Boolean @default(true)
+  Data        Data[]
+}
+
+model State {
+  id                   Int                    @id @default(autoincrement())
+  state                String
+  active               Boolean                @default(true)
+  Data                 Data[]
+  StateOperationBridge StateOperationBridge[]
+  DataProduct          DataProduct[]
+  Bridge               Bridge[]
+  BijouterieBridge     BijouterieBridge[]
+}
+
+model Channel {
+  id               Int                @id @default(autoincrement())
+  channel          Float
+  active           Boolean            @default(true)
+  Data             Data[]
+  BijouterieBridge BijouterieBridge[]
+}
+
+model Recipients {
+  id          Int           @id @default(autoincrement())
+  recipient   String
+  active      Boolean       @default(true)
+  Data        Data[]
+  Stores      Stores?       @relation(fields: [storeId], references: [id], onDelete: NoAction)
+  storeId     Int?
+  DataProduct DataProduct[]
+}
+
+model VariantsAssemble {
+  id              Int     @id @default(autoincrement())
+  variantAssemble String
+  active          Boolean @default(true)
+}
+
+model typeAssemble {
+  id           Int           @id @default(autoincrement())
+  typeAssemble String
+  active       Boolean       @default(true)
+  DataProduct  DataProduct[]
+}
+
+model ColorsAssemble {
+  id            Int           @id @default(autoincrement())
+  colorAssemble String
+  active        Boolean       @default(true)
+  DataProduct   DataProduct[]
+}
+
+model YarnsAssemble {
+  id               Int                @id @default(autoincrement())
+  yarnAssemble     String
+  width            Int?
+  active           Boolean            @default(true)
+  BijouterieBridge BijouterieBridge[]
+}
+
+model GradesAssemble {
+  id            Int           @id @default(autoincrement())
+  gradeAssemble String
+  active        Boolean       @default(true)
+  DataProduct   DataProduct[]
+}
+
+model ResultsAssemble {
+  id                 Int                  @id @default(autoincrement())
+  resultAssemble     String
+  active             Boolean              @default(true)
+  DataProduct        DataProduct[]
+  BijouterieArticles BijouterieArticles[]
+}
+
+model BijouterieArticles {
+  id                Int                @id @default(autoincrement())
+  article           String
+  resultsAssembleId Int?
+  resultsAssemble   ResultsAssemble?   @relation(fields: [resultsAssembleId], references: [id], onDelete: NoAction)
+  variant           String
+  length            Int
+  typeAssemble      String
+  BijouterieBridge  BijouterieBridge[]
+  DataBijouterie    DataBijouterie[]
+}
+
+model Locks {
+  id                   Int                  @id @default(autoincrement())
+  material             String
+  size                 Decimal              @db.Decimal(10, 2)
+  type                 String
+  color                String
+  BijouterieBridge     BijouterieBridge[]
+  MinorAccessoriesData MinorAccessoryData[]
+}
+
+model BijouterieBridge {
+  id                   Int                @id @default(autoincrement())
+  bijouterieArticles   BijouterieArticles @relation(fields: [bijouterieArticlesId], references: [id])
+  bijouterieArticlesId Int
+  fullModelsId         Int?
+  fullModel            FullModels?        @relation(fields: [fullModelsId], references: [id])
+  workpieceType        WorkpieceType      @relation(fields: [workpieceTypeId], references: [id])
+  workpieceTypeId      Int
+  sizeRange            SizeRange          @relation(fields: [sizeRangeId], references: [id])
+  sizeRangeId          Int
+  color                Color              @relation(fields: [colorId], references: [id])
+  colorId              Int
+  locks                Locks              @relation(fields: [locksId], references: [id])
+  locksId              Int
+  yarnsAssemble        YarnsAssemble      @relation(fields: [yarnsAssembleId], references: [id])
+  yarnsAssembleId      Int
+  state                State?             @relation(fields: [stateId], references: [id])
+  stateId              Int?
+  grade                Grade?             @relation(fields: [gradeId], references: [id])
+  gradeId              Int?
+  type                 Types?             @relation(fields: [typesId], references: [id])
+  typesId              Int?
+  cannel               Channel?           @relation(fields: [channelId], references: [id])
+  channelId            Int?
+}
+
+model MinorAccessoryData {
+  id          Int     @id @default(autoincrement())
+  pp          Int?
+  accessory   Locks   @relation(fields: [idAccessory], references: [id])
+  idAccessory Int
+  storeId     Int?
+  store       Stores? @relation(fields: [storeId], references: [id])
+  countIn     Int?
+  countOut    Int?
+  moneyIn     Float?
+  moneyOut    Float?
 }

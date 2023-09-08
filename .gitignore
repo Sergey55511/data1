@@ -2,8 +2,12 @@
 
 # dependencies
 /node_modules
+postgres-data
 /.pnp
 .pnp.js
+.env
+/docker
+/nginx
 
 # testing
 /coverage

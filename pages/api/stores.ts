@@ -1,13 +1,11 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { PrismaClient } from '@prisma/client';
-import { iCookies } from '../../Store/interfaces';
-import { varifyJWT } from '../../Services/verifyJWT';
-import { resError } from '../../Services/Helpers';
-const prisma = new PrismaClient();
+import { varifyJWT } from '../../Backend/Data/Services/verifyJWT';
+import { resError } from '../../Shared/Helpers';
+import { prisma } from '../../Backend/Data/Services/prisma';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     try {
-        await varifyJWT(req, res);
+        await varifyJWT(req, res,prisma);
 
         const result = await prisma.stores.findMany();
 

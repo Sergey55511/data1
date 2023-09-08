@@ -1,3 +1,3 @@
-import Leftover from '../Components/Pages/Leftover';
+import { PageReduser } from '../Frontend/Components/Pages';
 
-export default () => <Leftover />;
+export default () => <PageReduser page="leftover" />;

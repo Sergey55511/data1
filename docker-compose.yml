@@ -1,0 +1,35 @@
+version: "3.4"
+
+services:
+
+  rootapp:
+    # build:
+    #   context: .
+    #   dockerfile: Dockerfile
+    image: "kpp2355575/data1:${APP_VERSION}"
+    container_name: rootapp
+    restart: always
+    ports:
+      - "3000:3000"
+    env_file:
+      - ./docker/app.global.env
+      - ./.env
+    networks:
+      - app_net
+
+  nginx:
+    image: nginx
+    restart: always
+    container_name: nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/certs:/etc/nginx/certs
+      - ./nginx/conf.d:/etc/nginx/conf.d
+    networks:
+      - app_net
+
+networks:
+  app_net:
+    external: true

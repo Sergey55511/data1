@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE "DataProduct" ALTER COLUMN "length" SET DATA TYPE DOUBLE PRECISION;
