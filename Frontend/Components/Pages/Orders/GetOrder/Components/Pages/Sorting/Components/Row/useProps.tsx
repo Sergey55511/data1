@@ -17,6 +17,7 @@ import {
     getMaterialGroup,
 } from '../../../../../../../../../Store/Lists/api';
 import { iProps as iRootProps } from '../../useProps';
+import { iPropsRow } from '../../../../../../../../Shared/Row';
 export interface iProps extends Omit<iRootProps, 'stateId'> {
     state: iState;
     index: number;
@@ -125,7 +126,9 @@ export const useProps = ({
         </InputField>,
     ];
 
-    if (isMaterialGroup)
+    const width: iPropsRow['width'] = ['100px'];
+
+    if (isMaterialGroup) {
         fields.unshift(
             <InputField isError={state.materialGroupId.isError} key="materialGroup">
                 <SelectField
@@ -140,7 +143,9 @@ export const useProps = ({
                 />
             </InputField>,
         );
-    if (isFraction)
+        width.unshift('120px');
+    }
+    if (isFraction) {
         fields.unshift(
             <InputField isError={state.fractionId.isError} key="fraction">
                 <SelectField
@@ -159,5 +164,8 @@ export const useProps = ({
                 />
             </InputField>,
         );
-    return { fields };
+        width.unshift('120px');
+    }
+
+    return { fields, width };
 };
