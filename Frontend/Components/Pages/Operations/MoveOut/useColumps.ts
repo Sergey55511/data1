@@ -59,11 +59,10 @@ export const useColumns = ({
             title: KEYSLEFTOVERS.materialGroup.title,
         });
     }
-
     columns.push({
-        ...getColumnPropsHoc(KEYSLEFTOVERS.color.key),
-        title: KEYSLEFTOVERS.color.title,
-        width: 80,
+        ...getColumnPropsHoc(KEYSLEFTOVERS.sizeRange.key),
+        title: KEYSLEFTOVERS.sizeRange.title,
+        width: 130,
     });
     columns.push({
         ...getColumnPropsHoc(KEYSLEFTOVERS.length.key),
@@ -71,9 +70,9 @@ export const useColumns = ({
         width: 90,
     });
     columns.push({
-        ...getColumnPropsHoc(KEYSLEFTOVERS.sizeRange.key),
-        title: KEYSLEFTOVERS.sizeRange.title,
-        width: 130,
+        ...getColumnPropsHoc(KEYSLEFTOVERS.color.key),
+        title: KEYSLEFTOVERS.color.title,
+        width: 80,
     });
     columns.push({
         ...getColumnPropsHoc(KEYSLEFTOVERS.grade.key),
