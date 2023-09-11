@@ -5,6 +5,7 @@ import { iProps, useProps } from './useProps';
 
 export const AssembleGet = (props: iProps) => {
     const params = useProps(props);
+
     return (
         <Wrapper>
             <Form {...props} />
@@ -16,6 +17,7 @@ export const AssembleGet = (props: iProps) => {
                     columns={params.columns}
                     dataSource={props.selectedRows}
                     onChange={params.handleChange}
+                    rowSelection={params.rowSelection}
                 />
             </div>
         </Wrapper>

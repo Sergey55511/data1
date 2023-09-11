@@ -15,7 +15,7 @@ export interface iProps {
     setModel: Dispatch<SetStateAction<string>>;
 }
 
-export const useProps = ({ selectedRows, setSelectedRows }: iProps) => {
+export const useProps = ({ selectedRows, setSelectedRows, setState }: iProps) => {
     const [filters, setFilters] = useState<Record<string, FilterValue | null>>({});
     const handleChange: TableProps<iData>['onChange'] = (
         _pagination,
@@ -36,5 +36,13 @@ export const useProps = ({ selectedRows, setSelectedRows }: iProps) => {
 
     const { columns } = useColumns({ data: selectedRows, filters, setValue });
 
-    return { columns, handleChange };
+    const rowSelection = {
+        onChange: (_selectedRowKeys: React.Key[], selectedRows: iData[]) => {
+            setSelectedRows(selectedRows);
+            setState(new State());
+        },
+        selectedRowKeys: selectedRows?.map((item) => item.key!),
+    };
+
+    return { columns, handleChange, rowSelection };
 };
