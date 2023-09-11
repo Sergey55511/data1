@@ -74,6 +74,15 @@ export const Form = ({
                             value={props.width}
                             onChangeHandler={(v) => props.setWidth(v)}
                             onKeyDown={props.onPressEnterHandler}
+                            suffix={
+                                <Button
+                                    size="small"
+                                    type="text"
+                                    onClick={() => props.setWidth(record.width)}
+                                >
+                                    всё
+                                </Button>
+                            }
                         />
                         <InputNumber
                             placeholder="Плановое время"
