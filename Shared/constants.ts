@@ -50,6 +50,7 @@ export const OPERATIONS = {
     pot: { id: 51 }, //Кастрюля
     assembleBijouterie: { id: 53 }, //Сборка Бижутерия
     resortingElements: { id: 54 }, //Пересорт элементов
+    mixingState: { id: 55 }, //Смешивание состояний
 };
 export const STATE = {
     washed: { id: 1 },

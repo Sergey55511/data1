@@ -50,9 +50,14 @@ export const useItems = () => {
                 key: ROUTES.mixingGrade,
                 icon: <FullscreenExitOutlined />,
             },
+            // {
+            //     label: 'Смешивание размеров',
+            //     key: ROUTES.mixingSize,
+            //     icon: <FullscreenExitOutlined />,
+            // },
             {
-                label: 'Смешивание размеров',
-                key: ROUTES.mixingSize,
+                label: 'Смешивание состояний',
+                key: ROUTES.mixingState,
                 icon: <FullscreenExitOutlined />,
             },
         ];

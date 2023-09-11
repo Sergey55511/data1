@@ -44,8 +44,10 @@ export const PageSwitcher = ({ page }: { page: tPages }) => {
             return <MoveOut title="Перемещение:" type="shareItems" />;
         case pages.mixingGrade:
             return <MoveOut title="Смешивание сорт:" type="mixingGrade" />;
-        case pages.mixingSize:
-            return <MoveOut title="Смешивание размер:" type="mixingSize" />;
+        // case pages.mixingSize:
+        //     return <MoveOut title="Смешивание размеров:" type="mixingSize" />;
+        case pages.mixingState:
+            return <MoveOut title="Смешивание состояний:" type="mixingState" />;
         case pages.mixingLot:
             return <MoveOut title="Смешивание партия:" type="mixingLot" />;
         case pages.mixingProduction:

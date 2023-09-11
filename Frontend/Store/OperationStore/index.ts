@@ -269,6 +269,23 @@ export class OperationStore {
         }
     });
 
+    mixingState = flow(function* (
+        this: OperationStore,
+        data: iDataTable[],
+        callBack?: () => void,
+    ) {
+        try {
+            yield api.mixingState({
+                data: data,
+                storeId: this.loginStore.user.storeId,
+                maxId: this.maxId,
+            });
+            if (callBack) callBack();
+        } catch (err) {
+            this.errorStore.setError(err as iError);
+        }
+    });
+
     inventory = flow(function* (
         this: OperationStore,
         data: iDataTable[],

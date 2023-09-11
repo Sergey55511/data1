@@ -192,6 +192,17 @@ export const mixingSize = (data: {
         data,
     }).then((res) => res.data);
 };
+export const mixingState = (data: {
+    data: iDataTable[];
+    storeId: number;
+    maxId: number;
+}) => {
+    return axios({
+        url: `/api/data/mixing/state`,
+        method: 'POST',
+        data,
+    }).then((res) => res.data);
+};
 
 export const inventory = (data: {
     data: iDataTable[];

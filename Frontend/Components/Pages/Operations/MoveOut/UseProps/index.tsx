@@ -20,6 +20,7 @@ export interface iProps {
         | 'shareItems'
         | 'mixingGrade'
         | 'mixingSize'
+        | 'mixingState'
         | 'mixingLot'
         | 'mixingProduction'
         | 'inventory';
@@ -38,12 +39,14 @@ export const useProps = ({ type }: iProps) => {
     const { ListsStore, loginStore, OperationStore } = useStores();
     const { leftovers } = OperationStore;
 
-    const isMixing = [
+    const mixingTypes: iProps['type'][] = [
         'mixingGrade',
         'mixingSize',
+        'mixingState',
         'mixingLot',
         'mixingProduction',
-    ].includes(type || '');
+    ];
+    const isMixing = mixingTypes.includes(type);
 
     const getNum = (v: any) => (v ? +v : 0);
 
@@ -61,6 +64,11 @@ export const useProps = ({ type }: iProps) => {
             });
         }
         if (type == 'mixingSize') {
+            data = leftovers.filter((item) =>
+                [STATE.polished.id, STATE.gluedBlank.id].includes(item.stateId ?? 0),
+            );
+        }
+        if (type == 'mixingState') {
             data = leftovers.filter((item) =>
                 [STATE.polished.id, STATE.gluedBlank.id].includes(item.stateId ?? 0),
             );
@@ -173,6 +181,10 @@ export const useProps = ({ type }: iProps) => {
                 operationId = OPERATIONS.mixingSize.id;
                 nDocUniq = '';
                 break;
+            case 'mixingState':
+                operationId = OPERATIONS.mixingState.id;
+                nDocUniq = '';
+                break;
             case 'mixingLot':
                 operationId = OPERATIONS.mixingLot.id;
                 nDocUniq = '';
@@ -225,6 +237,10 @@ export const useProps = ({ type }: iProps) => {
 
         if (type == 'mixingSize')
             await OperationStore.mixingSize(dataSendPrepared, () =>
+                noteSuccess('Смешивание прошла успешно'),
+            );
+        if (type == 'mixingState')
+            await OperationStore.mixingState(dataSendPrepared, () =>
                 noteSuccess('Смешивание прошла успешно'),
             );
         if (type == 'inventory')
