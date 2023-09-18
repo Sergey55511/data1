@@ -1,16 +1,27 @@
 import { useMutation, UseQueryResult } from '@tanstack/react-query';
 import { message } from 'antd';
 import { ChangeEvent, Dispatch, SetStateAction, useState } from 'react';
-import { iRecipient } from '../../../../../../Shared/Types/interfaces';
+import { iDataProduct, iRecipient } from '../../../../../../Shared/Types/interfaces';
 import { postRecipient } from '../../../../../Store/Lists/api';
 
-export const useProps = (
-    recipient: UseQueryResult<iRecipient[], unknown>,
-    setRecipientId: Dispatch<SetStateAction<number | undefined>>,
-) => {
-    const [newRecipient, setNewRecipient] = useState('');
-    const [numDocument, setNumDocument] = useState('');
+export interface iProps {
+    onCancel: () => void;
+    submitHandler: () => Promise<void>;
+    isLoading?: boolean;
+    recipientId: number | undefined;
+    setRecipientId: Dispatch<SetStateAction<number | undefined>>;
+    numDocument: string;
+    setNumDocument: Dispatch<SetStateAction<string>>;
+    recipient: UseQueryResult<iRecipient[], unknown>;
+    isShowAddInput?: boolean;
+    isShowNumDocument?: boolean;
+    selectedRows: iDataProduct[];
+    date: moment.Moment | null | undefined;
+    setDate: Dispatch<SetStateAction<moment.Moment | null | undefined>>;
+}
 
+export const useProps = (props: iProps) => {
+    const [newRecipient, setNewRecipient] = useState('');
     const addRecipient = useMutation(async () => {
         if (newRecipient) await postRecipient([{ recipient: newRecipient }]);
     });
@@ -18,8 +29,8 @@ export const useProps = (
     const addRecipientHandler = async () => {
         await addRecipient.mutate();
         setNewRecipient('');
-        setRecipientId(undefined);
-        recipient.refetch();
+        props.setRecipientId(undefined);
+        props.recipient.refetch();
     };
 
     const setNumDocumentHandler = (e: ChangeEvent<HTMLInputElement>) => {
@@ -28,15 +39,16 @@ export const useProps = (
             message.error('Не допустим ввод символа /');
             return;
         }
-        setNumDocument(e.target.value);
+        props.setNumDocument(e.target.value);
     };
 
+    const disabled = !(props.recipientId && props.numDocument && props.date);
     return {
         newRecipient,
         setNewRecipient,
         addRecipientHandler,
         addRecipient,
-        numDocument,
         setNumDocumentHandler,
+        disabled,
     };
 };

@@ -1,4 +1,6 @@
 import { useMutation, useQuery } from '@tanstack/react-query';
+import moment from 'moment';
+import { Moment } from 'moment';
 import { Dispatch, SetStateAction, useState } from 'react';
 import { OPERATIONS } from '../../../../../Shared/constants';
 import {
@@ -22,6 +24,7 @@ export const useData = (
     const [managerId, setManagerId] = useState<number | undefined>();
     const [recipientId, setRecipientId] = useState<number | undefined>();
     const [numDocument, setNumDocument] = useState('');
+    const [date, setDate] = useState<Moment | undefined | null>(moment());
     const { loginStore } = useStores();
 
     const isShowSelectUser = props.recipientType == 'takeApart';
@@ -77,5 +80,7 @@ export const useData = (
         postData,
         numDocument,
         setNumDocument,
+        date,
+        setDate,
     };
 };
