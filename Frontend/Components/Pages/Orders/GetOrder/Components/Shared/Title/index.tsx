@@ -5,6 +5,7 @@ import { confirmAction } from '../../../../../../Shared/ConfirmSubbmit';
 import { Dispatch, SetStateAction } from 'react';
 import { FullReturn } from '../FullReturn';
 import { iData } from '../../../../../../../../Shared/Types/interfaces';
+import { disabledDateAfterToday } from '../../../../../../Helpers';
 
 export const Title = ({
     subbmitHandler,
@@ -60,6 +61,7 @@ export const Title = ({
                         value={date}
                         onChange={(v) => setDate(v ?? undefined)}
                         format="DD.MM.YYYY"
+                        disabledDate={disabledDateAfterToday}
                     />
                 </div>
             )}

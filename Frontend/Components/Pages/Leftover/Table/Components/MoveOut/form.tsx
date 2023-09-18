@@ -1,5 +1,6 @@
-import { Button, DatePicker, Input } from 'antd';
+import { Button, DatePicker } from 'antd';
 import { iData } from '../../../../../../../Shared/Types/interfaces';
+import { disabledDateAfterToday } from '../../../../../Helpers';
 import { InputNumber } from '../../../../../Shared/InputNumber';
 import { SelectField } from '../../../../../Shared/SelectField';
 import { KEYSLEFTOVERS } from '../../../../../Shared/Table/constants';
@@ -31,6 +32,7 @@ export const Form = ({
                 allowClear
                 onKeyDown={props.onPressEnterHandler}
                 format="DD.MM.YYYY"
+                disabledDate={disabledDateAfterToday}
             />
             <SelectField
                 placeholder="Операция"

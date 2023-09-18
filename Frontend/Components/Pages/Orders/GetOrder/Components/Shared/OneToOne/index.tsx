@@ -1,4 +1,5 @@
 import { Button, DatePicker } from 'antd';
+import { disabledDateAfterToday } from '../../../../../../Helpers';
 import { InputField } from '../../../../../../Shared/InputField';
 import { InputNumber } from '../../../../../../Shared/InputNumber';
 import { SelectField } from '../../../../../../Shared/SelectField';
@@ -36,6 +37,7 @@ export const OneToOne = (props: iProps) => {
                         params.setState((prev) => ({ ...prev, date: v ?? undefined }))
                     }
                     format="DD.MM.YYYY"
+                    disabledDate={disabledDateAfterToday}
                 />
             </Item>
             {props.isShowWorkingTimeFact && (

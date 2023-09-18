@@ -5,6 +5,12 @@ import { iData, iDataTable, iField } from '../../../Shared/Types/interfaces';
 import { ROUTES } from '../Pages/constants';
 import { tValue } from '../Shared/InputNumber';
 import divide from 'lodash/divide';
+import moment from 'moment';
+import { RangePickerProps } from 'antd/lib/date-picker';
+
+export const disabledDateAfterToday: RangePickerProps['disabledDate'] = (current) => {
+    return current && current > moment().endOf('day');
+};
 
 export const getCode = (
     code?: number,
