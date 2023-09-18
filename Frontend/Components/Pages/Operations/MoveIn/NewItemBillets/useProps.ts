@@ -1,3 +1,4 @@
+import moment, { Moment } from 'moment';
 import { useState } from 'react';
 import { iField } from '../../../../../../Shared/Types/interfaces';
 import { checkDuplicate } from '../../../../Helpers';
@@ -26,6 +27,7 @@ export const useProps = () => {
     const [state, setState] = useState<iState[]>([]);
     const [lot, setLot] = useState<tValue>('');
     const [numDocument, setNumDocument] = useState<tValue>('');
+    const [date, setDate] = useState<Moment | undefined | null>(moment());
     const [isValidated, setIsValidated] = useState(false);
     const [isShowLot, setIsShowLot] = useState(false);
 
@@ -41,6 +43,7 @@ export const useProps = () => {
 
     const subbmitHandler = () => {
         data.submitMutation.mutate({
+            date,
             state,
             setState,
         });
@@ -99,6 +102,8 @@ export const useProps = () => {
     };
 
     return {
+        date,
+        setDate,
         lot,
         setLot,
         numDocument,

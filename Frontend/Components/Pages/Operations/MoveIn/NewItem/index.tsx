@@ -1,150 +1,18 @@
-import { Button, notification, Tooltip } from 'antd';
+import { Button, DatePicker, Tooltip } from 'antd';
 import { Title } from '../../../../Shared/Title';
 import { Wrapper } from './style';
-import { useEffect, useRef, useState } from 'react';
-import { iItem, initData, initPrimeData, iPrimeData } from './constants';
 import { PrimeField } from './Components/fields';
 import { observer } from 'mobx-react-lite';
-import { useStores } from '../../../../../Store/useStores';
-import { iData, iField } from '../../../../../../Shared/Types/interfaces';
 import { Frame } from '../../../../Shared/Frame';
-import { STATE, WORKPIECETYPE } from '../../../../../../Shared/constants';
-import { InputNumber, tValue } from '../../../../Shared/InputNumber';
+import { InputNumber } from '../../../../Shared/InputNumber';
 import { Row } from '../../../../Shared/Row';
-import { checkDuplicate, getTotalSum, validation } from '../../../../Helpers';
+import { disabledDateAfterToday } from '../../../../Helpers';
 import { InputField } from '../../../../Shared/InputField';
 import { SelectField } from '../../../../Shared/SelectField';
-import { useKeyArrow } from '../../../Orders/GetOrder/Components/Shared/Hooks/useKeyArrow';
-import { useQuery } from '@tanstack/react-query';
-import { getFraction, getMaterialGroup } from '../../../../../Store/Lists/api';
-
-export interface iState {
-    fractionId: iField;
-    materialGroupId: iField;
-    widthInDocument: iField;
-    widthIn: iField;
-    moneyIn: iField;
-    duplicate: boolean;
-}
+import { useProps } from './useProps';
 
 export const NewItem = observer(() => {
-    const [primeData, setPrimeData] = useState<iPrimeData>(initPrimeData());
-    const [isLoading, setIsLoading] = useState(false);
-    const [data, setData] = useState<iState[]>([]);
-    const tuched = useRef(false);
-    const { OperationStore, loginStore } = useStores();
-    const { onKeyDown, onFocus, refHandler } = useKeyArrow();
-
-    useEffect(() => {
-        OperationStore.getMaxLot();
-    }, []);
-
-    const addRowHandler = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
-        e.preventDefault();
-        setData((prev) => {
-            const newRow = initData();
-            return [...prev, newRow];
-        });
-    };
-
-    const removeHandler = (index: number) => {
-        setData((prev) => prev.filter((_, i) => i != index));
-    };
-
-    const setItemValue = (item: iItem, value: any) => {
-        item.value = value;
-        item.isError = value ? false : true;
-    };
-
-    const onChange = (index: number, v: string | number, fieldName: keyof iState) => {
-        setData((prev) => {
-            const field = prev[index][fieldName] as iField;
-            field.value = v;
-            return [...prev];
-        });
-    };
-
-    const setPrameValue = <T extends keyof iPrimeData>(key: T, value: tValue) => {
-        setPrimeData((prev) => {
-            setItemValue(prev[key], value);
-            return { ...prev };
-        });
-    };
-
-    const subbmitHandler = async () => {
-        tuched.current = true;
-        const isError = validation(setData);
-        const errorNote = () => {
-            notification.error({
-                message: 'Ошибка!',
-                description: 'Не верно заполнены поля!',
-            });
-        };
-        if (!data.length) {
-            errorNote();
-            throw { error: 'error count row' };
-        }
-        if (isError) {
-            errorNote();
-            throw { error: 'validation error' };
-        }
-
-        const totalSum = getTotalSum(data);
-        if (!totalSum) {
-            errorNote();
-            throw { error: 'error total sym' };
-        }
-        setIsLoading(true);
-        const preparedData: iData[] = data.map((item) => {
-            item.widthInDocument.value;
-            const res: iData = {
-                lot: +primeData.lot.value,
-                numDocument: `${primeData.numDocument.value}`,
-                operationId: 1,
-                workpieceTypeId: WORKPIECETYPE.stone.id,
-                userId: loginStore.user.id,
-                storeId: loginStore.user.storeId,
-                stateId: STATE.stone.id,
-                widthInDocument: +item.widthInDocument.value,
-                widthIn: +item.widthIn.value,
-                moneyIn: +item.moneyIn.value,
-                materialGroupId: +item.materialGroupId.value,
-                fractionId: +item.fractionId.value,
-            };
-            return res;
-        });
-
-        await OperationStore.postNewItems(preparedData, () => {
-            setPrimeData(initPrimeData());
-            setData([]);
-            notification.success({
-                message: 'Успешно',
-                description: 'Приход сохранен успешно',
-            });
-        });
-        setIsLoading(false);
-    };
-
-    const copyRow = (index: number) => {
-        setData((prev) => {
-            const elem: iState = JSON.parse(JSON.stringify(prev[index]));
-            elem.widthIn.value = '';
-            prev.splice(index + 1, 0, elem);
-            return [...prev];
-        });
-    };
-
-    const storeId = loginStore.user.storeId;
-    const fraction = useQuery(['fraction', storeId], getFraction, { enabled: !!storeId });
-    const materialGroup = useQuery(
-        ['getMaterialGroup', storeId],
-        () => getMaterialGroup(),
-        {
-            enabled: !!storeId,
-        },
-    );
-
-    const stateDuplicate: iState[] = checkDuplicate(data);
+    const props = useProps();
 
     return (
         <Wrapper>
@@ -154,27 +22,42 @@ export const NewItem = observer(() => {
                     <div>
                         <Tooltip
                             placement="top"
-                            title={`Макс партия: ${OperationStore.maxLot || 0}`}
+                            title={`Макс партия: ${props.maxLot || 0}`}
                         >
                             <div>
                                 <PrimeField
-                                    {...{ primeData, setPrameValue }}
+                                    {...{
+                                        primeData: props.primeData,
+                                        setPrameValue: props.setPrameValue,
+                                    }}
                                     fieldName={'lot'}
                                 />
                             </div>
                         </Tooltip>
                         <PrimeField
-                            {...{ primeData, setPrameValue }}
+                            {...{
+                                primeData: props.primeData,
+                                setPrameValue: props.setPrameValue,
+                            }}
                             fieldName={'numDocument'}
-                            type={primeData.numDocument.type}
-                            step={primeData.numDocument.step}
+                            type={props.primeData.numDocument.type}
+                            step={props.primeData.numDocument.step}
                         />
+                        <div>
+                            <DatePicker
+                                className="input"
+                                value={props.date}
+                                onChange={(v) => props.setDate(v)}
+                                format="DD.MM.YYYY"
+                                disabledDate={disabledDateAfterToday}
+                            />
+                        </div>
                     </div>
                     <div>
                         <Button
                             type="primary"
-                            onClick={() => subbmitHandler()}
-                            loading={isLoading}
+                            onClick={() => props.subbmitHandler()}
+                            loading={props.isLoading}
                         >
                             Сохранить
                         </Button>
@@ -182,29 +65,29 @@ export const NewItem = observer(() => {
                 </div>
             </Frame>
             <div className="addRow">
-                <a href="#" onClick={addRowHandler}>
+                <a href="#" onClick={props.addRowHandler}>
                     Добавить строку
                 </a>
             </div>
-            {stateDuplicate.map((item, index) => (
+            {props.stateDuplicate.map((item, index) => (
                 <Row
                     key={index}
-                    copyRow={() => copyRow(index)}
-                    removeRow={() => removeHandler(index)}
+                    copyRow={() => props.copyRow(index)}
+                    removeRow={() => props.removeHandler(index)}
                     isDuplicate={item.duplicate}
                     fields={[
                         <InputField key="fractionId" isError={item.fractionId.isError}>
                             <SelectField
                                 placeholder={item.fractionId.placeholder}
                                 value={+item.fractionId.value || undefined}
-                                onChange={(v) => onChange(index, v, 'fractionId')}
-                                options={fraction.data?.map((item) => ({
+                                onChange={(v) => props.onChange(index, v, 'fractionId')}
+                                options={props.fraction.data?.map((item) => ({
                                     value: item.id,
                                     caption: item.fraction,
                                 }))}
                                 selectProps={{
-                                    disabled: fraction.isLoading,
-                                    loading: fraction.isFetching,
+                                    disabled: props.fraction.isLoading,
+                                    loading: props.fraction.isFetching,
                                 }}
                             />
                         </InputField>,
@@ -212,14 +95,16 @@ export const NewItem = observer(() => {
                             <SelectField
                                 placeholder={item.materialGroupId.placeholder}
                                 value={+item.materialGroupId.value || undefined}
-                                onChange={(v) => onChange(index, v, 'materialGroupId')}
-                                options={materialGroup.data?.map((item) => ({
+                                onChange={(v) =>
+                                    props.onChange(index, v, 'materialGroupId')
+                                }
+                                options={props.materialGroup.data?.map((item) => ({
                                     value: item.id,
                                     caption: item.materialGroup,
                                 }))}
                                 selectProps={{
-                                    disabled: materialGroup.isLoading,
-                                    loading: materialGroup.isFetching,
+                                    disabled: props.materialGroup.isLoading,
+                                    loading: props.materialGroup.isFetching,
                                 }}
                             />
                         </InputField>,
@@ -230,7 +115,7 @@ export const NewItem = observer(() => {
                             <InputNumber
                                 placeholder={item.widthInDocument.placeholder}
                                 onChangeHandler={(v) => {
-                                    onChange(index, v!, 'widthInDocument');
+                                    props.onChange(index, v!, 'widthInDocument');
                                 }}
                                 value={item.widthInDocument.value || ''}
                             />
@@ -239,19 +124,19 @@ export const NewItem = observer(() => {
                             <InputNumber
                                 placeholder={item.widthIn.placeholder}
                                 onChangeHandler={(v) => {
-                                    onChange(index, v!, 'widthIn');
+                                    props.onChange(index, v!, 'widthIn');
                                 }}
                                 value={item.widthIn.value || ''}
-                                ref={(r) => refHandler(r, index)}
-                                onKeyDown={onKeyDown}
-                                onFocus={() => onFocus(index)}
+                                ref={(r) => props.refHandler(r, index)}
+                                onKeyDown={props.onKeyDown}
+                                onFocus={() => props.onFocus(index)}
                             />
                         </InputField>,
                         <InputField key="moneyIn" isError={item.moneyIn.isError}>
                             <InputNumber
                                 placeholder={item.moneyIn.placeholder}
                                 onChangeHandler={(v) => {
-                                    onChange(index, v!, 'moneyIn');
+                                    props.onChange(index, v!, 'moneyIn');
                                 }}
                                 value={item.moneyIn.value || ''}
                             />

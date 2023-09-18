@@ -1,10 +1,9 @@
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { notification } from 'antd';
-import moment from 'moment';
+import { Moment } from 'moment';
 import { Dispatch, SetStateAction } from 'react';
 import { OPERATIONS } from '../../../../../../Shared/constants';
 import { iData } from '../../../../../../Shared/Types/interfaces';
-import * as api from '../../../../../Store/Lists/api';
 import { getMaxLot, postNewItems } from '../../../../../Store/OperationStore/Api';
 import { useStores } from '../../../../../Store/useStores';
 import { getTotalSum, validation } from '../../../../Helpers';
@@ -26,13 +25,14 @@ export const useData = (
     const submitMutation = useMutation(
         ({
             state,
+            date,
             setState,
         }: {
             state: iState[];
+            date?: Moment | null;
             setState: Dispatch<SetStateAction<iState[]>>;
         }) => {
             setIsValidated(true);
-            const date = moment();
             const errorNote = () => {
                 notification.error({
                     message: 'Ошибка!',
@@ -50,6 +50,10 @@ export const useData = (
             if (!numDocument) {
                 errorNote();
                 throw { error: 'error numDocument' };
+            }
+            if (!date) {
+                errorNote();
+                throw { error: 'error date' };
             }
 
             const isError = validation(setState);

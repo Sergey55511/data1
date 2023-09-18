@@ -1,10 +1,11 @@
-import { Button, Input, Tooltip } from 'antd';
+import { Button, DatePicker, Input, Tooltip } from 'antd';
 import { Title } from '../../../../Shared/Title';
 import { useProps } from './useProps';
 import { Wrapper } from './style';
 import { InputNumber } from '../../../../Shared/InputNumber';
 import { InputField } from '../../../../Shared/InputField';
 import { RowWrapper } from './RowWrapper';
+import { disabledDateAfterToday } from '../../../../Helpers';
 
 export const NewItemBillets = () => {
     const props = useProps();
@@ -45,6 +46,18 @@ export const NewItemBillets = () => {
                                 onChange={(e) => props.setNumDocument(e.target.value)}
                                 width={300}
                                 allowClear
+                            />
+                        </InputField>
+                        <InputField
+                            isError={props.isValidated && !props.date}
+                            width="150px"
+                        >
+                            <DatePicker
+                                className="input"
+                                value={props.date}
+                                onChange={(v) => props.setDate(v)}
+                                format="DD.MM.YYYY"
+                                disabledDate={disabledDateAfterToday}
                             />
                         </InputField>
                         <Button
