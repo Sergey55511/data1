@@ -221,7 +221,7 @@ export const GetOrderSwitcher = ({
                 <GrindingFormated
                     record={record}
                     stateId={STATE.grindedCrumpledBall.id}
-                    workpiecetypeId={WORKPIECETYPE.grindingFormated.id}
+                    workpiecetypeId={WORKPIECETYPE.crumpledBall.id}
                 />
             );
         case OPERATIONS.pot.id:
