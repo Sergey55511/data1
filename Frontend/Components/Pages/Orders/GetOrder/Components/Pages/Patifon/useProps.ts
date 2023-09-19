@@ -118,6 +118,8 @@ export const useProps = ({ record, stateId }: iProps) => {
 
         const data: iData[] = state.map((item) => ({
             ...record,
+            fractionId: undefined,
+            materialGroupId: undefined,
             date,
             workpieceTypeId: WORKPIECETYPE.crumpledBall.id,
             sizeRangeId: +item.sizeRange.value,
