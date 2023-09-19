@@ -52,7 +52,6 @@ export const useProps = (props: iProps) => {
     const moveOutAssembleHandler = async () => {
         const data = props.selectedRows.map((item) => ({
             ...item,
-            date: params.date,
             operationId:
                 recipientType == 'recipientsInternal'
                     ? OPERATIONS.shareItems.id

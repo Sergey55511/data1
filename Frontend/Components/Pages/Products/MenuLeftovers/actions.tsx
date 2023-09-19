@@ -11,6 +11,7 @@ import { SelectRecipient } from './SelectRecipient';
 
 export const Actions = (props: iProps) => {
     const params = useProps(props);
+    props.setSelectedRows;
 
     const menu = (
         <Menu
@@ -69,8 +70,6 @@ export const Actions = (props: iProps) => {
                     selectedRows={props.selectedRows}
                     isShowAddInput={params.isShowAddInput}
                     isShowNumDocument={params.isShowNumDocument}
-                    date={params.date}
-                    setDate={params.setDate}
                 />
             )}
             <Badge count={props.selectedRows.length}>
