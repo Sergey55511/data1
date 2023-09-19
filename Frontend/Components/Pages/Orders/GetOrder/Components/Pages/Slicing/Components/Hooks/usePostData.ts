@@ -84,7 +84,6 @@ export const usePostData = () => {
                 materialGroupId: undefined,
                 typeId: undefined,
                 workpieceType: undefined,
-                productionId: undefined,
                 stateId: +item.stateId.value,
                 moneyIn: item.widthIn.value ? codeOneItem * +item.widthIn.value : 0,
             }));
