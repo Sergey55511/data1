@@ -13,13 +13,6 @@ export const TableLeftOvers = observer((props: iProps) => {
         <>
             <Counter data={filteredleftovers} countKey="count" widthKey="width" />
             <TableApp
-                onRow={(record: iDataIndex, _rowIndex, ...rest) => {
-                    return {
-                        onDoubleClick: (_event) => {
-                            props.selectRow(record.index!);
-                        },
-                    };
-                }}
                 columns={columns}
                 dataSource={data}
                 onChange={handleChange}

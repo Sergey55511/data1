@@ -130,7 +130,7 @@ export const useProps = ({ type }: iProps) => {
         });
     };
 
-    const dataSend = data.filter((item) => {
+    const dataSend = moveOutData.filter((item) => {
         return item.widthOut || item.countItemsOut;
     });
 

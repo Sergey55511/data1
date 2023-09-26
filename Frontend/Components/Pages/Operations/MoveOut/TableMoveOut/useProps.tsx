@@ -88,5 +88,16 @@ export const useProps = ({
         // setSortedInfo(sorter as SorterResult<DataType>);
     };
 
-    return { columns, data, handleChange, filteredleftovers };
+    const rowSelection = {
+        onChange: (selectedRowKeys: React.Key[]) => {
+            leftovers.forEach((item, index) => {
+                if (!selectedRowKeys.includes(index)) {
+                    if (item.index != undefined) removeRow(item.index);
+                }
+            });
+        },
+        selectedRowKeys: leftovers.map((_, index) => index),
+    };
+
+    return { columns, data, handleChange, filteredleftovers, rowSelection };
 };

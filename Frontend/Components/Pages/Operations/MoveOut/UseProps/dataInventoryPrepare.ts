@@ -27,13 +27,6 @@ export const dataInventoryPrepare = (dataSend: iDataIndex[], user: iUser) => {
     const dataLosses: iDataTable[] = [];
 
     const dataIn = dataSend.map((item) => {
-        console.log(
-            'item.widthOut != item.width',
-            item.widthOut,
-            item.width,
-            item.widthOut != item.width,
-        );
-
         if (item.widthOut != item.width || item.countItemsOut != item.count) {
             const widthIn = +(+(item.width ?? 0) - (item.widthOut ?? 0)).toFixed(2);
             const countItemsIn = Math.round(

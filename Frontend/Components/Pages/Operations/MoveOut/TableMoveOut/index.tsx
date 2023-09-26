@@ -19,7 +19,8 @@ export const TableMoveOut = observer(
         ) => void;
         isInventory?: boolean;
     }) => {
-        const { columns, data, handleChange, filteredleftovers } = useProps(props);
+        const { columns, data, handleChange, filteredleftovers, rowSelection } =
+            useProps(props);
 
         return (
             <>
@@ -29,16 +30,10 @@ export const TableMoveOut = observer(
                     widthKey="widthOut"
                 />
                 <TableApp
-                    onRow={(record: iDataIndex, _rowIndex) => {
-                        return {
-                            onDoubleClick: (_event) => {
-                                props.removeRow(record.index!);
-                            },
-                        };
-                    }}
                     columns={columns}
                     dataSource={data}
                     onChange={handleChange}
+                    rowSelection={rowSelection}
                 />
             </>
         );
