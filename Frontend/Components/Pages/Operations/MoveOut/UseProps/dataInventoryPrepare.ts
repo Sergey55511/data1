@@ -1,6 +1,6 @@
-import { iUser } from '../../../../../../Shared/Types/interfaces';
-import { OPERATIONS } from '../../../../../../Shared/constants';
-import { prepareDataTable } from '../../../../Helpers';
+import { iDataTable, iUser } from '../../../../../../Shared/Types/interfaces';
+import { OPERATIONS, WORKPIECETYPE } from '../../../../../../Shared/constants';
+import { getLosseObject, prepareDataTable } from '../../../../Helpers';
 import { iDataIndex } from '.';
 
 export const dataInventoryPrepare = (dataSend: iDataIndex[], user: iUser) => {
@@ -24,7 +24,36 @@ export const dataInventoryPrepare = (dataSend: iDataIndex[], user: iUser) => {
         return prepareDataTable(clone);
     });
 
+    const dataLosses: iDataTable[] = [];
+
     const dataIn = dataSend.map((item) => {
+        console.log(
+            'item.widthOut != item.width',
+            item.widthOut,
+            item.width,
+            item.widthOut != item.width,
+        );
+
+        if (item.widthOut != item.width || item.countItemsOut != item.count) {
+            const widthIn = +(+(item.width ?? 0) - (item.widthOut ?? 0)).toFixed(2);
+            const countItemsIn = Math.round(
+                +(item.count ?? 0) - (item.countItemsOut ?? 0),
+            );
+            const cloneLosses = getLosseObject(
+                { ...item },
+                WORKPIECETYPE.losses.id,
+                widthIn,
+            );
+
+            cloneLosses.widthIn = widthIn ?? undefined;
+            cloneLosses.countItemsIn = countItemsIn;
+            cloneLosses.countItemsOut = undefined;
+            cloneLosses.moneyIn = undefined;
+            cloneLosses.moneyOut = undefined;
+            standardSettings(cloneLosses);
+            dataLosses.push(prepareDataTable(cloneLosses));
+        }
+
         const clone = { ...item };
         clone.widthIn = getValue(item.widthOut);
         clone.widthOut = undefined;
@@ -37,5 +66,5 @@ export const dataInventoryPrepare = (dataSend: iDataIndex[], user: iUser) => {
         return prepareDataTable(clone);
     });
 
-    return [...dataOut, ...dataIn];
+    return [...dataOut, ...dataIn, ...dataLosses];
 };
