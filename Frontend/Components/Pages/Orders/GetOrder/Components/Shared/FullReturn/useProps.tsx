@@ -17,11 +17,11 @@ export const useProps = ({ record }: iProps) => {
         const preparedRecord: iDataTable = {
             ...record,
             task: undefined,
-            widthOut: undefined,
-            moneyOut: undefined,
+            widthIn: undefined,
+            moneyIn: undefined,
             countItemsOut: undefined,
-            widthIn: getNumber(record.width),
-            moneyIn: getNumber(record.code),
+            widthOut: getNumber(record.width) * -1,
+            moneyOut: getNumber(record.code) * -1,
             countItemsIn: getNumber(record.count),
         };
         returnHandler.mutate([preparedRecord]);

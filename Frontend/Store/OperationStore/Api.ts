@@ -1,15 +1,11 @@
 import axios from 'axios';
 import {
     iAssembleTakeApartData,
-    iBigouterueBridje,
-    iBijouterieArticles,
     iData,
     iDataProduct,
     iDataProductTable,
     iDataTable,
-    iLock,
 } from '../../../Shared/Types/interfaces';
-import { tValue } from '../../Components/Shared/InputNumber';
 
 export const leftovers = (storeId: number) => {
     return axios({
