@@ -79,6 +79,9 @@ export const useProps = () => {
     const { columns, filteredleftovers } = useColumns(filters, data);
 
     const disabledSubmit = (() => {
+        if (numDocument) {
+            if (numDocument.length > 3) return false;
+        }
         if (productionId) return false;
         if (pp) return false;
 

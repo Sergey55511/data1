@@ -22,13 +22,24 @@ export const RowWrapper = ({
     removeRow: (index: number) => void;
     keyArrowHandlers: ReturnType<typeof useProps>['keyArrowHandlers'];
 }) => {
-    const { sizeRange } = useData();
+    const { sizeRange, workpieceType, length } = useData(state);
     return (
         <Row
             key={index}
             isLoading={isLoading}
             copyRow={() => copyRow(index)}
             fields={[
+                <InputField key="workpieceType" isError={state.workpieceType.isError}>
+                    <SelectField
+                        placeholder={state.workpieceType.placeholder}
+                        value={+state.workpieceType.value || undefined}
+                        onChange={(v) => onChange(v, index, 'workpieceType')}
+                        options={workpieceType.data?.map((item) => ({
+                            value: item.id,
+                            caption: item.workpieceType,
+                        }))}
+                    />
+                </InputField>,
                 <InputField key="sizeRange" isError={state.sizeRange.isError}>
                     <SelectField
                         placeholder={state.sizeRange.placeholder}
@@ -37,6 +48,17 @@ export const RowWrapper = ({
                         options={sizeRange.data?.map((item) => ({
                             value: item.id,
                             caption: item.sizeRange,
+                        }))}
+                    />
+                </InputField>,
+                <InputField key="length" isError={state.length.isError}>
+                    <SelectField
+                        placeholder={state.length.placeholder}
+                        value={+state.length.value || undefined}
+                        onChange={(v) => onChange(v, index, 'length')}
+                        options={length.data?.map((item) => ({
+                            value: item.id,
+                            caption: item.length,
                         }))}
                     />
                 </InputField>,

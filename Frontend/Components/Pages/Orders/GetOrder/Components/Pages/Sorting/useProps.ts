@@ -67,9 +67,9 @@ export const useProps = ({ record, stateId, isMaterialGroup, isFraction }: iProp
                     materialGroupId: new Field(
                         'materialGroupId',
                         'Группа сырья',
-                        isMaterialGroup,
+                        !!isMaterialGroup,
                     ),
-                    fractionId: new Field('fractionId', 'Фракция', isFraction),
+                    fractionId: new Field('fractionId', 'Фракция', !!isFraction),
                     typeId: new Field('typeId', 'Тип'),
                     gradeId: new Field('gradeId', 'Сорт'),
                     colorId: new Field('colorId', 'Цвет'),
