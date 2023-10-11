@@ -117,7 +117,6 @@ export const useProps = ({ record, stateId }: iProps) => {
             gradeId: getNumber(item.grade.value),
             colorId: getNumber(item.color.value),
             workpieceType: undefined,
-            productionId: undefined,
             stateId,
             moneyIn: item.widthIn.value ? codeOneItem * +item.widthIn.value : 0,
         }));
