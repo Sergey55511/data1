@@ -9,24 +9,20 @@ export const getProduction = async <T>(
 ): Promise<T> => {
     const data = dal(req.query);
 
-    const production = await prisma.productions.findFirst({
-        select: {
-            id: true,
-            description: true,
-            Data: {
-                select: { task: true },
-                where: { task: { not: null } },
-            },
-        },
-        where: { id: data.productionId },
-    });
+    const production = (await prisma.$queryRaw`
+            SELECT 
+            id,
+            description,
+            (
+                SELECT "task"
+                FROM "Data"  
+                WHERE "productionId" = "Productions".id 
+                    AND "task" IS NOT NULL
+                LIMIT 1 
+            ) as "fullModalId"
+        FROM public."Productions"
+        where id=${data.productionId};
+    `) as any[];
 
-    const fullModal = production?.Data.find((item) => item.task);
-    const fullModalId = fullModal?.task;
-
-    return {
-        id: production?.id,
-        description: production?.description,
-        fullModalId,
-    } as any;
+    return production?.length ? production[0] : ([] as any);
 };
