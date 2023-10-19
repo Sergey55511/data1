@@ -30,13 +30,10 @@ export const moveIn = async (req: NextApiRequest) => {
 
         await prisma.crypto.create({ data: { key } });
 
-        await prisma.$queryRaw`SET session_replication_role = 'replica';`;
         await prisma.data.createMany({ data });
-        await prisma.$queryRaw`SET session_replication_role = 'origin';`;
 
         return { message: 'data get successfully' };
     } catch (err) {
-        await prisma.$queryRaw`SET session_replication_role = 'origin';`;
         prisma.$disconnect();
         throw err;
     }
