@@ -9,7 +9,7 @@ import { getFilteredleftovers } from '../../../Shared/Table/Helpers/getFilteredl
 
 export const useColumns = (filters: Record<string, FilterValue | null>) => {
     const { OperationStore, loginStore } = useStores();
-    const { leftovers } = OperationStore;
+    const { leftovers, isLoadingLeftovers } = OperationStore;
 
     const isMSC = loginStore.user.storeId == STORES.Moscow.id;
 
@@ -105,5 +105,5 @@ export const useColumns = (filters: Record<string, FilterValue | null>) => {
             width: 50,
         });
 
-    return { columns, data, filteredleftovers };
+    return { columns, data, filteredleftovers, isLoadingLeftovers };
 };
