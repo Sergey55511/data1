@@ -17,7 +17,8 @@ export const TableLeftOvers = observer(
         filters: Record<string, FilterValue | null>;
         setFilters: Dispatch<SetStateAction<Record<string, FilterValue | null>>>;
     }) => {
-        const { columns, data, filteredleftovers } = useColumns(filters);
+        const { columns, data, filteredleftovers, isLoadingLeftovers } =
+            useColumns(filters);
         const recordRef = useRef<iData | undefined>();
         const [isShowMoveOutSolo, setIsShowMoveOutSolo] = useState(false);
 
@@ -53,6 +54,7 @@ export const TableLeftOvers = observer(
                     columns={columns}
                     dataSource={data}
                     onChange={handleChange}
+                    loading={isLoadingLeftovers}
                 />
             </>
         );

@@ -23,6 +23,7 @@ export class OperationStore {
     leftovers: iData[] = [];
     orders: iData[] = [];
     ordersGetOut: iData[] = [];
+    isLoadingLeftovers = false;
 
     constructor(errorStore: ErrorStore, login: Login, listsStore: ListsStore) {
         makeAutoObservable(this);
@@ -73,10 +74,13 @@ export class OperationStore {
         isGetMaxId = true,
     ) {
         try {
+            this.isLoadingLeftovers = true;
             this.leftovers = yield api.leftovers(storeId);
             if (isGetMaxId) yield this.getMaxId();
+            this.isLoadingLeftovers = false;
         } catch (err) {
             this.errorStore.setError(err as iError);
+            this.isLoadingLeftovers = false;
         }
     });
     getOrders = flow(function* (
