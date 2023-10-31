@@ -1,5 +1,3 @@
-import { PrismaPromise } from '@prisma/client';
-import { Decimal } from '@prisma/client/runtime';
 import { NextApiRequest } from 'next';
 import { tPrisma } from '../../../types';
 import { dal } from './Dal';

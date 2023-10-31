@@ -13,6 +13,13 @@ export const leftovers = (storeId: number) => {
         method: 'GET',
     }).then((res) => res.data as iData[]);
 };
+export const leftoversExcel = () => {
+    return axios({
+        url: `/api/data/leftovers/excel`,
+        responseType: 'blob',
+        method: 'GET',
+    }).then((res) => res.data);
+};
 
 interface iPropsListOperation {
     start: moment.Moment;

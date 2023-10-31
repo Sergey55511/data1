@@ -1,5 +1,5 @@
 import { NextApiRequest } from 'next';
-import { iData, iDataProduct, iUser } from '../../../../../Shared/Types/interfaces';
+import { iDataProduct, iUser } from '../../../../../Shared/Types/interfaces';
 import { tPrisma } from '../../../../types';
 import { getDataProduct } from '../Get';
 import { prepareData } from './prepareData';
@@ -7,7 +7,7 @@ import { createExcel } from '../../../../Helpers/createExcel';
 
 export const getDataProductExcel = async (
     prisma: tPrisma,
-    req: NextApiRequest,
+    _req: NextApiRequest,
     user: iUser,
 ) => {
     const reportData = await getDataProduct<iDataProduct[]>(prisma, user);
