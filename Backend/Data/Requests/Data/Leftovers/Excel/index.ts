@@ -6,7 +6,7 @@ import { prepareData } from './prepareData';
 
 export const leftoversExcel = async (prisma: tPrisma, user: iUser) => {
     const dataLeftovers = await leftovers<iData[]>(prisma, user);
-    const { rows, columns } = prepareData(dataLeftovers);
+    const { rows, columns } = prepareData(dataLeftovers, user);
     const buffer = await createExcel({
         rows,
         columns,
