@@ -1,13 +1,15 @@
 import ExcelJS from 'exceljs';
-import { iData } from '../../../../../../Shared/Types/interfaces';
+import { STORES } from '../../../../../../Shared/constants';
+import { iData, iUser } from '../../../../../../Shared/Types/interfaces';
 
-export const prepareData = (reportData: iData[]) => {
+export const prepareData = (reportData: iData[], user: iUser) => {
+    const isMSC = user.storeId == STORES.Moscow.id;
     const columns: ExcelJS.TableColumnProperties[] = [
         { name: 'Тип заготовки', filterButton: true },
         { name: 'Состояние', filterButton: true },
         { name: 'Тип', filterButton: true },
-        { name: 'Фракция', filterButton: true },
-        { name: 'Группа сырья', filterButton: true },
+        { name: isMSC ? 'Модель' : 'Фракция', filterButton: true },
+        { name: isMSC ? 'Канал' : 'Группа сырья', filterButton: true },
         { name: 'Цвет', filterButton: true },
         { name: 'Размерный ряд', filterButton: true },
         { name: 'Длинна', filterButton: true },
@@ -23,8 +25,8 @@ export const prepareData = (reportData: iData[]) => {
         item.workpieceType,
         item.state,
         item.type,
-        item.fraction,
-        item.materialGroup,
+        isMSC ? item.fullModel : item.fraction,
+        isMSC ? item.channel : item.materialGroup,
         item.color,
         item.sizeRange,
         item.length,
