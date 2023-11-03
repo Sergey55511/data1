@@ -7,6 +7,58 @@ export const leftovers = <T>(prisma: tPrisma, user: iUser): PrismaPromise<T> => 
     const storeId = user.storeId;
 
     return prisma.$queryRawUnsafe(`
+        WITH "Data" as (
+            SELECT
+                pp,
+                "storeId",
+                "workpieceTypeId",
+                "typeId",
+                "sizeRangeId",
+                "productionId",
+                "fullModelId",
+                "fractionId",
+                "colorId",
+                "lengthId",
+                "channelId",
+                "gradeId",
+                "materialGroupId",
+                "stateId",
+                lot,
+                "widthIn",
+                "widthOut",
+                "countItemsIn",
+                "countItemsOut",
+                "moneyIn",
+                "moneyOut"
+            FROM "Data"
+            WHERE active=true and NOT optimized=false
+        
+            UNION
+        
+            SELECT
+                pp,
+                "storeId",
+                "workpieceTypeId",
+                "typeId",
+                "sizeRangeId",
+                "productionId",
+                "fullModelId",
+                "fractionId",
+                "colorId",
+                "lengthId",
+                "channelId",
+                "gradeId",
+                "materialGroupId",
+                "stateId",
+                lot,
+                "widthIn",
+                "widthOut",
+                "countItemsIn",
+                "countItemsOut",
+                "moneyIn",
+                "moneyOut"
+            FROM "OptimizedData"
+        )
       SELECT 
             "Data"."workpieceTypeId",
             "workpieceType",
@@ -37,8 +89,8 @@ export const leftovers = <T>(prisma: tPrisma, user: iUser): PrismaPromise<T> => 
             COALESCE(round(sum("widthIn")::numeric,2),0)-COALESCE(round(coalesce(sum("widthOut"),0)::numeric,2),0) as "width",
             COALESCE(round(sum("countItemsIn")::numeric,2),0)-COALESCE(round(sum("countItemsOut")::numeric,2),0) as "count",
             COALESCE(sum("moneyIn")::numeric,0)-COALESCE(sum("moneyOut")::numeric,0) as "code"
-        FROM 
-            public."Data" left join "WorkpieceType" on "Data"."workpieceTypeId"="WorkpieceType".id
+        FROM "Data" 
+            left join "WorkpieceType" on "Data"."workpieceTypeId"="WorkpieceType".id
             left join "Fraction" on "Data"."fractionId"="Fraction".id
             left join "MaterialGroup" on "Data"."materialGroupId"="MaterialGroup".id
 			left join "Grade" on "Data"."gradeId"="Grade".id

@@ -7,6 +7,24 @@ import { fullModelSQL, fullModelSQLTask } from '../constants';
 export const orders = <T>(prisma: tPrisma, user: iUser): PrismaPromise<T> => {
     const storeId = user.storeId;
     return prisma.$queryRawUnsafe(`
+        WITH "DataP" as (
+            SELECT
+                pp,
+                "storeId",
+                "widthIn",
+                "widthOut"
+            FROM "Data"
+            WHERE active=true and NOT optimized=false
+        
+            UNION
+        
+            SELECT
+                pp,
+                "storeId",
+                "widthIn",
+                "widthOut"
+            FROM "OptimizedData"
+        )
         SELECT 
             pp,
             "productionId",
@@ -61,8 +79,8 @@ export const orders = <T>(prisma: tPrisma, user: iUser): PrismaPromise<T> => {
         WHERE "Data"."pp" in 
 			(
 				select pp 
-				from "Data" 
-				where "Data"."storeId"=${+storeId} and pp is not null
+				from "DataP" 
+				where "DataP"."storeId"=${+storeId} and pp is not null
 				group by pp
 				having 
 					COALESCE(round(sum("widthIn")::numeric,2),0)-COALESCE(round(coalesce(sum("widthOut"),0)::numeric,2),0)<>0
