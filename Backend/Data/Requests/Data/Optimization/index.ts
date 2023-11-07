@@ -72,5 +72,5 @@ export const optimization = async <T>(prisma: tPrisma, user: iUser) => {
             "stateId",
             lot
         HAVING COALESCE(round(sum("widthIn")::numeric,2),0)-COALESCE(round(coalesce(sum("widthOut"),0)::numeric,2),0)<>0;
-        `;
+        ` as any;
 };
