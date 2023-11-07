@@ -2,7 +2,7 @@ import { NextApiRequest } from 'next';
 import { encrypt } from '../../../Helpers/Crypto/encript';
 import { dal } from '../../Dal';
 import { MyError } from '../../../../Shared/Classes/error';
-import { prisma } from '../../Services/prisma';
+import prisma from '../../Services/prisma';
 
 export const moveIn = async (req: NextApiRequest) => {
     const data = dal(req);

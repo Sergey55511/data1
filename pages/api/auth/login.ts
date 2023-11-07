@@ -6,7 +6,7 @@ import sha1 from 'sha1';
 import { KEY } from './registration';
 import { MyError } from '../../../Shared/Classes/error';
 import { resError } from '../../../Shared/Helpers';
-import { prisma } from '../../../Backend/Data/Services/prisma';
+import prisma from '../../../Backend/Data/Services/prisma';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     if (req.method == 'POST') {

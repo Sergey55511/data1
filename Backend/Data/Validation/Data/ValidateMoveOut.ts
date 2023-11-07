@@ -1,7 +1,7 @@
 import { NextApiRequest } from 'next';
 import { MyError } from '../../../../Shared/Classes/error';
 import { iData, iUser } from '../../../../Shared/Types/interfaces';
-import { prisma } from '../../Services/prisma';
+import prisma from '../../Services/prisma';
 
 export const validateLeftovers = async (req: NextApiRequest, user: iUser) => {
     const data = req.body.data as iData[];

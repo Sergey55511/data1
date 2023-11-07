@@ -4,7 +4,7 @@ import { varifyJWT } from './verifyJWT';
 import { tPrisma } from '../../types';
 import { sendUsersNewMaxId } from './sendUsersNewMaxId';
 import { iUser } from '../../../Shared/Types/interfaces';
-import { prisma } from './prisma';
+import prisma from './prisma';
 
 export const fetchService = async <T>({
     req,
