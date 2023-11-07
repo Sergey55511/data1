@@ -19,7 +19,7 @@ export const OptimizationData = observer(() => {
             loading={optimize.isLoading}
             onClick={() => optimize.mutate()}
         >
-            Oтимизировать Дату
+            Oтимизировать данные
         </Button>
     );
 });

@@ -48,7 +48,7 @@ export const optimization = async <T>(prisma: tPrisma, user: iUser) => {
             "stateId",
             lot,
             COALESCE(round(sum("widthIn")::numeric,2),0) as "widthIn",
-            COALESCE(round(coalesce(sum("widthOut"),0)::numeric,2),0) as "widthOut",
+            COALESCE(round(sum("widthOut")::numeric,2),0) as "widthOut",
             COALESCE(round(sum("countItemsIn")::numeric,2),0) as "countItemsIn",
             COALESCE(round(sum("countItemsOut")::numeric,2),0) as "countItemsOut",
             COALESCE(sum("moneyIn")::numeric,0) as "moneyIn",
@@ -71,6 +71,6 @@ export const optimization = async <T>(prisma: tPrisma, user: iUser) => {
             "materialGroupId",
             "stateId",
             lot
-        HAVING COALESCE(round(sum("widthIn")::numeric,2),0)-COALESCE(round(coalesce(sum("widthOut"),0)::numeric,2),0)>0;
+        HAVING COALESCE(round(sum("widthIn")::numeric,2),0)-COALESCE(round(coalesce(sum("widthOut"),0)::numeric,2),0)<>0;
         `;
 };

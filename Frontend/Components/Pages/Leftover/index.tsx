@@ -4,8 +4,7 @@ import { TableLeftOvers } from './Table';
 import { useStores } from '../../../Store/useStores';
 import { observer } from 'mobx-react-lite';
 import { MenuLeftovers } from '../../Shared/MenuLeftovers';
-import { DownloadExcel } from './DownloadExcel';
-import { OptimizationData } from './OptimizationData';
+import { Content } from './Content';
 
 export default observer(() => {
     const [filters, setFilters] = useState<Record<string, FilterValue | null>>({});
@@ -17,15 +16,7 @@ export default observer(() => {
 
     return (
         <>
-            <MenuLeftovers
-                setFilters={setFilters}
-                content={
-                    <>
-                        <OptimizationData />
-                        <DownloadExcel />
-                    </>
-                }
-            />
+            <MenuLeftovers setFilters={setFilters} content={<Content />} />
             <TableLeftOvers {...{ filters, setFilters }} />
         </>
     );

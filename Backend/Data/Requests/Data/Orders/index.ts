@@ -14,7 +14,7 @@ export const orders = <T>(prisma: tPrisma, user: iUser): PrismaPromise<T> => {
                 "widthIn",
                 "widthOut"
             FROM "Data"
-            WHERE active=true and NOT optimized=false
+            WHERE active=true and optimized=false
         
             UNION
         
