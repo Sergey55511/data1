@@ -33,7 +33,7 @@ export const leftovers = <T>(prisma: tPrisma, user: iUser): PrismaPromise<T> => 
             FROM "Data"
             WHERE active=true and optimized=false
         
-            UNION
+            UNION ALL
         
             SELECT
                 pp,

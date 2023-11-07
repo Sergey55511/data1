@@ -16,7 +16,7 @@ export const orders = <T>(prisma: tPrisma, user: iUser): PrismaPromise<T> => {
             FROM "Data"
             WHERE active=true and optimized=false
         
-            UNION
+            UNION ALL
         
             SELECT
                 pp,
@@ -83,7 +83,7 @@ export const orders = <T>(prisma: tPrisma, user: iUser): PrismaPromise<T> => {
 				where "DataP"."storeId"=${+storeId} and pp is not null
 				group by pp
 				having 
-					COALESCE(round(sum("widthIn")::numeric,2),0)-COALESCE(round(coalesce(sum("widthOut"),0)::numeric,2),0)<>0
+					COALESCE(round(sum("widthIn")::numeric,2),0)-COALESCE(round(sum("widthOut")::numeric,2),0)<>0
 			) 
             and "operationId" <> ${+OPERATIONS.assemble.id} 
             and "operationId" <> ${+OPERATIONS.getOut.id}
