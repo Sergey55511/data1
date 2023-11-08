@@ -4,7 +4,7 @@ import 'moment/locale/ru';
 import { useQueryClient } from './useQueryClient';
 
 export const useProps = () => {
-    const { loginStore, UIStore, OperationStore, SocketIo, ErrorStore } = useStores();
+    const { loginStore, UIStore, OperationStore, SocketIo } = useStores();
 
     const queryClient = useQueryClient();
 

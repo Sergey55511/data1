@@ -2,7 +2,6 @@ import { observer } from 'mobx-react-lite';
 import { useEffect } from 'react';
 import { useStores } from '../../../Store/useStores';
 import { Title } from '../../Shared/Title';
-import { Wrapper } from './style';
 import { OrdersTable } from './Table';
 
 export const Orders = observer(({ isGetOut }: { isGetOut?: boolean }) => {

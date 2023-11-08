@@ -43,14 +43,14 @@ export class OperationStore {
     fetchInitData = flow(function* (this: OperationStore, storeId: number) {
         if (this.isFetched) return;
         try {
-            this.getShared(storeId, false);
-            this.getOrders(storeId, false);
-            this.getOrdersGetOut(storeId);
-            this.listsStore.getProductions(storeId);
-            this.listsStore.getUsers(storeId);
-            this.listsStore.getMaterialGroup();
-            this.listsStore.getFraction();
-            this.listsStore.getStores();
+            yield this.getShared(storeId, false);
+            yield this.getOrders(storeId, false);
+            yield this.getOrdersGetOut(storeId);
+            yield this.listsStore.getProductions(storeId);
+            yield this.listsStore.getUsers(storeId);
+            yield this.listsStore.getMaterialGroup();
+            yield this.listsStore.getFraction();
+            yield this.listsStore.getStores();
             this.isFetched = true;
         } catch (err) {
             this.errorStore.setError(err as iError);
@@ -88,6 +88,7 @@ export class OperationStore {
         storeId: number,
         isGetMaxId = true,
     ) {
+        if (this.orders.length) if (this.maxId == this.maxIdSocket) return;
         try {
             this.orders = yield api.getOrders(storeId);
             if (isGetMaxId) yield this.getMaxId();
