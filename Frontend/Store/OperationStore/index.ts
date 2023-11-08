@@ -88,7 +88,6 @@ export class OperationStore {
         storeId: number,
         isGetMaxId = true,
     ) {
-        if (this.orders.length) if (this.maxId == this.maxIdSocket) return;
         try {
             this.orders = yield api.getOrders(storeId);
             if (isGetMaxId) yield this.getMaxId();
