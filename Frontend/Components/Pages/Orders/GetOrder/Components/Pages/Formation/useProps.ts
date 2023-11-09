@@ -2,7 +2,6 @@ import { notification } from 'antd';
 import moment from 'moment';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import { WORKPIECETYPE } from '../../../../../../../../Shared/constants';
 import { round } from '../../../../../../../../Shared/Helpers';
 import { iData, iField } from '../../../../../../../../Shared/Types/interfaces';
 import { useStores } from '../../../../../../../Store/useStores';
@@ -19,7 +18,6 @@ import { useKeyArrow } from '../../Shared/Hooks/useKeyArrow';
 
 export interface iState {
     sizeRange: iField;
-    length: iField;
     workpieceType: iField;
     widthIn: iField;
     duplicate?: boolean;
@@ -75,7 +73,6 @@ export const useProps = ({ record, stateId }: iProps) => {
                 ...prev,
                 {
                     sizeRange: new Field('sizeRangeId', 'Размерный ряд'),
-                    length: new Field('lengthId', 'Длинна'),
                     workpieceType: new Field('workpieceTypeId', 'Тип заготовки'),
                     widthIn: new Field('widthIn', 'Вес гр.'),
                 },
@@ -128,7 +125,6 @@ export const useProps = ({ record, stateId }: iProps) => {
             date,
             workpieceTypeId: getNumber(item.workpieceType.value),
             sizeRangeId: getNumber(item.sizeRange.value),
-            lengthId: getNumber(item.length.value),
             widthOut: undefined,
             widthIn: getNumber(item.widthIn.value),
             stateId,
