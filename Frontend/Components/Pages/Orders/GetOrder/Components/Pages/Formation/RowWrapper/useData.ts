@@ -1,10 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
-import { OPERATIONS, WORKPIECETYPE } from '../../../../../../../../../Shared/constants';
-import {
-    getLength,
-    getSizeRange,
-    getWorkpieceType,
-} from '../../../../../../../../Store/Lists/api';
+import { OPERATIONS } from '../../../../../../../../../Shared/constants';
+import { getSizeRange, getWorkpieceType } from '../../../../../../../../Store/Lists/api';
 import { useStores } from '../../../../../../../../Store/useStores';
 import { iState } from '../useProps';
 
@@ -28,16 +24,5 @@ export const useData = (state: iState) => {
             }),
         { enabled: !!storeId },
     );
-    const length = useQuery(
-        ['length', storeId],
-        () =>
-            getLength({
-                storeId,
-                operationId: OPERATIONS.formation.id,
-                workpieceTypeId,
-                sizeRangeId,
-            }),
-        { enabled: !!storeId },
-    );
-    return { sizeRange, workpieceType, length };
+    return { sizeRange, workpieceType };
 };

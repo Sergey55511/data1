@@ -22,7 +22,7 @@ export const RowWrapper = ({
     removeRow: (index: number) => void;
     keyArrowHandlers: ReturnType<typeof useProps>['keyArrowHandlers'];
 }) => {
-    const { sizeRange, workpieceType, length } = useData(state);
+    const { sizeRange, workpieceType } = useData(state);
     return (
         <Row
             key={index}
@@ -48,17 +48,6 @@ export const RowWrapper = ({
                         options={sizeRange.data?.map((item) => ({
                             value: item.id,
                             caption: item.sizeRange,
-                        }))}
-                    />
-                </InputField>,
-                <InputField key="length" isError={state.length.isError}>
-                    <SelectField
-                        placeholder={state.length.placeholder}
-                        value={+state.length.value || undefined}
-                        onChange={(v) => onChange(v, index, 'length')}
-                        options={length.data?.map((item) => ({
-                            value: item.id,
-                            caption: item.length,
                         }))}
                     />
                 </InputField>,
