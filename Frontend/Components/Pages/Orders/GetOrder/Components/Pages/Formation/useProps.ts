@@ -125,6 +125,8 @@ export const useProps = ({ record, stateId }: iProps) => {
             date,
             workpieceTypeId: getNumber(item.workpieceType.value),
             sizeRangeId: getNumber(item.sizeRange.value),
+            color: undefined,
+            grade: undefined,
             widthOut: undefined,
             widthIn: getNumber(item.widthIn.value),
             stateId,
