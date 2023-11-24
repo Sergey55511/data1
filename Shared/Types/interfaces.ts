@@ -1,5 +1,9 @@
 import moment from 'moment';
 
+export interface iCookiesAuth {
+    atkn?: string;
+    rtkn?: string;
+}
 export interface iUser {
     id?: number;
     login: string;
