@@ -1,5 +1,4 @@
 import moment from 'moment';
-import { parentPort, workerData } from 'worker_threads';
 import { iCookiesAuth, iDataTable } from '../../../../../Shared/Types/interfaces';
 import { moveOutHoc } from '../../../Link';
 import prisma from '../../../Services/prisma';
@@ -12,8 +11,7 @@ export interface iData {
     qookies: iCookiesAuth;
 }
 
-entarSemaphore(async () => {
-    const { data, isSetNewPP, isSetArticleId, qookies } = workerData.data as iData;
+entarSemaphore(async ({ data, isSetNewPP, isSetArticleId, qookies }: iData) => {
     let pp: number | undefined;
     let articleId: number | undefined;
 
@@ -52,7 +50,7 @@ entarSemaphore(async () => {
         await moveOutHoc(prisma, recipient, dataPrepared, qookies);
     }
 
-    parentPort?.postMessage(result);
+    return result;
 });
 
 export const executerPaht = __filename;
