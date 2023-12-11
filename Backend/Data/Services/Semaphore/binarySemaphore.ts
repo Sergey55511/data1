@@ -8,10 +8,15 @@ export class BinarySemaphore {
     }
 
     enter() {
+        console.log('this.lock', this.lock);
+
         while (true) {
             if (Atomics.compareExchange(this.lock, 0, UNLOCKED, LOCKED) === UNLOCKED) {
+                console.log('return');
+
                 return;
             }
+            console.log('wait');
             Atomics.wait(this.lock, 0, LOCKED, 1000 * 60 * 2);
         }
     }

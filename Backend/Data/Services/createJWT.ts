@@ -35,8 +35,6 @@ export const createJWT = async (
             },
         });
 
-        console.log('key updated');
-
         const cookies = new Cookies(req, res);
 
         cookies.set('atkn', atkn, {

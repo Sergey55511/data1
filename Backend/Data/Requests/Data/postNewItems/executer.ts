@@ -12,6 +12,8 @@ export interface iData {
 }
 
 enterSemaphore(async ({ data, isSetNewPP, isSetArticleId, qookies }: iData) => {
+    console.log('enterSemaphore');
+    
     let pp: number | undefined;
     let articleId: number | undefined;
 
