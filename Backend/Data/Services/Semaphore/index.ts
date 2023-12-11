@@ -1,16 +1,41 @@
-import { Worker } from 'worker_threads';
-const buffer = new SharedArrayBuffer(6);
+import { MyError } from '../../../../Shared/Classes/error';
 
-export const startQueue = (executePath: string, data: any) => {
+let isFree = true;
+
+export const startQueue = (callBack: () => any) => {
+    const startDate = new Date();
     return new Promise((resolve, reject) => {
-        const worker = new Worker(executePath, {
-            workerData: { sharedArrayBuffer: buffer, data },
-        });
+        //run every 0.1 seconds
+        const timer: NodeJS.Timer = setInterval(
+            () =>
+                queueProvider(() => {
+                    isFree = true;
+                    clearTimeout(timer);
+                }),
+            100,
+        );
 
-        worker.on('message', resolve);
-        worker.on('error', reject);
-        worker.on('exit', (code) => {
-            if (code !== 0) reject(new Error(`Worker stopped with exit code ${code}`));
-        });
+        //try to execute callback
+        const queueProvider = async (reset: () => void) => {
+            const rejectError = (err: any) => {
+                reset();
+                reject(err);
+            };
+            try {
+                if (isFree) {
+                    isFree = false;
+                    resolve(await callBack());
+                    reset();
+                }
+                const endDate = new Date();
+                const difference = (endDate.getTime() - startDate.getTime()) / 1000;
+                const isTimeError = difference > 60 * 2;
+                if (isTimeError) {
+                    rejectError(new MyError(504, 'queue time error'));
+                }
+            } catch (err) {
+                rejectError(err);
+            }
+        };
     });
 };

@@ -2,7 +2,6 @@ import moment from 'moment';
 import { iCookiesAuth, iDataTable } from '../../../../../Shared/Types/interfaces';
 import { moveOutHoc } from '../../../Link';
 import prisma from '../../../Services/prisma';
-import { enterSemaphore } from '../../../Services/Semaphore/enterSemaphore';
 
 export interface iData {
     data: iDataTable[];
@@ -11,9 +10,7 @@ export interface iData {
     qookies: iCookiesAuth;
 }
 
-enterSemaphore(async ({ data, isSetNewPP, isSetArticleId, qookies }: iData) => {
-    console.log('enterSemaphore');
-    
+export const executer = async ({ data, isSetNewPP, isSetArticleId, qookies }: iData) => {
     let pp: number | undefined;
     let articleId: number | undefined;
 
@@ -53,6 +50,4 @@ enterSemaphore(async ({ data, isSetNewPP, isSetArticleId, qookies }: iData) => {
     }
 
     return result;
-});
-
-export const executerPaht = __filename;
+};
