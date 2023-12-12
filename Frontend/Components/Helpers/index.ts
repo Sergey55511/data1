@@ -145,7 +145,13 @@ export const prepareSubbmitData = ({
         let codePrun = record.widthOut ? (record.code || 0) / record.widthOut : 0;
         codePrun = codePrun * +pruning * -1;
         data.push(
-            getPruneObject(record, WORKPIECETYPE.prunes.id, +pruning, codePrun, stateId),
+            getPruneObject(
+                recordDate,
+                WORKPIECETYPE.prunes.id,
+                +pruning,
+                codePrun,
+                stateId,
+            ),
         );
     }
 
