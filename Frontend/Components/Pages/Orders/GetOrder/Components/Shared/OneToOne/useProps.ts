@@ -16,6 +16,7 @@ export interface iProps {
     isCheckLosses?: boolean;
     defect?: boolean;
     pruning?: boolean;
+    garbage?: boolean;
     isShowWorkingTimeFact?: boolean;
 }
 
@@ -26,6 +27,7 @@ interface iState {
     moveBack?: number;
     losses?: number;
     defect?: number;
+    garbage?: number;
     pruning?: number;
     channel?: number;
 }
@@ -47,6 +49,7 @@ export const useProps = ({
         defect: undefined,
         pruning: undefined,
         channel: undefined,
+        garbage: undefined,
     });
 
     const isValid = (() => {
@@ -98,6 +101,7 @@ export const useProps = ({
             defect: state.defect,
             pruning: state.pruning,
             moveBack: state.moveBack,
+            garbage: state.moveBack,
             record,
             setIsLoading,
             postOrderResult: OperationStore.postOrderResult.bind(OperationStore),
@@ -126,6 +130,7 @@ export const useProps = ({
                 getValue(prev.defect) -
                 getValue(prev.moveBack) -
                 getValue(prev.pruning) -
+                getValue(prev.garbage) -
                 getValue(prev.widthIn);
 
             losses = round(losses);
