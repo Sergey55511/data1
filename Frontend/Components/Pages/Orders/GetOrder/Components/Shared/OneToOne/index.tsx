@@ -122,6 +122,19 @@ export const OneToOne = (props: iProps) => {
                     </InputField>
                 </Item>
             )}
+            {props.garbage && (
+                <Item title="Отход гр.">
+                    <InputField>
+                        <InputNumber
+                            placeholder="Не обязательное поле"
+                            value={params.state.garbage}
+                            onChangeHandler={(v) => {
+                                params.onChangeInput('garbage', v);
+                            }}
+                        />
+                    </InputField>
+                </Item>
+            )}
         </Wrapper>
     );
 };
