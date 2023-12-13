@@ -236,10 +236,12 @@ export const GetOrderSwitcher = ({
             return <OneToOne record={record} stateId={STATE.polished.id} isCheckLosses />;
         case OPERATIONS.slice.id:
             return (
-                <Slicing
+                <OneToOne
                     record={record}
                     stateId={STATE.sliced.id}
-                    operationId={OPERATIONS.slice.id}
+                    isCheckLosses
+                    defect
+                    garbage
                 />
             );
         case OPERATIONS.sortingLength.id:
