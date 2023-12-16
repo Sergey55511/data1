@@ -22,10 +22,10 @@ export const getHTMLTicket = (data: iTocketProps) => {
                 <div style="margin-bottom: 10px;">№ ${data.articleId}</div>
                 <div style="margin-bottom: 10px; height: 24px;display: flex; align-items: center; word-break:break-all;">
                     ${data.model}</div>
-                <div style="width: 100%;">
-                    <div style="width: 48%; display: inline-block;">${data.length} см.</div>
-                    <div style="width: 48%; display: inline-block; text-align: end;">${data.width} гр.</div>
-                </div>
+                <!-- <div style="width: 100%;">
+                     <div style="width: 48%; display: inline-block;">${data.length} см.</div>
+                     <div style="width: 48%; display: inline-block; text-align: end;">${data.width} гр.</div>
+                 </div> -->
             </div>
         </body>
         
