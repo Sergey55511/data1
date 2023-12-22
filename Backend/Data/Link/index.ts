@@ -6,7 +6,7 @@ export const moveOutHoc = async (
     prisma: tPrisma,
     recipient: iDataTable,
     data: iDataTable[],
-    qookies: iCookiesAuth,
+    cookies: iCookiesAuth,
 ) => {
     const storeIdRecipient = await prisma.recipients.findFirst({
         select: { storeId: true, Stores: { select: { pathKey: true } } },
@@ -17,5 +17,5 @@ export const moveOutHoc = async (
 
     const url = process.env[pathKey];
 
-    await moveOut(url, data, qookies);
+    await moveOut(url, data, cookies);
 };

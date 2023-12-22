@@ -6,8 +6,6 @@ import { tPrisma } from '../../../Backend/types';
 import { iDataTable } from '../../../Shared/Types/interfaces';
 
 export default async function moveToWork(req: NextApiRequest, res: NextApiResponse) {
-    console.log('moveToWork', 'cookie', req.cookies);
-
     await fetchService<iDataTable>({
         req,
         res,
