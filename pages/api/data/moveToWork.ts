@@ -6,15 +6,13 @@ import { tPrisma } from '../../../Backend/types';
 import { iDataTable } from '../../../Shared/Types/interfaces';
 
 export default async function moveToWork(req: NextApiRequest, res: NextApiResponse) {
+    console.log('moveToWork', 'cookie', req.cookies);
+
     await fetchService<iDataTable>({
         req,
         res,
         validation: (prisma, user) => validateLeftovers(prisma, req, user),
-        fetch: (prisma: tPrisma) =>
-            postNewItems(
-                prisma,
-                req,
-            ),
+        fetch: (prisma: tPrisma) => postNewItems(prisma, req),
         isSendUsersNewMaxId: true,
     });
 }
