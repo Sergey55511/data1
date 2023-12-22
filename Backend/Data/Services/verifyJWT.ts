@@ -17,6 +17,7 @@ export const varifyJWT = async (
     >,
 ) => {
     const cookies = req.cookies as iCookies;
+    console.log('cookies', cookies);
     try {
         const atkn = jwt.verify(cookies.atkn, KEY) as iUser;
         return createAtkn(atkn);
