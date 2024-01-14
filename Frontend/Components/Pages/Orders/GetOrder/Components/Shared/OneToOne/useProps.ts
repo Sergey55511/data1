@@ -14,6 +14,7 @@ export interface iProps {
     stateId: number;
     isShowChannel?: boolean;
     isCheckLosses?: boolean;
+    isCheckGarbage?: boolean;
     defect?: boolean;
     pruning?: boolean;
     garbage?: boolean;
@@ -34,6 +35,7 @@ interface iState {
 
 export const useProps = ({
     isCheckLosses,
+    isCheckGarbage,
     isShowChannel,
     record,
     stateId,
@@ -63,6 +65,9 @@ export const useProps = ({
 
         if (isCheckLosses) {
             if (state.losses! < 0) return false;
+        }
+        if (isCheckGarbage) {
+            return !!state.garbage;
         }
         if (isShowChannel) {
             if (!state.channel) return false;
@@ -101,7 +106,7 @@ export const useProps = ({
             defect: state.defect,
             pruning: state.pruning,
             moveBack: state.moveBack,
-            garbage: state.moveBack,
+            garbage: state.garbage,
             record,
             setIsLoading,
             postOrderResult: OperationStore.postOrderResult.bind(OperationStore),

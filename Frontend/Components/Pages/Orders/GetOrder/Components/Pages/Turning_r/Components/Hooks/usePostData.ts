@@ -23,7 +23,6 @@ export const usePostData = () => {
             setState,
             losses,
             record,
-            garbage,
             defect,
             moveBack,
             date,
@@ -32,7 +31,6 @@ export const usePostData = () => {
             setState: Dispatch<SetStateAction<iState[]>>;
             losses: number;
             record: iData;
-            garbage?: tValue;
             defect?: tValue;
             moveBack?: tValue;
             date?: moment.Moment;
@@ -92,7 +90,6 @@ export const usePostData = () => {
                 record,
                 data,
                 losses,
-                garbage,
                 defect,
                 moveBack,
             });

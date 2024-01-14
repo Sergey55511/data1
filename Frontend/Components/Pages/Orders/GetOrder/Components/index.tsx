@@ -241,6 +241,7 @@ export const GetOrderSwitcher = ({
                     record={record}
                     stateId={STATE.sliced.id}
                     isCheckLosses
+                    isCheckGarbage
                     defect
                     garbage
                 />

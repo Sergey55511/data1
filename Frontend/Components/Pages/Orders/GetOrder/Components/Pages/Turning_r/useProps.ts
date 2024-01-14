@@ -89,7 +89,7 @@ export const useProps = ({ record, operationId, stateId }: iProps) => {
                 widthIn: new Field('widthIn', 'Вес гр.'),
                 duplicate: false,
             };
-            if (operationId == OPERATIONS.slice.id) newRow.stateId.value = stateId;
+            newRow.stateId.value = stateId;
             const res: iState[] = [...prev, newRow];
             return res;
         });
