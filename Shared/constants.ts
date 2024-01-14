@@ -51,6 +51,7 @@ export const OPERATIONS = {
     assembleBijouterie: { id: 53 }, //Сборка Бижутерия
     resortingElements: { id: 54 }, //Пересорт элементов
     mixingState: { id: 55 }, //Смешивание состояний
+    turning_r: { id: 56 }, //обточка р
 };
 export const STATE = {
     washed: { id: 1 },
