@@ -12,6 +12,7 @@ import { SortingInventory } from './Pages/SortingInventory';
 import { SortingInventoryElements } from './Pages/SortingInventoryElements';
 import { SortingLength } from './Pages/SortingLength';
 import { SortingPrunings } from './Pages/SortingPrunings';
+import { TurningR } from './Pages/Turning_r';
 import { OneToOne } from './Shared/OneToOne';
 
 export const GetOrderSwitcher = ({
@@ -242,8 +243,17 @@ export const GetOrderSwitcher = ({
                     record={record}
                     stateId={STATE.sliced.id}
                     isCheckLosses
+                    isCheckGarbage
                     defect
                     garbage
+                />
+            );
+        case OPERATIONS.turning_r.id:
+            return (
+                <TurningR
+                    record={record}
+                    stateId={STATE.turned.id}
+                    operationId={OPERATIONS.turning_r.id}
                 />
             );
         case OPERATIONS.sortingLength.id:
