@@ -214,6 +214,8 @@ export const GetOrderSwitcher = ({
                     record={record}
                     stateId={STATE.grindedSuper.id}
                     workpiecetypeId={WORKPIECETYPE.grindingFormated.id}
+                    resetColor
+                    resetGrade
                 />
             );
         case OPERATIONS.grindingCrumpledBall.id:

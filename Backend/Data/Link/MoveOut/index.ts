@@ -12,7 +12,9 @@ export const moveOut = async (
 
     const key = makeRandomString();
     const value = encrypt(key);
-    const { atkn, rtkn } = cookies;
+
+    const atkn = cookies?.atkn;
+    const rtkn = cookies?.rtkn;
 
     try {
         await axios({

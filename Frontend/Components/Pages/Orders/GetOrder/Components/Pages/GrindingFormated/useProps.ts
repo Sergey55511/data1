@@ -2,7 +2,12 @@ import { notification } from 'antd';
 import moment from 'moment';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import { TYPES, WORKPIECETYPE } from '../../../../../../../../Shared/constants';
+import {
+    COLOR,
+    GRADE,
+    TYPES,
+    WORKPIECETYPE,
+} from '../../../../../../../../Shared/constants';
 import { round } from '../../../../../../../../Shared/Helpers';
 import { iData, iField } from '../../../../../../../../Shared/Types/interfaces';
 import { useStores } from '../../../../../../../Store/useStores';
@@ -26,9 +31,17 @@ export interface iProps {
     record: iData;
     stateId: number;
     workpiecetypeId: number;
+    resetColor?: boolean;
+    resetGrade?: boolean;
 }
 
-export const useProps = ({ record, stateId, workpiecetypeId }: iProps) => {
+export const useProps = ({
+    record,
+    stateId,
+    workpiecetypeId,
+    resetColor,
+    resetGrade,
+}: iProps) => {
     const [moveBack, setMoveBack] = useState<tValue>(undefined);
     const { OperationStore } = useStores();
     const [date, setDate] = useState<moment.Moment | undefined>(moment());
@@ -122,6 +135,10 @@ export const useProps = ({ record, stateId, workpiecetypeId }: iProps) => {
             }
             return undefined;
         })();
+
+        const gradeId = resetGrade ? GRADE.mix.id : record.gradeId;
+        const colorId = resetColor ? COLOR.mix.id : record.colorId;
+
         const data: iData[] = state.map((item) => ({
             ...record,
             date,
@@ -133,6 +150,8 @@ export const useProps = ({ record, stateId, workpiecetypeId }: iProps) => {
             widthOut: undefined,
             widthIn: +item.widthIn.value!,
             stateId,
+            gradeId,
+            colorId,
             moneyIn: item.widthIn.value ? codeOneItem * +item.widthIn.value : 0,
         }));
 
