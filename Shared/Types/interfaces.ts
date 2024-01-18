@@ -49,6 +49,7 @@ export interface iAssembleTakeApartData {
 }
 
 export interface iDataProductTable {
+    date?: moment.Moment | null | any;
     storeId?: number;
     model?: string;
     userId?: number;

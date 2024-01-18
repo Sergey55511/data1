@@ -8,5 +8,6 @@ export const postNewItems = async <T>(
     req: NextApiRequest,
 ): Promise<T> => {
     const { body, cookies } = req;
+
     return (await startQueue(() => executer({ ...body, cookies }))) as any;
 };

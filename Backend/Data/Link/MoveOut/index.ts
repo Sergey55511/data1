@@ -12,7 +12,6 @@ export const moveOut = async (
 
     const key = makeRandomString();
     const value = encrypt(key);
-    console.log('cookies', cookies);
 
     const atkn = cookies?.atkn;
     const rtkn = cookies?.rtkn;

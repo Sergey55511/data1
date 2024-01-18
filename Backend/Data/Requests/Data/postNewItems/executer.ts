@@ -7,10 +7,10 @@ export interface iData {
     data: iDataTable[];
     isSetNewPP?: boolean;
     isSetArticleId?: boolean;
-    qookies: iCookiesAuth;
+    cookies: iCookiesAuth;
 }
 
-export const executer = async ({ data, isSetNewPP, isSetArticleId, qookies }: iData) => {
+export const executer = async ({ data, isSetNewPP, isSetArticleId, cookies }: iData) => {
     let pp: number | undefined;
     let articleId: number | undefined;
 
@@ -46,7 +46,7 @@ export const executer = async ({ data, isSetNewPP, isSetArticleId, qookies }: iD
     const recipient = dataPrepared.find((item) => item.recipientId);
 
     if (recipient) {
-        await moveOutHoc(prisma, recipient, dataPrepared, qookies);
+        await moveOutHoc(prisma, recipient, dataPrepared, cookies);
     }
 
     return result;

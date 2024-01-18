@@ -7,6 +7,7 @@ export interface iParams extends iDataProductTable {}
 export const dal = (params: { [key: string]: any }): iParams => {
     const getNumber = (v: any) => (v ? +v : undefined);
     const data: iParams = {
+        date: params.date,
         storeId: getNumber(params.storeId),
         pp: getNumber(params.pp),
         model: params.model,

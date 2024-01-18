@@ -11,7 +11,7 @@ export const OPERATIONS = {
     turning: { id: 10 }, //обточка
     makeBall: { id: 11 }, //шарокрут
     makeSuperBall: { id: 12 }, //Докат
-    grindingSuper: { id: 13 }, //Шлифовака
+    grindingSuper: { id: 13 }, //Шлифовка
     polishing: { id: 14 }, //Полировка
     slice: { id: 15 }, //Распил
     sale: { id: 16 }, //Отгрузка
@@ -110,6 +110,9 @@ export const WORKPIECETYPE = {
 };
 export const GRADE = {
     mix: { id: 1 },
+};
+export const COLOR = {
+    mix: { id: 5 },
 };
 export const TYPES = {
     PRESS: { id: 8 }, //пресс
