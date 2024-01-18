@@ -1,6 +1,7 @@
 export const schema = {
     type: 'object',
     properties: {
+        date: { type: 'string' },
         storeId: { type: 'integer' },
         pp: { type: 'integer' },
         model: { type: 'string' },
