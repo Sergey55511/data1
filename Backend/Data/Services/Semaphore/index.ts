@@ -1,6 +1,7 @@
 import { MyError } from '../../../../Shared/Classes/error';
 
 let isFree = true;
+let numberOfQueue = 0;
 
 export const startQueue = (callBack: () => any) => {
     const startDate = new Date();
@@ -17,6 +18,8 @@ export const startQueue = (callBack: () => any) => {
 
         //try to execute callback
         const queueProvider = async (reset: () => void) => {
+            console.log('test queue:', new Date(), isFree, numberOfQueue);
+
             const rejectError = (err: any) => {
                 reset();
                 reject(err);
@@ -24,6 +27,7 @@ export const startQueue = (callBack: () => any) => {
             try {
                 if (isFree) {
                     isFree = false;
+                    numberOfQueue++;
                     resolve(await callBack());
                     reset();
                 }
