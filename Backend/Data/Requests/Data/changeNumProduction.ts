@@ -7,33 +7,38 @@ export const changeNumProduction = async <T>(
     prisma: tPrisma,
     data: iDataTable[],
 ): Promise<T> => {
-    const tmpData = (item: iDataTable) => ({
-        ...item,
-        date: moment(item.date)?.toDate(),
-        operationId: OPERATIONS.changeProduction.id,
-        pp: undefined,
-        task: undefined,
-        productionId: undefined,
-    });
+    try {
+        const tmpData = (item: iDataTable) => ({
+            ...item,
+            date: moment(item.date)?.toDate(),
+            operationId: OPERATIONS.changeProduction.id,
+            pp: undefined,
+            task: undefined,
+            productionId: undefined,
+        });
 
-    const dateOut = data?.map(tmpData);
-    const dateIn = data?.map((item) => ({
-        ...tmpData(item),
-        task: undefined,
-        widthIn: item.widthOut,
-        widthOut: undefined,
-        moneyIn: item.moneyOut,
-        moneyOut: undefined,
-        countItemsOut: undefined,
-        countItemsIn: item.countItemsOut,
-        productionId: item.productionId,
-    }));
+        const dateOut = data?.map(tmpData);
+        const dateIn = data?.map((item) => ({
+            ...tmpData(item),
+            task: undefined,
+            widthIn: item.widthOut,
+            widthOut: undefined,
+            moneyIn: item.moneyOut,
+            moneyOut: undefined,
+            countItemsOut: undefined,
+            countItemsIn: item.countItemsOut,
+            productionId: item.productionId,
+        }));
 
-    await prisma.data.createMany({
-        data: dateOut,
-    });
+        await prisma.data.createMany({
+            data: dateOut,
+        });
 
-    return (await prisma.data.createMany({
-        data: dateIn,
-    })) as any;
+        return (await prisma.data.createMany({
+            data: dateIn,
+        })) as any;
+    } catch (err) {
+        console.log('err changeNumProduction:', new Date(), err);
+        throw err;
+    }
 };
