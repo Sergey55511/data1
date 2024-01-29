@@ -43,6 +43,8 @@ export const executer = async ({ data, isSetNewPP, isSetArticleId, cookies }: iD
     result.pp = pp;
     result.articleId = articleId;
 
+    console.log('postNewItems', new Date(), 'pp', pp, 'articleId', articleId);
+
     const recipient = dataPrepared.find((item) => item.recipientId);
 
     if (recipient) {
