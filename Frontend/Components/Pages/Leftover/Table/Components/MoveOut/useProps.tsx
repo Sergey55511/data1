@@ -90,7 +90,18 @@ export const useProps = (props: iProps) => {
         if (test(width)) return false;
         if (test(count)) return false;
         if (isMinus(props.record.width!, width)) return false;
-        if (count) if ((props.record.count ?? 0) - +count < 0) return false;
+
+        if (props.record.count) {
+            if (count) {
+                const countNum = +count;
+                if (!countNum) return false;
+                if (props.record.count - countNum < 0) {
+                    console.log('hello');
+                    return false;
+                }
+            }
+        }
+
         if (props.isShowCount) {
             if (!count) return false;
         }

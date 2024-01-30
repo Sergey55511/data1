@@ -67,43 +67,43 @@ export const Form = ({
                     </>
                 )}
             </div>
-            <div className="flex">
-                <div className="item">
-                    <div className="inputWrapper">
+
+            <div className="item">
+                <div className="inputWrapper">
+                    <InputNumber
+                        placeholder="Выдать"
+                        disabled={!record.width}
+                        value={props.width}
+                        onChangeHandler={(v) => props.setWidth(v)}
+                        onKeyDown={props.onPressEnterHandler}
+                        suffix={
+                            <Button
+                                size="small"
+                                type="text"
+                                onClick={() => props.setWidth(record.width)}
+                            >
+                                всё
+                            </Button>
+                        }
+                    />
+                    <InputNumber
+                        placeholder="Плановое время"
+                        value={props.workingTimePlan}
+                        onChangeHandler={(v) => props.setWorkingTimePlan(v)}
+                        onKeyDown={props.onPressEnterHandler}
+                    />
+                    {isShowCount && (
                         <InputNumber
                             placeholder="Выдать"
-                            disabled={!record.width}
-                            value={props.width}
-                            onChangeHandler={(v) => props.setWidth(v)}
-                            onKeyDown={props.onPressEnterHandler}
-                            suffix={
-                                <Button
-                                    size="small"
-                                    type="text"
-                                    onClick={() => props.setWidth(record.width)}
-                                >
-                                    всё
-                                </Button>
-                            }
-                        />
-                        <InputNumber
-                            placeholder="Плановое время"
-                            value={props.workingTimePlan}
-                            onChangeHandler={(v) => props.setWorkingTimePlan(v)}
+                            disabled={!record.count}
+                            value={props.count}
+                            onChangeHandler={(v) => props.setCount(v)}
                             onKeyDown={props.onPressEnterHandler}
                         />
-                        {isShowCount && (
-                            <InputNumber
-                                placeholder="Выдать"
-                                disabled={!record.count}
-                                value={props.count}
-                                onChangeHandler={(v) => props.setCount(v)}
-                                onKeyDown={props.onPressEnterHandler}
-                            />
-                        )}
-                    </div>
+                    )}
                 </div>
             </div>
+
             <div>
                 <div className="selectButtons">
                     <div>№ производства {props.numProd || record.productionId}</div>
