@@ -14,7 +14,7 @@ model Crypto {
 
 model Data {
   id               Int            @id @default(autoincrement())
-  dateSystem       DateTime       @default(now()) @db.Date()
+  dateSystem       DateTime       @default(now())
   date             DateTime       @default(now()) @db.Date()
   lot              Float?
   numDocument      String?
@@ -73,7 +73,7 @@ model Data {
 
 model OptimizedData {
   id               Int            @id @default(autoincrement())
-  dateSystem       DateTime       @default(now()) @db.Date()
+  dateSystem       DateTime       @default(now())
   date             DateTime       @default(now()) @db.Date()
   lot              Float?
   numDocument      String?
@@ -132,6 +132,7 @@ model OptimizedData {
 
 model DataBijouterie {
   id                  Int                 @id @default(autoincrement())
+  dateSystem          DateTime?           @default(now())
   date                DateTime?           @default(now()) @db.Date()
   pp                  Int?
   storeId             Int
@@ -151,7 +152,7 @@ model DataBijouterie {
 
 model DataProduct {
   id              Int             @id @default(autoincrement())
-  dateSystem      DateTime?       @default(now()) @db.Date()
+  dateSystem      DateTime?       @default(now())
   date            DateTime?       @default(now()) @db.Date()
   pp              Int?
   storeId         Int?

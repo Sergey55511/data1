@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE "Data" ALTER COLUMN "dateSystem" SET DATA TYPE TIMESTAMP(3);
