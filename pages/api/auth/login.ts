@@ -7,6 +7,7 @@ import { KEY } from './registration';
 import { MyError } from '../../../Shared/Classes/error';
 import { resError } from '../../../Shared/Helpers';
 import prisma from '../../../Backend/Data/Services/prisma';
+import { logger } from '../../../Backend/Helpers/logger';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     if (req.method == 'POST') {
@@ -42,6 +43,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             throw new MyError(401);
         } catch (err) {
             resError(err, res);
+        } finally {
+            logger(res);
         }
     }
 }

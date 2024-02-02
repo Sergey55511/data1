@@ -3,6 +3,7 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 import { varifyJWT } from '../../../Backend/Data/Services/verifyJWT';
 import { resError } from '../../../Shared/Helpers';
 import prisma from '../../../Backend/Data/Services/prisma';
+import { logger } from '../../../Backend/Helpers/logger';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     try {
@@ -15,5 +16,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         }
     } catch (err) {
         resError(err, res);
+    } finally {
+        logger(res);
     }
 }

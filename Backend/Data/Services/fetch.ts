@@ -5,6 +5,7 @@ import { tPrisma } from '../../types';
 import { sendUsersNewMaxId } from './sendUsersNewMaxId';
 import { iUser } from '../../../Shared/Types/interfaces';
 import prisma from './prisma';
+import { logger } from '../../Helpers/logger';
 
 export const fetchService = async <T>({
     req,
@@ -37,5 +38,7 @@ export const fetchService = async <T>({
         res.status(204).json('no content');
     } catch (err) {
         resError(err, res);
+    } finally {
+        logger(res);
     }
 };
