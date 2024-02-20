@@ -1,4 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
+import { OPERATIONS } from '../../../../../../../../../Shared/constants';
 import { iData } from '../../../../../../../../../Shared/Types/interfaces';
 import { getSizeRange, getWorkpieceType } from '../../../../../../../../Store/Lists/api';
 import { useStores } from '../../../../../../../../Store/useStores';
@@ -21,8 +22,8 @@ export const useData = (record: iData, state: iState) => {
         },
     );
     const workpieceType = useQuery(
-        ['sizeRange', storeId, workpieceTypeId],
-        () => getWorkpieceType({ storeId }),
+        ['workpieceType', storeId, workpieceTypeId, OPERATIONS.patifon2.id],
+        () => getWorkpieceType({ storeId, operationId: OPERATIONS.patifon2.id }),
         {
             enabled: !!storeId,
         },
