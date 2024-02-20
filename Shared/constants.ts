@@ -52,6 +52,7 @@ export const OPERATIONS = {
     resortingElements: { id: 54 }, //Пересорт элементов
     mixingState: { id: 55 }, //Смешивание состояний
     turning_r: { id: 56 }, //обточка р
+    patifon2: { id: 57 }, //Патифон 2
 };
 export const STATE = {
     washed: { id: 1 },
@@ -93,6 +94,7 @@ export const STATE = {
     calibratedFormated: { id: 39 }, //Калиброванный МШ
     glued2: { id: 40 }, //Клеенный 2
     washed2: { id: 41 }, //Мытый 2
+    calibrated2: { id: 44 }, //Калиброванный 2
 };
 export const WORKPIECETYPE = {
     stone: { id: 1 },
