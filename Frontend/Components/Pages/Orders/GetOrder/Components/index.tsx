@@ -6,6 +6,7 @@ import { MakeBall } from './Pages/MakeBall';
 import { MakeMinalets } from './Pages/makeMinalets';
 import { Patifon } from './Pages/Patifon';
 import { Patifon2 } from './Pages/Patifon2';
+import { PatifonM } from './Pages/PatifonM';
 import { Slicing } from './Pages/Slicing';
 import { Sorting } from './Pages/Sorting';
 import { SortingElements } from './Pages/SortingElements';
@@ -191,6 +192,8 @@ export const GetOrderSwitcher = ({
             return <Patifon record={record} stateId={STATE.calibratedFormated.id} />;
         case OPERATIONS.patifon2.id:
             return <Patifon2 record={record} stateId={STATE.calibrated2.id} />;
+        case OPERATIONS.patifonM.id:
+            return <PatifonM record={record} stateId={STATE.grindedMsc.id} />;
         case OPERATIONS.turning.id:
             return <OneToOne record={record} stateId={STATE.turned.id} isCheckLosses />;
         case OPERATIONS.makeBall.id:
