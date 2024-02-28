@@ -53,6 +53,7 @@ export const OPERATIONS = {
     mixingState: { id: 55 }, //Смешивание состояний
     turning_r: { id: 56 }, //обточка р
     patifon2: { id: 57 }, //Патифон 2
+    patifonM: { id: 58 }, //Патифон М
 };
 export const STATE = {
     washed: { id: 1 },
