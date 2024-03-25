@@ -124,8 +124,9 @@ export const getShared = (storeId: number) => {
 
 export const getMoveIn = (storeId: number, numDocument: string) => {
     return axios({
-        url: `/api/data/shared/getMoveIn?storeId=${storeId}&numDocument=${numDocument}`,
+        url: `/api/data/shared/getMoveIn`,
         method: 'GET',
+        params: { storeId, numDocument },
     }).then((res) => res.data);
 };
 
