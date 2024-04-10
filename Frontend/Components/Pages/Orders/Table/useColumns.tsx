@@ -128,5 +128,5 @@ export const useColumns = (
             title: 'В работе шт.',
         });
 
-    return { columns };
+    return { columns, isMSC };
 };
