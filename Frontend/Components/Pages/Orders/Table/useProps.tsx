@@ -2,23 +2,31 @@ import { useStores } from '../../../../Store/useStores';
 import type { TableProps } from 'antd/es/table';
 import { FilterValue } from 'antd/es/table/interface';
 import { iData } from '../../../../../Shared/Types/interfaces';
-import { useState } from 'react';
+import { Dispatch, SetStateAction, useState } from 'react';
 import { useRouter } from 'next/router';
 import { useColumns } from './useColumns';
 import { ROUTES } from '../../constants';
 import modal from 'antd/lib/modal';
-import { useMutation } from '@tanstack/react-query';
 import { notification } from 'antd';
 import { prepareDataTable } from '../../../Helpers';
+import { getFilteredleftovers } from '../../../Shared/Table/Helpers/getFilteredleftovers';
 
-export const useProps = (isGetOut?: boolean) => {
-    const [filters, setFilters] = useState<Record<string, FilterValue | null>>({});
+export interface iProps {
+    isGetOut?: boolean;
+    filters: Record<string, FilterValue | null>;
+    setFilters: Dispatch<SetStateAction<Record<string, FilterValue | null>>>;
+}
 
+export const useProps = ({ isGetOut, filters, setFilters }: iProps) => {
     const { OperationStore, loginStore, UIStore } = useStores();
     const orders = isGetOut ? OperationStore.ordersGetOut : OperationStore.orders;
     const data = orders.map((item, index) => ({ ...item, key: index }));
+    const filteredleftovers = getFilteredleftovers({ data, filters });
+    const { columns, isMSC } = useColumns(filters, data);
 
-    const { columns } = useColumns(filters, data);
+    const countKey: keyof (typeof filteredleftovers)[number] | undefined = isMSC
+        ? 'count'
+        : undefined;
 
     const router = useRouter();
 
@@ -63,5 +71,5 @@ export const useProps = (isGetOut?: boolean) => {
         };
     };
 
-    return { handleChange, onRowHandler, data, columns };
+    return { handleChange, onRowHandler, data, columns, filteredleftovers, countKey };
 };

@@ -28,6 +28,13 @@ export const leftoversExcel = () => {
         method: 'GET',
     }).then((res) => res.data);
 };
+export const ordersExcel = () => {
+    return axios({
+        url: `/api/data/orders/excel`,
+        responseType: 'blob',
+        method: 'GET',
+    }).then((res) => res.data);
+};
 
 interface iPropsListOperation {
     start: moment.Moment;
