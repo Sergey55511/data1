@@ -1,17 +1,22 @@
 import { observer } from 'mobx-react-lite';
+import { Counter } from '../../../Shared/Counter';
 import { TableApp } from '../../../Shared/Table';
-import { useProps } from './useProps';
+import { iProps, useProps } from './useProps';
 
-export const OrdersTable = observer(({ isGetOut }: { isGetOut?: boolean }) => {
-    const { handleChange, onRowHandler, data, columns } = useProps(isGetOut);
+export const OrdersTable = observer((props: iProps) => {
+    const { handleChange, onRowHandler, data, columns, filteredleftovers, countKey } =
+        useProps(props);
 
     return (
-        <TableApp
-            onRow={onRowHandler}
-            columns={columns}
-            dataSource={data}
-            onChange={handleChange}
-            xScroll={1400}
-        />
+        <>
+            <Counter data={filteredleftovers} countKey={countKey} widthKey="width" />
+            <TableApp
+                onRow={onRowHandler}
+                columns={columns}
+                dataSource={data}
+                onChange={handleChange}
+                xScroll={1400}
+            />
+        </>
     );
 });

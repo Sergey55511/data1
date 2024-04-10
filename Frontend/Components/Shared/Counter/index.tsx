@@ -1,4 +1,3 @@
-import { iData } from '../../../../Shared/Types/interfaces';
 import { Wrapper } from './style';
 
 interface iCount {
@@ -28,8 +27,8 @@ export const Counter = <T extends Object>({
     return (
         <Wrapper>
             <div>строк: {data.length.toLocaleString()}</div>
-            <div>вес: {count.width.toLocaleString()}</div>
-            <div>шт: {count.count.toLocaleString()}</div>
+            {!!widthKey && <div>вес: {count.width.toLocaleString()}</div>}
+            {!!countKey && <div>шт: {count.count.toLocaleString()}</div>}
         </Wrapper>
     );
 };
