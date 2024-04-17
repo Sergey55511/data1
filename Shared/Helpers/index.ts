@@ -4,7 +4,8 @@ import { iQueryFilters, iUser } from '../Types/interfaces';
 
 export const resError = (err: any, res: NextApiResponse) => {
     const error = err as MyError;
-    if (error?.status != 401) console.log(new Date().toLocaleString(), 'error', error);
+    if (error?.status != 401)
+        console.log(new Date().toLocaleString('ru-RU'), 'error', error);
 
     res.status(error?.status || 500).json(err);
 };

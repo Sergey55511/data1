@@ -88,7 +88,7 @@ export const useRowData = (produstionData?: iPrintBlank[]): iTableRowData[] => {
                 { value: '', class: 'gray' },
                 { value: '', class: 'gray' },
                 { value: 'Итого, кг:', class: 'gray' },
-                { value: ttlSum?.toLocaleString() ?? '', class: 'gray' },
+                { value: ttlSum?.toLocaleString('ru-RU') ?? '', class: 'gray' },
             ],
             moveIn: [
                 { value: 'Итого, кг:', class: 'gray' },
