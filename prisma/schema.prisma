@@ -350,6 +350,7 @@ model FullModels {
   BijouterieBridge BijouterieBridge[]
   DataProduct      DataProduct[]
   OptimizedData    OptimizedData[]
+  fullModel        String?
 }
 
 model LengthModel {
