@@ -1,7 +1,7 @@
 UPDATE
-    public."fullModels"
+    public."FullModels"
 SET
-    "FullModel" =(
+    "fullModel" =(
         SELECT
             concat(
                 "model",
