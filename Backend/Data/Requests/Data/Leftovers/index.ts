@@ -1,7 +1,6 @@
 import { PrismaPromise } from '@prisma/client';
 import { iUser } from '../../../../../Shared/Types/interfaces';
 import { tPrisma } from '../../../../types';
-import { fullModelSQL } from '../constants';
 
 export const leftovers = <T>(prisma: tPrisma, user: iUser): PrismaPromise<T> => {
     const storeId = user.storeId;
@@ -70,7 +69,7 @@ export const leftovers = <T>(prisma: tPrisma, user: iUser): PrismaPromise<T> => 
 			"productionId",
 			"Productions".description as "production",
             "fullModelId",
-			${fullModelSQL},
+			"fullModel",
             "fractionId",
             "fraction",
 			"colorId",
@@ -114,7 +113,7 @@ export const leftovers = <T>(prisma: tPrisma, user: iUser): PrismaPromise<T> => 
 			"productionId",
 			"Productions".description,
 			"fullModelId",
-			${fullModelSQL},
+			"fullModel",
             "fractionId",
             "fraction",
             "colorId",
@@ -131,6 +130,6 @@ export const leftovers = <T>(prisma: tPrisma, user: iUser): PrismaPromise<T> => 
             state,
             lot
         HAVING COALESCE(round(sum("widthIn")::numeric,2),0)-COALESCE(round(coalesce(sum("widthOut"),0)::numeric,2),0)>0
-        ORDER BY ${fullModelSQL} asc;
+        ORDER BY "fullModel" asc;
     `);
 };

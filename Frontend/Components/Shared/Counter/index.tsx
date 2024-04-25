@@ -26,9 +26,9 @@ export const Counter = <T extends Object>({
 
     return (
         <Wrapper>
-            <div>строк: {data.length.toLocaleString()}</div>
-            {!!widthKey && <div>вес: {count.width.toLocaleString()}</div>}
-            {!!countKey && <div>шт: {count.count.toLocaleString()}</div>}
+            <div>строк: {data.length.toLocaleString('ru-RU')}</div>
+            {!!widthKey && <div>вес: {count.width.toLocaleString('ru-RU')}</div>}
+            {!!countKey && <div>шт: {count.count.toLocaleString('ru-RU')}</div>}
         </Wrapper>
     );
 };
