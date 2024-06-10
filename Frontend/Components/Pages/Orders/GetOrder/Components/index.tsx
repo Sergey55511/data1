@@ -139,7 +139,7 @@ export const GetOrderSwitcher = ({
         case OPERATIONS.sortingN.id:
             return <Sorting record={record} stateId={STATE.sortedN.id} />;
         case OPERATIONS.sortingA.id:
-            return <Sorting record={record} stateId={STATE.sortedA.id} />;
+            return <Sorting record={record} stateId={STATE.sortedA.id} isFraction />;
         case OPERATIONS.glue.id:
             return (
                 <OneToOne

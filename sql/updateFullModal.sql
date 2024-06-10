@@ -22,7 +22,7 @@ SET
                         WHEN "length" IS NOT NULL THEN '_'
                     END
                 END,
-                "length"
+                REPLACE(length :: text, '.', ',')
             ) as name
         FROM
             public."FullModels" as fm
