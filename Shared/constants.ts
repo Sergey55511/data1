@@ -90,6 +90,7 @@ export const STATE = {
     minaretFinishedElement: { id: 32 },
     mixed: { id: 34 },
     createdProduct: { id: 35 },
+    disassembled: { id: 36 }, //разобранный
     prunings: { id: 37 },
     grindedCrumpledBall: { id: 38 }, //Шлифованный МШ
     calibratedFormated: { id: 39 }, //Калиброванный МШ

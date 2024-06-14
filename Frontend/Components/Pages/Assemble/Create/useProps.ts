@@ -2,6 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import { TableProps } from 'antd';
 import { FilterValue } from 'antd/es/table/interface';
 import { Dispatch, SetStateAction, useState } from 'react';
+import { STATE } from '../../../../../Shared/constants';
 import { iData } from '../../../../../Shared/Types/interfaces';
 import { leftoversAssemble } from '../../../../Store/OperationStore/Api';
 import { useStores } from '../../../../Store/useStores';
@@ -20,7 +21,12 @@ export const useProps = ({
 
     const assembleLeftovers = useQuery(
         ['assembleLeftovers', storeId],
-        () => leftoversAssemble(storeId),
+        () =>
+            leftoversAssemble(storeId, [
+                STATE.sertedElements.id,
+                STATE.minaretFinishedElement.id,
+                STATE.disassembled.id,
+            ]),
         { enabled: !!storeId, onSuccess: () => OperationStore.getMaxId() },
     );
     const { columns } = useColumns({ data: assembleLeftovers.data, filters });

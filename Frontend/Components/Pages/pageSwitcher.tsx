@@ -13,6 +13,7 @@ import { NewItemBillets } from './Operations/MoveIn/NewItemBillets';
 import { MoveInDocument } from './Reports/MoveInDocuments';
 import { AssembleBijouterie } from './AssembleBijouterie';
 import { Bijouterie } from './Bijouterie';
+import { AssembleComplects } from './AssembleComplects';
 
 export const PageSwitcher = ({ page }: { page: tPages }) => {
     switch (page) {
@@ -60,6 +61,8 @@ export const PageSwitcher = ({ page }: { page: tPages }) => {
             return <Assemble />;
         case pages.assembleBijouterie:
             return <AssembleBijouterie />;
+        case pages.assembleComplects:
+            return <AssembleComplects />;
     }
     return <></>;
 };

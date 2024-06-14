@@ -73,10 +73,15 @@ export const listMoveInDocument = (params: {
     }).then((res) => res.data as iData[]);
 };
 
-export const leftoversAssemble = (storeId: number) => {
+export const leftoversAssemble = (
+    storeId: number,
+    stateId: number[],
+    workpieceTypeId?: number,
+) => {
     return axios({
-        url: `/api/data/leftovers/assemble?storeId=${storeId}`,
+        url: `/api/data/leftovers/assemble`,
         method: 'GET',
+        params: { storeId, stateId, workpieceTypeId },
     }).then((res) => res.data as iData[]);
 };
 

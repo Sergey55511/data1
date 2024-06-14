@@ -130,6 +130,11 @@ export const useItems = () => {
                     icon: <DeploymentUnitOutlined />,
                 },
                 {
+                    label: 'Комплектовка',
+                    key: ROUTES.assembleComplects,
+                    icon: <DeploymentUnitOutlined />,
+                },
+                {
                     label: 'Сборка бижутерия',
                     key: ROUTES.assembleBijouterie,
                     icon: <DeploymentUnitOutlined />,
