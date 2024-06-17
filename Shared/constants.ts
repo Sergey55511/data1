@@ -129,6 +129,7 @@ export const STORES = {
 export const RESULTASSEMBLE = {
     chaplet: { id: 1 }, //четки
     beads: { id: 2 }, //бусы
+    complect: { id: 3 }, //комплекты
 };
 
 export const ROLES = {

@@ -248,11 +248,11 @@ export const postOrderResult = (data: iDataTable[]) => {
     }).then((res) => res.data);
 };
 
-export const getDataProduct = (storeId: number) => {
+export const getDataProduct = (storeId: number, workpieceTypeId?: number) => {
     return axios({
         url: `/api/dataproduct`,
         method: 'GET',
-        params: { storeId },
+        params: { storeId, workpieceTypeId },
     }).then((res) => res.data as iDataProduct[]);
 };
 

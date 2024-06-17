@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { iData, iProduction } from '../../../../Shared/Types/interfaces';
+import { iData, iDataProduct } from '../../../../Shared/Types/interfaces';
 
 export enum eTypeButton {
     complects = 'complects',
@@ -8,10 +8,23 @@ export enum eTypeButton {
 }
 export const useProps = () => {
     const [stateButton, setStateButton] = useState<eTypeButton>(eTypeButton.complects);
-    const [complect, setComplect] = useState<iProduction>();
+    const [complect, setComplect] = useState<iDataProduct[]>([]);
     const [minaret, setMinaret] = useState<iData[]>([]);
 
     const disabledGetResult = !(complect && minaret);
 
-    return { stateButton, setStateButton, disabledGetResult, minaret, setMinaret };
+    const isSelectedMinaret = !!minaret?.length;
+    const isSelectedComplect = !!complect?.length;
+
+    return {
+        stateButton,
+        setStateButton,
+        disabledGetResult,
+        minaret,
+        setMinaret,
+        isSelectedMinaret,
+        complect,
+        setComplect,
+        isSelectedComplect,
+    };
 };

@@ -3,6 +3,7 @@ import { Title } from '../../Shared/Title';
 import { eTypeButton, useProps } from './useProps';
 import { Wrapper } from './style';
 import { SelectMinaret } from './SelectMinaret';
+import { SelectComplect } from './SelectComplect';
 
 export const AssembleComplects = () => {
     const params = useProps();
@@ -15,12 +16,20 @@ export const AssembleComplects = () => {
                         value={params.stateButton}
                         onChange={(e) => params.setStateButton(e.target.value)}
                     >
-                        <Badge dot={true} color="green" style={{ zIndex: 1 }}>
+                        <Badge
+                            dot={params.isSelectedComplect}
+                            color="green"
+                            style={{ zIndex: 1 }}
+                        >
                             <Radio.Button value={eTypeButton.complects}>
                                 Комплекты
                             </Radio.Button>
                         </Badge>
-                        <Badge dot={true} color="green" style={{ zIndex: 1 }}>
+                        <Badge
+                            dot={params.isSelectedMinaret}
+                            color="green"
+                            style={{ zIndex: 1 }}
+                        >
                             <Radio.Button value={eTypeButton.minarets}>
                                 Минареты
                             </Radio.Button>
@@ -40,25 +49,11 @@ export const AssembleComplects = () => {
                     setMinaret={params.setMinaret}
                     minaret={params.minaret}
                 />
-                <div>{params.stateButton}</div>
-                {/* {params.stateButton == 'assembleCreate' && (
-                    <AssembleCreate
-                        filters={params.filters}
-                        setFilters={params.setFilters}
-                        setSelectedRows={params.setSelectedRows}
-                        selectedRows={params.selectedRows}
-                    />
-                )}
-                {params.stateButton == 'assembleGet' && (
-                    <AssembleGet
-                        selectedRows={params.selectedRows}
-                        setSelectedRows={params.setSelectedRows}
-                        state={params.state}
-                        setState={params.setState}
-                        model={params.model}
-                        setModel={params.setModel}
-                    />
-                )} */}
+                <SelectComplect
+                    stateButton={params.stateButton}
+                    complect={params.complect}
+                    setComplect={params.setComplect}
+                />
             </div>
         </Wrapper>
     );

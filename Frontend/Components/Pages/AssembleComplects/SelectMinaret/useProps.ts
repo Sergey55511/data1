@@ -39,7 +39,6 @@ export const useProps = (
         _sorter,
     ) => {
         setFilters(filters);
-        // setSortedInfo(sorter as SorterResult<DataType>);
     };
     const rowSelection: TableProps<iData>['rowSelection'] = {
         type: 'radio',
