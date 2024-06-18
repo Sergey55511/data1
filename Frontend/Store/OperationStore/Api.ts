@@ -6,6 +6,7 @@ import {
     iDataProductTable,
     iDataTable,
 } from '../../../Shared/Types/interfaces';
+import { tValue } from '../../Components/Shared/InputNumber';
 
 export const leftovers = (storeId: number) => {
     return axios({
@@ -46,6 +47,19 @@ interface iPropsListOperation {
     productionId?: number;
 }
 
+export const postAssembleComplect = (data: {
+    complect?: iDataProduct;
+    minaret?: iData;
+    model: string;
+    length: tValue;
+    width: tValue;
+}) => {
+    return axios({
+        url: `/api/dataproduct/complect`,
+        method: 'POST',
+        data,
+    }).then((res) => res.data);
+};
 export const listOperations = (params: iPropsListOperation) => {
     return axios({
         url: `/api/data/reports/listOperations`,

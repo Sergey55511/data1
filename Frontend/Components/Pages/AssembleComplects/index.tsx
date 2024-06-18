@@ -4,6 +4,7 @@ import { eTypeButton, useProps } from './useProps';
 import { Wrapper } from './style';
 import { SelectMinaret } from './SelectMinaret';
 import { SelectComplect } from './SelectComplect';
+import { GetResult } from './GetResult';
 
 export const AssembleComplects = () => {
     const params = useProps();
@@ -44,15 +45,22 @@ export const AssembleComplects = () => {
                 </div>
             </div>
             <div className="tableWrapperLeftovers">
+                <SelectComplect
+                    stateButton={params.stateButton}
+                    complect={params.complect}
+                    setComplect={params.setComplect}
+                />
                 <SelectMinaret
                     stateButton={params.stateButton}
                     setMinaret={params.setMinaret}
                     minaret={params.minaret}
                 />
-                <SelectComplect
+
+                <GetResult
                     stateButton={params.stateButton}
-                    complect={params.complect}
-                    setComplect={params.setComplect}
+                    complects={params.complect}
+                    minarets={params.minaret}
+                    resetRootState={params.resetRootState}
                 />
             </div>
         </Wrapper>

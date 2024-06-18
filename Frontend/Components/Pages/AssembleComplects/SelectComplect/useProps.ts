@@ -24,7 +24,7 @@ export const useProps = ({
         { enabled: !!loginStore.user.storeId },
     );
 
-    const data = dataProduct.data?.map((item, index) => ({ ...item, key: index }));
+    const data = dataProduct.data?.map((item) => ({ ...item, key: item.articleId }));
 
     const handleChange: TableProps<iDataProduct>['onChange'] = (
         _pagination,
@@ -39,7 +39,7 @@ export const useProps = ({
         onChange: (_selectedRowKeys: React.Key[], selectedRows: iDataProduct[]) => {
             setComplect(selectedRows);
         },
-        selectedRowKeys: complect?.map((_, index) => index),
+        selectedRowKeys: complect?.map((item) => item.articleId ?? ''),
     };
 
     const { columns } = useColumns({ data: dataProduct.data, filters });

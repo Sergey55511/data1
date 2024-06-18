@@ -48,8 +48,14 @@ export const useProps = (
 
     useEffect(() => {
         let res = '';
+        const isSetModel = (() => {
+            if (state.typeBillet.value == `${RESULTASSEMBLE.chaplet.id || ''}`)
+                return true;
+            if (state.typeBillet.value == `${RESULTASSEMBLE.complect.id || ''}`)
+                return true;
+        })();
 
-        if (state.typeBillet.value == `${RESULTASSEMBLE.chaplet.id || ''}`) {
+        if (isSetModel) {
             const minaretItem = selectedRows.find(
                 (item) => item.workpieceTypeId == WORKPIECETYPE.minaret.id,
             );

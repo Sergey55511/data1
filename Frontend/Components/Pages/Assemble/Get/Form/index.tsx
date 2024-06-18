@@ -1,5 +1,4 @@
 import { Radio, Space } from 'antd';
-import { iData } from '../../../../../../Shared/Types/interfaces';
 import { InputNumber } from '../../../../Shared/InputNumber';
 import { SelectField } from '../../../../Shared/SelectField';
 import { iProps } from '../useProps';
