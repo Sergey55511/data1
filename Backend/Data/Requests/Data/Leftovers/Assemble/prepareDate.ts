@@ -7,8 +7,12 @@ export const prepareDate = (user: iUser, req: NextApiRequest) => {
     let statesId = req.query?.['stateId[]'] as any[];
     const workpieceTypeId = req.query?.workpieceTypeId as number | undefined;
 
+    console.log('statesId', statesId);
+
     let stateFilter = '';
     if (statesId?.length) {
+        if (!Array.isArray(statesId)) statesId = [statesId];
+
         let inParams = '';
         statesId = statesId?.map((itm, i) => {
             const startIndex = workpieceTypeId ? 4 : 3;

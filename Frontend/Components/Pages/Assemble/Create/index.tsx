@@ -12,15 +12,18 @@ export const AssembleCreate = observer(
         setFilters,
         selectedRows,
         setSelectedRows,
+        stateId,
     }: {
         filters: Record<string, FilterValue | null>;
         setFilters: Dispatch<SetStateAction<Record<string, FilterValue | null>>>;
         selectedRows: iData[];
         setSelectedRows: Dispatch<SetStateAction<iData[]>>;
+        stateId: number[];
     }) => {
         const { data, columns, handleChange } = useProps({
             filters,
             setFilters,
+            stateId,
         });
 
         const rowSelection = {

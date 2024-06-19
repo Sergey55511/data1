@@ -22,7 +22,7 @@ export class State {
     }
 }
 
-export const useProps = () => {
+export const useProps = ({ stateResultId }: { stateResultId: number }) => {
     const [model, setModel] = useState('');
     const [errorText, setErrorText] = useState('');
     const [filters, setFilters] = useState<Record<string, FilterValue | null>>({});
@@ -130,7 +130,7 @@ export const useProps = () => {
         setErrorText('');
     };
 
-    const data = useData(state, model, resetState);
+    const data = useData(state, model, resetState, stateResultId);
 
     const submitHandler = () => {
         data.submitHandler.mutate(selectedRows);

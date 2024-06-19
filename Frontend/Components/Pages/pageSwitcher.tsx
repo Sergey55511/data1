@@ -13,7 +13,8 @@ import { NewItemBillets } from './Operations/MoveIn/NewItemBillets';
 import { MoveInDocument } from './Reports/MoveInDocuments';
 import { AssembleBijouterie } from './AssembleBijouterie';
 import { Bijouterie } from './Bijouterie';
-import { AssembleComplects } from './AssembleComplects';
+import { AssembleFromComplects } from './AssembleFromComplects';
+import { STATE } from '../../../Shared/constants';
 
 export const PageSwitcher = ({ page }: { page: tPages }) => {
     switch (page) {
@@ -58,11 +59,27 @@ export const PageSwitcher = ({ page }: { page: tPages }) => {
         case pages.moveInDetales:
             return <MoveInDetales />;
         case pages.assemble:
-            return <Assemble />;
+            return (
+                <Assemble
+                    stateId={[
+                        STATE.sertedElements.id,
+                        STATE.minaretFinishedElement.id,
+                        STATE.disassembled.id,
+                    ]}
+                    stateResultId={STATE.createdProduct.id}
+                />
+            );
+        case pages.assembleComplects:
+            return (
+                <Assemble
+                    stateId={[STATE.minaretFinishedElement.id]}
+                    stateResultId={STATE.createdComplect.id}
+                />
+            );
         case pages.assembleBijouterie:
             return <AssembleBijouterie />;
-        case pages.assembleComplects:
-            return <AssembleComplects />;
+        case pages.assembleFromComplects:
+            return <AssembleFromComplects />;
     }
     return <></>;
 };

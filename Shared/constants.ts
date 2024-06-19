@@ -97,6 +97,7 @@ export const STATE = {
     glued2: { id: 40 }, //Клеенный 2
     washed2: { id: 41 }, //Мытый 2
     calibrated2: { id: 44 }, //Калиброванный 2
+    createdComplect: { id: 45 }, //Готовый комплект
 };
 export const WORKPIECETYPE = {
     stone: { id: 1 },

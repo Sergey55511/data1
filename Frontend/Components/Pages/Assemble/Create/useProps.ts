@@ -11,9 +11,11 @@ import { useColumns } from './useColumns';
 export const useProps = ({
     filters,
     setFilters,
+    stateId,
 }: {
     filters: Record<string, FilterValue | null>;
     setFilters: Dispatch<SetStateAction<Record<string, FilterValue | null>>>;
+    stateId: number[];
 }) => {
     const { loginStore, OperationStore } = useStores();
 
@@ -21,12 +23,7 @@ export const useProps = ({
 
     const assembleLeftovers = useQuery(
         ['assembleLeftovers', storeId],
-        () =>
-            leftoversAssemble(storeId, [
-                STATE.sertedElements.id,
-                STATE.minaretFinishedElement.id,
-                STATE.disassembled.id,
-            ]),
+        () => leftoversAssemble(storeId, stateId),
         { enabled: !!storeId, onSuccess: () => OperationStore.getMaxId() },
     );
     const { columns } = useColumns({ data: assembleLeftovers.data, filters });

@@ -1,3 +1,3 @@
 import { PageReduser } from '../../../Frontend/Components/Pages';
 
-export default () => <PageReduser page="assembleComplects" />;
+export default () => <PageReduser page="assembleFromComplects" />;

@@ -1,28 +1,19 @@
-import { useQuery } from '@tanstack/react-query';
+import { UseQueryResult } from '@tanstack/react-query';
 import { TableProps } from 'antd';
 import { FilterValue } from 'antd/lib/table/interface';
 import { Dispatch, SetStateAction, useState } from 'react';
-import { RESULTASSEMBLE } from '../../../../../Shared/constants';
 import { iDataProduct } from '../../../../../Shared/Types/interfaces';
-import { getDataProduct } from '../../../../Store/OperationStore/Api';
-import { useStores } from '../../../../Store/useStores';
+import { eTypeButton } from '../useProps';
 import { useColumns } from './useColumns';
 
-export const useProps = ({
-    complect,
-    setComplect,
-}: {
+export interface iProps {
     complect?: iDataProduct[];
     setComplect: Dispatch<SetStateAction<iDataProduct[]>>;
-}) => {
-    const { loginStore } = useStores();
+    dataProduct: UseQueryResult<iDataProduct[], unknown>;
+    stateButton: eTypeButton;
+}
+export const useProps = ({ complect, setComplect, dataProduct }: iProps) => {
     const [filters, setFilters] = useState<Record<string, FilterValue | null>>({});
-
-    const dataProduct = useQuery(
-        ['dataProduct'],
-        () => getDataProduct(loginStore.user.storeId, RESULTASSEMBLE.complect.id),
-        { enabled: !!loginStore.user.storeId },
-    );
 
     const data = dataProduct.data?.map((item) => ({ ...item, key: item.articleId }));
 

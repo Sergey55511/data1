@@ -1,4 +1,5 @@
 import { NextApiRequest } from 'next';
+import { RESULTASSEMBLE } from '../../../../../Shared/constants';
 import { tPrisma } from '../../../../types';
 import { dal } from './Dal';
 
@@ -19,6 +20,7 @@ export const postDataProductComplect = async <T>(
     await prisma.dataProduct.updateMany({
         data: {
             date,
+            workpieceTypeId: RESULTASSEMBLE.chaplet.id,
             model: data.model,
             length: data.length,
             widthIn: data.width,

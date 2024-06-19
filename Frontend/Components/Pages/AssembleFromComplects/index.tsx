@@ -5,8 +5,9 @@ import { Wrapper } from './style';
 import { SelectMinaret } from './SelectMinaret';
 import { SelectComplect } from './SelectComplect';
 import { GetResult } from './GetResult';
+import { observer } from 'mobx-react-lite';
 
-export const AssembleComplects = () => {
+export const AssembleFromComplects = observer(() => {
     const params = useProps();
     return (
         <Wrapper>
@@ -49,11 +50,13 @@ export const AssembleComplects = () => {
                     stateButton={params.stateButton}
                     complect={params.complect}
                     setComplect={params.setComplect}
+                    dataProduct={params.dataProduct}
                 />
                 <SelectMinaret
                     stateButton={params.stateButton}
                     setMinaret={params.setMinaret}
                     minaret={params.minaret}
+                    assembleLeftovers={params.assembleLeftovers}
                 />
 
                 <GetResult
@@ -65,4 +68,4 @@ export const AssembleComplects = () => {
             </div>
         </Wrapper>
     );
-};
+});

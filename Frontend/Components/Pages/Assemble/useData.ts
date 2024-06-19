@@ -14,7 +14,12 @@ export interface iPropsSubmit {
     articleId?: number;
     fullModelId?: number;
 }
-export const useData = (state: State, model: string, resetState: () => void) => {
+export const useData = (
+    state: State,
+    model: string,
+    resetState: () => void,
+    stateResultId: number,
+) => {
     const { loginStore, OperationStore } = useStores();
     const storeId = loginStore.user.storeId;
     const maxId = OperationStore.maxId;
@@ -148,7 +153,7 @@ export const useData = (state: State, model: string, resetState: () => void) => 
                 managerId: getValue(state.manager.value),
                 widthIn: getValue(state.widthIn.value),
                 countItemsIn: getValue(state.countItemIn.value),
-                stateId: STATE.createdProduct.id,
+                stateId: stateResultId,
                 moneyIn: code,
                 workpieceTypeId: getValue(state.typeBillet.value),
                 colorId: getValue(state.color.value),
