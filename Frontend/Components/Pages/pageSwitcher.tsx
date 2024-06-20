@@ -15,6 +15,7 @@ import { AssembleBijouterie } from './AssembleBijouterie';
 import { Bijouterie } from './Bijouterie';
 import { AssembleFromComplects } from './AssembleFromComplects';
 import { STATE } from '../../../Shared/constants';
+import { eTypeAssemble } from '../../../Shared/Types/interfaces';
 
 export const PageSwitcher = ({ page }: { page: tPages }) => {
     switch (page) {
@@ -67,6 +68,7 @@ export const PageSwitcher = ({ page }: { page: tPages }) => {
                         STATE.disassembled.id,
                     ]}
                     stateResultId={STATE.createdProduct.id}
+                    typeAssemble={eTypeAssemble.assemble}
                 />
             );
         case pages.assembleComplects:
@@ -74,6 +76,7 @@ export const PageSwitcher = ({ page }: { page: tPages }) => {
                 <Assemble
                     stateId={[STATE.minaretFinishedElement.id]}
                     stateResultId={STATE.createdComplect.id}
+                    typeAssemble={eTypeAssemble.complect}
                 />
             );
         case pages.assembleBijouterie:

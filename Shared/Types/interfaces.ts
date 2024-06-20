@@ -381,3 +381,7 @@ export interface iBigouterueBridje {
     count: number;
     code: number;
 }
+export enum eTypeAssemble {
+    assemble = 'assemble',
+    complect = 'complect',
+}

@@ -18,7 +18,6 @@ export class State {
     manager = new Field('managerId', 'Обязательное поле');
     constructor() {
         this.countItemIn.value = '1';
-        this.typeBillet.value = '1';
     }
 }
 

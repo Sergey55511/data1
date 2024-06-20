@@ -1,4 +1,5 @@
 import { Badge, Button, Popover, Radio } from 'antd';
+import { eTypeAssemble } from '../../../../Shared/Types/interfaces';
 import { Title } from '../../Shared/Title';
 import { AssembleCreate } from './Create';
 import { AssembleGet } from './Get';
@@ -8,9 +9,11 @@ import { useProps } from './useProps';
 export const Assemble = ({
     stateId,
     stateResultId,
+    typeAssemble,
 }: {
     stateId: number[];
     stateResultId: number;
+    typeAssemble?: eTypeAssemble;
 }) => {
     const params = useProps({ stateResultId });
 
@@ -80,6 +83,7 @@ export const Assemble = ({
                         setState={params.setState}
                         model={params.model}
                         setModel={params.setModel}
+                        typeAssemble={typeAssemble}
                     />
                 )}
             </div>

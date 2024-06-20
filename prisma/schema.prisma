@@ -537,6 +537,7 @@ model GradesAssemble {
 model ResultsAssemble {
   id                 Int                  @id @default(autoincrement())
   resultAssemble     String
+  typeAssemble       String?
   active             Boolean              @default(true)
   DataProduct        DataProduct[]
   BijouterieArticles BijouterieArticles[]
