@@ -74,7 +74,7 @@ export const PageSwitcher = ({ page }: { page: tPages }) => {
         case pages.assembleComplects:
             return (
                 <Assemble
-                    stateId={[STATE.minaretFinishedElement.id]}
+                    stateId={[STATE.sertedElements.id, STATE.disassembled.id]}
                     stateResultId={STATE.createdComplect.id}
                     typeAssemble={eTypeAssemble.complect}
                 />

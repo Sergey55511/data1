@@ -1,9 +1,6 @@
-import { useQuery, UseQueryResult } from '@tanstack/react-query';
+import { UseQueryResult } from '@tanstack/react-query';
 import { FilterValue } from 'antd/lib/table/interface';
 import { Dispatch, SetStateAction, useState } from 'react';
-import { STATE, WORKPIECETYPE } from '../../../../../Shared/constants';
-import { leftoversAssemble } from '../../../../Store/OperationStore/Api';
-import { useStores } from '../../../../Store/useStores';
 import { useColumns } from './useColumns';
 import { TableProps } from 'antd';
 import { iData } from '../../../../../Shared/Types/interfaces';

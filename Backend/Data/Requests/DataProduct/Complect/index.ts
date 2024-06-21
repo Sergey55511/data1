@@ -14,6 +14,9 @@ export const postDataProductComplect = async <T>(
     });
     const pp = dataProduct?.pp;
     const date = new Date();
+    const money = data.minaret.moneyOut ?? 0;
+    let moneyInProduct = dataProduct?.moneyIn ?? 0;
+    moneyInProduct = money + moneyInProduct;
 
     await prisma.data.create({ data: { ...data.minaret, date, pp } });
 
@@ -24,6 +27,7 @@ export const postDataProductComplect = async <T>(
             model: data.model,
             length: data.length,
             widthIn: data.width,
+            moneyIn: moneyInProduct,
         },
         where: { articleId: data.complect.articleId },
     });
