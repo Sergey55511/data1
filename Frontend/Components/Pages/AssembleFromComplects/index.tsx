@@ -64,6 +64,7 @@ export const AssembleFromComplects = observer(() => {
                     complects={params.complect}
                     minarets={params.minaret}
                     resetRootState={params.resetRootState}
+                    setMinaret={params.setMinaret}
                 />
             </div>
         </Wrapper>

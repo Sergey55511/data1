@@ -13,29 +13,58 @@ export const useColumns = ({
     filters: Record<string, FilterValue | null>;
 }) => {
     const filteredleftovers = getFilteredleftovers({ data, filters });
-
-    const getColumnPropsHoc = (dataIndex: typeof KEYSLEFTOVERS.workpieceType) => {
-        return {
-            ...getColumnProps(dataIndex.key, filteredleftovers, filters),
-            title: dataIndex.title,
-        };
-    };
+    const getColumnPropsHoc = (dataIndex: string) =>
+        getColumnProps<iDataProduct>(dataIndex, filteredleftovers, filters);
 
     const columns: ColumnsType<iDataProduct> = [
-        getColumnPropsHoc(KEYSLEFTOVERS.workpieceType),
-        getColumnPropsHoc(KEYSLEFTOVERS.fullModel),
-        getColumnPropsHoc(KEYSLEFTOVERS.sizeRange),
-        getColumnPropsHoc(KEYSLEFTOVERS.color),
-        getColumnPropsHoc(KEYSLEFTOVERS.length),
-        getColumnPropsHoc(KEYSLEFTOVERS.channel),
-        getColumnPropsHoc(KEYSLEFTOVERS.grade),
-        getColumnPropsHoc(KEYSLEFTOVERS.state),
-        getColumnPropsHoc(KEYSLEFTOVERS.model),
-        getColumnPropsHoc(KEYSLEFTOVERS.type),
-        getColumnPropsHoc(KEYSLEFTOVERS.lot),
-        getColumnPropsHoc(KEYSLEFTOVERS.production),
-        getColumnPropsHoc(KEYSLEFTOVERS.width),
-        getColumnPropsHoc(KEYSLEFTOVERS.count),
+        {
+            ...getColumnPropsHoc('workpieceType'),
+            title: 'Тип изделия',
+        },
+        {
+            ...getColumnPropsHoc('typeAssemble'),
+            title: 'Тип сборки',
+        },
+        {
+            ...getColumnPropsHoc('model'),
+            title: 'Модель',
+        },
+        {
+            ...getColumnPropsHoc('articleId'),
+            title: 'Номер изделия',
+        },
+        {
+            ...getColumnPropsHoc('state'),
+            title: 'Состояние',
+        },
+        {
+            ...getColumnPropsHoc('grade'),
+            title: 'Сорт',
+        },
+        {
+            ...getColumnPropsHoc('color'),
+            title: 'Цвет',
+        },
+        {
+            ...getColumnPropsHoc('length'),
+            title: 'Длинна',
+        },
+        {
+            ...getColumnPropsHoc('profile'),
+            title: 'Профиль',
+        },
+        {
+            ...getColumnPropsHoc('sizeRange'),
+            title: 'Размер бусины',
+        },
+        {
+            ...getColumnPropsHoc('width'),
+            title: 'Остаток гр.',
+        },
+        {
+            ...getColumnPropsHoc('count'),
+            title: 'Остаток шт.',
+        },
     ];
 
     return { columns };
