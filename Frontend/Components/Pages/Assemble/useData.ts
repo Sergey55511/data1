@@ -82,27 +82,30 @@ export const useData = (
             res.operationId = OPERATIONS.assemble.id;
             return res;
         });
+        try {
+            const moveToWorkRes = await moveToWork({
+                data: dataProfit,
+                maxId,
+                storeId,
+                isSetNewPP: true,
+                isSetArticleId: true,
+            });
 
-        const moveToWorkRes = await moveToWork({
-            data: dataProfit,
-            maxId,
-            storeId,
-            isSetNewPP: true,
-            isSetArticleId: true,
-        });
+            const props: iPropsSubmit = {
+                rows,
+                pp: moveToWorkRes.pp,
+                articleId: moveToWorkRes.articleId || 0,
+                fullModelId,
+            };
 
-        const props: iPropsSubmit = {
-            rows,
-            pp: moveToWorkRes.pp,
-            articleId: moveToWorkRes.articleId || 0,
-            fullModelId,
-        };
+            await moveOutDefectHandler(props);
+            await getResultHandler(props);
+            await getResultDefects(props);
 
-        await moveOutDefectHandler(props);
-        await getResultHandler(props);
-        await getResultDefects(props);
-
-        return props;
+            return props;
+        } catch (err) {
+            console.log('moveToWorkRes', err);
+        }
     };
 
     const moveOutDefectHandler = async ({ rows, pp, articleId }: iPropsSubmit) => {
@@ -212,7 +215,7 @@ export const useData = (
     const submitHandler = useMutation(submitHandlerFoo, {
         onSuccess: (res) => {
             printTicket({
-                articleId: res.articleId ?? 0,
+                articleId: res?.articleId ?? 0,
                 length: getValue(state.length.value) ?? 0,
                 model,
                 width: getValue(state.widthIn.value) ?? 0,
@@ -220,7 +223,7 @@ export const useData = (
             resetState();
             notification.success({
                 message: 'Успешно',
-                description: `Принято изделие № ${res.articleId}`,
+                description: `Принято изделие № ${res?.articleId}`,
             });
         },
         onError: () => {

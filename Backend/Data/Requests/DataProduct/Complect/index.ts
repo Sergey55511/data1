@@ -1,4 +1,5 @@
 import { NextApiRequest } from 'next';
+import { MyError } from '../../../../../Shared/Classes/error';
 import { RESULTASSEMBLE } from '../../../../../Shared/constants';
 import { tPrisma } from '../../../../types';
 import { dal } from './Dal';
@@ -9,9 +10,14 @@ export const postDataProductComplect = async <T>(
 ): Promise<T> => {
     const data = dal(req.body);
 
-    const dataProduct = await prisma.dataProduct.findFirst({
+    const dataProducts = await prisma.dataProduct.findMany({
         where: { articleId: data.complect.articleId },
     });
+    const length = dataProducts.length;
+    if (!length) throw new MyError(400, 'data product is not exist');
+
+    const dataProduct = dataProducts[length - 1];
+
     const pp = dataProduct?.pp;
     const date = new Date();
     const money = data.minaret.moneyOut ?? 0;
