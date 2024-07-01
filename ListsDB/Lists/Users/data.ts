@@ -1,8 +1,8 @@
 export const data = [
     {
-        id: 27,
-        login: 'oeremeeva',
-        password: '2e95d310361f8bc6bc81ffe2fadc737db4ef57bb',
+        id: 29,
+        login: 'ykurakina',
+        password: '5e7ef60f345ca529b150a3ad75b4d774ae97a960',
         status: 'worker',
         activ: false,
         storeId: 1,
