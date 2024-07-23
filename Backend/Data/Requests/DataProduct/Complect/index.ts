@@ -1,6 +1,6 @@
 import { NextApiRequest } from 'next';
 import { MyError } from '../../../../../Shared/Classes/error';
-import { RESULTASSEMBLE } from '../../../../../Shared/constants';
+import { OPERATIONS, RESULTASSEMBLE } from '../../../../../Shared/constants';
 import { tPrisma } from '../../../../types';
 import { dal } from './Dal';
 
@@ -20,11 +20,19 @@ export const postDataProductComplect = async <T>(
 
     const pp = dataProduct?.pp;
     const date = new Date();
-    const money = data.minaret.moneyOut ?? 0;
+    const money = data.code;
     let moneyInProduct = dataProduct?.moneyIn ?? 0;
     moneyInProduct = money + moneyInProduct;
 
-    await prisma.data.create({ data: { ...data.minaret, date, pp } });
+    await prisma.data.create({
+        data: {
+            ...data.minaret,
+            date,
+            pp,
+            operationId: OPERATIONS.assemble.id,
+            managerId: data.managerId,
+        },
+    });
 
     await prisma.dataProduct.updateMany({
         data: {

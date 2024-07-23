@@ -3,8 +3,10 @@ import { InputNumber } from '../../../../Shared/InputNumber';
 import { Title } from '../../../../Shared/Title';
 import { iProps, useProps } from './useProps';
 import { Wrapper } from './style';
+import { SelectField } from '../../../../Shared/SelectField';
+import { observer } from 'mobx-react-lite';
 
-export const Form = (props: iProps) => {
+export const Form = observer((props: iProps) => {
     const params = useProps(props);
 
     return (
@@ -50,7 +52,19 @@ export const Form = (props: iProps) => {
                         allowClear
                     />
                 </div>
+                <div className="row">
+                    <Title text="Cборщик:" />
+                    <SelectField
+                        placeholder="Выберите изделие"
+                        value={params.managerId}
+                        onChange={params.setManagerId}
+                        options={params.managers.data?.map((item) => ({
+                            value: item.id,
+                            caption: item.name,
+                        }))}
+                    />
+                </div>
             </Wrapper>
         </>
     );
-};
+});

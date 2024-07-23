@@ -16,8 +16,10 @@ export interface iParams<
     complect: T;
     minaret: T2;
     model: string;
+    managerId: number;
     length: number;
     width: number;
+    code: number;
 }
 
 export const dal = (
@@ -27,8 +29,10 @@ export const dal = (
         complect: getProduct(params.complect),
         minaret: getData(params.minaret),
         model: params.model,
+        managerId: params.managerId,
         length: +params.length,
         width: +params.width,
+        code: +params.code || 0,
     };
 
     return checkSchema(data, schema);
