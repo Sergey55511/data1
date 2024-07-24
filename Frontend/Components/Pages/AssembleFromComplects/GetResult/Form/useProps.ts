@@ -27,8 +27,9 @@ export const useProps = ({ complects, minarets, resetRootState }: iProps) => {
     const modelComplect = complect?.model ?? '';
     const fullModelMinaret = minaret?.fullModel ?? '';
     const model = `${fullModelMinaret}/${modelComplect}`;
+    const getNumber = (v: any) => (v ? +v : 0);
+
     const disabled = (() => {
-        const getNumber = (v: any) => (v ? +v : 0);
         if (!managerId) return true;
         if (!length) return true;
         if (!width) return true;
@@ -39,6 +40,16 @@ export const useProps = ({ complects, minarets, resetRootState }: iProps) => {
         return false;
     })();
 
+    const validateWidth = () => {
+        const minaretWidthOut = getNumber(minaret?.widthOut);
+        const complectWidth = getNumber(complect?.width);
+        const widthResult = getNumber(width);
+
+        if (widthResult < minaretWidthOut + complectWidth) {
+            throw new Error('Вес готового изделия меньше комплекта + минарета');
+        }
+    };
+
     const managers = useQuery(['managers', OPERATIONS.assemble.id], () =>
         getManagers({
             storeId: loginStore.user.storeId,
@@ -48,8 +59,28 @@ export const useProps = ({ complects, minarets, resetRootState }: iProps) => {
     );
 
     const subbmitFetch = useMutation(
-        () =>
-            postAssembleComplect({ complect, minaret, model, length, width, managerId }),
+        () => {
+            if (!minaret) {
+                throw new Error('Минарет не выбран');
+            }
+            validateWidth();
+
+            const minaretClone: iData = JSON.parse(JSON.stringify(minaret));
+
+            const moneyOut =
+                (getNumber(minaretClone.code) / getNumber(minaretClone.width)) *
+                    getNumber(minaretClone.widthOut) || 0;
+            const userId = managerId;
+            const articleId = complect?.articleId;
+
+            return postAssembleComplect({
+                complect,
+                minaret: { ...minaretClone, moneyOut, userId, articleId, managerId },
+                model,
+                length,
+                width,
+            });
+        },
         {
             onSuccess: () => {
                 notification.success({ message: 'Сборка прошла умпешно' });
@@ -57,10 +88,12 @@ export const useProps = ({ complects, minarets, resetRootState }: iProps) => {
                 setLength(undefined);
                 setWidth(undefined);
             },
-            onError: () => {
+            onError: (err) => {
+                const error = err as Error;
+                const description = error.message || 'Свяжитель с администратором';
                 notification.error({
                     message: 'Ошибка',
-                    description: 'Свяжитель с администратором',
+                    description,
                 });
             },
         },

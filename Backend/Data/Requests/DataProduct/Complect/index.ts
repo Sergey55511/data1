@@ -1,12 +1,14 @@
 import { NextApiRequest } from 'next';
 import { MyError } from '../../../../../Shared/Classes/error';
 import { OPERATIONS, RESULTASSEMBLE } from '../../../../../Shared/constants';
+import { iUser } from '../../../../../Shared/Types/interfaces';
 import { tPrisma } from '../../../../types';
 import { dal } from './Dal';
 
 export const postDataProductComplect = async <T>(
     prisma: tPrisma,
     req: NextApiRequest,
+    user: iUser,
 ): Promise<T> => {
     const data = dal(req.body);
 
@@ -20,17 +22,19 @@ export const postDataProductComplect = async <T>(
 
     const pp = dataProduct?.pp;
     const date = new Date();
-    const money = data.code;
+    const money = data.minaret.moneyOut ?? 0;
+    const storeId = user.storeId;
+
     let moneyInProduct = dataProduct?.moneyIn ?? 0;
     moneyInProduct = money + moneyInProduct;
 
     await prisma.data.create({
         data: {
             ...data.minaret,
+            storeId,
             date,
             pp,
             operationId: OPERATIONS.assemble.id,
-            managerId: data.managerId,
         },
     });
 

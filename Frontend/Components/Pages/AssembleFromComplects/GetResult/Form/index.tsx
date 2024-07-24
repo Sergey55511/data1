@@ -55,7 +55,7 @@ export const Form = observer((props: iProps) => {
                 <div className="row">
                     <Title text="Cборщик:" />
                     <SelectField
-                        placeholder="Выберите изделие"
+                        placeholder="Выберите сборщика"
                         value={params.managerId}
                         onChange={params.setManagerId}
                         options={params.managers.data?.map((item) => ({

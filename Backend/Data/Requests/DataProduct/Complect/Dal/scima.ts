@@ -50,11 +50,10 @@ export const schema = {
             },
         },
         model: { type: 'string' },
-        managerId: { type: 'number' },
         length: { type: 'number' },
         width: { type: 'number' },
         code: { type: 'number' },
     },
-    required: ['complect', 'model', 'managerId', 'length', 'width'],
+    required: ['complect', 'model', 'minaret', 'length', 'width'],
     additionalProperties: false,
 };

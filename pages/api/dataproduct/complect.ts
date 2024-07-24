@@ -10,7 +10,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             await fetchService<iData>({
                 req,
                 res,
-                fetch: (prisma: tPrisma) => postDataProductComplect(prisma, req),
+                fetch: (prisma: tPrisma, user) =>
+                    postDataProductComplect(prisma, req, user),
             });
             break;
         }

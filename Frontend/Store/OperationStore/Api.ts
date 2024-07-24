@@ -51,7 +51,6 @@ export const postAssembleComplect = (data: {
     complect?: iDataProduct;
     minaret?: iData;
     model: string;
-    managerId?: number;
     length: tValue;
     width: tValue;
 }) => {
