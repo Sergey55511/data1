@@ -4,6 +4,8 @@ const getNumber = (v: any) => (v ? +v : undefined);
 
 export const getData = (params: iData): iDataTable => {
     return {
+        managerId: getNumber(params?.managerId),
+        articleId: getNumber(params?.articleId),
         channelId: getNumber(params?.channelId),
         moneyOut: getNumber(params?.moneyOut),
         colorId: getNumber(params?.colorId),

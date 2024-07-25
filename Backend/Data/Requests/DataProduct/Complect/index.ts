@@ -1,6 +1,6 @@
 import { NextApiRequest } from 'next';
 import { MyError } from '../../../../../Shared/Classes/error';
-import { OPERATIONS, RESULTASSEMBLE } from '../../../../../Shared/constants';
+import { OPERATIONS, RESULTASSEMBLE, STATE } from '../../../../../Shared/constants';
 import { iUser } from '../../../../../Shared/Types/interfaces';
 import { tPrisma } from '../../../../types';
 import { dal } from './Dal';
@@ -24,6 +24,7 @@ export const postDataProductComplect = async <T>(
     const date = new Date();
     const money = data.minaret.moneyOut ?? 0;
     const storeId = user.storeId;
+    const userId = user.id;
 
     let moneyInProduct = dataProduct?.moneyIn ?? 0;
     moneyInProduct = money + moneyInProduct;
@@ -35,6 +36,7 @@ export const postDataProductComplect = async <T>(
             date,
             pp,
             operationId: OPERATIONS.assemble.id,
+            userId,
         },
     });
 
@@ -46,6 +48,7 @@ export const postDataProductComplect = async <T>(
             length: data.length,
             widthIn: data.width,
             moneyIn: moneyInProduct,
+            stateId: STATE.createdComplect.id,
         },
         where: { articleId: data.complect.articleId },
     });

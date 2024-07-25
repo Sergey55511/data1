@@ -70,12 +70,12 @@ export const useProps = ({ complects, minarets, resetRootState }: iProps) => {
             const moneyOut =
                 (getNumber(minaretClone.code) / getNumber(minaretClone.width)) *
                     getNumber(minaretClone.widthOut) || 0;
-            const userId = managerId;
+
             const articleId = complect?.articleId;
 
             return postAssembleComplect({
                 complect,
-                minaret: { ...minaretClone, moneyOut, userId, articleId, managerId },
+                minaret: { ...minaretClone, moneyOut, articleId, managerId },
                 model,
                 length,
                 width,
