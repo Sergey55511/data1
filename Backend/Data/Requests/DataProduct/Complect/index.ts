@@ -48,7 +48,7 @@ export const postDataProductComplect = async <T>(
             length: data.length,
             widthIn: data.width,
             moneyIn: moneyInProduct,
-            stateId: STATE.createdComplect.id,
+            stateId: STATE.createdProduct.id,
         },
         where: { articleId: data.complect.articleId },
     });
