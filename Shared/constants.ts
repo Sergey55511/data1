@@ -90,12 +90,14 @@ export const STATE = {
     minaretFinishedElement: { id: 32 },
     mixed: { id: 34 },
     createdProduct: { id: 35 },
+    disassembled: { id: 36 }, //разобранный
     prunings: { id: 37 },
     grindedCrumpledBall: { id: 38 }, //Шлифованный МШ
     calibratedFormated: { id: 39 }, //Калиброванный МШ
     glued2: { id: 40 }, //Клеенный 2
     washed2: { id: 41 }, //Мытый 2
     calibrated2: { id: 44 }, //Калиброванный 2
+    createdComplect: { id: 45 }, //Готовый комплект
 };
 export const WORKPIECETYPE = {
     stone: { id: 1 },
@@ -128,6 +130,7 @@ export const STORES = {
 export const RESULTASSEMBLE = {
     chaplet: { id: 1 }, //четки
     beads: { id: 2 }, //бусы
+    complect: { id: 3 }, //комплекты
 };
 
 export const ROLES = {

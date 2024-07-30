@@ -14,7 +14,12 @@ export interface iPropsSubmit {
     articleId?: number;
     fullModelId?: number;
 }
-export const useData = (state: State, model: string, resetState: () => void) => {
+export const useData = (
+    state: State,
+    model: string,
+    resetState: () => void,
+    stateResultId: number,
+) => {
     const { loginStore, OperationStore } = useStores();
     const storeId = loginStore.user.storeId;
     const maxId = OperationStore.maxId;
@@ -77,27 +82,30 @@ export const useData = (state: State, model: string, resetState: () => void) => 
             res.operationId = OPERATIONS.assemble.id;
             return res;
         });
+        try {
+            const moveToWorkRes = await moveToWork({
+                data: dataProfit,
+                maxId,
+                storeId,
+                isSetNewPP: true,
+                isSetArticleId: true,
+            });
 
-        const moveToWorkRes = await moveToWork({
-            data: dataProfit,
-            maxId,
-            storeId,
-            isSetNewPP: true,
-            isSetArticleId: true,
-        });
+            const props: iPropsSubmit = {
+                rows,
+                pp: moveToWorkRes.pp,
+                articleId: moveToWorkRes.articleId || 0,
+                fullModelId,
+            };
 
-        const props: iPropsSubmit = {
-            rows,
-            pp: moveToWorkRes.pp,
-            articleId: moveToWorkRes.articleId || 0,
-            fullModelId,
-        };
+            await moveOutDefectHandler(props);
+            await getResultHandler(props);
+            await getResultDefects(props);
 
-        await moveOutDefectHandler(props);
-        await getResultHandler(props);
-        await getResultDefects(props);
-
-        return props;
+            return props;
+        } catch (err) {
+            console.log('moveToWorkRes', err);
+        }
     };
 
     const moveOutDefectHandler = async ({ rows, pp, articleId }: iPropsSubmit) => {
@@ -148,7 +156,7 @@ export const useData = (state: State, model: string, resetState: () => void) => 
                 managerId: getValue(state.manager.value),
                 widthIn: getValue(state.widthIn.value),
                 countItemsIn: getValue(state.countItemIn.value),
-                stateId: STATE.createdProduct.id,
+                stateId: stateResultId,
                 moneyIn: code,
                 workpieceTypeId: getValue(state.typeBillet.value),
                 colorId: getValue(state.color.value),
@@ -207,7 +215,7 @@ export const useData = (state: State, model: string, resetState: () => void) => 
     const submitHandler = useMutation(submitHandlerFoo, {
         onSuccess: (res) => {
             printTicket({
-                articleId: res.articleId ?? 0,
+                articleId: res?.articleId ?? 0,
                 length: getValue(state.length.value) ?? 0,
                 model,
                 width: getValue(state.widthIn.value) ?? 0,
@@ -215,7 +223,7 @@ export const useData = (state: State, model: string, resetState: () => void) => 
             resetState();
             notification.success({
                 message: 'Успешно',
-                description: `Принято изделие № ${res.articleId}`,
+                description: `Принято изделие № ${res?.articleId}`,
             });
         },
         onError: () => {

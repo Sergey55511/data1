@@ -9,7 +9,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             await fetchService({
                 req,
                 res,
-                fetch: (prisma: tPrisma) => getResultsAssemble(prisma),
+                fetch: (prisma: tPrisma) => getResultsAssemble(prisma, req),
             });
             break;
         }

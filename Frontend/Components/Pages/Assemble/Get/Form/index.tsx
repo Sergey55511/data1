@@ -1,5 +1,4 @@
 import { Radio, Space } from 'antd';
-import { iData } from '../../../../../../Shared/Types/interfaces';
 import { InputNumber } from '../../../../Shared/InputNumber';
 import { SelectField } from '../../../../Shared/SelectField';
 import { iProps } from '../useProps';
@@ -7,12 +6,20 @@ import { Row } from './row';
 import { Wrapper } from './style';
 import { useProps } from './useProps';
 
-export const Form = ({ selectedRows, state, setState, model, setModel }: iProps) => {
+export const Form = ({
+    selectedRows,
+    state,
+    setState,
+    model,
+    setModel,
+    typeAssemble,
+}: iProps) => {
     const { setStateHandler, getSelectProps, data } = useProps(
         selectedRows,
         state,
         setState,
         setModel,
+        typeAssemble,
     );
 
     return (

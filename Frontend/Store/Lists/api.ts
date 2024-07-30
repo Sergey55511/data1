@@ -27,6 +27,7 @@ import {
     iFraction,
     iMaterialGroup,
     iProductions,
+    eTypeAssemble,
 } from '../../../Shared/Types/interfaces';
 
 export const getMaterialGroup = (forSorting?: boolean) => {
@@ -187,10 +188,11 @@ export const getGradesAssemble = () => {
         method: 'GET',
     }).then((res) => res.data as iGradeAssemble[]);
 };
-export const getResultsAssemble = () => {
+export const getResultsAssemble = (typeAssemble?: eTypeAssemble) => {
     return axios({
         url: `/api/list/assemble/result`,
         method: 'GET',
+        params: { typeAssemble },
     }).then((res) => res.data as iResultAssemble[]);
 };
 export const getTypesAssemble = () => {

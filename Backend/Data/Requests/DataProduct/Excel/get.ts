@@ -7,10 +7,10 @@ import { createExcel } from '../../../../Helpers/createExcel';
 
 export const getDataProductExcel = async (
     prisma: tPrisma,
-    _req: NextApiRequest,
+    req: NextApiRequest,
     user: iUser,
 ) => {
-    const reportData = await getDataProduct<iDataProduct[]>(prisma, user);
+    const reportData = await getDataProduct<iDataProduct[]>(prisma, user, req);
 
     const { rows, columns } = prepareData(reportData);
     const buffer = await createExcel({

@@ -1,7 +1,7 @@
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { RESULTASSEMBLE, WORKPIECETYPE } from '../../../../../../Shared/constants';
 import { round } from '../../../../../../Shared/Helpers';
-import { iData } from '../../../../../../Shared/Types/interfaces';
+import { eTypeAssemble, iData } from '../../../../../../Shared/Types/interfaces';
 import { State } from '../../useProps';
 import { useData } from './useData';
 
@@ -10,6 +10,7 @@ export const useProps = (
     state: State,
     setState: Dispatch<SetStateAction<State>>,
     setModel: Dispatch<SetStateAction<string>>,
+    typeAssemble?: eTypeAssemble,
 ) => {
     const setStateHandler = (key: keyof State, value: any) => {
         setState((prev) => {
@@ -27,7 +28,7 @@ export const useProps = (
         value: getValue(state[field].value),
     });
 
-    const data = useData();
+    const data = useData(typeAssemble);
 
     useEffect(() => {
         const ttlSum = selectedRows.reduce(
@@ -48,8 +49,14 @@ export const useProps = (
 
     useEffect(() => {
         let res = '';
+        const isSetModel = (() => {
+            if (state.typeBillet.value == `${RESULTASSEMBLE.chaplet.id || ''}`)
+                return true;
+            if (state.typeBillet.value == `${RESULTASSEMBLE.complect.id || ''}`)
+                return true;
+        })();
 
-        if (state.typeBillet.value == `${RESULTASSEMBLE.chaplet.id || ''}`) {
+        if (isSetModel) {
             const minaretItem = selectedRows.find(
                 (item) => item.workpieceTypeId == WORKPIECETYPE.minaret.id,
             );

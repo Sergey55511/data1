@@ -6,6 +6,7 @@ import {
     iDataProductTable,
     iDataTable,
 } from '../../../Shared/Types/interfaces';
+import { tValue } from '../../Components/Shared/InputNumber';
 
 export const leftovers = (storeId: number) => {
     return axios({
@@ -46,6 +47,19 @@ interface iPropsListOperation {
     productionId?: number;
 }
 
+export const postAssembleComplect = (data: {
+    complect?: iDataProduct;
+    minaret?: iData;
+    model: string;
+    length: tValue;
+    width: tValue;
+}) => {
+    return axios({
+        url: `/api/dataproduct/complect`,
+        method: 'POST',
+        data,
+    }).then((res) => res.data);
+};
 export const listOperations = (params: iPropsListOperation) => {
     return axios({
         url: `/api/data/reports/listOperations`,
@@ -73,10 +87,15 @@ export const listMoveInDocument = (params: {
     }).then((res) => res.data as iData[]);
 };
 
-export const leftoversAssemble = (storeId: number) => {
+export const leftoversAssemble = (
+    storeId: number,
+    stateId: number[],
+    workpieceTypeId?: number,
+) => {
     return axios({
-        url: `/api/data/leftovers/assemble?storeId=${storeId}`,
+        url: `/api/data/leftovers/assemble`,
         method: 'GET',
+        params: { storeId, stateId, workpieceTypeId },
     }).then((res) => res.data as iData[]);
 };
 
@@ -243,11 +262,11 @@ export const postOrderResult = (data: iDataTable[]) => {
     }).then((res) => res.data);
 };
 
-export const getDataProduct = (storeId: number) => {
+export const getDataProduct = (storeId: number, workpieceTypeId?: number) => {
     return axios({
         url: `/api/dataproduct`,
         method: 'GET',
-        params: { storeId },
+        params: { storeId, workpieceTypeId },
     }).then((res) => res.data as iDataProduct[]);
 };
 

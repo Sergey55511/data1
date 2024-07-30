@@ -1,7 +1,7 @@
 import { TableProps } from 'antd';
 import { FilterValue } from 'antd/es/table/interface';
 import { Dispatch, SetStateAction, useState } from 'react';
-import { iData } from '../../../../../Shared/Types/interfaces';
+import { eTypeAssemble, iData } from '../../../../../Shared/Types/interfaces';
 import { tValue } from '../../../Shared/InputNumber';
 import { State } from '../useProps';
 import { useColumns } from './UseColumn/useColumns';
@@ -13,6 +13,7 @@ export interface iProps {
     setState: Dispatch<SetStateAction<State>>;
     model: string;
     setModel: Dispatch<SetStateAction<string>>;
+    typeAssemble?: eTypeAssemble;
 }
 
 export const useProps = ({ selectedRows, setSelectedRows, setState }: iProps) => {

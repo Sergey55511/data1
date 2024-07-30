@@ -1,12 +1,21 @@
 import { Badge, Button, Popover, Radio } from 'antd';
+import { eTypeAssemble } from '../../../../Shared/Types/interfaces';
 import { Title } from '../../Shared/Title';
 import { AssembleCreate } from './Create';
 import { AssembleGet } from './Get';
 import { Wrapper } from './style';
 import { useProps } from './useProps';
 
-export const Assemble = () => {
-    const params = useProps();
+export const Assemble = ({
+    stateId,
+    stateResultId,
+    typeAssemble,
+}: {
+    stateId: number[];
+    stateResultId: number;
+    typeAssemble?: eTypeAssemble;
+}) => {
+    const params = useProps({ stateResultId });
 
     return (
         <Wrapper>
@@ -63,6 +72,7 @@ export const Assemble = () => {
                         setFilters={params.setFilters}
                         setSelectedRows={params.setSelectedRows}
                         selectedRows={params.selectedRows}
+                        stateId={stateId}
                     />
                 )}
                 {params.stateButton == 'assembleGet' && (
@@ -73,6 +83,7 @@ export const Assemble = () => {
                         setState={params.setState}
                         model={params.model}
                         setModel={params.setModel}
+                        typeAssemble={typeAssemble}
                     />
                 )}
             </div>

@@ -7,6 +7,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     await fetchService<iData>({
         req,
         res,
-        fetch: (prisma, user) => getLeftoversAssemble(prisma, user),
+        fetch: (prisma, user) => getLeftoversAssemble(prisma, user, req),
     });
 }
