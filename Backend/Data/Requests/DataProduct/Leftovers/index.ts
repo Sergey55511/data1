@@ -4,14 +4,14 @@ import { tPrisma } from '../../../../types';
 import { prepareParams } from './prepareParams';
 import { prepareSQL } from './prepareSQL';
 
-export const getDataProduct = async <T>(
+export const getDataProductLeftovers = async <T>(
     prisma: tPrisma,
     user: iUser,
     req: NextApiRequest,
 ): Promise<T> => {
-    const { params, articleId } = prepareParams({ user, req });
+    const { params, workpieceTypeId } = prepareParams({ user, req });
 
-    const sql = prepareSQL(articleId);
+    const sql = prepareSQL(workpieceTypeId);
 
     return (await prisma.$queryRawUnsafe(sql, ...params)) as any;
 };

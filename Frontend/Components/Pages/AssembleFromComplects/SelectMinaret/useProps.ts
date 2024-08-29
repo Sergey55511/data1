@@ -25,7 +25,7 @@ export const useProps = ({ minaret, setMinaret, assembleLeftovers }: iProps) => 
         setFilters(filters);
     };
     const rowSelection: TableProps<iData>['rowSelection'] = {
-        type: 'radio',
+        type: 'checkbox',
         onChange: (_selectedRowKeys: React.Key[], selectedRows: iData[]) => {
             setMinaret(selectedRows);
         },

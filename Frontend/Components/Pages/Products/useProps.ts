@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { FilterValue } from 'antd/es/table/interface';
 import { useStores } from '../../../Store/useStores';
 import { iDataProduct } from '../../../../Shared/Types/interfaces';
-import { getDataProduct } from '../../../Store/OperationStore/Api';
+import { getDataProductLeftovers } from '../../../Store/OperationStore/Api';
 import { useQuery } from '@tanstack/react-query';
 
 export const useProps = () => {
@@ -21,7 +21,7 @@ export const useProps = () => {
     }, [loginStore.user.storeId]);
 
     const getProductsHandler = async () => {
-        const res = await getDataProduct(loginStore.user.storeId);
+        const res = await getDataProductLeftovers(loginStore.user.storeId);
         return res;
     };
 

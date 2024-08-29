@@ -2,12 +2,15 @@ import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { RESULTASSEMBLE, STATE, WORKPIECETYPE } from '../../../../Shared/constants';
 import { iData, iDataProduct } from '../../../../Shared/Types/interfaces';
-import { getDataProduct, leftoversAssemble } from '../../../Store/OperationStore/Api';
+import {
+    getDataProductLeftovers,
+    leftoversAssemble,
+} from '../../../Store/OperationStore/Api';
 import { useStores } from '../../../Store/useStores';
 
 export enum eTypeButton {
     complects = 'complects',
-    minarets = 'minarets',
+    complectIyems = 'complectIyems',
     getResult = 'getResult',
 }
 export const useProps = () => {
@@ -25,21 +28,18 @@ export const useProps = () => {
     const assembleLeftovers = useQuery(
         ['assembleLeftoversComplects', storeId],
         () =>
-            leftoversAssemble(
-                storeId,
-                [
-                    STATE.sertedElements.id,
-                    STATE.minaretFinishedElement.id,
-                    STATE.disassembled.id,
-                ],
-                WORKPIECETYPE.minaret.id,
-            ),
+            leftoversAssemble(storeId, [
+                STATE.sertedElements.id,
+                STATE.minaretFinishedElement.id,
+                STATE.disassembled.id,
+            ]),
         { enabled: !!storeId, onSuccess: () => OperationStore.getMaxId() },
     );
 
     const dataProduct = useQuery(
         ['dataProduct'],
-        () => getDataProduct(loginStore.user.storeId, RESULTASSEMBLE.complect.id),
+        () =>
+            getDataProductLeftovers(loginStore.user.storeId, RESULTASSEMBLE.complect.id),
         { enabled: !!storeId },
     );
 

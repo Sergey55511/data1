@@ -3,7 +3,7 @@ import { iData } from '../../../../../../Shared/Types/interfaces';
 import { TableApp } from '../../../../Shared/Table';
 import { useColumns } from './useColumns';
 
-export const MinaretMoveOut = ({
+export const NewItemsMoveOut = ({
     data,
     setMinaret,
 }: {

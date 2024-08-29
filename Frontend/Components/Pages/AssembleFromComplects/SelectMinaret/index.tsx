@@ -3,9 +3,9 @@ import { eTypeButton } from '../useProps';
 import { Wrapper } from './style';
 import { iProps, useProps } from './useProps';
 
-export const SelectMinaret = (props: iProps) => {
+export const SelectComplectIyems = (props: iProps) => {
     const params = useProps(props);
-    if (props.stateButton != eTypeButton.minarets) return null;
+    if (props.stateButton != eTypeButton.complectIyems) return null;
 
     return (
         <Wrapper>

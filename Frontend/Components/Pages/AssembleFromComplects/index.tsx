@@ -2,7 +2,7 @@ import { Badge, Radio } from 'antd';
 import { Title } from '../../Shared/Title';
 import { eTypeButton, useProps } from './useProps';
 import { Wrapper } from './style';
-import { SelectMinaret } from './SelectMinaret';
+import { SelectComplectIyems } from './SelectMinaret';
 import { SelectComplect } from './SelectComplect';
 import { GetResult } from './GetResult';
 import { observer } from 'mobx-react-lite';
@@ -32,8 +32,8 @@ export const AssembleFromComplects = observer(() => {
                             color="green"
                             style={{ zIndex: 1 }}
                         >
-                            <Radio.Button value={eTypeButton.minarets}>
-                                Минареты
+                            <Radio.Button value={eTypeButton.complectIyems}>
+                                Комплектующие
                             </Radio.Button>
                         </Badge>
                         <Radio.Button
@@ -52,7 +52,7 @@ export const AssembleFromComplects = observer(() => {
                     setComplect={params.setComplect}
                     dataProduct={params.dataProduct}
                 />
-                <SelectMinaret
+                <SelectComplectIyems
                     stateButton={params.stateButton}
                     setMinaret={params.setMinaret}
                     minaret={params.minaret}
@@ -62,7 +62,7 @@ export const AssembleFromComplects = observer(() => {
                 <GetResult
                     stateButton={params.stateButton}
                     complects={params.complect}
-                    minarets={params.minaret}
+                    selectedRows={params.minaret}
                     resetRootState={params.resetRootState}
                     setMinaret={params.setMinaret}
                 />
