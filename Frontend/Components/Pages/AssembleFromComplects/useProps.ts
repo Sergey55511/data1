@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { RESULTASSEMBLE, STATE, WORKPIECETYPE } from '../../../../Shared/constants';
 import { iData, iDataProduct } from '../../../../Shared/Types/interfaces';
 import {
@@ -7,6 +7,7 @@ import {
     leftoversAssemble,
 } from '../../../Store/OperationStore/Api';
 import { useStores } from '../../../Store/useStores';
+import { tValue } from '../../Shared/InputNumber';
 
 export enum eTypeButton {
     complects = 'complects',
@@ -18,11 +19,22 @@ export const useProps = () => {
     const storeId = loginStore.user.storeId;
     const [stateButton, setStateButton] = useState<eTypeButton>(eTypeButton.complects);
     const [complect, setComplect] = useState<iDataProduct[]>([]);
-    const [minaret, setMinaret] = useState<iData[]>([]);
+    const [complectItems, setComplectItems] = useState<iData[]>([]);
+    const [managerId, setManagerId] = useState<number>();
+    const [length, setLength] = useState<tValue>();
+    const [width, setWidth] = useState<tValue>();
+    const [model, setModel] = useState<string>('');
 
-    const disabledGetResult = !(complect?.length && minaret?.length);
+    useEffect(() => {
+        if (complect) {
+            setLength(complect[0]?.length);
+            setWidth(complect[0]?.width);
+        }
+    }, [complect]);
 
-    const isSelectedMinaret = !!minaret?.length;
+    const disabledGetResult = !(complect?.length && complectItems?.length);
+
+    const isSelectedMinaret = !!complectItems?.length;
     const isSelectedComplect = !!complect?.length;
 
     const assembleLeftovers = useQuery(
@@ -46,7 +58,7 @@ export const useProps = () => {
     const resetRootState = () => {
         setStateButton(eTypeButton.complects);
         setComplect([]);
-        setMinaret([]);
+        setComplectItems([]);
         assembleLeftovers.refetch();
         dataProduct.refetch();
     };
@@ -55,8 +67,8 @@ export const useProps = () => {
         stateButton,
         setStateButton,
         disabledGetResult,
-        minaret,
-        setMinaret,
+        complectItems,
+        setComplectItems,
         isSelectedMinaret,
         complect,
         setComplect,
@@ -64,5 +76,13 @@ export const useProps = () => {
         resetRootState,
         assembleLeftovers,
         dataProduct,
+        managerId,
+        setManagerId,
+        length,
+        setLength,
+        width,
+        setWidth,
+        model,
+        setModel,
     };
 };

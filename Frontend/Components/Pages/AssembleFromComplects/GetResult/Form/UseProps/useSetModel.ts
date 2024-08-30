@@ -13,7 +13,7 @@ export const useSetModel = ({
 }: {
     state: State;
     selectedRows: iData[];
-    setModel: (value: SetStateAction<string | undefined>) => void;
+    setModel: (value: SetStateAction<string>) => void;
     data: ReturnType<typeof useData>;
 }) => {
     useEffect(() => {

@@ -10,8 +10,11 @@ export const GetResult = (props: iProps) => {
     return (
         <>
             <Form {...props} />
-            <NewItemsMoveOut data={props.selectedRows} setMinaret={props.setMinaret} />
-            <ComplectItems />
+            <NewItemsMoveOut
+                data={props.selectedRows}
+                setMinaret={props.setComplectItems}
+            />
+            <ComplectItems complects={props.complects} />
         </>
     );
 };

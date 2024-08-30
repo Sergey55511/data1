@@ -4,6 +4,7 @@ import {
     iData,
     iDataProduct,
 } from '../../../../../../../Shared/Types/interfaces';
+import { tValue } from '../../../../../Shared/InputNumber';
 import { eTypeButton } from '../../../useProps';
 import { getSelectPropsCreator } from './getSelectProps';
 import { State } from './State';
@@ -16,12 +17,19 @@ export interface iProps {
     complects: iDataProduct[];
     selectedRows: iData[];
     resetRootState: () => void;
-    setMinaret: Dispatch<SetStateAction<iData[]>>;
+    setComplectItems: Dispatch<SetStateAction<iData[]>>;
+    managerId: number | undefined;
+    setManagerId: Dispatch<SetStateAction<number | undefined>>;
+    length: tValue;
+    setLength: Dispatch<SetStateAction<tValue>>;
+    width: tValue;
+    setWidth: Dispatch<SetStateAction<tValue>>;
+    model: string;
+    setModel: Dispatch<SetStateAction<string>>;
 }
 
-export const useProps = (selectedRows: iData[]) => {
+export const useProps = ({ selectedRows, model, setModel }: iProps) => {
     const [state, setState] = useState<State>(new State());
-    const [model, setModel] = useState<string>();
     const typeAssemble = eTypeAssemble.assemble;
     const setStateHandler = (key: keyof State, value: any) => {
         setState((prev) => {
@@ -37,9 +45,9 @@ export const useProps = (selectedRows: iData[]) => {
 
     const data = useData(typeAssemble);
 
-    useSetLosses({ state, setState, selectedRows });
+    useSetLosses({ state, setState, selectedRows: selectedRows });
 
-    useSetModel({ state, selectedRows, setModel, data });
+    useSetModel({ state, selectedRows: selectedRows, setModel, data });
 
     return { state, setStateHandler, getValue, getSelectProps, data, model };
 };

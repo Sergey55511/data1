@@ -1,6 +1,7 @@
 import { Dispatch, SetStateAction } from 'react';
 import { iData } from '../../../../../../Shared/Types/interfaces';
 import { TableApp } from '../../../../Shared/Table';
+import { Title } from '../../../../Shared/Title';
 import { useColumns } from './useColumns';
 
 export const NewItemsMoveOut = ({
@@ -11,5 +12,10 @@ export const NewItemsMoveOut = ({
     setMinaret: Dispatch<SetStateAction<iData[]>>;
 }) => {
     const columns = useColumns({ setMinaret });
-    return <TableApp columns={columns} dataSource={data} />;
+    return (
+        <div>
+            <Title text="Добавляеься в контент" />
+            <TableApp columns={columns} dataSource={data} pagination={false} />;
+        </div>
+    );
 };

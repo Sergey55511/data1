@@ -7,6 +7,7 @@ export const prepareSQL = (articleId?: number) => {
     return `
         SELECT 
             model,
+            pp,
             "DataProduct"."workpieceTypeId",
             "ResultsAssemble"."resultAssemble" as "workpieceType",
             "colorId",

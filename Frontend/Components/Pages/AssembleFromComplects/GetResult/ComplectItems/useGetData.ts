@@ -1,14 +1,20 @@
 import { useQuery } from '@tanstack/react-query';
-import { iData } from '../../../../../../Shared/Types/interfaces';
-import { getDataProduct } from '../../../../../Store/OperationStore/Api';
+import { iDataProduct } from '../../../../../../Shared/Types/interfaces';
+import { getDataProduct, getData } from '../../../../../Store/OperationStore/Api';
 
-export const useGetData = () => {
-    const articleId = 24;
+export const useGetData = (complects: iDataProduct[]) => {
+    const articleId = complects?.find((item) => item.articleId)?.articleId;
     const dataProducts = useQuery([articleId], () => getDataProduct({ articleId }), {
         enabled: !!articleId,
     });
-    console.log('dataProducts', dataProducts.data);
+    const pp = dataProducts.data?.find((item) => item.pp)?.pp;
+    const complectItems = useQuery([pp], () => getData({ pp }), {
+        enabled: !!pp,
+    });
 
-    let data: iData[] = [];
+    const data = complectItems.data
+        ?.filter((item) => item.widthOut)
+        .map((item) => ({ ...item, key: item.id }));
+
     return data;
 };

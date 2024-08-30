@@ -5,9 +5,8 @@ import { Row } from './row';
 import { Wrapper } from './style';
 import { useProps, iProps } from './UseProps';
 
-export const Form = ({ selectedRows }: iProps) => {
-    const { setStateHandler, getSelectProps, data, state, model } =
-        useProps(selectedRows);
+export const Form = (props: iProps) => {
+    const { setStateHandler, getSelectProps, data, state, model } = useProps(props);
 
     return (
         <Wrapper>

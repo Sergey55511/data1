@@ -1,50 +1,18 @@
-import { Badge, Radio } from 'antd';
 import { Title } from '../../Shared/Title';
-import { eTypeButton, useProps } from './useProps';
+import { useProps } from './useProps';
 import { Wrapper } from './style';
 import { SelectComplectIyems } from './SelectMinaret';
 import { SelectComplect } from './SelectComplect';
 import { GetResult } from './GetResult';
 import { observer } from 'mobx-react-lite';
+import { Tubs } from './Tubs';
 
 export const AssembleFromComplects = observer(() => {
     const params = useProps();
     return (
         <Wrapper>
             <Title text="Комплектовка" />
-            <div className="buttonWrapper">
-                <div className="leftButtons">
-                    <Radio.Group
-                        value={params.stateButton}
-                        onChange={(e) => params.setStateButton(e.target.value)}
-                    >
-                        <Badge
-                            dot={params.isSelectedComplect}
-                            color="green"
-                            style={{ zIndex: 1 }}
-                        >
-                            <Radio.Button value={eTypeButton.complects}>
-                                Комплекты
-                            </Radio.Button>
-                        </Badge>
-                        <Badge
-                            dot={params.isSelectedMinaret}
-                            color="green"
-                            style={{ zIndex: 1 }}
-                        >
-                            <Radio.Button value={eTypeButton.complectIyems}>
-                                Комплектующие
-                            </Radio.Button>
-                        </Badge>
-                        <Radio.Button
-                            value={eTypeButton.getResult}
-                            disabled={params.disabledGetResult}
-                        >
-                            Получить результат
-                        </Radio.Button>
-                    </Radio.Group>
-                </div>
-            </div>
+            <Tubs {...params} />
             <div className="tableWrapperLeftovers">
                 <SelectComplect
                     stateButton={params.stateButton}
@@ -54,17 +22,25 @@ export const AssembleFromComplects = observer(() => {
                 />
                 <SelectComplectIyems
                     stateButton={params.stateButton}
-                    setMinaret={params.setMinaret}
-                    minaret={params.minaret}
+                    setComplectItems={params.setComplectItems}
+                    complectItems={params.complectItems}
                     assembleLeftovers={params.assembleLeftovers}
                 />
 
                 <GetResult
                     stateButton={params.stateButton}
                     complects={params.complect}
-                    selectedRows={params.minaret}
+                    selectedRows={params.complectItems}
                     resetRootState={params.resetRootState}
-                    setMinaret={params.setMinaret}
+                    setComplectItems={params.setComplectItems}
+                    managerId={params.managerId}
+                    setManagerId={params.setManagerId}
+                    length={params.length}
+                    setLength={params.setLength}
+                    width={params.width}
+                    setWidth={params.setWidth}
+                    model={params.model}
+                    setModel={params.setModel}
                 />
             </div>
         </Wrapper>

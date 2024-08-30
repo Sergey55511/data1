@@ -8,11 +8,15 @@ import { eTypeButton } from '../useProps';
 
 export interface iProps {
     stateButton: eTypeButton;
-    minaret: iData[];
-    setMinaret: Dispatch<SetStateAction<iData[]>>;
+    complectItems: iData[];
+    setComplectItems: Dispatch<SetStateAction<iData[]>>;
     assembleLeftovers: UseQueryResult<iData[], unknown>;
 }
-export const useProps = ({ minaret, setMinaret, assembleLeftovers }: iProps) => {
+export const useProps = ({
+    complectItems,
+    setComplectItems,
+    assembleLeftovers,
+}: iProps) => {
     const [filters, setFilters] = useState<Record<string, FilterValue | null>>({});
 
     const data = assembleLeftovers.data?.map((item, index) => ({ ...item, key: index }));
@@ -27,9 +31,9 @@ export const useProps = ({ minaret, setMinaret, assembleLeftovers }: iProps) => 
     const rowSelection: TableProps<iData>['rowSelection'] = {
         type: 'checkbox',
         onChange: (_selectedRowKeys: React.Key[], selectedRows: iData[]) => {
-            setMinaret(selectedRows);
+            setComplectItems(selectedRows);
         },
-        selectedRowKeys: minaret?.map((item) => item.key!),
+        selectedRowKeys: complectItems?.map((item) => item.key!),
     };
 
     const { columns } = useColumns({ data: assembleLeftovers.data, filters });

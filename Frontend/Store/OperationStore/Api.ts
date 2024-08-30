@@ -278,12 +278,19 @@ export const getDataProductExcel = () => {
     }).then((res) => res.data);
 };
 
+export const getData = (params: { pp?: number }) => {
+    return axios({
+        url: `/api/data`,
+        method: 'GET',
+        params,
+    }).then((res) => res.data as iData[]);
+};
 export const getDataProduct = (params: { articleId?: number }) => {
     return axios({
         url: `/api/dataproduct`,
         method: 'GET',
         params,
-    }).then((res) => res.data);
+    }).then((res) => res.data as iDataProduct[]);
 };
 export const postDataProduct = (data: iDataProductTable[]) => {
     return axios({
