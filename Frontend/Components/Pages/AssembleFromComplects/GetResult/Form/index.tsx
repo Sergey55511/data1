@@ -112,10 +112,8 @@ export const Form = (props: iProps) => {
                     <Row label={'Длина'}>
                         <InputNumber
                             placeholder={state?.length.placeholder}
-                            onChangeHandler={(v) => {
-                                setStateHandler('length', v);
-                            }}
-                            value={state?.length.value}
+                            onChangeHandler={props.setLength}
+                            value={props.length}
                         />
                     </Row>
                 </div>
@@ -123,10 +121,8 @@ export const Form = (props: iProps) => {
                     <Row label={'Принято гр'}>
                         <InputNumber
                             placeholder={state?.widthIn.placeholder}
-                            onChangeHandler={(v) => {
-                                setStateHandler('widthIn', v);
-                            }}
-                            value={state?.widthIn.value}
+                            onChangeHandler={props.setWidth}
+                            value={props.width}
                         />
                     </Row>
                 </div>

@@ -1,8 +1,10 @@
 import { Button, Badge, Radio } from 'antd';
 import { Wrapper } from './style';
-import { useProps, eTypeButton } from '../useProps';
+import { useProps as usePropsRoot, eTypeButton } from '../useProps';
+import { useProps } from './UseProps';
 
-export const Tubs = (props: ReturnType<typeof useProps>) => {
+export const Tubs = (props: ReturnType<typeof usePropsRoot>) => {
+    const { subbmitMutation } = useProps(props);
     return (
         <Wrapper>
             <div className="leftButtons">
@@ -37,7 +39,9 @@ export const Tubs = (props: ReturnType<typeof useProps>) => {
                 </Radio.Group>
             </div>
             <div>
-                <Button type="primary">Сохранить</Button>
+                <Button type="primary" onClick={() => subbmitMutation.mutate()}>
+                    Сохранить
+                </Button>
             </div>
         </Wrapper>
     );
