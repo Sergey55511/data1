@@ -8,7 +8,7 @@ export const SelectField = ({
     options,
     selectProps,
 }: {
-    placeholder: string;
+    placeholder?: string;
     onChange: (value: any, option: DefaultOptionType | DefaultOptionType[]) => void;
     options?: { value: number; caption: string }[];
     value?: number;

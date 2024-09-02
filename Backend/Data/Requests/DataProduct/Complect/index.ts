@@ -1,7 +1,7 @@
 import { NextApiRequest } from 'next';
 import { MyError } from '../../../../../Shared/Classes/error';
 import { OPERATIONS, RESULTASSEMBLE, STATE } from '../../../../../Shared/constants';
-import { iUser } from '../../../../../Shared/Types/interfaces';
+import { iDataTable, iUser } from '../../../../../Shared/Types/interfaces';
 import { tPrisma } from '../../../../types';
 import { dal } from './Dal';
 
@@ -20,24 +20,31 @@ export const postDataProductComplect = async <T>(
 
     const dataProduct = dataProducts[length - 1];
 
-    const pp = dataProduct?.pp;
+    const pp = dataProduct?.pp ?? undefined;
     const date = new Date();
-    const money = data.minaret.moneyOut ?? 0;
+
     const storeId = user.storeId;
     const userId = user.id;
 
-    let moneyInProduct = dataProduct?.moneyIn ?? 0;
-    moneyInProduct = money + moneyInProduct;
-
-    await prisma.data.create({
-        data: {
-            ...data.minaret,
+    const newDataItems: iDataTable[] = [];
+    const money = data.complectItems.reduce((state, item) => {
+        newDataItems.push({
+            ...item,
             storeId,
             date,
             pp,
             operationId: OPERATIONS.assemble.id,
             userId,
-        },
+        });
+        const money = item.moneyOut ?? 0;
+        return (state += money);
+    }, 0);
+
+    let moneyInProduct = dataProduct?.moneyIn ?? 0;
+    moneyInProduct = money + moneyInProduct;
+
+    await prisma.data.createMany({
+        data: newDataItems,
     });
 
     await prisma.dataProduct.updateMany({

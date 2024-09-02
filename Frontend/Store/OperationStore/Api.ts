@@ -49,7 +49,7 @@ interface iPropsListOperation {
 
 export const postAssembleComplect = (data: {
     complect?: iDataProduct;
-    minaret?: iData;
+    complectItems: iData[];
     model: string;
     length: tValue;
     width: tValue;
@@ -262,9 +262,9 @@ export const postOrderResult = (data: iDataTable[]) => {
     }).then((res) => res.data);
 };
 
-export const getDataProduct = (storeId: number, workpieceTypeId?: number) => {
+export const getDataProductLeftovers = (storeId: number, workpieceTypeId?: number) => {
     return axios({
-        url: `/api/dataproduct`,
+        url: `/api/dataproduct/leftovers`,
         method: 'GET',
         params: { storeId, workpieceTypeId },
     }).then((res) => res.data as iDataProduct[]);
@@ -278,6 +278,20 @@ export const getDataProductExcel = () => {
     }).then((res) => res.data);
 };
 
+export const getData = (params: { pp?: number }) => {
+    return axios({
+        url: `/api/data`,
+        method: 'GET',
+        params,
+    }).then((res) => res.data as iData[]);
+};
+export const getDataProduct = (params: { articleId?: number }) => {
+    return axios({
+        url: `/api/dataproduct`,
+        method: 'GET',
+        params,
+    }).then((res) => res.data as iDataProduct[]);
+};
 export const postDataProduct = (data: iDataProductTable[]) => {
     return axios({
         url: `/api/dataproduct`,

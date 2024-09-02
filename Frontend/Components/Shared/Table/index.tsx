@@ -37,13 +37,13 @@ export function TableApp<T extends object>(props: iTable<T>) {
             }}
         >
             <Table
-                {...props}
                 scroll={{ y, x: props.xScroll }}
                 pagination={{
                     showSizeChanger: true,
                     pageSizeOptions: [10, 20, 50, 100],
                     defaultPageSize: 100,
                 }}
+                {...props}
             />
         </Wrapper>
     );
