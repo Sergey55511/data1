@@ -9,10 +9,10 @@ import { extructData } from './extructData';
 export const useProps = (props: ReturnType<typeof useRootProps>) => {
     const subbmitMutation = useMutation(() => subbmitHandler(props), {
         onSuccess: () => {
-            // notification.success({ message: 'Сборка прошла умпешно' });
-            // props.resetRootState();
-            // props.setLength(undefined);
-            // props.setWidth(undefined);
+            notification.success({ message: 'Сборка прошла умпешно' });
+            props.resetRootState();
+            props.setLength(undefined);
+            props.setWidth(undefined);
         },
         onError: (err) => {
             const error = err as Error;

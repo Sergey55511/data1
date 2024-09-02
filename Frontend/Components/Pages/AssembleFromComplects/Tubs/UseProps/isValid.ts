@@ -14,8 +14,22 @@ export const isValid = ({
     const complectWidth = getNumber(complect?.width);
     const widthResult = getNumber(props.width);
 
+    props.complectItems.forEach((item) => {
+        if (!item.widthOut) {
+            throw new Error('Не указан вес отгрузки комлектующих');
+        }
+        if (getNumber(item.widthOut) > getNumber(item.width)) {
+            throw new Error('Расход комлектующих больше остатка');
+        }
+    });
     if (!minaret) {
         throw new Error('Минарет не выбран');
+    }
+    if (!minaret.countItemsOut) {
+        throw new Error('Минарет не введен расход штук');
+    }
+    if (getNumber(minaret.countItemsOut) > getNumber(minaret.count)) {
+        throw new Error('Минарет расхлд штук больше остатка');
     }
 
     if (!countItemsOut) {

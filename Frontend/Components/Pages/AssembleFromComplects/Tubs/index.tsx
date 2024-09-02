@@ -39,7 +39,11 @@ export const Tubs = (props: ReturnType<typeof usePropsRoot>) => {
                 </Radio.Group>
             </div>
             <div>
-                <Button type="primary" onClick={() => subbmitMutation.mutate()}>
+                <Button
+                    type="primary"
+                    loading={subbmitMutation.isLoading}
+                    onClick={() => subbmitMutation.mutate()}
+                >
                     Сохранить
                 </Button>
             </div>

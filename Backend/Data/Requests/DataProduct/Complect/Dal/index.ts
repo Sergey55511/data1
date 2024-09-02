@@ -14,7 +14,7 @@ export interface iParams<
     T2 extends iData | iDataTable,
 > {
     complect: T;
-    minaret: T2;
+    complectItems: T2[];
     model: string;
     length: number;
     width: number;
@@ -26,7 +26,7 @@ export const dal = (
 ): iParams<iDataProductTable, iDataTable> => {
     const data: iParams<iDataProductTable, iDataTable> = {
         complect: getProduct(params.complect),
-        minaret: getData(params.minaret),
+        complectItems: getData(params.complectItems),
         model: params.model,
         length: +params.length,
         width: +params.width,

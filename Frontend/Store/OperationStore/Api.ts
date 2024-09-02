@@ -49,7 +49,7 @@ interface iPropsListOperation {
 
 export const postAssembleComplect = (data: {
     complect?: iDataProduct;
-    minaret?: iData;
+    complectItems: iData[];
     model: string;
     length: tValue;
     width: tValue;
