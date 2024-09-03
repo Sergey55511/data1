@@ -10,7 +10,7 @@ export class State {
     typeAssemble = new Field('typeAssemble', 'Обязательное поле');
     color = new Field('color', 'Обязательное поле');
     yarn = new Field('yarn', 'Обязательное поле');
-    grade = new Field('yarn', 'Обязательное поле');
+    grade = new Field('grade', 'Обязательное поле');
     length = new Field('length', 'Обязательное поле');
     widthIn = new Field('widthIn', 'Обязательное поле');
     countItemIn = new Field('countItemIn', 'Обязательное поле');

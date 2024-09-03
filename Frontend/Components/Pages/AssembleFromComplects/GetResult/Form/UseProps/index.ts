@@ -28,8 +28,15 @@ export interface iProps {
     setModel: Dispatch<SetStateAction<string>>;
 }
 
-export const useProps = ({ selectedRows, model, setModel }: iProps) => {
-    const [state, setState] = useState<State>(new State());
+export const useProps = ({ selectedRows, model, setModel, complects }: iProps) => {
+    const complectItem = complects[0];
+    const [state, setState] = useState<State>(
+        new State({
+            colorId: complectItem.colorId,
+            gradeId: complectItem.gradeId,
+            typeAssembleId: complectItem.typeAssembleId,
+        }),
+    );
     const typeAssemble = eTypeAssemble.assemble;
     const setStateHandler = (key: keyof State, value: any) => {
         setState((prev) => {
