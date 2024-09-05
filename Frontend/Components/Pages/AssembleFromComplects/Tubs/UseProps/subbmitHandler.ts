@@ -1,4 +1,3 @@
-import { iData } from '../../../../../../Shared/Types/interfaces';
 import { postAssembleComplect } from '../../../../../Store/OperationStore/Api';
 import { useProps as useRootProps } from '../../useProps';
 import { isValid } from './isValid';

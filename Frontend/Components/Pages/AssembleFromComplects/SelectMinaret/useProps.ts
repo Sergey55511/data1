@@ -3,23 +3,32 @@ import { FilterValue } from 'antd/lib/table/interface';
 import { Dispatch, SetStateAction, useState } from 'react';
 import { useColumns } from './useColumns';
 import { TableProps } from 'antd';
-import { iData } from '../../../../../Shared/Types/interfaces';
+import { iData, iDataProduct } from '../../../../../Shared/Types/interfaces';
 import { eTypeButton } from '../useProps';
+import { WORKPIECETYPE } from '../../../../../Shared/constants';
 
 export interface iProps {
     stateButton: eTypeButton;
     complectItems: iData[];
     setComplectItems: Dispatch<SetStateAction<iData[]>>;
     assembleLeftovers: UseQueryResult<iData[], unknown>;
+    complect: iDataProduct[];
 }
 export const useProps = ({
     complectItems,
     setComplectItems,
     assembleLeftovers,
+    complect,
 }: iProps) => {
     const [filters, setFilters] = useState<Record<string, FilterValue | null>>({});
-
-    const data = assembleLeftovers.data?.map((item, index) => ({ ...item, key: index }));
+    const complectItem = complect[0];
+    const data = assembleLeftovers.data
+        ?.filter((item) => {
+            if (item.workpieceTypeId == WORKPIECETYPE.ball.id)
+                return item.fullModelId == complectItem?.fullModelId;
+            return true;
+        })
+        .map((item, index) => ({ ...item, key: index }));
 
     const handleChange: TableProps<iData>['onChange'] = (
         _pagination,

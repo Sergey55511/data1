@@ -175,9 +175,7 @@ export const GetOrderSwitcher = ({
                 />
             );
         case OPERATIONS.autoclave.id:
-            return (
-                <OneToOne record={record} stateId={STATE.autoclaved.id} isCheckLosses />
-            );
+            return <OneToOne record={record} stateId={STATE.autoclaved.id} />;
         case OPERATIONS.grindingEngraver.id:
             return (
                 <OneToOne

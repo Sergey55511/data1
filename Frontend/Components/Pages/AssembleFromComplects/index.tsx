@@ -25,6 +25,7 @@ export const AssembleFromComplects = observer(() => {
                     setComplectItems={params.setComplectItems}
                     complectItems={params.complectItems}
                     assembleLeftovers={params.assembleLeftovers}
+                    complect={params.complect}
                 />
 
                 <GetResult
