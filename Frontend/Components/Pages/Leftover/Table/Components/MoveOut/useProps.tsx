@@ -5,6 +5,7 @@ import { prepareDataTable } from '../../../../../Helpers';
 import { KEYSLEFTOVERS } from '../../../../../Shared/Table/constants';
 import { iProps } from '.';
 import { OPERATIONS, STATE, WORKPIECETYPE } from '../../../../../../../Shared/constants';
+import { patchProductionFullModal } from './patchProductionFullModal';
 
 export type tConstKeys = keyof typeof KEYSLEFTOVERS;
 type tValue = number | string | undefined;
@@ -161,12 +162,19 @@ export const useProps = (props: iProps) => {
         }
 
         await OperationStore.moveToWork([data], () => 1, true);
+        await patchProductionFullModal({
+            taskId: data.task,
+            productionId: data.productionId,
+            listsStore: ListsStore,
+            operationStore: OperationStore,
+        });
         if (loginStore.user.storeId) {
             if (operation != OPERATIONS.getOut.id)
                 await OperationStore.getOrders(loginStore.user.storeId!);
             if (operation == OPERATIONS.getOut.id)
                 await OperationStore.getOrdersGetOut(loginStore.user.storeId!);
         }
+
         end();
     };
 

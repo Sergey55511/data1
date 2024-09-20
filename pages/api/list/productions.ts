@@ -4,6 +4,7 @@ import { iOperation } from '../../../Shared/Types/interfaces';
 import { getProductions } from '../../../Backend/Data/Requests/Productions/get';
 import { postProductions } from '../../../Backend/Data/Requests/Productions/post';
 import { tPrisma } from '../../../Backend/types';
+import { patchProductions } from '../../../Backend/Data/Requests/Productions/Patch';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     switch (req.method) {
@@ -29,6 +30,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                         },
                         user,
                     ),
+            });
+            break;
+        }
+        case 'PATCH': {
+            await fetchService<iOperation>({
+                req,
+                res,
+                fetch: (prisma: tPrisma) => patchProductions(prisma, req),
             });
             break;
         }
