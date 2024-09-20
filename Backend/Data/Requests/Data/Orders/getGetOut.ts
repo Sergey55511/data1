@@ -41,6 +41,7 @@ export const getGetOut = <T>(prisma: tPrisma, user: iUser): PrismaPromise<T> => 
             task,
             ${fullModelSQLTask},
             "widthOut",
+            "moneyOut",
             ABS(COALESCE(round(sum("widthIn")::numeric,2),0)-COALESCE(round(coalesce(sum("widthOut"),0)::numeric,2),0)) as "width",
             ABS(COALESCE(round(sum("countItemsIn")::numeric,2),0)-COALESCE(round(sum("countItemsOut")::numeric,2),0)) as "count",
             COALESCE(sum("moneyIn"),0)-COALESCE(sum("moneyOut"),0) as "code"
@@ -101,7 +102,8 @@ export const getGetOut = <T>(prisma: tPrisma, user: iUser): PrismaPromise<T> => 
             lot,
             task,
             ${fullModelSQLTask},
-            "widthOut"
+            "widthOut",
+            "moneyOut"
         HAVING 
             pp is not null 
                 and 
