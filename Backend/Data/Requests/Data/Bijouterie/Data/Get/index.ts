@@ -5,6 +5,7 @@ import { tPrisma } from '../../../../../../types';
 export const getDataBijouterie = (prisma: tPrisma, req: NextApiRequest, user: iUser) => {
     return prisma.$queryRaw`
         SELECT
+            min(public."DataBijouterie".date) as date,
             "bijouterieArticleId",
             "BijouterieArticles".length,
             "BijouterieArticles"."typeAssemble",

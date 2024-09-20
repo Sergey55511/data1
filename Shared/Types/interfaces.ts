@@ -88,6 +88,7 @@ export interface iDataProduct extends iDataProductTable {
 }
 
 export interface iBijouterie {
+    date: string;
     bijouterieArticleId: number;
     length: number;
     typeAssemble: string;
