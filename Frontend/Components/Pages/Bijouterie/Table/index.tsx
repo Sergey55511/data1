@@ -6,6 +6,7 @@ import { FilterValue, TableRowSelection } from 'antd/es/table/interface';
 import { TableApp } from '../../../Shared/Table';
 import { useColumns } from './useСolumns';
 import { UseQueryResult } from '@tanstack/react-query';
+import { Counter } from '../../../Shared/Counter';
 
 export const TableLeftOvers = observer(
     ({
@@ -19,7 +20,7 @@ export const TableLeftOvers = observer(
         rowSelection?: TableRowSelection<iBijouterie>;
         bijouterie: UseQueryResult<iBijouterie[], unknown>;
     }) => {
-        const { columns, data } = useColumns(filters, bijouterie);
+        const { columns, data, filteredleftovers } = useColumns(filters, bijouterie);
 
         const handleChange: TableProps<iBijouterie>['onChange'] = (
             _pagination,
@@ -32,6 +33,7 @@ export const TableLeftOvers = observer(
 
         return (
             <>
+                <Counter data={filteredleftovers} countKey="count" widthKey="width" />
                 <TableApp
                     columns={columns}
                     dataSource={data}

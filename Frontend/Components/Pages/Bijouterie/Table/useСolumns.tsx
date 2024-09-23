@@ -53,5 +53,5 @@ export const useColumns = (
         title: 'Кол-во',
     });
 
-    return { columns, data };
+    return { columns, data, filteredleftovers };
 };

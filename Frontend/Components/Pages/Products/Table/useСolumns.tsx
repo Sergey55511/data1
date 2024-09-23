@@ -77,5 +77,5 @@ export const useColumns = (
         title: 'Остаток шт.',
     });
 
-    return { columns, data };
+    return { columns, data, filteredleftovers };
 };

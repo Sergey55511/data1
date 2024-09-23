@@ -5,6 +5,8 @@ import { iData } from '../../../../../Shared/Types/interfaces';
 import { getColumnProps } from '../../../Shared/Table/Helpers/getColumnProps';
 import { KEYSLEFTOVERS } from '../../../Shared/Table/constants';
 import { STORES } from '../../../../../Shared/constants';
+import moment from 'moment';
+import { getUniqueData } from '../../../Shared/Table/Helpers/getUniqueData';
 
 export const useColumns = (
     filters: Record<string, FilterValue | null>,
@@ -26,10 +28,19 @@ export const useColumns = (
         return true;
     });
 
+    const dateFormat = (date: string) => moment(date).format('MM.DD.YYYY');
+
     const getColumnPropsHoc = (dataIndex: string) =>
         getColumnProps(dataIndex, filteredleftovers, filters);
 
     const columns: ColumnsType<iData> = [];
+    columns.push({
+        ...getColumnPropsHoc(KEYSLEFTOVERS.date.key),
+        title: KEYSLEFTOVERS.date.title,
+        width: 100,
+        filters: getUniqueData(data, KEYSLEFTOVERS.date.key, dateFormat),
+        render: dateFormat,
+    });
     columns.push({
         ...getColumnPropsHoc(KEYSLEFTOVERS.pp.key),
         title: KEYSLEFTOVERS.pp.title,
