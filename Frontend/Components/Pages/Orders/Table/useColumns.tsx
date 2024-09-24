@@ -28,7 +28,7 @@ export const useColumns = (
         return true;
     });
 
-    const dateFormat = (date: string) => moment(date).format('MM.DD.YYYY');
+    const dateFormat = (date: string) => moment(date).format('DD.MM.YYYY');
 
     const getColumnPropsHoc = (dataIndex: string) =>
         getColumnProps(dataIndex, filteredleftovers, filters);

@@ -20,7 +20,7 @@ export const useColumns = (
 
     const columns: ColumnsType<iBijouterie> = [];
 
-    const dateFormat = (date: string) => moment(date).format('MM.DD.YYYY');
+    const dateFormat = (date: string) => moment(date).format('DD.MM.YYYY');
 
     columns.push({
         ...getColumnPropsHoc('date'),
