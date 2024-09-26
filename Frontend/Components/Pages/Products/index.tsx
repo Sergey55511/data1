@@ -10,7 +10,9 @@ export default observer(() => {
     return (
         <>
             <MenuLeftovers {...{ setFilters, selectedRows, products, setSelectedRows }} />
-            <TableLeftOvers {...{ filters, setFilters, rowSelection, products }} />
+            <TableLeftOvers
+                {...{ filters, setFilters, rowSelection, products, selectedRows }}
+            />
         </>
     );
 });

@@ -19,5 +19,5 @@ export const useProps = () => {
         enabled: !!loginStore.user.storeId,
     });
 
-    return { bijouterie, filters, setFilters, rowSelection };
+    return { bijouterie, filters, setFilters, rowSelection, selectedRows };
 };

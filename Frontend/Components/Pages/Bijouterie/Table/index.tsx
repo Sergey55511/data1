@@ -7,6 +7,7 @@ import { TableApp } from '../../../Shared/Table';
 import { useColumns } from './useСolumns';
 import { UseQueryResult } from '@tanstack/react-query';
 import { Counter } from '../../../Shared/Counter';
+import { TotalCounter } from './TotalCounter';
 
 export const TableLeftOvers = observer(
     ({
@@ -14,11 +15,13 @@ export const TableLeftOvers = observer(
         setFilters,
         rowSelection,
         bijouterie,
+        selectedRows,
     }: {
         filters: Record<string, FilterValue | null>;
         setFilters: Dispatch<SetStateAction<Record<string, FilterValue | null>>>;
         rowSelection?: TableRowSelection<iBijouterie>;
         bijouterie: UseQueryResult<iBijouterie[], unknown>;
+        selectedRows: iDataProduct[];
     }) => {
         const { columns, data, filteredleftovers } = useColumns(filters, bijouterie);
 
@@ -33,7 +36,10 @@ export const TableLeftOvers = observer(
 
         return (
             <>
-                <Counter data={filteredleftovers} countKey="count" widthKey="width" />
+                <TotalCounter
+                    selectedRows={selectedRows}
+                    filteredleftovers={filteredleftovers}
+                />
                 <TableApp
                     columns={columns}
                     dataSource={data}

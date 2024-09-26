@@ -27,54 +27,67 @@ export const useColumns = (
         title: 'Дата',
         filters: getUniqueData(data, 'date', dateFormat),
         render: dateFormat,
+        width: 100,
     });
     columns.push({
         ...getColumnPropsHoc('workpieceType'),
         title: 'Тип изделия',
+        width: 150,
     });
     columns.push({
         ...getColumnPropsHoc('typeAssemble'),
         title: 'Тип сборки',
+        width: 100,
     });
     columns.push({
         ...getColumnPropsHoc('model'),
         title: 'Модель',
+        width: 100,
     });
     columns.push({
         ...getColumnPropsHoc('articleId'),
         title: 'Номер изделия',
+        width: 100,
     });
     columns.push({
         ...getColumnPropsHoc('state'),
         title: 'Состояние',
+        width: 150,
     });
     columns.push({
         ...getColumnPropsHoc('grade'),
         title: 'Сорт',
+        width: 100,
     });
     columns.push({
         ...getColumnPropsHoc('color'),
         title: 'Цвет',
+        width: 100,
     });
     columns.push({
         ...getColumnPropsHoc('length'),
         title: 'Длинна',
+        width: 100,
     });
     columns.push({
         ...getColumnPropsHoc('profile'),
         title: 'Профиль',
+        width: 100,
     });
     columns.push({
         ...getColumnPropsHoc('sizeRange'),
         title: 'Размер бусины',
+        width: 100,
     });
     columns.push({
         ...getColumnPropsHoc('width'),
         title: 'Остаток гр.',
+        width: 100,
     });
     columns.push({
         ...getColumnPropsHoc('count'),
         title: 'Остаток шт.',
+        width: 100,
     });
 
     return { columns, data, filteredleftovers };
