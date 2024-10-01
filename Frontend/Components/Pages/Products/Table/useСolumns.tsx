@@ -32,7 +32,7 @@ export const useColumns = (
     columns.push({
         ...getColumnPropsHoc('workpieceType'),
         title: 'Тип изделия',
-        width: 150,
+        width: 100,
     });
     columns.push({
         ...getColumnPropsHoc('typeAssemble'),
@@ -42,7 +42,7 @@ export const useColumns = (
     columns.push({
         ...getColumnPropsHoc('model'),
         title: 'Модель',
-        width: 100,
+        width: 150,
     });
     columns.push({
         ...getColumnPropsHoc('articleId'),
@@ -57,17 +57,17 @@ export const useColumns = (
     columns.push({
         ...getColumnPropsHoc('grade'),
         title: 'Сорт',
-        width: 100,
+        width: 70,
     });
     columns.push({
         ...getColumnPropsHoc('color'),
         title: 'Цвет',
-        width: 100,
+        width: 70,
     });
     columns.push({
         ...getColumnPropsHoc('length'),
         title: 'Длинна',
-        width: 100,
+        width: 70,
     });
     columns.push({
         ...getColumnPropsHoc('profile'),
