@@ -27,7 +27,7 @@ export const useColumns = (
         title: 'Дата',
         filters: getUniqueData(data, 'date', dateFormat),
         render: dateFormat,
-        width: 100,
+        width: 70,
     });
     columns.push({
         ...getColumnPropsHoc('workpieceType'),
@@ -42,7 +42,7 @@ export const useColumns = (
     columns.push({
         ...getColumnPropsHoc('model'),
         title: 'Модель',
-        width: 150,
+        width: 250,
     });
     columns.push({
         ...getColumnPropsHoc('articleId'),
@@ -77,17 +77,17 @@ export const useColumns = (
     columns.push({
         ...getColumnPropsHoc('sizeRange'),
         title: 'Размер бусины',
-        width: 100,
+        width: 70,
     });
     columns.push({
         ...getColumnPropsHoc('width'),
         title: 'Остаток гр.',
-        width: 100,
+        width: 70,
     });
     columns.push({
         ...getColumnPropsHoc('count'),
         title: 'Остаток шт.',
-        width: 100,
+        width: 70,
     });
 
     return { columns, data, filteredleftovers };

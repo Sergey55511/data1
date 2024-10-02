@@ -2,7 +2,7 @@ export const prepareSql = (stateFilter: string, workpieceTypeIdFilter: string) =
     return `SELECT 
     "Data"."workpieceTypeId",
     "workpieceType",
-    "fullModelId",
+    "Data"."fullModelId",
     "FullModels"."fullModel",
     "sizeRangeId",
     "sizeRange",
@@ -42,7 +42,7 @@ WHERE "Data"."storeId"=$1 AND "WorkpieceType"."isShow"=true
 GROUP BY 
     "Data"."workpieceTypeId",
     "workpieceType",
-    "fullModelId",
+    "Data"."fullModelId",
     "FullModels"."fullModel",
     "sizeRangeId",
     "sizeRange",
