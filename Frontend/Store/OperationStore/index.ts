@@ -7,6 +7,7 @@ import {
     iDataTable,
     iShared,
     iAssembleTakeApartData,
+    iProductions,
 } from '../../../Shared/Types/interfaces';
 import { Login } from '../LoginStore';
 import { ListsStore } from '../Lists';
@@ -151,6 +152,15 @@ export class OperationStore {
         const storeId = this.loginStore.user.storeId;
         try {
             yield api.postProductions({ description, storeId });
+            yield this.listsStore.getProductions(this.loginStore.user.storeId);
+        } catch (err) {
+            this.errorStore.setError(err as iError);
+        }
+    });
+
+    patchProductions = flow(function* (this: OperationStore, production: iProductions) {
+        try {
+            yield api.patchProductions(production);
             yield this.listsStore.getProductions(this.loginStore.user.storeId);
         } catch (err) {
             this.errorStore.setError(err as iError);

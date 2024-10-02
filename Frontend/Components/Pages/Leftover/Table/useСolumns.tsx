@@ -77,10 +77,12 @@ export const useColumns = (filters: Record<string, FilterValue | null>) => {
         columns.push({
             ...getColumnPropsHoc(KEYSLEFTOVERS.channel.key),
             title: KEYSLEFTOVERS.channel.title,
+            width: 65,
         });
         columns.push({
             ...getColumnPropsHoc(KEYSLEFTOVERS.type.key),
             title: KEYSLEFTOVERS.type.title,
+            width: 70,
         });
     }
     columns.push({

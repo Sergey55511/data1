@@ -351,6 +351,8 @@ model FullModels {
   DataProduct      DataProduct[]
   OptimizedData    OptimizedData[]
   fullModel        String?
+
+  Productions Productions[]
 }
 
 model LengthModel {
@@ -460,11 +462,13 @@ model WorkpieceType {
 }
 
 model Productions {
-  id          Int     @id @default(autoincrement())
+  id          Int         @id @default(autoincrement())
   description String
-  Stores      Stores? @relation(fields: [storeId], references: [id], onDelete: NoAction)
+  Stores      Stores?     @relation(fields: [storeId], references: [id], onDelete: NoAction)
   storeId     Int?
-  active      Boolean @default(true)
+  fullModelId Int?
+  fullModel   FullModels? @relation(fields: [fullModelId], references: [id])
+  active      Boolean     @default(true)
 }
 
 model State {

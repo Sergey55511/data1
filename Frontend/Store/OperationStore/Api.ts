@@ -5,6 +5,7 @@ import {
     iDataProduct,
     iDataProductTable,
     iDataTable,
+    iProductions,
 } from '../../../Shared/Types/interfaces';
 import { tValue } from '../../Components/Shared/InputNumber';
 
@@ -310,6 +311,13 @@ export const postProductions = (data: { description: string; storeId: number }) 
     return axios({
         url: `/api/list/productions`,
         method: 'POST',
+        data,
+    }).then((res) => res.data);
+};
+export const patchProductions = (data: iProductions) => {
+    return axios({
+        url: `/api/list/productions`,
+        method: 'PATCH',
         data,
     }).then((res) => res.data);
 };

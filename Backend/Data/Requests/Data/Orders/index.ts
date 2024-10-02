@@ -26,6 +26,7 @@ export const orders = <T>(prisma: tPrisma, user: iUser): PrismaPromise<T> => {
             FROM "OptimizedData"
         )
         SELECT 
+            min(public."Data".date) as date,
             pp,
             "productionId",
 			"userId",

@@ -5,6 +5,8 @@ import { iData } from '../../../../../Shared/Types/interfaces';
 import { getColumnProps } from '../../../Shared/Table/Helpers/getColumnProps';
 import { KEYSLEFTOVERS } from '../../../Shared/Table/constants';
 import { STORES } from '../../../../../Shared/constants';
+import moment from 'moment';
+import { getUniqueData } from '../../../Shared/Table/Helpers/getUniqueData';
 
 export const useColumns = (
     filters: Record<string, FilterValue | null>,
@@ -26,10 +28,19 @@ export const useColumns = (
         return true;
     });
 
+    const dateFormat = (date: string) => moment(date).format('DD.MM.YYYY');
+
     const getColumnPropsHoc = (dataIndex: string) =>
         getColumnProps(dataIndex, filteredleftovers, filters);
 
     const columns: ColumnsType<iData> = [];
+    columns.push({
+        ...getColumnPropsHoc(KEYSLEFTOVERS.date.key),
+        title: KEYSLEFTOVERS.date.title,
+        width: 80,
+        filters: getUniqueData(data, KEYSLEFTOVERS.date.key, dateFormat),
+        render: dateFormat,
+    });
     columns.push({
         ...getColumnPropsHoc(KEYSLEFTOVERS.pp.key),
         title: KEYSLEFTOVERS.pp.title,
@@ -38,27 +49,32 @@ export const useColumns = (
     columns.push({
         ...getColumnPropsHoc(KEYSLEFTOVERS.productionId.key),
         title: KEYSLEFTOVERS.productionId.title,
+        width: 60,
     });
     columns.push({
         ...getColumnPropsHoc(KEYSLEFTOVERS.operation.key),
         title: KEYSLEFTOVERS.operation.title,
+        width: 105,
     });
     columns.push({
         ...getColumnPropsHoc(KEYSLEFTOVERS.userLogin.key),
         title: KEYSLEFTOVERS.userLogin.title,
-        width: 105,
+        width: 115,
     });
     columns.push({
         ...getColumnPropsHoc(KEYSLEFTOVERS.manager.key),
         title: KEYSLEFTOVERS.manager.title,
+        width: 105,
     });
     columns.push({
         ...getColumnPropsHoc(KEYSLEFTOVERS.workpieceType.key),
         title: KEYSLEFTOVERS.workpieceType.title,
+        width: 90,
     });
     columns.push({
         ...getColumnPropsHoc(KEYSLEFTOVERS.state.key),
         title: KEYSLEFTOVERS.state.title,
+        width: 105,
     });
     if (!isMSC)
         columns.push({
@@ -79,7 +95,7 @@ export const useColumns = (
     columns.push({
         ...getColumnPropsHoc(KEYSLEFTOVERS.sizeRange.key),
         title: KEYSLEFTOVERS.sizeRange.title,
-        width: 90,
+        width: 100,
     });
     columns.push({
         ...getColumnPropsHoc(KEYSLEFTOVERS.length.key),
@@ -95,6 +111,7 @@ export const useColumns = (
         columns.push({
             ...getColumnPropsHoc(KEYSLEFTOVERS.fullModel.key),
             title: KEYSLEFTOVERS.fullModel.title,
+            width: 105,
         });
 
     columns.push({
@@ -111,10 +128,12 @@ export const useColumns = (
         columns.push({
             ...getColumnPropsHoc(KEYSLEFTOVERS.channel.key),
             title: KEYSLEFTOVERS.channel.title,
+            width: 60,
         });
         columns.push({
             ...getColumnPropsHoc(KEYSLEFTOVERS.fullModelTask.key),
             title: KEYSLEFTOVERS.fullModelTask.title,
+            width: 80,
         });
     }
     columns.push({
@@ -126,6 +145,7 @@ export const useColumns = (
         columns.push({
             ...getColumnPropsHoc(KEYSLEFTOVERS.count.key),
             title: 'В работе шт.',
+            width: 70,
         });
 
     return { columns, isMSC };

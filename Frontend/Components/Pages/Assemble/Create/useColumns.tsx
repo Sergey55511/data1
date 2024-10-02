@@ -14,28 +14,31 @@ export const useColumns = ({
 }) => {
     const filteredleftovers = getFilteredleftovers({ data, filters });
 
-    const getColumnPropsHoc = (dataIndex: typeof KEYSLEFTOVERS.workpieceType) => {
+    const getColumnPropsHoc = (
+        dataIndex: typeof KEYSLEFTOVERS.workpieceType,
+        width?: number,
+    ) => {
         return {
             ...getColumnProps(dataIndex.key, filteredleftovers, filters),
             title: dataIndex.title,
+            width,
         };
     };
 
     const columns: ColumnsType<iData> = [
         getColumnPropsHoc(KEYSLEFTOVERS.workpieceType),
         getColumnPropsHoc(KEYSLEFTOVERS.fullModel),
-        getColumnPropsHoc(KEYSLEFTOVERS.sizeRange),
-        getColumnPropsHoc(KEYSLEFTOVERS.color),
-        getColumnPropsHoc(KEYSLEFTOVERS.length),
-        getColumnPropsHoc(KEYSLEFTOVERS.channel),
-        getColumnPropsHoc(KEYSLEFTOVERS.grade),
-        getColumnPropsHoc(KEYSLEFTOVERS.state),
-        getColumnPropsHoc(KEYSLEFTOVERS.model),
-        getColumnPropsHoc(KEYSLEFTOVERS.type),
-        getColumnPropsHoc(KEYSLEFTOVERS.lot),
+        getColumnPropsHoc(KEYSLEFTOVERS.sizeRange, 100),
+        getColumnPropsHoc(KEYSLEFTOVERS.color, 150),
+        getColumnPropsHoc(KEYSLEFTOVERS.length, 70),
+        getColumnPropsHoc(KEYSLEFTOVERS.channel, 65),
+        getColumnPropsHoc(KEYSLEFTOVERS.grade, 80),
+        getColumnPropsHoc(KEYSLEFTOVERS.state, 180),
+        getColumnPropsHoc(KEYSLEFTOVERS.type, 70),
+        getColumnPropsHoc(KEYSLEFTOVERS.lot, 70),
         getColumnPropsHoc(KEYSLEFTOVERS.production),
-        getColumnPropsHoc(KEYSLEFTOVERS.width),
-        getColumnPropsHoc(KEYSLEFTOVERS.count),
+        getColumnPropsHoc(KEYSLEFTOVERS.width, 75),
+        getColumnPropsHoc(KEYSLEFTOVERS.count, 50),
     ];
 
     return { columns };

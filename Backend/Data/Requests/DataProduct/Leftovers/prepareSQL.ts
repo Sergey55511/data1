@@ -6,6 +6,7 @@ export const prepareSQL = (workpieceTypeId?: string | string[]) => {
 
     return `
             SELECT 
+                min(public."DataProduct".date) as "date",
                 model,
                 "DataProduct"."workpieceTypeId",
                 "ResultsAssemble"."resultAssemble" as "workpieceType",

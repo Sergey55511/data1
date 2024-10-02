@@ -88,6 +88,7 @@ export interface iDataProduct extends iDataProductTable {
 }
 
 export interface iBijouterie {
+    date: string;
     bijouterieArticleId: number;
     length: number;
     typeAssemble: string;
@@ -222,7 +223,8 @@ export interface iChannel {
 export interface iProductions {
     id: number;
     description: string;
-    fullModel: string;
+    fullModel?: string;
+    fullModelId?: number;
 }
 export interface iGrade {
     id: number;
