@@ -74,6 +74,8 @@ jobs:
                       rm .env 
                       echo APP_VERSION=${{ github.ref_name }} >> .env
                       echo $(cat .env) 
+                      export DOCKER_CLIENT_TIMEOUT=240
+                      export COMPOSE_HTTP_TIMEOUT=240
                       docker-compose down --rmi local
                       docker image prune -a -f
                       docker-compose up -d
@@ -90,6 +92,8 @@ jobs:
                       rm .env 
                       echo APP_VERSION=${{ github.ref_name }} >> .env
                       echo $(cat .env) 
+                      export DOCKER_CLIENT_TIMEOUT=240
+                      export COMPOSE_HTTP_TIMEOUT=240
                       docker-compose down --rmi local
                       docker image prune -a -f
                       docker-compose up -d
@@ -106,6 +110,8 @@ jobs:
                       rm .env 
                       echo APP_VERSION=${{ github.ref_name }} >> .env
                       echo $(cat .env) 
+                      export DOCKER_CLIENT_TIMEOUT=240
+                      export COMPOSE_HTTP_TIMEOUT=240
                       docker-compose down --rmi local
                       docker image prune -a -f
                       docker-compose up -d
