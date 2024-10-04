@@ -1,10 +1,7 @@
 import { PrismaPromise } from '@prisma/client';
-import moment from 'moment';
 import { NextApiRequest } from 'next';
-import { MyError } from '../../../../../Shared/Classes/error';
 import { iUser } from '../../../../../Shared/Types/interfaces';
 import { tPrisma } from '../../../../types';
-import { fullModelSQL } from '../../Data/constants';
 import { dal } from './Dal';
 
 export const getListOperations = <T>(
@@ -35,8 +32,8 @@ export const getListOperations = <T>(
             "SizeRange".size,
             "productionId",
             "Productions".description as "production",
-            "fullModelId",
-            ${fullModelSQL},
+            "Data"."fullModelId",
+            "FullModels"."fullModel",
             "fractionId",
             "fraction",
             "colorId",
