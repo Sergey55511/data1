@@ -16,6 +16,7 @@ export const getFullModels = async <T>(
             Profile: { select: { id: true, profile: true } },
             SizeRangeModel: { select: { id: true, sizeRange: true } },
             LengthModel: { select: { id: true, length: true } },
+            fullModel: true,
         },
         where: {
             id: data.id,
@@ -38,9 +39,7 @@ export const getFullModels = async <T>(
             if (value) values.push(value);
         };
         pushData(item.WorkpieceType?.workpieceType);
-        pushData(item.Models?.model);
-        pushData(item.Profile?.profile);
-        pushData(item.SizeRangeModel?.sizeRange);
+        pushData(item.fullModel);
 
         return { ...item, fullModel: values.join('_') };
     }) as any;
